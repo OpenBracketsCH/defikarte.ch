@@ -110,7 +110,7 @@ Open Source und Open Data ist einer der Grund-Manifeste der Defikarte.
 
 Wir untersützen folgende Open Source Initiativen:
 
-*[OpenData Swiss](https://opendata.swiss/de/)
+* [OpenData Swiss](https://opendata.swiss/de/)
 
-***Code on Github***
+**Code on Github**
 ![Github](github_logo.png)
