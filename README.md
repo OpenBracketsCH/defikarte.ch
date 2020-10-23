@@ -104,6 +104,13 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 
 ## [Lizenz](LICENSE)
 
+## Contributors
+
+<a href="https://github.com/chnuessli/defikarte.ch/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=chnuessli/defikarte.ch" />
+</a>
+
+Made with [contributors-img](https://contributors-img.web.app).
 ## Open Source
 
 Open Source und Open Data ist einer der Grund-Manifeste der Defikarte.
@@ -112,5 +119,4 @@ Wir untersützen folgende Open Source Initiativen:
 
 * [OpenData Swiss](https://opendata.swiss/de/)
 
-**Code on Github**
-![Github](github_logo.png)
+**Code on<img src="github_logo.png" alt="drawing" width="60"/>**
