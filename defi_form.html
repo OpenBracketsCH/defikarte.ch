@@ -90,39 +90,40 @@
             <form onsubmit="return false">
                 <h2>Melder</h2>
                 <p>Name</p>
-                    <input type="text" placeholder="Gib deinen Namen ein" id="lastName" size="80"/>
+                    <input type="text" placeholder="Gib deinen Namen ein" id="reporter" size="80"/>
                 <br><br>
                 <p>E-Mail</p>
                     <input type="email" placeholder="Deine Email Adresse" id="email" size="80"/>
                 <br><br>
                 <h2>Angaben zum Defibrillator</h2>
                 <p>Bitte nenne uns die Adresse und den Ort des Defibrillators.</p>
-                    <textarea id="question" rows="2" cols="80"></textarea>
+                    <textarea id="place" rows="2" cols="80"></textarea>
                 <br><br>
                 <p>Bitte beschreibe den genauen Standort des Defibrillators.</p>
-                    <textarea id="question" rows="2" cols="80"></textarea>
+                    <textarea id="defi_location" rows="2" cols="80"></textarea>
                 <br><br>
                 <p>Ist der Defibrillator frei zugänglich?</p>
-                    <input type="radio" id="yes" name="gender" value="male"> Ja
-                    <input type="radio" id="no" name="gender" value="female"> Nein
-                    <input type="radio" id="opening_hours" name="gender" value="male"> nur während Öffnungszeiten
+                    <input type="radio" id="access_yes" name="access" value="male"> Ja
+                    <input type="radio" id="access_no" name="access" value="female"> Nein
+                    <input type="radio" id="access_opening_hours" name="access" value="male"> nur während Öffnungszeiten
                 <br><br>
                 <p>Befindet sich der Defibrillator innerhalb eines Gebäudes?</p>
-                    <input type="radio" id="yes" name="gender" value="male"> Ja
-                    <input type="radio" id="no" name="gender" value="female"> Nein
+                    <input type="radio" id="indoor_yes" name="indoor" value="male"> Ja
+                    <input type="radio" id="indoor_no" name="indoor" value="female"> Nein
                 <br><br>
                 <p>Wann ist dieser Defibrillator erreichbar?</p>
-                    <textarea id="question" rows="4" placeholder="24h / effektive Öffnungszeiten / unbekannt" cols="80"></textarea>
+                    <textarea id="opening_hours" rows="4" placeholder="24h / effektive Öffnungszeiten / unbekannt" cols="80"></textarea>
                 <br><br>
                 <p>Kannst du uns weitere Informationen / Beschreibung zum Defibrillator liefern?</p>
-                    <textarea id="question" rows="4" cols="80"></textarea>
+                    <textarea id="description" rows="4" cols="80"></textarea>
                 <br><br>
                 <p>Nenne uns bitte den Betreiber / Kontaktperson des Defibrillators.</p>
-                    <input type="text" placeholder="Address" id="address" size="80"/>
-                <p>Nenne uns die Telefonnummer des Betreibers.</p>
-                    <input type="text" placeholder="Address" id="address" size="80"/>
+                    <input type="text" id="operator" size="80"/>
                 <br><br>
-                <button onclick="sendContact();">Send contact</button>
+                <p>Nenne uns die Telefonnummer des Betreibers.</p>
+                    <input type="text" id="operator_phone" size="80"/>
+                <br><br>
+                <button onclick="sendContact();" class="btn btn-report"><i class="fa fa-file-text-o" aria-hidden="true"></i> Meldung absenden</button>
             </form>
         </div>
     </div>
