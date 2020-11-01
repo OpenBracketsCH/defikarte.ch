@@ -1,14 +1,4 @@
 <?php
-$errors = '';
-$myemail = 'chrigi@chnuessli.ch';//<-----Put Your email address here.
-if(empty($_POST['name'])  || 
-   empty($_POST['email']) || 
-   empty($_POST['place']) || 
-   empty($_POST['opening_hours']))
-{
-    $errors .= "\n Bitte fülle alle Pflichtfelder aus.";
-}
-
 $reporter = $_POST['reporter']; 
 $email_address = $_POST['email']; 
 $place = $_POST['place'];
@@ -48,7 +38,7 @@ Beschreibung: $description\n
 Betreiber: $operator\n
 Telefon Betreiber: $operator_phone\n";
 
-$headers = "From: $myemail\n";
+$headers = "From: info@defikarte.ch\n";
 
 $headers .= "Reply-To: $email_address";
 
@@ -58,5 +48,14 @@ mail($to,$email_subject,$email_body,$headers);
 
 header('Location: report_success.html');
 
+}
+$errors = '';
+$myemail = 'chrigi@chnuessli.ch';//<-----Put Your email address here.
+if(empty($_POST['reporter'])  || 
+   empty($_POST['email']) || 
+   empty($_POST['place']) || 
+   empty($_POST['opening_hours']))
+{
+    $errors .= "\n Bitte fülle alle Pflichtfelder aus.";
 }
 ?>

@@ -111,7 +111,8 @@
                     <input type="text" name="operator" size="80"/></p>
                 <p>Nenne uns die Telefonnummer des Betreibers.<br>
                     <input type="text" name="operator_phone" size="80"/></p>
-                <p><input type="submit" value="Meldung absenden" class="btn btn-report "></p>
+                <p>
+                    <input type="submit" value="Meldung absenden" class="btn btn-report "></p>
                 <!--<button onclick="sendContact();" class="btn btn-report"><i class="fa fa-envelope" aria-hidden="true"></i>  Meldung absenden</button>-->
             </form>
         </div>
@@ -139,11 +140,11 @@
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/form.js"></script>
-<script src="gen_validatorv4.js" type="text/javascript"></script>
+<script src="js/gen_validatorv4.js" type="text/javascript"></script>
 
 <script language="JavaScript">
     var formvalidator  = new Validator("defi_form");
-    formvalidator.addValidation("name","req","Bitte nenne uns deinen Namen, für Rückfragen.");
+    formvalidator.addValidation("reporter","req","Bitte nenne uns deinen Namen, für Rückfragen.");
     formvalidator.addValidation("email","req","Bitte gib uns deine E-mail Adresse an, für Rückfragen");
     formvalidator.addValidation("email","email","Bitte gib eine gültige E-Mailadresse an.");
     formvalidator.addValidation("place","req","Bitte gib einen Standort des Defibrillator an.");
