@@ -3,9 +3,8 @@ $errors = '';
 $myemail = 'chrigi@chnuessli.ch';//<-----Put Your email address here.
 if(empty($_POST['name'])  || 
    empty($_POST['email']) || 
-   empty($_POST['place'])
-   empty($_POST['opening_hours'])  
-   )
+   empty($_POST['place']) || 
+   empty($_POST['opening_hours']))
 {
     $errors .= "\n Bitte fülle alle Pflichtfelder aus.";
 }
@@ -38,16 +37,16 @@ $email_subject = "Neue Meldung auf Defikarte.ch von: $reporter";
 
 $email_body = "Hier ist ein neuer Defibrillator um in die Karte aufgenommen zu werden: ".
 
-"Name: $reporter \n "
-"Email: $email_address\n "
-"Ort: $place\n"
-"Defibrillator Standort: $defi_location\n"
-"Zugang: $access\n"
-"Im Gebäude: $indoor\n"
-"Öffnungszeiten: $opening_hours\n"
-"Beschreibung: $description\n"   
-"Betreiber: $operator\n"
-"Telefon Betreiber: $operator_phone\n";
+"Name: $reporter \n
+Email: $email_address\n
+Ort: $place\n
+Defibrillator Standort: $defi_location\n
+Zugang: $access\n
+Im Gebäude: $indoor\n
+Öffnungszeiten: $opening_hours\n
+Beschreibung: $description\n
+Betreiber: $operator\n
+Telefon Betreiber: $operator_phone\n";
 
 $headers = "From: $myemail\n";
 
