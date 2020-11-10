@@ -45,7 +45,7 @@ if( empty($errors))
 
 //redirect to the 'report_success' page
 
-    header('Location: ../report_success.html');
+    header('Location: ../success.html');
 
 }
 
