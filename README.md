@@ -2,6 +2,8 @@
 
 ![alt text](screenshot.PNG)
 
+This Page is also available in English, please visit: [English 👈🏻](readme_en.md)
+
 ## Idee und Umsetzung
 
 Die Idee zu dieser Seite kam mir als ich im Kanton Graubünden durch ein verschlafenes Dörfchen fuhr und mir in regelmässigen Abständen, eine Tafel den nächsten Standort eines Defibrillators angezeigt hat.Mir wurde bewusst dass dies bei weitem nicht alle Kantone so handhaben und dass die Defi-Standorte meist unbekannt sind.
@@ -40,7 +42,7 @@ Um die Daten aus Openstreetmap abzuholen werden folgende Tools verwendet:
 
 ### Overpass
 
-Overpass API und dessen GUI OVerpass Turbo ermöglicht es auf einfache Weise, Daten aus OpenStreetMap direkt abzurufen. Dazu ist kein Layer oder eine Zwischenspeicherung nötig.
+Overpass API und dessen GUI Overpass Turbo ermöglicht es auf einfache Weise, Daten aus OpenStreetMap direkt abzurufen. Dazu ist kein Layer oder eine Zwischenspeicherung nötig.
 
 Bekannte Endpoints für die API sind:
 
@@ -111,6 +113,7 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 </a>
 
 Made with [contributors-img](https://contributors-img.web.app).
+
 ## Open Source
 
 Open Source und Open Data ist einer der Grund-Manifeste der Defikarte.
