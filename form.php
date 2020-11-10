@@ -21,7 +21,7 @@ if( empty($errors))
 
 {
 
-$to = $myemail;
+$to = 'chrigi@chnuessli.ch';
 
 $email_subject = "Neue Meldung auf Defikarte.ch von: $reporter";
 

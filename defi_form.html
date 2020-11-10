@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 
 <head>
@@ -90,27 +91,27 @@
             <form method="POST" action="form.php" id="defi_form">
                 <h2>Melder</h2>
                 <p>Name *<br>
-                    <input type="text" placeholder="Gib deinen Namen ein" name="reporter" size="80"/></p>
+                    <input type="text" placeholder="Gib deinen Namen ein" id="name" size="80"/></p>
                 <p>E-Mail *<br>
-                    <input type="email" placeholder="Deine E-mail Adresse" name="email" size="80"/></p>
+                    <input type="email" placeholder="Deine E-mail Adresse" id="email" size="80"/></p>
                 <br>
                 <h2>Angaben zum Defibrillator</h2>
                 <p>Bitte nenne uns die Adresse und den Ort des Defibrillators. *<br>
-                    <textarea name="place" rows="2" cols="80"></textarea></p>
+                    <textarea id="place" rows="2" cols="80"></textarea></p>
                 <p>Bitte beschreibe den genauen Standort des Defibrillators.<br>
-                    <textarea name="defi_location" rows="2" cols="80"></textarea></p>
+                    <textarea id="defi_location" rows="2" cols="80"></textarea></p>
                 <p>Ist der Defibrillator frei zugänglich?<br>
-                    <input type="text" placeholder="Ja / Nein" name="access" size="80"/></p>
+                    <input type="text" placeholder="Ja / Nein" id="access" size="80"/></p>
                 <p>Befindet sich der Defibrillator innerhalb eines Gebäudes?<br>
-                    <input type="text" placeholder="Ja / Nein" name="indoor" size="80"/></p>
+                    <input type="text" placeholder="Ja / Nein" id="indoor" size="80"/></p>
                 <p>Wann ist dieser Defibrillator erreichbar? *<br>
-                    <input type="text"  name="opening_hours" rows="4" placeholder="24h / effektive Öffnungszeiten / unbekannt" size="80"></p>
+                    <input type="text"  id="opening_hours" rows="4" placeholder="24h / effektive Öffnungszeiten / unbekannt" size="80"></p>
                 <p>Kannst du uns weitere Informationen / Beschreibung zum Defibrillator liefern?<br>
-                    <textarea name="description" rows="4" cols="80"></textarea></p>
+                    <textarea id="description" rows="4" cols="80"></textarea></p>
                 <p>Nenne uns bitte den Betreiber / Kontaktperson des Defibrillators.<br>
-                    <input type="text" name="operator" size="80"/></p>
+                    <input type="text" id="operator" size="80"/></p>
                 <p>Nenne uns die Telefonnummer des Betreibers.<br>
-                    <input type="text" name="operator_phone" size="80"/></p>
+                    <input type="text" id="operator_phone" size="80"/></p>
                 <p>
                     <input type="submit" value="Meldung absenden" class="btn btn-report "></p>
                 <!--<button onclick="sendContact();" class="btn btn-report"><i class="fa fa-envelope" aria-hidden="true"></i>  Meldung absenden</button>-->
@@ -142,14 +143,6 @@
 <script src="js/form.js"></script>
 <script src="js/gen_validatorv4.js" type="text/javascript"></script>
 
-<script language="JavaScript">
-    var formvalidator  = new Validator("defi_form");
-    formvalidator.addValidation("reporter","req","Bitte nenne uns deinen Namen, für Rückfragen.");
-    formvalidator.addValidation("email","req","Bitte gib uns deine E-mail Adresse an, für Rückfragen");
-    formvalidator.addValidation("email","email","Bitte gib eine gültige E-Mailadresse an.");
-    formvalidator.addValidation("place","req","Bitte gib einen Standort des Defibrillator an.");
-    formvalidator.addValidation("opening_hours","req","Bitte gib uns für die Öffnungszeiten einen Wert an.");
-    </script>
 </body>
 
 </html>
