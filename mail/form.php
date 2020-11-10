@@ -1,4 +1,5 @@
 <?php
+
 $reporter = $_POST['reporter']; 
 $email_address = $_POST['email']; 
 $place = $_POST['place'];
@@ -22,6 +23,7 @@ if( empty($errors))
 {
 
 $to = 'chrigi@chnuessli.ch';
+$from= 'info@defikarte.ch';
 
 $email_subject = "Neue Meldung auf Defikarte.ch von: $reporter";
 
