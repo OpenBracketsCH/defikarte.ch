@@ -1,3 +1,26 @@
+input, select, textarea{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.defi_label {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.defi_input {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+
+
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
     
 }
