@@ -88,30 +88,30 @@
     <div class="about-content">
         <div class="container">
             <h1>Defibrillator melden</h1>
-            <form method="POST" action="mail/form.php" id="defi_form">
+            <form method="POST" action="form.php" name="defi_form">
                 <h2>Melder</h2>
                 <p>Name *<br>
-                    <input type="text" placeholder="Gib deinen Namen ein" id="name" size="80"/></p>
+                    <input type="text" placeholder="Gib deinen Namen ein" name="name" size="80"/></p>
                 <p>E-Mail *<br>
-                    <input type="email" placeholder="Deine E-mail Adresse" id="email" size="80"/></p>
+                    <input type="email" placeholder="Deine E-mail Adresse" name="email" size="80"/></p>
                 <br>
                 <h2>Angaben zum Defibrillator</h2>
                 <p>Bitte nenne uns die Adresse und den Ort des Defibrillators. *<br>
-                    <textarea id="place" rows="2" cols="80"></textarea></p>
+                    <textarea name="place" rows="2" cols="80"></textarea></p>
                 <p>Bitte beschreibe den genauen Standort des Defibrillators.<br>
-                    <textarea id="defi_location" rows="2" cols="80"></textarea></p>
+                    <textarea name="defi_location" rows="2" cols="80"></textarea></p>
                 <p>Ist der Defibrillator frei zugänglich?<br>
-                    <input type="text" placeholder="Ja / Nein" id="access" size="80"/></p>
+                    <input type="text" placeholder="Ja / Nein" name="access" size="80"/></p>
                 <p>Befindet sich der Defibrillator innerhalb eines Gebäudes?<br>
-                    <input type="text" placeholder="Ja / Nein" id="indoor" size="80"/></p>
+                    <input type="text" placeholder="Ja / Nein" name="indoor" size="80"/></p>
                 <p>Wann ist dieser Defibrillator erreichbar? *<br>
-                    <input type="text"  id="opening_hours" rows="4" placeholder="24h / effektive Öffnungszeiten / unbekannt" size="80"></p>
+                    <input type="text"  name="opening_hours" rows="4" placeholder="24h / effektive Öffnungszeiten / unbekannt" size="80"></p>
                 <p>Kannst du uns weitere Informationen / Beschreibung zum Defibrillator liefern?<br>
-                    <textarea id="description" rows="4" cols="80"></textarea></p>
+                    <textarea name="description" rows="4" cols="80"></textarea></p>
                 <p>Nenne uns bitte den Betreiber / Kontaktperson des Defibrillators.<br>
-                    <input type="text" id="operator" size="80"/></p>
+                    <input type="text" name="operator" size="80"/></p>
                 <p>Nenne uns die Telefonnummer des Betreibers.<br>
-                    <input type="text" id="operator_phone" size="80"/></p>
+                    <input type="text" name="operator_phone" size="80"/></p>
                 <p>
                     <input type="submit" value="Meldung absenden" class="btn btn-report "></p>
                 <!--<button onclick="sendContact();" class="btn btn-report"><i class="fa fa-envelope" aria-hidden="true"></i>  Meldung absenden</button>-->
