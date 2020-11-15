@@ -2,7 +2,7 @@
 
 ![alt text](screenshot.PNG)
 
-This Page is also available in English, please visit: [English 👈🏻](readme_en.md)
+This Page is also available in English, please visit: [English 👈🏻](README_en.md)
 
 ## Idee und Umsetzung
 
