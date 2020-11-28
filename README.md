@@ -34,7 +34,7 @@ Es steht dir frei unsere Daten zu kopieren, weiterzugeben, zu übermitteln sowie
 
 Unsere Dokumentation ist unter der ''Creative-Commons''-Lizenz „Namensnennung – Weitergabe unter gleichen Bedingungen“ 2.0 (CC BY-SA 2.0) verfügbar.
 
-Volständiger Artikel: [https://www.openstreetmap.org/copyright](https://www.openstreetmap.org/copyright)
+Vollständiger Artikel: [https://www.openstreetmap.org/copyright](https://www.openstreetmap.org/copyright)
 
 ## Tools
 
