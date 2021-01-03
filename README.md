@@ -50,6 +50,10 @@ Bekannte Endpoints für die API sind:
 * [Overpass SOSM](https://overpass-turbo.osm.ch/)
 * [weiterführende Links zu API Endpoints](https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances)
 
+#### Datengeneration in Overpass
+
+[![Get data from Overpass](https://github.com/Schutz-Rettung-Zurich/json-archive/workflows/Get%20data%20from%20Overpass/badge.svg)](https://github.com/Schutz-Rettung-Zurich/json-archive/actions?query=workflow%3A%22Get+data+from+Overpass%22)
+
 #### Abfragen
 
 ***zeige alle Defis in der Schweiz***
