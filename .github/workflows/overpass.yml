@@ -28,7 +28,6 @@ jobs:
 
     - name: Get data from Overpass API
       run: |
-      git update-index --chmod=+x  run_queries.sh
         ./run_queries.sh
     
     - uses: stefanzweifel/git-auto-commit-action@v4
