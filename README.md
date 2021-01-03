@@ -52,7 +52,7 @@ Bekannte Endpoints für die API sind:
 
 #### Datengeneration in Overpass
 
-[![Get data from Overpass](https://github.com/Schutz-Rettung-Zurich/json-archive/workflows/Get%20data%20from%20Overpass/badge.svg)](https://github.com/Schutz-Rettung-Zurich/json-archive/actions?query=workflow%3A%22Get+data+from+Overpass%22)
+![Get data from Overpass](https://github.com/chnuessli/defikarte.ch/workflows/Get%20data%20from%20Overpass/badge.svg)
 
 #### Abfragen
 
