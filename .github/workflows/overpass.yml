@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r json/requirements.txt
         sudo npm install -g osmtogeojson
 
     - name: Get data from Overpass API
