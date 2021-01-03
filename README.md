@@ -50,11 +50,9 @@ Bekannte Endpoints für die API sind:
 * [Overpass SOSM](https://overpass-turbo.osm.ch/)
 * [weiterführende Links zu API Endpoints](https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances)
 
-#### Datengeneration in Overpass
-
-![Get data from Overpass](https://github.com/chnuessli/defikarte.ch/workflows/Get%20data%20from%20Overpass/badge.svg)
-
 #### Abfragen
+
+Die Daten werden aus den Daten aus dem [Defi Archiv](https://github.com/chnuessli/defi_archive) generiert und in Umap dann dort angezeigt. 
 
 ***zeige alle Defis in der Schweiz***
 
