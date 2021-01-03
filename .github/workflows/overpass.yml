@@ -1,0 +1,37 @@
+name: Get data from Overpass
+
+on:
+  schedule:
+  #- cron:  '00 6 * * *' # run every day at 06:00 UTC
+  - cron:  '*/60 * * * *' # run every hour
+  workflow_dispatch: ~
+
+jobs:
+  query_overpass:
+    runs-on: ubuntu-18.04
+    continue-on-error: false
+    timeout-minutes: 10
+
+    steps:
+    - uses: actions/checkout@v2
+ 
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        sudo npm install -g osmtogeojson
+
+    - name: Get data from Overpass API
+      run: |
+        ./run_queries.sh
+    
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update overpass query results
+        commit_user_name: chnuessli
+        commit_user_email: chrigi@chnuessli.ch
+        commit_author: GitHub Action Bot <chrigi@chnuessli.ch>
