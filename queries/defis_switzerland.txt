@@ -1,0 +1,13 @@
+[out:json][timeout:25];
+(
+//ganze Schweiz
+area["ISO3166-1"="CH"];
+)->.searchArea;
+// gather results
+(
+nwr["emergency"="defibrillator"](area.searchArea);
+);
+// print results
+out body;
+>;
+out skel qt;
