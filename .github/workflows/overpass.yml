@@ -3,7 +3,8 @@ name: Get data from Overpass
 on:
   schedule:
   #- cron:  '00 6 * * *' # run every day at 06:00 UTC
-  - cron:  '*/60 * * * *' # run every hour
+  #- cron:  '*/60 * * * *' # run every hour
+  - cron:  '*/15 * * * *' # run every 15 minutes
   workflow_dispatch: ~
 
 jobs:
@@ -27,7 +28,7 @@ jobs:
 
     - name: Get data from Overpass API
       run: |
-        ./run_queries.sh
+        ../json/run_queries.sh
     
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
