@@ -1,4 +1,4 @@
-# Defikarte.ch - die Schweizer Defikarte
+![defi logo](images/defi_logo.png)
 
 ![alt text](screenshot.PNG)
 
