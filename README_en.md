@@ -102,6 +102,10 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 * DINACon Award [shortlist of the Community Award category] (<https://awards.dinacon.ch/shortlist-2020/>)
 
+## Sponsors
+
+* [Procamed AG](https://www.procamed.ch)
+
 ## [License](LICENSE)
 
 ## Contributors

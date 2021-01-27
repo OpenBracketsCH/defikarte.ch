@@ -106,6 +106,10 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 
 * DINACon Award [Shortlist der Kategorie Community Award](https://awards.dinacon.ch/shortlist-2020/)
 
+## Sponsoren
+
+* [Procamed AG](https://www.procamed.ch)
+
 ## [Lizenz](LICENSE)
 
 ## Contributors
