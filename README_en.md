@@ -105,6 +105,7 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 ## Sponsors
 
 * [Procamed AG](https://www.procamed.ch)
+* [Ursula Dombrowsky Gesundheitspraxis](http://www.dombrowsky.ch)
 
 ## [License](LICENSE)
 
