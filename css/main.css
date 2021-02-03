@@ -166,6 +166,13 @@ img {
   vertical-align: middle;
   border-style: none; }
 
+img-sponsor {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+  }
+
 svg {
   overflow: hidden;
   vertical-align: middle; }
