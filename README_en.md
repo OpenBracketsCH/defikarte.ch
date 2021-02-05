@@ -106,6 +106,7 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 * [Procamed AG](https://www.procamed.ch)
 * [Ursula Dombrowsky Gesundheitspraxis](http://www.dombrowsky.ch)
+* [Hexagon](http://www.hexagonsi.com)
 
 ## [License](LICENSE)
 
