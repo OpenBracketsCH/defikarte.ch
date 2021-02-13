@@ -111,6 +111,7 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 * [Procamed AG](https://www.procamed.ch)
 * [Ursula Dombrowsky Gesundheitspraxis](http://www.dombrowsky.ch)
 * [Hexagon](http://www.hexagonsi.com)
+* [Github-User Malsendif](https://github.com/Malsendif)
 
 ## [Lizenz](LICENSE)
 
