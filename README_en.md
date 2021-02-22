@@ -92,6 +92,13 @@ The card itself is embedded via an iframe and is actually an Umap card. The Swis
 
 Umap can be found here in [Github] (<https://github.com/umap-project/umap>)
 
+### App-Stores
+
+The App is available in the Appstores.
+
+[![appstore.png](images/appstore.png)](https://apps.apple.com/us/app/defikarte-ch/id1549569525)
+[![playstore.png](images/playstore.png)](https://play.google.com/store/apps/details?id=ch.defikarte.app)
+
 ## Press
 
 Various press reports were created via Defikarte.ch. The mentions were consistently positive, which makes me very happy.
