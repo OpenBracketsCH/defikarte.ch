@@ -96,6 +96,13 @@ Die Karte selber ist per iframe eingebettet und ist eigentlich eine Umap Karte. 
 
 Umap findet man hier in [Github](https://github.com/umap-project/umap)
 
+### App
+
+Die App zu Defikarte.ch findet man in den Stores des jeweiligen Anbieters.
+
+[![appstore.png](images/appstore.png)](https://apps.apple.com/us/app/defikarte-ch/id1549569525)
+[![playstore.png](images/playstore.png)](https://play.google.com/store/apps/details?id=ch.defikarte.app)
+
 ## Presse
 
 Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen waren durchwegs positiv, was mich sehr freut.
