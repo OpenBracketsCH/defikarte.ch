@@ -115,6 +115,13 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 
 ## Sponsoren
 
+### Gold Sponsoren
+
+* [resQShock](https://www.procamed.ch)
+* [First-Responder.ch](https://www.procamed.ch)
+
+### Logo Sponsoren
+
 * [Procamed AG](https://www.procamed.ch)
 * [Ursula Dombrowsky Gesundheitspraxis](http://www.dombrowsky.ch)
 * [Hexagon](http://www.hexagonsi.com)
