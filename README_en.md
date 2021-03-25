@@ -111,9 +111,17 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 ## Sponsors
 
+### Gold Sponsors
+
+* [resQShock](https://www.procamed.ch)
+* [First-Responder.ch](https://www.procamed.ch)
+
+### Logo Sponsors
+
 * [Procamed AG](https://www.procamed.ch)
 * [Ursula Dombrowsky Gesundheitspraxis](http://www.dombrowsky.ch)
 * [Hexagon](http://www.hexagonsi.com)
+* [Github-User Malsendif](https://github.com/Malsendif)
 
 ## [License](LICENSE)
 
