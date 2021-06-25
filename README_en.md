@@ -121,6 +121,7 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 * [Procamed AG](https://www.procamed.ch)
 * [Ursula Dombrowsky Gesundheitspraxis](http://www.dombrowsky.ch)
 * [Hexagon](http://www.hexagonsi.com)
+* [WC Guide](https://www.wc-guide.com)
 * [Github-User Malsendif](https://github.com/Malsendif)
 
 ## [License](LICENSE)
