@@ -23,7 +23,7 @@ if(empty($_POST['name'])  		||
    $operator_phone = strip_tags(htmlspecialchars($_POST['operator_phone']));
 	
 // Create the email and send the message
-   $to = 'christian@defikarte.ch'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
+   $to = 'chrigi@chnuessli.ch'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
    $subject = "Neuer Defibrillator";
    $email_body = "Hier ist ein neuer Defibrillator um in die Karte aufgenommen zu werden:\n
    Name: $name\n
