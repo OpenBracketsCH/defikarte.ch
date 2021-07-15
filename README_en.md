@@ -115,6 +115,7 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 * [resQShock](https://www.procamed.ch)
 * [First-Responder.ch](https://www.procamed.ch)
+* [Nohe.ch](https://www.nohe.ch)
 
 ### Logo Sponsors
 

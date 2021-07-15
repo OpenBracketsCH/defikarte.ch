@@ -119,6 +119,7 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 
 * [resQShock](https://www.procamed.ch)
 * [First-Responder.ch](https://www.procamed.ch)
+* [Nohe.ch](https://www.nohe.ch)
 
 ### Logo Sponsoren
 
