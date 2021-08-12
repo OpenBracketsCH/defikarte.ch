@@ -111,6 +111,10 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 ## Sponsors
 
+### Platin Sponsor
+
+* [Procamed AG](https://www.procamed.ch)
+
 ### Gold Sponsors
 
 * [resQShock](https://www.procamed.ch)
@@ -119,7 +123,6 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 ### Logo Sponsors
 
-* [Procamed AG](https://www.procamed.ch)
 * [Ursula Dombrowsky Gesundheitspraxis](http://www.dombrowsky.ch)
 * [Hexagon](http://www.hexagonsi.com)
 * [WC Guide](https://www.wc-guide.com)
