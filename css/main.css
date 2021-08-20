@@ -7769,4 +7769,9 @@ iframe {
 .modal ::placeholder {
   color: #414141; }
 
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 /*# sourceMappingURL=main.css.map */
