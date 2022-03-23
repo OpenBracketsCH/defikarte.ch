@@ -113,7 +113,8 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 ### Platin Sponsor
 
-* [Procamed AG](https://www.procamed.ch)
+* [Procamed](https://www.procamed.ch)
+* [Lifetec](https://www.lifetec.ch)
 
 ### Gold Sponsors
 
