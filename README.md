@@ -128,10 +128,8 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 
 ### Logo Sponsoren
 
-* [Ursula Dombrowsky Gesundheitspraxis](http://www.dombrowsky.ch)
 * [Hexagon](http://www.hexagonsi.com)
 * [WC Guide](https://www.wc-guide.com)
-* [Github-User Malsendif](https://github.com/Malsendif)
 
 ## [Lizenz](LICENSE)
 
