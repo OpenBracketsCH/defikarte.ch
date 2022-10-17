@@ -130,6 +130,8 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 
 * [Hexagon](http://www.hexagonsi.com)
 * [WC Guide](https://www.wc-guide.com)
+* [SIRMED](https://www.sirmed.ch)
+* [Säntis Härzstart](https://saentis-haerzstart.ch/)
 
 ## [Lizenz](LICENSE)
 

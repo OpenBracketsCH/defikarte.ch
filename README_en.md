@@ -118,16 +118,16 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 ### Gold Sponsors
 
-* [resQShock](https://www.procamed.ch)
 * [First-Responder.ch](https://www.procamed.ch)
 * [Nohe.ch](https://www.nohe.ch)
+* [Notfallsicher.ch](https://www.notfallsicher.ch)
 
 ### Logo Sponsors
 
-* [Ursula Dombrowsky Gesundheitspraxis](http://www.dombrowsky.ch)
 * [Hexagon](http://www.hexagonsi.com)
 * [WC Guide](https://www.wc-guide.com)
-* [Github-User Malsendif](https://github.com/Malsendif)
+* [SIRMED](https://www.sirmed.ch)
+* [Säntis Härzstart](https://saentis-haerzstart.ch/)
 
 ## [License](LICENSE)
 
