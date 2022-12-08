@@ -7659,7 +7659,13 @@ header {
         text-decoration: none; }
 
 iframe {
-  margin-top: 64px; }
+  margin-top: 64px;
+}
+
+iframe.form {
+
+  margin-top: 64px;
+  margin-left: 10px; }
 
 .footer-part {
   padding: 15px 80px;
