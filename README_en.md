@@ -120,6 +120,7 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 * [First-Responder.ch](https://www.procamed.ch)
 * [Notfallsicher.ch](https://www.notfallsicher.ch)
+* [Säntis Härzstart](https://www.saentis-haerzstart.ch)
 
 ### Logo Sponsors
 
