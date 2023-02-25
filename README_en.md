@@ -119,7 +119,6 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 ### Gold Sponsors
 
 * [First-Responder.ch](https://www.procamed.ch)
-* [Nohe.ch](https://www.nohe.ch)
 * [Notfallsicher.ch](https://www.notfallsicher.ch)
 
 ### Logo Sponsors
@@ -127,7 +126,6 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 * [Hexagon](http://www.hexagonsi.com)
 * [WC Guide](https://www.wc-guide.com)
 * [SIRMED](https://www.sirmed.ch)
-* [Säntis Härzstart](https://saentis-haerzstart.ch/)
 
 ## [License](LICENSE)
 
