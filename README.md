@@ -119,6 +119,7 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 
 * [Procamed](https://www.procamed.ch)
 * [Lifetec](https://www.lifetec.ch)
+* [Alpinmedic](https://www.alpinmedic.ch)
 
 ### Gold Sponsoren
 
