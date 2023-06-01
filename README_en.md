@@ -115,7 +115,6 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 * [Procamed](https://www.procamed.ch)
 * [Lifetec](https://www.lifetec.ch)
-* [Alpinmedic](https://www.alpinmedic.ch)
 
 ### Gold Sponsors
 
