@@ -124,7 +124,6 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 
 * [First-Responder.ch](https://www.procamed.ch)
 * [Notfallsicher.ch](https://www.notfallsicher.ch)
-* [Säntis Härzstart](https://www.saentis-haerzstart.ch)
 
 ### Logo Sponsoren
 
