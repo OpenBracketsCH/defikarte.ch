@@ -123,7 +123,6 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 ### Gold Sponsoren
 
 * [First-Responder.ch](https://www.procamed.ch)
-* [Notfallsicher.ch](https://www.notfallsicher.ch)
 
 ### Logo Sponsoren
 
