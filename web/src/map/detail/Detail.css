@@ -1,0 +1,14 @@
+.detail-detail {
+  position: absolute;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1;
+  right: 0;
+  margin: auto;
+  height: calc(100% - 60px);
+  width: 20%;
+  background-color: #ffffff;
+  overflow: auto;
+}
