@@ -1,0 +1,14 @@
+.layer-menu-container {
+  padding: 0.5rem  0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.layer-menu-layer-group-title {
+  margin: 0;
+}
+
+.layer-menu-layer-group {
+  padding: 0.5rem;
+}

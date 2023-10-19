@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import logo from "../../assets/logo.png";
 import lifetecLogo from "../../assets/lifetec.png";
+import logo from "../../assets/logo.png";
 import procamedLogo from "../../assets/procamed.jpg";
 import "./Header.css";
 
@@ -9,7 +9,9 @@ export const Header = () => {
   return (
     <header className="header-header">
       <div className="header-group">
-        <img src={logo} alt="Defikarte.ch" className="header-image" />
+        <a href="/">
+          <img src={logo} alt="Defikarte.ch" className="header-image" />
+        </a>
         <p className="header-text">{t("defikarte_titel")}</p>
       </div>
       <div className="header-group ">
