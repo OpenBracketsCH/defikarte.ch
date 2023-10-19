@@ -8,6 +8,8 @@ export enum MenuType {
   ADD,
   ROUTE,
   INFO,
+  SEARCH,
+  SETTINGS,
 }
 
 export type SubMenuProps = {
