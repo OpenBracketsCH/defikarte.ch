@@ -14,7 +14,7 @@ const getButtonClass = (activeMenu: MenuType | null, type: MenuType) => {
     case MenuType.LAYER:
     case MenuType.ADD:
       additionalClass =
-        activeMenu === type ? "btn-outline-success" : "btn-success";
+        activeMenu === type ? "btn-outline-success" : "btn-light";
       break;
     case MenuType.ROUTE:
       additionalClass =
@@ -25,7 +25,7 @@ const getButtonClass = (activeMenu: MenuType | null, type: MenuType) => {
         activeMenu === type ? "btn-outline-secondary" : "btn-secondary";
       break;
     case MenuType.INFO:
-      additionalClass = "btn-primary  menu-button-align-end";
+      additionalClass = "btn-dark";
       break;
   }
 

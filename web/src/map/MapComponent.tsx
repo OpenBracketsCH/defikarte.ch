@@ -1,60 +1,57 @@
 import { Feature } from "ol";
-import Map from "ol/Map.js";
-import View from "ol/View.js";
 import { Point } from "ol/geom";
-import "ol/ol.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "./MapComponent.css";
-import { Detail } from "./detail/Detail";
+import { Context as MapContext } from "./context/MapContext";
 import { Menu } from "./menu/Menu";
-import { AedClusterLayer } from "./openlayers/layers/aed-layers/AedClusterLayer";
-
-export const mapInstance = new Map({
-  layers: [],
-  view: new View({
-    center: [905000, 5900000], // todo: save last view in local storage
-    zoom: 8,
-  }),
-});
+import {
+  LayerConfiguration,
+  availableLayers,
+  defaultLayers,
+} from "./openlayers/configuration/layer.configuration";
+import { MapInstance } from "./openlayers/map-instance";
+import { LayerMangaerService } from "./openlayers/services/layer-manager.service";
 
 type Props = {
   features: Feature<Point>[];
 };
 
+export const mapInstance = new MapInstance();
+export const layerManager = new LayerMangaerService(availableLayers);
+
 export const MapComponent = (props: Props) => {
   const mapRef = React.useRef<HTMLDivElement>(null);
-  const [showDetail, setShowDetail] = useState(false);
-  const [detailData, setDetailData] = useState<any>(null);
-
-  const triggerDetail = (data: any) => {
-    if (data) {
-      setDetailData(data);
-      setShowDetail(true);
-    } else {
-      setShowDetail(false);
-      setDetailData(null);
-    }
-  };
+  const { state, setLayerVisible } = useContext(MapContext);
 
   useEffect(() => {
     const initBaseMap = () => {
-      mapInstance.getControls().forEach((c) => mapInstance.removeControl(c));
+      mapInstance.initMap();
+      defaultLayers.forEach((layer) => {
+        setLayerVisible(layer, true);
+      });
     };
 
     initBaseMap();
     if (mapRef) {
       mapInstance.setTarget(mapRef.current as HTMLElement);
     }
+
+    return () => {
+      mapInstance.disposeMap();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapRef]);
 
   useEffect(() => {
-    var aedClusterLayer = new AedClusterLayer({ minZoom: 0 });
-    mapInstance.addLayer(aedClusterLayer);
-    aedClusterLayer.setData(props.features);
-
-    aedClusterLayer.addClusterZoom(mapInstance);
-    aedClusterLayer.addSelectFeatureInteraction(mapInstance, triggerDetail);
+    mapInstance.loadDataLayers(props.features);
   }, [props.features]);
+
+  useEffect(() => {
+    availableLayers.forEach((layer: LayerConfiguration) => {
+      const isVisble = state.includes(layer.type);
+      layerManager.setLayerVisibility(layer.type, isVisble);
+    });
+  }, [state]);
 
   return (
     <div className="map-component-main">
@@ -64,7 +61,6 @@ export const MapComponent = (props: Props) => {
         id="map"
         style={{ height: "100%", width: "100%" }}
       ></div>
-      <Detail hidden={showDetail} data={detailData} />
     </div>
   );
 };

@@ -47,50 +47,54 @@ export const MenuBar = (props: Props) => {
   const menuBarClass = getMenurBarClass(props.activeMenu);
   return (
     <div className={menuBarClass}>
-      <MenuButton
-        handleMenuClick={() => handleMenuClick(MenuType.SEARCH)}
-        activeMenu={props.activeMenu}
-        type={MenuType.SEARCH}
-      >
-        <FaSearch size={"2em"} />
-      </MenuButton>
-      <MenuButton
-        handleMenuClick={() => handleMenuClick(MenuType.LAYER)}
-        activeMenu={props.activeMenu}
-        type={MenuType.LAYER}
-      >
-        <FaLayerGroup size={"2em"} />
-      </MenuButton>
-      <MenuButton
-        handleMenuClick={() => handleMenuClick(MenuType.ADD)}
-        activeMenu={props.activeMenu}
-        type={MenuType.ADD}
-      >
-        <FaPlus size={"2em"} />
-      </MenuButton>
-      <MenuButton
-        handleMenuClick={() => handleMenuClick(MenuType.ROUTE)}
-        activeMenu={props.activeMenu}
-        type={MenuType.ROUTE}
-      >
-        <FaDirections size={"2em"} />
-      </MenuButton>
-      <MenuButton
-        handleMenuClick={() => handleMenuClick(MenuType.SETTINGS)}
-        activeMenu={props.activeMenu}
-        type={MenuType.SETTINGS}
-      >
-        <FaSliders size={"2em"} />
-      </MenuButton>
-      <Link to="/info">
+      <div>
         <MenuButton
-          handleMenuClick={() => handleMenuClick(MenuType.INFO)}
+          handleMenuClick={() => handleMenuClick(MenuType.SEARCH)}
           activeMenu={props.activeMenu}
-          type={MenuType.INFO}
+          type={MenuType.SEARCH}
         >
-          <FaInfo size={"1.5em"} />
+          <FaSearch size={"2em"} color="#008000" />
         </MenuButton>
-      </Link>
+        <MenuButton
+          handleMenuClick={() => handleMenuClick(MenuType.LAYER)}
+          activeMenu={props.activeMenu}
+          type={MenuType.LAYER}
+        >
+          <FaLayerGroup size={"2em"} color="#008000" />
+        </MenuButton>
+        <MenuButton
+          handleMenuClick={() => handleMenuClick(MenuType.ADD)}
+          activeMenu={props.activeMenu}
+          type={MenuType.ADD}
+        >
+          <FaPlus size={"2em"} color="#008000" />
+        </MenuButton>
+        <MenuButton
+          handleMenuClick={() => handleMenuClick(MenuType.ROUTE)}
+          activeMenu={props.activeMenu}
+          type={MenuType.ROUTE}
+        >
+          <FaDirections size={"2em"} />
+        </MenuButton>
+      </div>
+      <div>
+        <MenuButton
+          handleMenuClick={() => handleMenuClick(MenuType.SETTINGS)}
+          activeMenu={props.activeMenu}
+          type={MenuType.SETTINGS}
+        >
+          <FaSliders size={"2em"} />
+        </MenuButton>
+        <Link to="/info">
+          <MenuButton
+            handleMenuClick={() => handleMenuClick(MenuType.INFO)}
+            activeMenu={props.activeMenu}
+            type={MenuType.INFO}
+          >
+            <FaInfo size={"1.5em"} />
+          </MenuButton>
+        </Link>
+      </div>
     </div>
   );
 };

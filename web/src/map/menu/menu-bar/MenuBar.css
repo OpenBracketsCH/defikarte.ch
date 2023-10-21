@@ -4,6 +4,7 @@
   flex-direction: column;
   z-index: 1;
   height: calc(100% - 60px);
+  justify-content: space-between;
 }
 
 .menu-bar-active-success {

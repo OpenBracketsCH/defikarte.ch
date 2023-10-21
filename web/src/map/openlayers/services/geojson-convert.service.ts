@@ -29,7 +29,6 @@ const convertInternal = (data: any) => {
 };
 
 export const toGeoJson = (data: any): Feature<Point>[] => {
-  console.log(data);
   if (!data) {
     return [];
   }

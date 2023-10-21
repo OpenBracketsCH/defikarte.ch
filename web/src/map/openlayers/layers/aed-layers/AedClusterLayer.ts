@@ -12,6 +12,7 @@ import {
   selectedPointStyle,
 } from "../../styles/aed-point.style";
 import { LayerProps } from "../props";
+import { InteractiveLayer, DataLayer } from "../interfaces/layer-intefaces";
 
 const createClusterSource = (data: Feature<Point>[]) => {
   return new Cluster({
@@ -34,7 +35,10 @@ const createClusterSource = (data: Feature<Point>[]) => {
   });
 };
 
-export class AedClusterLayer extends VectorLayer<Cluster> {
+export class AedClusterLayer
+  extends VectorLayer<Cluster>
+  implements InteractiveLayer, DataLayer
+{
   constructor({ minZoom, maxZoom }: LayerProps) {
     super({
       minZoom,
@@ -42,6 +46,28 @@ export class AedClusterLayer extends VectorLayer<Cluster> {
       source: createClusterSource([]),
       style: clusterPointStyle,
     });
+  }
+
+  public getInteractions() {
+    const selectFeatures = new Select({
+      layers: [this],
+      condition: click,
+      style: selectedPointStyle,
+      filter: (feature) => {
+        return feature.getProperties().features?.length === 1;
+      },
+    });
+    selectFeatures.on("select", (e) => {
+      if (e.selected.length > 0) {
+        const props = e.selected[0].getProperties().features[0].getProperties();
+        console.log(props);
+        //callback(props);
+      } else {
+        //callback(null);
+      }
+    });
+
+    return [selectFeatures];
   }
 
   public setData(data: Feature<Point>[]) {
@@ -52,26 +78,7 @@ export class AedClusterLayer extends VectorLayer<Cluster> {
   public addSelectFeatureInteraction(
     map: Map,
     callback: (feature: any) => void
-  ) {
-    const selectFeatures = new Select({
-      condition: click,
-      layers: [this],
-      style: selectedPointStyle,
-      filter: (feature) => {
-        return feature.getProperties().features?.length == 1;
-      },
-    });
-
-    map.addInteraction(selectFeatures);
-    selectFeatures.on("select", (e) => {
-      if (e.selected.length > 0) {
-        const props = e.selected[0].getProperties().features[0].getProperties();
-        callback(props);
-      } else {
-        callback(null);
-      }
-    });
-  }
+  ) {}
 
   public addClusterZoom(map: Map) {
     map.on("click", (e) => {

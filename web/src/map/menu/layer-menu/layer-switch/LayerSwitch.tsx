@@ -1,36 +1,27 @@
-import { LayerType } from "../../../openlayers/constants/layers";
-import {
-  disableLayer,
-  enableLayer,
-  isLayerEnabled,
-} from "../../../openlayers/services/map-functions.service";
+import { useCallback, useId } from "react";
 
 type Props = {
   name: string;
-  type?: LayerType;
+  isVisible: boolean;
+  setVisible: (isVisible: boolean) => void;
 };
 
 export const LayerSwitch = (props: Props) => {
-  const onToggleLayer = () => {
-    if (props.type) {
-      console.log("toggle layer", props.type);
-      if (isLayerEnabled(props.type)) {
-        disableLayer(props.type);
-      } else {
-        enableLayer(props.type);
-      }
-    }
-  };
+  const id = useId();
+  const onToggleLayer = useCallback(() => {
+    props.setVisible(!props.isVisible);
+  }, [props]);
 
   return (
     <div className="form-check form-switch">
       <input
         className="form-check-input"
         type="checkbox"
-        id="flexSwitchCheckDefault"
+        id={`layer-label-${id}`}
         onChange={() => onToggleLayer()}
+        checked={props.isVisible}
       />
-      <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+      <label className="form-check-label" htmlFor={`layer-label-${id}`}>
         {props.name}
       </label>
     </div>
