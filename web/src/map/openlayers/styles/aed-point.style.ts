@@ -94,13 +94,6 @@ const point247Style = new Style({
   }),
 });
 
-const simplifiedPointStyle = new Style({
-  image: new Circle({
-    radius: 10,
-    ...point247StylePart,
-  }),
-});
-
 const clusterStylePart10 = {
   image: new Circle({
     radius: 12,
@@ -154,7 +147,7 @@ export const clusterPointStyle = (
 ): Style[] | void => {
   const clusterFeatures = features.get("features");
 
-  if (clusterFeatures.length == 1) {
+  if (clusterFeatures.length === 1) {
     return pointStyle(clusterFeatures[0], resolution);
   }
 
