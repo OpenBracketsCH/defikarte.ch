@@ -171,8 +171,19 @@ export const pointStyleByAvailabillity = (
   features: FeatureLike,
   resolution: number
 ): Style[] => {
-  const oh = new opening_hours("We 12:00-14:00");
-  const isOpen = oh.getState();
+  const openingHours = features.getProperties().opening_hours;
+  let isOpen = false;
+  if (openingHours) {
+    try {
+      const oh = new opening_hours(
+        features.getProperties().opening_hours || ""
+      );
+      isOpen = oh.getState();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const style = isOpen ? point247Style : pointUnavailableStyle;
 
   return [style, aedIcon];
