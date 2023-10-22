@@ -16,7 +16,7 @@ type Props = {
   features: Feature<Point>[];
 };
 
-export const mapInstance = new MapInstance();
+export const mapInstance = new MapInstance(availableLayers);
 export const layerManager = new LayerMangaerService(availableLayers);
 
 export const MapComponent = (props: Props) => {
@@ -43,7 +43,7 @@ export const MapComponent = (props: Props) => {
   }, [mapRef]);
 
   useEffect(() => {
-    mapInstance.loadDataLayers(props.features);
+    mapInstance.initializeData(props.features);
   }, [props.features]);
 
   useEffect(() => {
