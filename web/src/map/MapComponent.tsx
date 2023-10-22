@@ -10,6 +10,7 @@ import {
 } from "./openlayers/configuration/layer.configuration";
 import { MapInstance } from "./openlayers/map-instance";
 import { LayerMangaerService } from "./openlayers/services/layer-manager.service";
+import { Detail } from "./detail/Detail";
 
 type Props = {
   features: Feature<Point>[];
@@ -59,6 +60,7 @@ export const MapComponent = (props: Props) => {
         id="map"
         style={{ height: "100%", width: "100%" }}
       ></div>
+      <Detail data={selectedFeatures} />
     </div>
   );
 };

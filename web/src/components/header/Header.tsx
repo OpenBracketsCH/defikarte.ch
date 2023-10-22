@@ -14,7 +14,7 @@ export const Header = () => {
         </a>
         <p className="header-text">{t("defikarte_titel")}</p>
       </div>
-      <div className="header-group ">
+      <div className="header-group header-group-collapsed">
         <p className="header-text header-text-sm">{t("in_partnership_with")}</p>
         <a href="https://www.aed.ch">
           <img

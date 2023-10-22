@@ -1,12 +1,11 @@
 import "./Detail.css";
 
 type Props = {
-  hidden: boolean;
   data: any;
 };
 
-export const Detail = ({ hidden, data }: Props) => {
-  if (!data) {
+export const Detail = ({ data }: Props) => {
+  if (!data || data.length === 0) {
     return null;
   }
   const dataList = Object.keys(data).map((key: any, index: number) => {
@@ -21,11 +20,5 @@ export const Detail = ({ hidden, data }: Props) => {
     );
   });
 
-  console.log(dataList);
-
-  return (
-    <div className="detail-detail" >
-      {dataList}
-    </div>
-  );
+  return <div className="detail-detail">{dataList}</div>;
 };

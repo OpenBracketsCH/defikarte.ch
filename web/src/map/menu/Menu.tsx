@@ -34,7 +34,10 @@ export const Menu = () => {
   return (
     <div>
       <MenuBar toggleMenu={(t) => handleMenuClick(t)} activeMenu={activeMenu} />
-      <div className="menu-sidecar" hidden={activeMenu === null}>
+      <div
+        className="menu-sidecar menu-sidecare-mobile"
+        hidden={activeMenu === null}
+      >
         <LayerMenu
           hidden={activeMenu !== MenuType.LAYER}
           closeAction={() => setActiveMenu(null)}

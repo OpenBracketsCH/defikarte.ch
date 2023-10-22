@@ -25,3 +25,9 @@
 .header-image{
   max-height: 45px;
 } 
+
+@media (max-width: 768px) {
+  .header-group-collapsed {
+    display: none;
+  }
+}
