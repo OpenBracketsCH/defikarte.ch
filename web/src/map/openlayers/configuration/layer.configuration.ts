@@ -2,6 +2,12 @@ import { AedClusterLayer } from "../layers/aed-layers/AedClusterLayer";
 import { OsmLayer } from "../layers/base-layers/OsmLayer";
 import { SwisstopoLayer } from "../layers/base-layers/SwisstopoLayer";
 import { selectInteraction } from "../layers/aed-layers/aed-layer-interactions";
+import { filterByOpeningHours } from "../layers/aed-layers/aed-filter";
+import {
+  clusterAvailabillityPointStyle,
+  clusterDayPointStyle,
+  clusterPointStyle,
+} from "../styles/aed-point.style";
 
 export enum LayerType {
   UNKNOWN,
@@ -50,17 +56,31 @@ export const availableLayers: LayerConfiguration[] = [
   },
   {
     type: LayerType.AED247,
-    layer: new AedClusterLayer({ minZoom: 0, maxZoom: 20 }),
-    priority: 20,
+    layer: new AedClusterLayer({
+      minZoom: 0,
+      maxZoom: 20,
+      dataFilter: filterByOpeningHours("247"),
+      style: clusterPointStyle,
+    }),
+    priority: 21,
   },
   {
     type: LayerType.AED_DAY,
-    layer: new AedClusterLayer({ minZoom: 0, maxZoom: 20 }),
+    layer: new AedClusterLayer({
+      minZoom: 0,
+      maxZoom: 20,
+      dataFilter: filterByOpeningHours("day"),
+      style: clusterDayPointStyle,
+    }),
     priority: 20,
   },
   {
     type: LayerType.AED_BY_OPENING_HOURS,
-    layer: new AedClusterLayer({ minZoom: 0, maxZoom: 20 }),
+    layer: new AedClusterLayer({
+      minZoom: 0,
+      maxZoom: 20,
+      style: clusterAvailabillityPointStyle,
+    }),
     priority: 20,
   },
 ];

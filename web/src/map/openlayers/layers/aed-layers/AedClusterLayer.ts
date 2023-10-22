@@ -6,14 +6,15 @@ import Interaction from "ol/interaction/Interaction";
 import VectorLayer from "ol/layer/Vector";
 import { Cluster } from "ol/source.js";
 import VectorSource from "ol/source/Vector";
-import { clusterPointStyle } from "../../styles/aed-point.style";
+import { StyleLike } from "ol/style/Style";
+import { FlatStyleLike } from "ol/style/flat";
 import {
   DataLayer,
   InteractiveLayer,
   MapEventLayer,
 } from "../interfaces/layer-intefaces";
-import { LayerProps } from "../props";
 import { selectInteraction } from "./aed-layer-interactions";
+import { clusterPointStyle } from "../../styles/aed-point.style";
 
 const createClusterSource = (data: Feature<Point>[]) => {
   return new Cluster({
@@ -36,22 +37,43 @@ const createClusterSource = (data: Feature<Point>[]) => {
   });
 };
 
+type LayerProps = {
+  minZoom?: number;
+  maxZoom?: number;
+  style?: StyleLike | FlatStyleLike | null | undefined;
+  dataFilter?: (data: Feature<Point>[]) => Feature<Point>[];
+};
+
 export class AedClusterLayer
   extends VectorLayer<Cluster>
   implements InteractiveLayer, DataLayer, MapEventLayer
 {
-  constructor({ minZoom, maxZoom }: LayerProps) {
+  private style?: StyleLike | FlatStyleLike | null | undefined;
+  private dataFilter?: (data: Feature<Point>[]) => Feature<Point>[];
+
+  constructor({
+    minZoom,
+    maxZoom,
+    style = clusterPointStyle,
+    dataFilter,
+  }: LayerProps) {
     super({
       minZoom,
       maxZoom,
-      style: clusterPointStyle,
+      style: style,
       source: createClusterSource([]),
     });
+
+    this.style = style;
+    this.dataFilter = dataFilter;
   }
 
   public setData(data: Feature<Point>[]) {
+    if (this.dataFilter) {
+      data = this.dataFilter(data);
+    }
     this.setSource(createClusterSource(data));
-    this.setStyle(clusterPointStyle);
+    this.setStyle(this.style);
   }
 
   public getInteractions(
