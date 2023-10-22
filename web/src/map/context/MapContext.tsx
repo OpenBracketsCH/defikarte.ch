@@ -1,10 +1,11 @@
 import {
   LayerType,
+  defaultLayers,
   layerGroups,
 } from "../openlayers/configuration/layer.configuration";
 import createDataContext from "./createDataContext";
 
-const initialState: LayerType[] = [];
+const initialState: LayerType[] = defaultLayers;
 type ActionType = {
   type: "enable" | "disable";
   payload: LayerType;

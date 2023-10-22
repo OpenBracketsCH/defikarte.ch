@@ -1,6 +1,7 @@
 import { AedClusterLayer } from "../layers/aed-layers/AedClusterLayer";
 import { OsmLayer } from "../layers/base-layers/OsmLayer";
 import { SwisstopoLayer } from "../layers/base-layers/SwisstopoLayer";
+import { selectInteraction } from "../layers/aed-layers/aed-layer-interactions";
 
 export enum LayerType {
   UNKNOWN,
@@ -68,4 +69,15 @@ export const defaultLayers = [
   LayerType.OSM_SWISS,
   LayerType.AED247,
   LayerType.AED_DAY,
+];
+
+export const layerInteractions = [
+  {
+    layers: [
+      LayerType.AED247,
+      LayerType.AED_DAY,
+      LayerType.AED_BY_OPENING_HOURS,
+    ],
+    interaction: selectInteraction,
+  },
 ];

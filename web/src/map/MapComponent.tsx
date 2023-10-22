@@ -7,7 +7,6 @@ import { Menu } from "./menu/Menu";
 import {
   LayerConfiguration,
   availableLayers,
-  defaultLayers,
 } from "./openlayers/configuration/layer.configuration";
 import { MapInstance } from "./openlayers/map-instance";
 import { LayerMangaerService } from "./openlayers/services/layer-manager.service";
@@ -16,31 +15,18 @@ type Props = {
   features: Feature<Point>[];
 };
 
-export const mapInstance = new MapInstance(availableLayers);
+export const mapInstance = new MapInstance({
+  layerConfiguration: availableLayers,
+});
+
 export const layerManager = new LayerMangaerService(availableLayers);
 
 export const MapComponent = (props: Props) => {
   const mapRef = React.useRef<HTMLDivElement>(null);
-  const { state, setLayerVisible } = useContext(MapContext);
-
-  useEffect(() => {
-    const initBaseMap = () => {
-      mapInstance.initMap();
-      defaultLayers.forEach((layer) => {
-        setLayerVisible(layer, true);
-      });
-    };
-
-    initBaseMap();
-    if (mapRef) {
-      mapInstance.setTarget(mapRef.current as HTMLElement);
-    }
-
-    return () => {
-      mapInstance.disposeMap();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapRef]);
+  const { state } = useContext(MapContext);
+  const [selectedFeatures, setSelectedFeatures] = React.useState<
+    Feature<Point>[]
+  >([]);
 
   useEffect(() => {
     mapInstance.initializeData(props.features);
@@ -52,6 +38,18 @@ export const MapComponent = (props: Props) => {
       layerManager.setLayerVisibility(layer.type, isVisble);
     });
   }, [state]);
+
+  useEffect(() => {
+    if (mapRef) {
+      mapInstance.setTarget(mapRef.current as HTMLElement);
+    }
+  }, [mapRef]);
+
+  useEffect(() => {
+    mapInstance.initializeClickInteraction((features: Feature<Point>[]) => {
+      setSelectedFeatures(features); // todo: register listener too much
+    });
+  }, []);
 
   return (
     <div className="map-component-main">

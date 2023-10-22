@@ -1,18 +1,19 @@
-import { Feature } from "ol";
+import { Feature, MapBrowserEvent } from "ol";
 import Map from "ol/Map.js";
-import { click } from "ol/events/condition";
 import { boundingExtent } from "ol/extent";
 import { Geometry, Point } from "ol/geom";
-import Select from "ol/interaction/Select";
+import Interaction from "ol/interaction/Interaction";
 import VectorLayer from "ol/layer/Vector";
 import { Cluster } from "ol/source.js";
 import VectorSource from "ol/source/Vector";
+import { clusterPointStyle } from "../../styles/aed-point.style";
 import {
-  clusterPointStyle,
-  selectedPointStyle,
-} from "../../styles/aed-point.style";
+  DataLayer,
+  InteractiveLayer,
+  MapEventLayer,
+} from "../interfaces/layer-intefaces";
 import { LayerProps } from "../props";
-import { InteractiveLayer, DataLayer } from "../interfaces/layer-intefaces";
+import { selectInteraction } from "./aed-layer-interactions";
 
 const createClusterSource = (data: Feature<Point>[]) => {
   return new Cluster({
@@ -37,37 +38,15 @@ const createClusterSource = (data: Feature<Point>[]) => {
 
 export class AedClusterLayer
   extends VectorLayer<Cluster>
-  implements InteractiveLayer, DataLayer
+  implements InteractiveLayer, DataLayer, MapEventLayer
 {
   constructor({ minZoom, maxZoom }: LayerProps) {
     super({
       minZoom,
       maxZoom,
-      source: createClusterSource([]),
       style: clusterPointStyle,
+      source: createClusterSource([]),
     });
-  }
-
-  public getInteractions() {
-    const selectFeatures = new Select({
-      layers: [this],
-      condition: click,
-      style: selectedPointStyle,
-      filter: (feature) => {
-        return feature.getProperties().features?.length === 1;
-      },
-    });
-    selectFeatures.on("select", (e) => {
-      if (e.selected.length > 0) {
-        const props = e.selected[0].getProperties().features[0].getProperties();
-        console.log(props);
-        //callback(props);
-      } else {
-        //callback(null);
-      }
-    });
-
-    return [selectFeatures];
   }
 
   public setData(data: Feature<Point>[]) {
@@ -75,13 +54,18 @@ export class AedClusterLayer
     this.setStyle(clusterPointStyle);
   }
 
-  public addSelectFeatureInteraction(
-    map: Map,
-    callback: (feature: any) => void
-  ) {}
+  public getInteractions(
+    callback: (features: Feature<Point>[]) => void
+  ): Interaction[] {
+    return [selectInteraction([this], callback)];
+  }
 
-  public addClusterZoom(map: Map) {
-    map.on("click", (e) => {
+  public registerEvents(map: Map): void {
+    map.on("click", this.onClusterElemenClick(map));
+  }
+
+  private onClusterElemenClick(map: Map) {
+    return (e: MapBrowserEvent<UIEvent>) => {
       this.getFeatures(e.pixel).then((clickedFeatures) => {
         if (clickedFeatures.length) {
           // Get clustered Coordinates
@@ -96,6 +80,6 @@ export class AedClusterLayer
           }
         }
       });
-    });
+    };
   }
 }
