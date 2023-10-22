@@ -1,6 +1,5 @@
 import { AedClusterLayer } from "../layers/aed-layers/AedClusterLayer";
-import { OsmCommonLayer } from "../layers/base-layers/OsmCommonLayer";
-import { OsmSwissLayer } from "../layers/base-layers/OsmSwissLayer";
+import { OsmLayer } from "../layers/base-layers/OsmLayer";
 import { SwisstopoLayer } from "../layers/base-layers/SwisstopoLayer";
 
 export enum LayerType {
@@ -37,8 +36,12 @@ export const availableLayers: LayerConfiguration[] = [
     layer: new SwisstopoLayer("ch.swisstopo.swissimage"),
     priority: 5,
   },
-  { type: LayerType.OSM_COMMON, layer: new OsmCommonLayer(), priority: 6 },
-  { type: LayerType.OSM_SWISS, layer: new OsmSwissLayer(), priority: 6 },
+  { type: LayerType.OSM_COMMON, layer: new OsmLayer(), priority: 6 },
+  {
+    type: LayerType.OSM_SWISS,
+    layer: new OsmLayer("https://tile.osm.ch/osm-swiss-style/{z}/{x}/{y}.png"),
+    priority: 6,
+  },
   {
     type: LayerType.SWISSTOPO,
     layer: new SwisstopoLayer("ch.swisstopo.pixelkarte-farbe"),

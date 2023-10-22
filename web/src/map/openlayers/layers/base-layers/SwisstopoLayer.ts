@@ -17,7 +17,7 @@ export class SwisstopoLayer extends TileLayer<WMTS> {
     axios.get(url).then((response) => {
       const result = parser.read(response.data);
       const options = optionsFromCapabilities(result, {
-        layer: layerIdentifier || "ch.swisstopo.pixelkarte-farbe",
+        layer: layerIdentifier,
         matrixSet: "EPSG:3857",
       });
       if (!options) {
