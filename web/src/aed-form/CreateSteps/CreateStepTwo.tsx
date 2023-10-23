@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import backend from "../../api/backend";
 import ErrorAlert from "../../components/error-alert/ErrorAlert";
@@ -9,7 +8,6 @@ import CreateForm from "../CreateForm/CreateForm";
 const initErrorState = { isError: false, msg: "" };
 
 const CreateStepTwo = () => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [state, setState] = useState({} as AEDData);
   const [loading, setLoading] = useState(false);
