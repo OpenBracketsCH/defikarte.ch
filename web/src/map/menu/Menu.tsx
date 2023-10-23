@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import "./Menu.css";
+import { AddMenu } from "./add-menu/AddMenu";
 import { LayerMenu } from "./layer-menu/LayerMenu";
 import { MenuBar } from "./menu-bar/MenuBar";
 
@@ -14,7 +15,7 @@ export enum MenuType {
 
 export type SubMenuProps = {
   hidden: boolean;
-  closeAction: () => void;
+  closeAction?: () => void;
 };
 
 export const Menu = () => {
@@ -35,11 +36,15 @@ export const Menu = () => {
     <div>
       <MenuBar toggleMenu={(t) => handleMenuClick(t)} activeMenu={activeMenu} />
       <div
-        className="menu-sidecar menu-sidecare-mobile"
+        className="menu-sidecar  menu-sidecare-mobile"
         hidden={activeMenu === null}
       >
         <LayerMenu
           hidden={activeMenu !== MenuType.LAYER}
+          closeAction={() => setActiveMenu(null)}
+        />
+        <AddMenu
+          hidden={activeMenu !== MenuType.ADD}
           closeAction={() => setActiveMenu(null)}
         />
       </div>

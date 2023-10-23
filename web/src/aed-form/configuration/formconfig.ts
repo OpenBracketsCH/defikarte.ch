@@ -4,7 +4,7 @@ import {
   isValidPhoneNumber,
   validatePhoneNumberLength,
 } from "libphonenumber-js";
-import { FormProps } from "../model/app";
+import { FormProps } from "../../model/app";
 
 const openingHoursValidation = (value: string) => {
   let valid = false;

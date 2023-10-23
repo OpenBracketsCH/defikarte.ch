@@ -17,8 +17,8 @@ export const LayerMenu = (props: SubMenuProps) => {
   const isLayerVisible = (layer: LayerType) => state.includes(layer);
 
   return (
-    <div hidden={props.hidden} className="layer-menu-container">
-      <p className="fs-4 m-0">{t("layer_settings")}</p>
+    <div hidden={props.hidden} className="layer-menu-container mobile">
+      <p className="fs-4 layer-menu-title">{t("layer_settings")}</p>
       <div className="card">
         <div className="card-header">
           <p className="layer-menu-layer-group-title fs-6">{t("base_layer")}</p>

@@ -3,6 +3,7 @@ import { Point } from "ol/geom";
 import React, { useContext, useEffect } from "react";
 import "./MapComponent.css";
 import { Context as MapContext } from "./context/MapContext";
+import { Detail } from "./detail/Detail";
 import { Menu } from "./menu/Menu";
 import {
   LayerConfiguration,
@@ -10,7 +11,6 @@ import {
 } from "./openlayers/configuration/layer.configuration";
 import { MapInstance } from "./openlayers/map-instance";
 import { LayerMangaerService } from "./openlayers/services/layer-manager.service";
-import { Detail } from "./detail/Detail";
 
 type Props = {
   features: Feature<Point>[];
