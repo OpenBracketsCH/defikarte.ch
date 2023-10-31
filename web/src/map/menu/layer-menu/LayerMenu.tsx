@@ -8,7 +8,10 @@ import { LayerSwitch } from "./layer-switch/LayerSwitch";
 
 export const LayerMenu = (props: SubMenuProps) => {
   const { t } = useTranslation();
-  const { state, setLayerVisible } = useContext(MapContext);
+  const {
+    state,
+    setLayerVisible,
+  } = useContext(MapContext);
 
   const toggleLayer = (layer: LayerType) => {
     const isVisible = isLayerVisible(layer);
@@ -65,6 +68,11 @@ export const LayerMenu = (props: SubMenuProps) => {
             name={t("aed_by_opening_hours")}
             setVisible={() => toggleLayer(LayerType.AED_BY_OPENING_HOURS)}
             isVisible={isLayerVisible(LayerType.AED_BY_OPENING_HOURS)}
+          />
+          <LayerSwitch
+            name={t("test")}
+            setVisible={() => toggleLayer(LayerType.SELECT)}
+            isVisible={isLayerVisible(LayerType.SELECT)}
           />
         </div>
       </div>

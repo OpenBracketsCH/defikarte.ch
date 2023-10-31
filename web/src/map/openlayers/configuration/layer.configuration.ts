@@ -8,6 +8,7 @@ import {
   clusterDayPointStyle,
   clusterPointStyle,
 } from "../styles/aed-point.style";
+import { SelectPositionLayer } from "../layers/select-position-layer/SelectPositionLayer";
 
 export enum LayerType {
   UNKNOWN,
@@ -18,6 +19,7 @@ export enum LayerType {
   AED247,
   AED_DAY,
   AED_BY_OPENING_HOURS,
+  SELECT,
 }
 
 export type LayerConfiguration = {
@@ -51,7 +53,7 @@ export const availableLayers: LayerConfiguration[] = [
   },
   {
     type: LayerType.SWISSTOPO,
-    layer: new SwisstopoLayer("ch.swisstopo.pixelkarte-farbe"),
+    layer: new SwisstopoLayer("ch.swisstopo.pixelkarte-grau"),
     priority: 7,
   },
   {
@@ -83,12 +85,18 @@ export const availableLayers: LayerConfiguration[] = [
     }),
     priority: 20,
   },
+  {
+    type: LayerType.SELECT,
+    layer: new SelectPositionLayer(),
+    priority: 100,
+  },
 ];
 
 export const defaultLayers = [
   LayerType.OSM_SWISS,
   LayerType.AED247,
   LayerType.AED_DAY,
+  LayerType.SELECT,
 ];
 
 export const layerInteractions = [

@@ -10,6 +10,10 @@ export const AddMenu = (props: SubMenuProps) => {
     setActiveStep("select");
   }, []);
 
+  const selectPosition = () => {
+    setActiveStep("form");
+  };
+
   return (
     <>
       <div
@@ -18,7 +22,10 @@ export const AddMenu = (props: SubMenuProps) => {
       >
         <CreateForm loading={false} onSubmit={(data) => console.log(data)} />
       </div>
-      <SelectPosition hidden={props.hidden || activeStep !== "select"} />
+      <SelectPosition
+        hidden={props.hidden || activeStep !== "select"}
+        onSubmitPosition={selectPosition}
+      />
     </>
   );
 };
