@@ -5,12 +5,11 @@ import React, { useEffect } from 'react';
 import { LayerId } from '../../model/map';
 import './MapComponent.css';
 import { MapConfiguration } from './configuration/map.configuration';
+import { Detail } from './detail/Detail';
 import { useLayerVisibility } from './hooks/useLayerVisibility';
 import { AedClusterLayer } from './map-instance/layers/aed-layers/AedClusterLayer';
 import { MapInstance } from './map-instance/map-instance';
 import { Menu } from './menu/Menu';
-import { Detail } from './detail/Detail';
-import { InteractiveLayer } from './map-instance/layers/interfaces/layer-intefaces';
 
 type Props = {
   aedData: Feature<Point>[];
