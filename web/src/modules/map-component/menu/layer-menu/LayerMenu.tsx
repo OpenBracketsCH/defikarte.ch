@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { FaX } from 'react-icons/fa6';
+import FilledButton from '../../../../components/buttons/filled-button/FilledButton';
 import { LayerId } from '../../../../model/map';
 import { SubMenuProps } from '../Menu';
 import './LayerMenu.css';
@@ -62,6 +64,18 @@ export const LayerMenu = (props: Props) => {
           setVisible={() => toggleLayer(LayerId.AedByOpeningHours)}
           isVisible={isLayerVisible(LayerId.AedByOpeningHours)}
         />
+      </div>
+      <div className="layer-menu-close-section">
+        <FilledButton
+          onClick={() => {
+            if (props.closeAction) {
+              props.closeAction();
+            }
+          }}
+        >
+          <FaX style={{ marginRight: '5px' }} />
+          {t('close')}
+        </FilledButton>
       </div>
     </div>
   );

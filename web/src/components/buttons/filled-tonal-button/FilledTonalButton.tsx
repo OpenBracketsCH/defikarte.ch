@@ -1,10 +1,10 @@
 import { createComponent } from '@lit/react';
-import { MdElevatedButton } from '@material/web/button/elevated-button.js';
+import { MdFilledTonalButton } from '@material/web/button/filled-tonal-button';
 import React from 'react';
 
 export default createComponent({
-  tagName: 'md-elevated-button',
-  elementClass: MdElevatedButton,
+  tagName: 'md-filled-tonal-button',
+  elementClass: MdFilledTonalButton,
   react: React,
   events: {
     onClick: 'click',

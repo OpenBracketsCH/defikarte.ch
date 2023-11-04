@@ -26,6 +26,7 @@ i18n
           aed_by_opening_hours: 'currently available AEDs',
           base_layer: 'Base Layer',
           cancel: 'Cancel',
+          close: 'Close',
           contact_support: 'Contact Support',
           default_error: 'An error occured. Please try again or contact our support.',
           defikarte_titel: 'The AED Map of Switzerland',
@@ -81,6 +82,7 @@ i18n
           aed_by_opening_hours: 'aktuell verfügbare AEDs',
           base_layer: 'Basiskarte',
           cancel: 'Abbrechen',
+          close: 'Schliessen',
           contact_support: 'Support kontaktieren',
           default_error:
             'Es ist ein Fehler aufgetreten. Bitte versuche es erneut oder kontaktiere unseren Support.',

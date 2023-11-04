@@ -1,6 +1,6 @@
+import { createComponent } from '@lit/react';
 import { MdFab } from '@material/web/fab/fab.js';
 import React from 'react';
-import { createComponent } from '@lit/react';
 
 export type { FabSize, FabVariant } from '@material/web/fab/fab.js';
 
