@@ -24,7 +24,7 @@ export const MapComponent = (props: Props) => {
   const { state: enabledLayers, setLayerVisible } = useLayerVisibility(
     MapConfiguration.defaultLayers
   );
-  const [selectedFeatures, setSelectedFeatures] = React.useState<Feature<Point>[]>([]);
+  //const [selectedFeatures, setSelectedFeatures] = React.useState<Feature<Point>[]>([]);
 
   const showLayer = (layerId: LayerId, data?: Feature<Point>[]) => {
     const isLayerExisting = layers.get(layerId);

@@ -1,5 +1,3 @@
-import Feature from 'ol/Feature';
-import { Point } from 'ol/geom';
 import { LayerId } from '../../../model/map';
 import { AedClusterLayer } from '../map-instance/layers/aed-layers/AedClusterLayer';
 import { filterByOpeningHours } from '../map-instance/layers/aed-layers/aed-filter';
