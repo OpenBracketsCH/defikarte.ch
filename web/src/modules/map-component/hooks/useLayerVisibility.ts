@@ -9,7 +9,13 @@ type ActionType = {
 
 export const useLayerVisibility = (initialState: LayerId[]) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  const setLayerVisibleCallback = React.useCallback(setLayerVisible(dispatch), [dispatch]);
+
+  const setLayerVisibleCallback = React.useCallback(
+    (layerType: LayerId, setVisible: boolean) => {
+      dispatch({ type: setVisible ? 'enable' : 'disable', payload: layerType });
+    },
+    [dispatch]
+  );
 
   return { state, setLayerVisible: setLayerVisibleCallback };
 };
@@ -37,8 +43,4 @@ const reducer = (state: LayerId[], action: ActionType) => {
     default:
       return state;
   }
-};
-
-const setLayerVisible = (dispatch: any) => (layerType: LayerId, setVisible: boolean) => {
-  dispatch({ type: setVisible ? 'enable' : 'disable', payload: layerType });
 };
