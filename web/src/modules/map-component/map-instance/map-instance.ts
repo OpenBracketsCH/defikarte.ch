@@ -1,6 +1,7 @@
 import MapView from 'ol/Map.js';
 import View from 'ol/View.js';
 import { defaults as defaultControls } from 'ol/control.js';
+import Interaction from 'ol/interaction/Interaction';
 import Layer from 'ol/layer/Layer';
 
 export class MapInstance {
@@ -32,4 +33,10 @@ export class MapInstance {
   public hideLayer = (layer: Layer) => {
     layer.setVisible(false);
   };
+
+  public addInteractions = (interactions: Interaction[]) => {
+    interactions.forEach((interaction) => {
+      this.mapInstance.addInteraction(interaction);
+    });
+  }
 }

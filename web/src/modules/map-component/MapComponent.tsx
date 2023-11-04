@@ -9,6 +9,8 @@ import { useLayerVisibility } from './hooks/useLayerVisibility';
 import { AedClusterLayer } from './map-instance/layers/aed-layers/AedClusterLayer';
 import { MapInstance } from './map-instance/map-instance';
 import { Menu } from './menu/Menu';
+import { Detail } from './detail/Detail';
+import { InteractiveLayer } from './map-instance/layers/interfaces/layer-intefaces';
 
 type Props = {
   aedData: Feature<Point>[];
@@ -24,7 +26,7 @@ export const MapComponent = (props: Props) => {
   const { state: enabledLayers, setLayerVisible } = useLayerVisibility(
     MapConfiguration.defaultLayers
   );
-  //const [selectedFeatures, setSelectedFeatures] = React.useState<Feature<Point>[]>([]);
+  const [selectedFeatures, setSelectedFeatures] = React.useState<Feature<Point>[]>([]);
 
   const showLayer = (layerId: LayerId, data?: Feature<Point>[]) => {
     const isLayerExisting = layers.get(layerId);
@@ -64,6 +66,9 @@ export const MapComponent = (props: Props) => {
       case LayerId.AedRestricted:
       case LayerId.AedByOpeningHours:
         (layer as AedClusterLayer).setData(data);
+        mapInstance.addInteractions(
+          (layer as AedClusterLayer).getInteractions(data => setSelectedFeatures(data))
+        );
         break;
     }
   };
@@ -105,7 +110,8 @@ export const MapComponent = (props: Props) => {
   return (
     <div className="map-container">
       <Menu enabledLayers={enabledLayers} setLayerVisible={setLayerVisible} />
-      <div ref={mapRef} id="map" style={{ height: '100%', width: '100%' }}></div>
+      <div ref={mapRef} id="map"></div>
+      <Detail data={selectedFeatures} closeAction={() => setSelectedFeatures([])} />
     </div>
   );
 };

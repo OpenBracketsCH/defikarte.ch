@@ -12,3 +12,12 @@
   background-color: #ffffff;
   overflow: auto;
 }
+
+@media screen and (max-width: 768px) {
+  .detail-detail.mobile {
+    position: absolute;
+    width: 100%;
+    z-index: 99;
+    padding-bottom: 70px;
+  }
+}
