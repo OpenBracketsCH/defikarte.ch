@@ -2,8 +2,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-  height: 60px;
-  border-bottom: 2px solid #008000;
+  height: 57px;
 }
 
 .header-group {
@@ -22,12 +21,16 @@
   font-size: 0.8rem;
 }
 
-.header-image{
+.header-image {
   max-height: 45px;
-} 
+}
 
 @media (max-width: 768px) {
   .header-group-collapsed {
+    display: none;
+  }
+
+  .header-header.mobile {
     display: none;
   }
 }

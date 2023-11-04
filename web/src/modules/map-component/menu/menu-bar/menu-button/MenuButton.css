@@ -1,0 +1,22 @@
+.menu-button-round-button {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.menu-button-active-menu-item-success {
+  border-radius: 50% 0 0 50%;
+}
+
+.menu-button-active-menu-item-warning {
+  border-radius: 50% 0 0 50%;
+}
+
+.menu-button-active-menu-item-secondary {
+  border-radius: 50% 0 0 50%;
+}
+
+.menu-button-menu-item {
+  margin: 0.15rem 0 0.15rem 0.15rem;
+  padding: 0.15rem 0.15rem 0.15rem 0.15rem;
+}

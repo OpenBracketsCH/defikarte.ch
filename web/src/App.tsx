@@ -1,10 +1,12 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // import EnvironmentInfo from "./components/environment-info/EnvironmentInfo";
-import { Header } from "./components/header/Header";
-import { Home } from "./home/Home";
-import { Info } from "./info/Info";
-import { useEffect, useState } from "react";
-import { requestAedData } from "./services/aed-data.service";
+import { useEffect, useState } from 'react';
+import { Header } from './components/header/Header';
+import { Home } from './modules/home/Home';
+import { Info } from './modules/info/Info';
+import { requestAedData } from './services/aed-data.service';
+import { toGeoJson } from './services/geojson-convert.service';
+import LinearProgress from './components/progress/linear-progress/LinearProgress';
 
 export const App = () => {
   const [aedData, setAedData] = useState<any>(null);
@@ -12,14 +14,15 @@ export const App = () => {
   useEffect(() => {
     const initData = async () => {
       const response = await requestAedData();
-      setAedData(response);
+      setAedData(toGeoJson(response));
     };
     initData();
   }, []);
 
   return (
-    <div className="App">
+    <div className="app-container">
       <Header />
+      <LinearProgress indeterminate={!aedData} value={1} className="progress-bar mobile" />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home data={aedData} />} />

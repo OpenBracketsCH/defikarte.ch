@@ -1,0 +1,11 @@
+.menu-sidecar {
+  height: 100%;
+  padding-left: calc(0.5rem + 55px);
+  overflow: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .menu-sidecar {
+    padding-left: 0;
+  }
+}
