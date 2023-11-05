@@ -108,7 +108,11 @@ export const MapComponent = (props: Props) => {
 
   return (
     <div className="map-container">
-      <Menu enabledLayers={enabledLayers} setLayerVisible={setLayerVisible} />
+      <Menu
+        hidden={selectedFeatures.length > 0}
+        enabledLayers={enabledLayers}
+        setLayerVisible={setLayerVisible}
+      />
       <div ref={mapRef} id="map"></div>
       <Detail data={selectedFeatures} closeAction={() => setSelectedFeatures([])} />
     </div>

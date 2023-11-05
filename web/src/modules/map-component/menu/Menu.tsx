@@ -20,6 +20,7 @@ export interface SubMenuProps {
 }
 
 type Props = {
+  hidden: boolean;
   enabledLayers: LayerId[];
   setLayerVisible: (layer: LayerId, visible: boolean) => void;
 };
@@ -40,7 +41,7 @@ export const Menu = (props: Props) => {
 
   return (
     <div>
-      <MenuBar toggleMenu={t => handleMenuClick(t)} activeMenu={activeMenu} />
+      <MenuBar toggleMenu={t => handleMenuClick(t)} activeMenu={activeMenu} hidden={props.hidden} />
       <div className="menu-sidecar mobile" hidden={activeMenu === null}>
         <LayerMenu
           enabledLayers={props.enabledLayers}

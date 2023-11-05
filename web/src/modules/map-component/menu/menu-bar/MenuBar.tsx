@@ -7,6 +7,7 @@ import { MenuButton } from './menu-button/MenuButton';
 type Props = {
   toggleMenu: (type: MenuType | null) => void;
   activeMenu: MenuType | null;
+  hidden: boolean;
 };
 
 export const MenuBar = (props: Props) => {
@@ -15,7 +16,7 @@ export const MenuBar = (props: Props) => {
   };
 
   return (
-    <div className="menu-bar">
+    <div className={`menu-bar ${props.hidden ? 'hidden' : null}`}>
       <MenuButton
         handleMenuClick={() => handleMenuClick(MenuType.SEARCH)}
         activeMenu={props.activeMenu}
