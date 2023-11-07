@@ -3,6 +3,7 @@ import { AedClusterLayer } from '../map-instance/layers/aed-layers/AedClusterLay
 import { filterByOpeningHours } from '../map-instance/layers/aed-layers/aed-filter';
 import { OsmLayer } from '../map-instance/layers/base-layers/OsmLayer';
 import { SwisstopoLayer } from '../map-instance/layers/base-layers/SwisstopoLayer';
+import { SelectPositionLayer } from '../map-instance/layers/select-position-layer/SelectPositionLayer';
 import {
   clusterAvailabillityPointStyle,
   clusterPointStyle,
@@ -40,7 +41,7 @@ export class MapConfiguration {
   public static createAed247Layer = () => {
     return new AedClusterLayer({
       minZoom: 0,
-      maxZoom: 20,
+      maxZoom: 28,
       dataFilter: filterByOpeningHours('247'),
       style: clusterPointStyle,
       zIndex: 11,
@@ -50,7 +51,7 @@ export class MapConfiguration {
   public static createAedRestrictedLayer = () => {
     return new AedClusterLayer({
       minZoom: 0,
-      maxZoom: 20,
+      maxZoom: 28,
       dataFilter: filterByOpeningHours('day'),
       style: clusterPointStyle,
       zIndex: 10,
@@ -60,8 +61,12 @@ export class MapConfiguration {
   public static createAedByOpeningHoursLayer = () => {
     return new AedClusterLayer({
       minZoom: 0,
-      maxZoom: 20,
+      maxZoom: 28,
       style: clusterAvailabillityPointStyle,
     });
+  };
+
+  public static createSelectPositionLayer = () => {
+    return new SelectPositionLayer();
   };
 }

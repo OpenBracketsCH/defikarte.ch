@@ -43,7 +43,7 @@ const CreateStepTwo = () => {
         retry={() => retry(state)}
         resetError={() => setError(initErrorState)}
       />
-      <CreateForm loading={loading} onSubmit={onSubmit} />
+      <CreateForm loading={loading} onSubmit={onSubmit} onSelectPosition={() => {}} />
     </div>
   );
 };

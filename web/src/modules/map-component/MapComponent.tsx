@@ -10,6 +10,7 @@ import { useLayerVisibility } from './hooks/useLayerVisibility';
 import { AedClusterLayer } from './map-instance/layers/aed-layers/AedClusterLayer';
 import { MapInstance } from './map-instance/map-instance';
 import { Menu } from './menu/Menu';
+import { SelectPosition } from './select-position/SelectPosition';
 
 type Props = {
   aedData: Feature<Point>[];
@@ -51,6 +52,9 @@ export const MapComponent = (props: Props) => {
           break;
         case LayerId.AedByOpeningHours:
           layers.set(layerId, MapConfiguration.createAedByOpeningHoursLayer());
+          break;
+        case LayerId.SelectPosition:
+          layers.set(layerId, MapConfiguration.createSelectPositionLayer());
           break;
       }
     }
@@ -112,6 +116,12 @@ export const MapComponent = (props: Props) => {
         hidden={selectedFeatures.length > 0}
         enabledLayers={enabledLayers}
         setLayerVisible={setLayerVisible}
+      />
+      <SelectPosition
+        hidden={false}
+        onSubmitPosition={function (): void {
+          throw new Error('Function not implemented.');
+        }}
       />
       <div ref={mapRef} id="map"></div>
       <Detail data={selectedFeatures} closeAction={() => setSelectedFeatures([])} />

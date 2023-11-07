@@ -16,7 +16,11 @@ export const MenuBar = (props: Props) => {
   };
 
   return (
-    <div className={`menu-bar ${props.hidden ? 'hidden' : null}`}>
+    <div
+      className={`menu-bar ${props.hidden ? 'hidden' : ''} ${
+        props.activeMenu !== null ? 'active' : ''
+      }`}
+    >
       <MenuButton
         handleMenuClick={() => handleMenuClick(MenuType.SEARCH)}
         activeMenu={props.activeMenu}

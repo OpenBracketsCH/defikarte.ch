@@ -7,9 +7,11 @@ import { AEDData } from '../../../model/app';
 import SwitchForm from '../SwitchForm/SwitchForm';
 import TextForm from '../TextForm/TextForm';
 import './CreateForm.css';
+import FilledButton from '../../../components/buttons/filled-button/FilledButton';
 
 type Props = {
   loading: boolean;
+  onSelectPosition: () => void;
   onSubmit: (aedData: AEDData) => void;
 };
 
@@ -83,24 +85,24 @@ const CreateForm = ({ loading, onSubmit }: Props) => {
     <Form onSubmit={handleSubmit(data => onHandleSubmit(state, data))} className="form-inline">
       <div className="mb-3 form-inline">
         <p>{t('position')}</p>
-        <p className={positionError != null ? 'border-bottom  border-danger' : 'border-bottom'}>
-          {position}
-        </p>
+        <div style={{ display: 'flex', width: '100%', alignItems: 'center' }}>
+          <p
+            style={{ flexGrow: 1, marginRight: '0.5rem' }}
+            className={positionError != null ? 'border-bottom  border-danger' : 'border-bottom'}
+          >
+            {position}
+          </p>
+          <FilledButton type="button">{t('select_position')}</FilledButton>
+        </div>
         {positionError !== null ? <p className="error">{positionError}</p> : null}
       </div>
       {renderFormComponent()}
-      <Button
-        variant="success"
-        type="submit"
-        value="submit"
-        className="w-100 my-3"
-        disabled={loading}
-      >
+      <FilledButton type="submit" value="submit" className="w-100 my-3" disabled={loading}>
         {loading ? (
           <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
         ) : null}
         {t('submit')}
-      </Button>
+      </FilledButton>
     </Form>
   );
 };

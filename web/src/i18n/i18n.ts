@@ -64,6 +64,7 @@ i18n
           reporter: 'Reporter',
           satellite: 'Satellite',
           select: 'Confirm position',
+          select_position: 'Select position',
           start: 'Create new AED',
           step_one: '1. Select position',
           step_success: 'AED successful created!',

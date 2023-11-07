@@ -64,6 +64,11 @@ export const LayerMenu = (props: Props) => {
           setVisible={() => toggleLayer(LayerId.AedByOpeningHours)}
           isVisible={isLayerVisible(LayerId.AedByOpeningHours)}
         />
+          <LayerSwitch
+          name={t('test')}
+          setVisible={() => toggleLayer(LayerId.SelectPosition)}
+          isVisible={isLayerVisible(LayerId.SelectPosition)}
+        />
       </div>
       <div className="layer-menu-close-section">
         <FilledButton

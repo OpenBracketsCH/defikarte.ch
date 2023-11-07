@@ -1,11 +1,25 @@
 .menu-sidecar {
+  position: absolute;
   height: 100%;
-  padding-left: calc(0.5rem + 55px);
+  padding-left: 55px;
   overflow: auto;
+  z-index: 99;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: all 0.5s;
 }
 
 @media screen and (max-width: 768px) {
   .menu-sidecar {
     padding-left: 0;
+    bottom: 0;
+    width: 100%;
+    transition: height 0.5s;
   }
+}
+
+.menu-sidecar.hidden {
+  height: 0;
+  width: 0;
+  padding: 0;
+  margin: 0;
 }

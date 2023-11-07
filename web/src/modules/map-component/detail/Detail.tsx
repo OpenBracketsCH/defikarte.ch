@@ -111,7 +111,7 @@ export const Detail = ({ data, closeAction }: Props) => {
 
   const hidden = !data || data.length === 0;
   return (
-    <div className={`detail-detail mobile ${hidden ? 'hidden' : null}`}>
+    <div className={`detail-detail mobile ${hidden ? 'hidden' : ''}`}>
       {dataList}
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <FilledButton

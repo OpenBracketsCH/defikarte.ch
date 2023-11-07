@@ -6,6 +6,6 @@ export enum LayerId {
   Aed247,
   AedRestricted,
   AedByOpeningHours,
-  CreateNewAed,
+  SelectPosition,
   SearchResults,
 }

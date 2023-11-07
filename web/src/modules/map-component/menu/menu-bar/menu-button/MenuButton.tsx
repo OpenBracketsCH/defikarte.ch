@@ -1,4 +1,4 @@
-import IconButton from '../../../../../components/buttons/icon-button/IconButton';
+import IconButton from '../../../../../components/buttons/filled-icon-button/FilledIconButton';
 import { MenuType } from '../../Menu';
 import './MenuButton.css';
 

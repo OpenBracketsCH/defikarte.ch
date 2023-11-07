@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import './Menu.css';
-import { AddMenu } from './add-menu/AddMenu';
+import { AddMenu } from './form-menu/FormMenu';
 import { LayerMenu } from './layer-menu/LayerMenu';
 import { MenuBar } from './menu-bar/MenuBar';
 import { LayerId } from '../../../model/map';
@@ -40,9 +40,9 @@ export const Menu = (props: Props) => {
   );
 
   return (
-    <div>
+    <>
       <MenuBar toggleMenu={t => handleMenuClick(t)} activeMenu={activeMenu} hidden={props.hidden} />
-      <div className="menu-sidecar mobile" hidden={activeMenu === null}>
+      <div className={`menu-sidecar mobile ${activeMenu === null ? 'hidden' : ''}`}>
         <LayerMenu
           enabledLayers={props.enabledLayers}
           setLayerVisible={props.setLayerVisible}
@@ -51,6 +51,6 @@ export const Menu = (props: Props) => {
         />
         <AddMenu hidden={activeMenu !== MenuType.ADD} closeAction={() => setActiveMenu(null)} />
       </div>
-    </div>
+    </>
   );
 };
