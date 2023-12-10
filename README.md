@@ -122,12 +122,11 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 
 ### Gold Sponsoren
 
-* [First-Responder.ch](https://www.procamed.ch)
+* [First-Responder.ch](https://www.first-responder.ch)
 
 ### Logo Sponsoren
 
 * [Hexagon](http://www.hexagonsi.com)
-* [WC Guide](https://www.wc-guide.com)
 * [SIRMED](https://www.sirmed.ch)
 
 ## [Lizenz](LICENSE)
