@@ -118,12 +118,11 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 
 ### Gold Sponsors
 
-* [First-Responder.ch](https://www.procamed.ch)
+* [First-Responder.ch](https://www.first-responder.ch)
 
 ### Logo Sponsors
 
 * [Hexagon](http://www.hexagonsi.com)
-* [WC Guide](https://www.wc-guide.com)
 * [SIRMED](https://www.sirmed.ch)
 
 ## [License](LICENSE)
