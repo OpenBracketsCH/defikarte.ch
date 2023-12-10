@@ -123,6 +123,7 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 ### Logo Sponsors
 
 * [Hexagon](http://www.hexagonsi.com)
+- [Hostpoint](http://www.hostpoint.ch)
 * [SIRMED](https://www.sirmed.ch)
 
 ## [License](LICENSE)

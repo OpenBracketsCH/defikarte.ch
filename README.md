@@ -127,6 +127,7 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 ### Logo Sponsoren
 
 * [Hexagon](http://www.hexagonsi.com)
+- [Hostpoint](http://www.hostpoint.ch)
 * [SIRMED](https://www.sirmed.ch)
 
 ## [Lizenz](LICENSE)
