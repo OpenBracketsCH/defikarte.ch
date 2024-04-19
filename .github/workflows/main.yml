@@ -13,4 +13,4 @@ jobs:
       with:
         server: sl656.web.hostpoint.ch
         username: deploy@openbrackets.ch
-        password: ${{ secrets.ftp_password }}
+        password: ${{ secrets.password }}
