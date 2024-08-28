@@ -123,12 +123,14 @@ Diverse Presseberichte wurden über die Defikarte.ch erstellt. Die Nennungen war
 ### Gold Sponsoren
 
 * [First-Responder.ch](https://www.first-responder.ch)
+* [SIRMED](https://www.sirmed.ch)
 
 ### Logo Sponsoren
 
 * [Hexagon](http://www.hexagonsi.com)
-- [Hostpoint](http://www.hostpoint.ch)
-* [SIRMED](https://www.sirmed.ch)
+* [Hostpoint](http://www.hostpoint.ch)
+* [SUSV](http://www.susv.ch)
+
 
 ## [Lizenz](LICENSE)
 

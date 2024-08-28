@@ -119,12 +119,14 @@ Various press reports were created via Defikarte.ch. The mentions were consisten
 ### Gold Sponsors
 
 * [First-Responder.ch](https://www.first-responder.ch)
+* [SIRMED](https://www.sirmed.ch)
 
 ### Logo Sponsors
 
 * [Hexagon](http://www.hexagonsi.com)
-- [Hostpoint](http://www.hostpoint.ch)
-* [SIRMED](https://www.sirmed.ch)
+* [Hostpoint](http://www.hostpoint.ch)
+* [SUSV](http://www.susv.ch)
+
 
 ## [License](LICENSE)
 
