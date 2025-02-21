@@ -1,11 +1,6 @@
-export enum LayerId {
-  OsmSwiss,
-  OsmCommon,
-  Swisstopo,
-  Satellite,
-  Aed247,
-  AedRestricted,
-  AedByOpeningHours,
-  SelectPosition,
-  SearchResults,
+import { StyleSpecification } from "maplibre-gl";
+
+export interface BaseLayerDefinition {
+  id: string;
+  style?: string | StyleSpecification;
 }

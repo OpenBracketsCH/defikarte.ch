@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: "${{ github.ref == 'refs/heads/master' && 'production' || 'staging' }}"
-      url: "${{ github.ref == 'refs/heads/master' && 'https://defikarteformstaticapp.z1.web.core.windows.net/' || 'https://defikarteformapp.z1.web.core.windows.net/' }}"
+      url: "https://proud-plant-0451de503.4.azurestaticapps.net/"
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v3

@@ -1,16 +1,14 @@
-import axios from "axios";
+import axios from "../api/backend";
+import { FeatureCollection } from "geojson";
 
-export const requestAedData = async (): Promise<any> => {
+export const requestAedData = async (): Promise<FeatureCollection> => {
   try {
-    const response = await axios.get(
-      "https://defikarte-backend-staging.azurewebsites.net/api/defibrillator",
-      {
-        method: "GET",
-        headers: {
-          "ACCESS-Control-Allow-Origin": "*",
-        },
-      }
-    );
+    const response = await axios.get<FeatureCollection>("/v2/defibrillator", {
+      method: "GET",
+      headers: {
+        "ACCESS-Control-Allow-Origin": "*",
+      },
+    });
     if (response.status === 200) {
       const data = await response.data;
       return data;
@@ -19,5 +17,5 @@ export const requestAedData = async (): Promise<any> => {
     console.error(error);
   }
 
-  return [];
+  return {} as FeatureCollection;
 };
