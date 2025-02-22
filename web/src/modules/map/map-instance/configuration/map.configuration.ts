@@ -3,7 +3,6 @@ import {
   RasterSourceSpecification,
   StyleSpecification,
 } from "maplibre-gl";
-import { createAedLayerSpec } from "../layers/aed.layers";
 import { createOsmLayerSpec } from "../layers/osm.layers";
 import { LayerConfiguration } from "./layer.configuration";
 
@@ -30,9 +29,8 @@ export class MapConfiguration {
       version: 8,
       sources: {
         [LayerConfiguration.osmLayerSource]: this.osmSourceSpec,
-        [LayerConfiguration.aedLayerSource]: this.aedSourceSpec,
       },
-      layers: [createOsmLayerSpec(), createAedLayerSpec()], // Todo: as long there is only one aed layer, this can stay. afterwards this has to be added depending on the user selection
+      layers: [createOsmLayerSpec()], // Todo: as long there is only one aed layer, this can stay. afterwards this has to be added depending on the user selection
     },
     [LayerConfiguration.swisstopoBaseMapLayerId]:
       "https://vectortiles.geo.admin.ch/styles/ch.swisstopo.lightbasemap.vt/style.json",
