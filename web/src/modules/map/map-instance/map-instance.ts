@@ -1,6 +1,6 @@
-import axios from "axios";
 import { Map, StyleSpecification } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { requestStyleSpecification } from "../../../services/map-style.service";
 import { LayerConfiguration } from "./configuration/layer.configuration";
 import { MapConfiguration } from "./configuration/map.configuration";
 import { createAedLayerSpec } from "./layers/aed.layers";
@@ -51,12 +51,7 @@ export class MapInstance {
   ): Promise<StyleSpecification> => {
     let styleSpec: StyleSpecification | null = null;
     if (typeof layerStyle === "string") {
-      try {
-        const response = await axios.get<StyleSpecification>(layerStyle);
-        styleSpec = response.data;
-      } catch (e) {
-        console.error(e);
-      }
+      styleSpec = await requestStyleSpecification(layerStyle);
     } else {
       styleSpec = layerStyle;
     }
