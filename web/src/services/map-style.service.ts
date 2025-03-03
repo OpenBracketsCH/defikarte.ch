@@ -1,9 +1,9 @@
+import axios from "axios";
 import { StyleSpecification } from "maplibre-gl";
-import axios from "../api/backend";
 
 export const requestStyleSpecification = async (
   styleUrl: string
-): Promise<StyleSpecification> => {
+): Promise<StyleSpecification | null> => {
   try {
     const response = await axios.get<StyleSpecification>(styleUrl);
     return response.data;
@@ -11,5 +11,5 @@ export const requestStyleSpecification = async (
     console.error(e);
   }
 
-  return {} as StyleSpecification;
+  return null;
 };

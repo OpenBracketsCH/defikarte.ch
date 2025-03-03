@@ -22,6 +22,9 @@ export class MapConfiguration {
   public static aedSourceSpec: GeoJSONSourceSpecification = {
     type: "geojson",
     data: "https://defikarte-backend-staging.azurewebsites.net/api/v2/defibrillator",
+    cluster: true,
+    clusterMaxZoom: 14,
+    clusterRadius: 75,
   };
 
   public static baseLayers: { [key: string]: string | StyleSpecification } = {
@@ -30,6 +33,7 @@ export class MapConfiguration {
       sources: {
         [LayerConfiguration.osmLayerSource]: this.osmSourceSpec,
       },
+      glyphs: "https://vectortiles.geo.admin.ch/fonts/{fontstack}/{range}.pbf",
       layers: [createOsmLayerSpec()], // Todo: as long there is only one aed layer, this can stay. afterwards this has to be added depending on the user selection
     },
     [LayerConfiguration.swisstopoBaseMapLayerId]:

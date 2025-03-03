@@ -8,7 +8,7 @@ const Map = () => {
 
   useEffect(() => {
     if (mapContainer.current) {
-      const map = new MapInstance(mapContainer.current);
+      const map = new MapInstance({ container: mapContainer.current });
       setMapInstance(map);
       return () => map.remove();
     }
