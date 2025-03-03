@@ -1,4 +1,4 @@
-import { Map, StyleSpecification } from "maplibre-gl";
+import { GeoJSONSource, Map, StyleSpecification } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import markerGreen from "../../../assets/icons/defi-map-marker-green.svg";
 import markerOrange from "../../../assets/icons/defi-map-marker-orange.svg";
@@ -84,7 +84,7 @@ export class MapInstance {
 
       const zoom = this.mapInstance.getZoom();
       this.mapInstance.easeTo({
-        center: e.features[0].geometry.coordinates,
+        center: e.features[0].toJSON()["geometry"]["coordinates"],
         zoom,
       });
 
@@ -111,11 +111,13 @@ export class MapInstance {
         layers: ["cluster-point"],
       });
       const clusterId = features[0].properties.cluster_id;
-      const zoom = await this.mapInstance
-        .getSource(LayerConfiguration.aedLayerSource)
-        ?.getClusterExpansionZoom(clusterId);
+      const zoom = await (
+        this.mapInstance.getSource(
+          LayerConfiguration.aedLayerSource
+        ) as GeoJSONSource
+      )?.getClusterExpansionZoom(clusterId);
       this.mapInstance.easeTo({
-        center: features[0].geometry.coordinates,
+        center: features[0].toJSON()["geometry"]["coordinates"],
         zoom,
       });
     });
