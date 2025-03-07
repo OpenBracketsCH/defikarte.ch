@@ -1,47 +1,45 @@
-import {
-  GeoJSONSourceSpecification,
-  RasterSourceSpecification,
-  StyleSpecification,
-} from "maplibre-gl";
-import { createOsmLayerSpec } from "../layers/osm.layers";
-import { LayerConfiguration } from "./layer.configuration";
+import { StyleSpecification } from 'maplibre-gl';
+import AppConfiguration from '../../../../configuration/app.configuration';
+import { createOsmLayer } from '../layers/osm.layer';
+import { createOsmSource } from '../sources/osm.source';
 
 export class MapConfiguration {
   public static defaultCenter: [number, number] = [7.4, 46.95];
   public static defaultZoom: number = 10;
 
-  public static osmSourceSpec: RasterSourceSpecification = {
-    type: "raster",
-    tiles: ["https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"],
-    tileSize: 256,
-    minzoom: 0,
-    maxzoom: 19,
-    attribution: "© OpenStreetMap contributors",
-  };
+  public static osmBaseMapId = 'osm-common';
+  public static swisstopoBaseMapId = 'swisstopo-basemap';
+  public static swisstopoImageryBaseMapId = 'swisstopo-imagery-basemap';
 
-  public static aedSourceSpec: GeoJSONSourceSpecification = {
-    type: "geojson",
-    data: "https://defikarte-backend-staging.azurewebsites.net/api/v2/defibrillator",
-    cluster: true,
-    clusterMaxZoom: 14,
-    clusterRadius: 75,
-  };
+  public static osmBaseMapLayerId = 'osm-common-layer';
+  public static osmLayerSourceId = 'osm-common-source';
+
+  public static swisstopoBaseMapLayerId = 'siwsstopo-basemap-layer';
+  public static swisstopoBaseMapLayerSourceId = 'siwsstopo-basemap-source';
+
+  public static swisstopoImageryBaseMapLayerId = 'swisstopo-imagery-basemap-layer';
+  public static swisstopoImageryBaseMapLayerSourceId = 'swisstopo-imagery-basemap-source';
+
+  public static aedPointLayerId = 'aed-layer';
+  public static aedSourceId = 'aed-source';
+
+  public static aedAvailabilityPointLayerId = 'aed-availability-layer';
+  public static aedAvailabilitySourceId = 'aed-availability-source';
+
+  public static aedGeoJsonUrl = `${AppConfiguration.baseUrl}v2/defibrillator`;
 
   public static baseLayers: { [key: string]: string | StyleSpecification } = {
-    [LayerConfiguration.osmLayerId]: {
+    [this.osmBaseMapId]: {
       version: 8,
       sources: {
-        [LayerConfiguration.osmLayerSource]: this.osmSourceSpec,
+        [this.osmLayerSourceId]: createOsmSource(),
       },
-      glyphs: "https://vectortiles.geo.admin.ch/fonts/{fontstack}/{range}.pbf",
-      layers: [createOsmLayerSpec()], // Todo: as long there is only one aed layer, this can stay. afterwards this has to be added depending on the user selection
+      glyphs: 'https://vectortiles.geo.admin.ch/fonts/{fontstack}/{range}.pbf',
+      layers: [createOsmLayer(this.osmBaseMapLayerId, this.osmLayerSourceId)],
     },
-    [LayerConfiguration.swisstopoBaseMapLayerId]:
-      "https://vectortiles.geo.admin.ch/styles/ch.swisstopo.lightbasemap.vt/style.json",
-    [LayerConfiguration.swisstopoImageryBaseMapLayerId]:
-      "https://vectortiles.geo.admin.ch/styles/ch.swisstopo.imagerybasemap.vt/style.json",
+    [this.swisstopoBaseMapId]:
+      'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.lightbasemap.vt/style.json',
+    [this.swisstopoImageryBaseMapId]:
+      'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.imagerybasemap.vt/style.json',
   };
-
-  public static defaultStyle: string | StyleSpecification =
-    this.baseLayers[LayerConfiguration.swisstopoBaseMapLayerId];
 }
