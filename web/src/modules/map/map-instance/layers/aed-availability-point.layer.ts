@@ -1,4 +1,5 @@
 import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
+
 const layerFilter: FilterSpecification = ['!', ['has', 'point_count']];
 
 export const createAedAvailabilityPointLayers = (

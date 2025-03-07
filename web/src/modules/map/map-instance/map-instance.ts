@@ -3,8 +3,12 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
 import { requestAedDataByCurrentAvailability } from '../../../services/aed-data.service';
+import { requestStyleSpecification } from '../../../services/map-style.service';
 import { MARKER_GREEN_IMAGE_ID, MARKER_ORANGE_IMAGE_ID } from './configuration/constants';
 import { MapConfiguration } from './configuration/map.configuration';
+import AedSelectInteraction from './interactions/aed-select.interaction';
+import ClusterZoomInteraction from './interactions/cluster-zoom.interaction';
+import CursorClickableInteraction from './interactions/cursor-clickable.interaction';
 import { createAedAvailabilityPointLayers } from './layers/aed-availability-point.layer';
 import { createAedClusterLayers } from './layers/aed-cluster.layer';
 import { createAedPointLayers } from './layers/aed-point.layer';
@@ -16,13 +20,13 @@ type MapInstanceProps = {
 
 export class MapInstance {
   private mapInstance: Map;
-  private selectedFeatureId: number | null = null;
-  // private activeOverlays: string[] = [];
+  private activeBaseLayer: string = MapConfiguration.osmBaseMapId;
+  private activeOverlay: 'default' | 'availability' = 'default';
 
   constructor(props: MapInstanceProps) {
     this.mapInstance = new Map({
       container: props.container,
-      style: MapConfiguration.defaultStyle,
+      style: MapConfiguration.baseLayers[this.activeBaseLayer],
       center: MapConfiguration.defaultCenter,
       zoom: MapConfiguration.defaultZoom,
     });
@@ -43,133 +47,51 @@ export class MapInstance {
       this.mapInstance.addImage(MARKER_ORANGE_IMAGE_ID, image2);
     };
 
-    console.log('Map loaded');
-
     const updatedStyle = this.extendAedLayers(this.mapInstance.getStyle());
     this.mapInstance.setStyle(updatedStyle);
-
-    /*
-    this.mapInstance.on('mouseenter', LayerConfiguration.aedLayerId, () => {
-      this.mapInstance.getCanvas().style.cursor = 'pointer';
-    });
-
-    // Change it back to a pointer when it leaves.
-    this.mapInstance.on('mouseleave', LayerConfiguration.aedLayerId, () => {
-      this.mapInstance.getCanvas().style.cursor = '';
-    });
-
-    this.mapInstance.on('mouseenter', 'cluster-point', () => {
-      this.mapInstance.getCanvas().style.cursor = 'pointer';
-    });
-
-    // Change it back to a pointer when it leaves.
-    this.mapInstance.on('mouseleave', 'cluster-point', () => {
-      this.mapInstance.getCanvas().style.cursor = '';
-    });
-
-    this.mapInstance.on('click', e => {
-      const features = this.mapInstance.queryRenderedFeatures(e.point, {
-        layers: [LayerConfiguration.aedLayerId],
-      });
-
-      if (features.length === 0) {
-        if (this.selectedFeatureId) {
-          this.mapInstance.setFeatureState(
-            {
-              source: LayerConfiguration.aedLayerSource,
-              id: this.selectedFeatureId,
-            },
-            { selected: false }
-          );
-        }
-      }
-    });
-
-    this.mapInstance.on('click', LayerConfiguration.aedLayerId, async e => {
-      if (!e || !e.features) {
-        return;
-      }
-
-      const zoom = this.mapInstance.getZoom();
-      this.mapInstance.easeTo({
-        center: e.features[0].toJSON()['geometry']['coordinates'],
-        zoom,
-      });
-
-      const featureId = e.features[0].id;
-      if (this.selectedFeatureId) {
-        this.mapInstance.setFeatureState(
-          {
-            source: LayerConfiguration.aedLayerSource,
-            id: this.selectedFeatureId,
-          },
-          { selected: false }
-        );
-      }
-      this.mapInstance.setFeatureState(
-        { source: LayerConfiguration.aedLayerSource, id: featureId },
-        { selected: true }
-      );
-
-      this.selectedFeatureId = (featureId as number) ?? null;
-    });
-
-    this.mapInstance.on('click', 'cluster-point', async e => {
-      const features = this.mapInstance.queryRenderedFeatures(e.point, {
-        layers: ['cluster-point'],
-      });
-      const clusterId = features[0].properties.cluster_id;
-      const zoom = await (
-        this.mapInstance.getSource(LayerConfiguration.aedLayerSource) as GeoJSONSource
-      )?.getClusterExpansionZoom(clusterId);
-      this.mapInstance.easeTo({
-        center: features[0].toJSON()['geometry']['coordinates'],
-        zoom,
-      });
-    });
-    */
   };
 
-  /*
+  public setActiveBaseLayer(id: string) {
+    this.activeBaseLayer = id;
 
-  public setBaseLayer = async (layerId: string) => {
-    let layerStyle = MapConfiguration.baseLayers[layerId];
+    this.updateStyle();
+  }
 
-    if (!layerStyle) {
-      return;
-    }
+  public setActiveOverlayLayer(overlay: 'default' | 'availability') {
+    this.activeOverlay = overlay;
 
-    // todo: aed layers have to be added dynamically
-    layerStyle = await this.applyActiveOverlays(layerStyle);
-    this.mapInstance.setStyle(layerStyle, { diff: true });
-  };
-
-  private applyActiveOverlays = async (
-    layerStyle: string | StyleSpecification
-  ): Promise<StyleSpecification> => {
-    let styleSpec: StyleSpecification | null = null;
-    if (typeof layerStyle === 'string') {
-      styleSpec = await requestStyleSpecification(layerStyle);
-    } else {
-      styleSpec = layerStyle;
-    }
-
-    if (!styleSpec) {
-      return { layers: {}, sources: {}, version: 8 } as StyleSpecification;
-    }
-
-    return {
-      ...styleSpec,
-      sources: {
-        ...styleSpec.sources,
-        [LayerConfiguration.aedLayerSource]: MapConfiguration.aedSourceSpec,
-      },
-      layers: [...styleSpec.layers, ...createAedAvailableLayerSpec()],
-    } as StyleSpecification;
-  };*/
+    this.updateStyle();
+  }
 
   public remove = () => {
     this.mapInstance.remove();
+  };
+
+  private updateStyle = async () => {
+    const baseLayerStyle = MapConfiguration.baseLayers[this.activeBaseLayer];
+
+    if (!baseLayerStyle) {
+      return;
+    }
+
+    let styleSpec: StyleSpecification | null = null;
+    if (typeof baseLayerStyle === 'string') {
+      styleSpec = await requestStyleSpecification(baseLayerStyle);
+    } else {
+      styleSpec = baseLayerStyle;
+    }
+
+    if (!styleSpec) {
+      this.mapInstance.setStyle({ layers: {}, sources: {}, version: 8 } as StyleSpecification);
+      return;
+    }
+
+    const updatedStyle =
+      this.activeOverlay === 'availability'
+        ? await this.extendAedAvailabilityLayers(styleSpec)
+        : this.extendAedLayers(styleSpec);
+
+    this.mapInstance.setStyle(updatedStyle, { diff: true });
   };
 
   private extendAedLayers = (style: StyleSpecification) => {
@@ -183,6 +105,16 @@ export class MapInstance {
       MapConfiguration.aedSourceId
     );
 
+    const cursorClickableInteraction = new CursorClickableInteraction(this.mapInstance);
+    cursorClickableInteraction.setup(aedPointLayers.map(layer => layer.id));
+    cursorClickableInteraction.setup(aedClusterLayers.map(layer => layer.id));
+
+    const clusterZoomInteraction = new ClusterZoomInteraction(this.mapInstance);
+    clusterZoomInteraction.setup(aedClusterLayers.map(layer => layer.id));
+
+    const aedSelectInteraction = new AedSelectInteraction(this.mapInstance);
+    aedSelectInteraction.setup(aedPointLayers.map(layer => layer.id));
+
     const updatedStyle = {
       ...style,
       sources: {
@@ -192,7 +124,6 @@ export class MapInstance {
       layers: [...style.layers, ...aedPointLayers, ...aedClusterLayers],
     };
 
-    console.log(updatedStyle);
     return updatedStyle;
   };
 
@@ -207,6 +138,16 @@ export class MapInstance {
       MapConfiguration.aedAvailabilityPointLayerId,
       MapConfiguration.aedAvailabilitySourceId
     );
+
+    const cursorClickableInteraction = new CursorClickableInteraction(this.mapInstance);
+    cursorClickableInteraction.setup(aedPointLayers.map(layer => layer.id));
+    cursorClickableInteraction.setup(aedClusterLayers.map(layer => layer.id));
+
+    const clusterZoomInteraction = new ClusterZoomInteraction(this.mapInstance);
+    clusterZoomInteraction.setup(aedClusterLayers.map(layer => layer.id));
+
+    const aedSelectInteraction = new AedSelectInteraction(this.mapInstance);
+    aedSelectInteraction.setup(aedPointLayers.map(layer => layer.id));
 
     return {
       ...style,

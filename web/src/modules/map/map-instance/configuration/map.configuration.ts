@@ -1,7 +1,7 @@
 import { StyleSpecification } from 'maplibre-gl';
 import AppConfiguration from '../../../../configuration/app.configuration';
-import { createOsmSource } from '../sources/osm.source';
 import { createOsmLayer } from '../layers/osm.layer';
+import { createOsmSource } from '../sources/osm.source';
 
 export class MapConfiguration {
   public static defaultCenter: [number, number] = [7.4, 46.95];
@@ -42,6 +42,4 @@ export class MapConfiguration {
     [this.swisstopoImageryBaseMapId]:
       'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.imagerybasemap.vt/style.json',
   };
-
-  public static defaultStyle: string | StyleSpecification = this.baseLayers[this.osmBaseMapId];
 }
