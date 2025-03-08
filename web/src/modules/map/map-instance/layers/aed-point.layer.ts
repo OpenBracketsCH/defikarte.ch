@@ -1,9 +1,10 @@
 import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
 
-const layerFilter: FilterSpecification = ['!', ['has', 'point_count']];
+const noClusterFilter: FilterSpecification = ['!', ['has', 'point_count']];
 
 export const createAedPointLayers = (baseId: string, source: string): LayerSpecification[] => {
   const result = [];
+
   const singlePointLayer: LayerSpecification = {
     id: `${baseId}-single-point`,
     source: source,
@@ -12,7 +13,7 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
       'icon-allow-overlap': true,
       'icon-image': ['match', ['get', 'opening_hours'], '24/7', 'marker-green', 'marker-orange'],
     },
-    filter: layerFilter,
+    filter: noClusterFilter,
   };
 
   const singlePointCircleLayer: LayerSpecification = {
@@ -29,7 +30,7 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
       ],
       'circle-opacity': 0.4,
     },
-    filter: layerFilter,
+    filter: noClusterFilter,
   };
 
   // order is important

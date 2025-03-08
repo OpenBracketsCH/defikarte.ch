@@ -1,6 +1,1 @@
-import { StyleSpecification } from "maplibre-gl";
-
-export interface BaseLayerDefinition {
-  id: string;
-  style?: string | StyleSpecification;
-}
+export type ActiveOverlayType = ('247' | 'restricted')[] | 'availability';

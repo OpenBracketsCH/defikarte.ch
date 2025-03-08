@@ -1,6 +1,6 @@
 import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
 
-const layerFilter: FilterSpecification = ['has', 'point_count'];
+const clusterFilter: FilterSpecification = ['has', 'point_count'];
 
 export const createAedClusterLayers = (baseId: string, source: string): LayerSpecification[] => {
   const result = [];
@@ -16,7 +16,7 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
       'circle-stroke-opacity': 0.4,
       'circle-stroke-color': '#93C460',
     },
-    filter: layerFilter,
+    filter: clusterFilter,
   };
 
   const clusterPointWhiteStrokeLayer: LayerSpecification = {
@@ -31,7 +31,7 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
       'circle-stroke-opacity': 1,
       'circle-stroke-color': '#FFFFFF',
     },
-    filter: layerFilter,
+    filter: clusterFilter,
   };
 
   const clusterCountLayer: LayerSpecification = {
@@ -50,7 +50,7 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
     paint: {
       'text-color': 'white',
     },
-    filter: layerFilter,
+    filter: clusterFilter,
   };
 
   result.push(clusterPointLayer);

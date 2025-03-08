@@ -1,11 +1,13 @@
-import { Map, StyleSpecification } from 'maplibre-gl';
+import { FilterSpecification, Map, StyleSpecification } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
+import { ActiveOverlayType } from '../../../model/map';
 import { requestAedDataByCurrentAvailability } from '../../../services/aed-data.service';
 import { requestStyleSpecification } from '../../../services/map-style.service';
 import { MARKER_GREEN_IMAGE_ID, MARKER_ORANGE_IMAGE_ID } from './configuration/constants';
 import { MapConfiguration } from './configuration/map.configuration';
+import { alwaysAvailableFilterOverride, restrictedFilterOverride } from './filter/aed.filter';
 import AedSelectInteraction from './interactions/aed-select.interaction';
 import ClusterZoomInteraction from './interactions/cluster-zoom.interaction';
 import CursorClickableInteraction from './interactions/cursor-clickable.interaction';
@@ -19,36 +21,36 @@ type MapInstanceProps = {
 };
 
 export class MapInstance {
-  private mapInstance: Map;
+  private mapInstance: Map | null = null;
   private activeBaseLayer: string = MapConfiguration.osmBaseMapId;
-  private activeOverlay: 'default' | 'availability' = 'default';
+  private activeOverlay: ActiveOverlayType = ['247', 'restricted'];
 
   constructor(props: MapInstanceProps) {
-    this.mapInstance = new Map({
+    const map = new Map({
       container: props.container,
       style: MapConfiguration.baseLayers[this.activeBaseLayer],
       center: MapConfiguration.defaultCenter,
       zoom: MapConfiguration.defaultZoom,
     });
 
-    this.mapInstance.on('load', this.init);
+    map.on('load', () => this.init(map));
   }
 
-  public init = async () => {
+  public init = async (map: Map) => {
     const image = new Image();
     image.src = markerGreen;
     image.onload = () => {
-      this.mapInstance.addImage(MARKER_GREEN_IMAGE_ID, image);
+      map.addImage(MARKER_GREEN_IMAGE_ID, image);
     };
 
     const image2 = new Image();
     image2.src = markerOrange;
     image2.onload = () => {
-      this.mapInstance.addImage(MARKER_ORANGE_IMAGE_ID, image2);
+      map.addImage(MARKER_ORANGE_IMAGE_ID, image2);
     };
 
-    const updatedStyle = this.extendAedLayers(this.mapInstance.getStyle());
-    this.mapInstance.setStyle(updatedStyle);
+    this.mapInstance = map;
+    this.updateStyle();
   };
 
   public setActiveBaseLayer(id: string) {
@@ -57,17 +59,21 @@ export class MapInstance {
     this.updateStyle();
   }
 
-  public setActiveOverlayLayer(overlay: 'default' | 'availability') {
+  public setActiveOverlayLayer(overlay: ActiveOverlayType) {
     this.activeOverlay = overlay;
 
     this.updateStyle();
   }
 
   public remove = () => {
-    this.mapInstance.remove();
+    this.mapInstance?.remove();
   };
 
   private updateStyle = async () => {
+    if (!this.mapInstance) {
+      return;
+    }
+
     const baseLayerStyle = MapConfiguration.baseLayers[this.activeBaseLayer];
 
     if (!baseLayerStyle) {
@@ -89,13 +95,29 @@ export class MapInstance {
     const updatedStyle =
       this.activeOverlay === 'availability'
         ? await this.extendAedAvailabilityLayers(styleSpec)
-        : this.extendAedLayers(styleSpec);
-
+        : this.extendAedLayers(styleSpec, this.activeOverlay);
     this.mapInstance.setStyle(updatedStyle, { diff: true });
   };
 
-  private extendAedLayers = (style: StyleSpecification) => {
-    const aedSource = createAedSource(MapConfiguration.aedGeoJsonUrl);
+  private extendAedLayers = (
+    style: StyleSpecification,
+    activeOverlays: ('247' | 'restricted')[]
+  ) => {
+    if (!this.mapInstance) {
+      return style;
+    }
+
+    if (activeOverlays.length === 0) {
+      return style;
+    }
+
+    let sourceFilter: FilterSpecification | null = null;
+    if (activeOverlays.length === 1) {
+      sourceFilter =
+        activeOverlays[0] === '247' ? alwaysAvailableFilterOverride : restrictedFilterOverride;
+    }
+    const aedSource = createAedSource(MapConfiguration.aedGeoJsonUrl, sourceFilter);
+
     const aedPointLayers = createAedPointLayers(
       MapConfiguration.aedPointLayerId,
       MapConfiguration.aedSourceId
@@ -115,7 +137,7 @@ export class MapInstance {
     const aedSelectInteraction = new AedSelectInteraction(this.mapInstance);
     aedSelectInteraction.setup(aedPointLayers.map(layer => layer.id));
 
-    const updatedStyle = {
+    return {
       ...style,
       sources: {
         ...style.sources,
@@ -123,11 +145,13 @@ export class MapInstance {
       },
       layers: [...style.layers, ...aedPointLayers, ...aedClusterLayers],
     };
-
-    return updatedStyle;
   };
 
   private extendAedAvailabilityLayers = async (style: StyleSpecification) => {
+    if (!this.mapInstance) {
+      return style;
+    }
+
     const aedData = await requestAedDataByCurrentAvailability();
     const aedSource = createAedSource(aedData);
     const aedPointLayers = createAedAvailabilityPointLayers(
