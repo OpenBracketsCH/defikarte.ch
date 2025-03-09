@@ -4,7 +4,7 @@ import { ActiveOverlayType } from '../../../../model/map';
 import { MapInstance } from '../../map-instance/map-instance';
 
 type Props = {
-  map: MapInstance;
+  map: MapInstance | null;
 };
 
 export const FilterControl = (props: Props) => {

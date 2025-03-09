@@ -1,4 +1,4 @@
-import { FilterSpecification, Map, StyleSpecification } from 'maplibre-gl';
+import { FilterSpecification, LngLatLike, Map, StyleSpecification } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
@@ -63,6 +63,20 @@ export class MapInstance {
     this.activeOverlay = overlay;
 
     this.updateStyle();
+  }
+
+  public easyTo(coordinates: LngLatLike, zoom?: number) {
+    this.mapInstance?.easeTo({
+      center: coordinates,
+      zoom: zoom ?? this.mapInstance.getZoom(),
+    });
+  }
+
+  public fitBounds(bounds: [[number, number], [number, number]]) {
+    this.mapInstance?.fitBounds(bounds, {
+      padding: 10,
+      maxZoom: 18,
+    });
   }
 
   public remove = () => {
