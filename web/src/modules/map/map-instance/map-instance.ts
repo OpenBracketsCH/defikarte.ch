@@ -2,10 +2,15 @@ import { FilterSpecification, LngLatLike, Map, StyleSpecification } from 'maplib
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
+import markerGradient from '../../../assets/icons/map-marker-gradient.svg';
 import { ActiveOverlayType } from '../../../model/map';
 import { requestAedDataByCurrentAvailability } from '../../../services/aed-data.service';
 import { requestStyleSpecification } from '../../../services/map-style.service';
-import { MARKER_GREEN_IMAGE_ID, MARKER_ORANGE_IMAGE_ID } from './configuration/constants';
+import {
+  MARKER_GRADIENT_IMAGE_ID,
+  MARKER_GREEN_IMAGE_ID,
+  MARKER_ORANGE_IMAGE_ID,
+} from './configuration/constants';
 import { MapConfiguration } from './configuration/map.configuration';
 import { alwaysAvailableFilterOverride, restrictedFilterOverride } from './filter/aed.filter';
 import AedSelectInteraction from './interactions/aed-select.interaction';
@@ -37,17 +42,19 @@ export class MapInstance {
   }
 
   public init = async (map: Map) => {
-    const image = new Image();
-    image.src = markerGreen;
-    image.onload = () => {
-      map.addImage(MARKER_GREEN_IMAGE_ID, image);
-    };
+    const images = [
+      { id: MARKER_GREEN_IMAGE_ID, url: markerGreen },
+      { id: MARKER_ORANGE_IMAGE_ID, url: markerOrange },
+      { id: MARKER_GRADIENT_IMAGE_ID, url: markerGradient },
+    ];
 
-    const image2 = new Image();
-    image2.src = markerOrange;
-    image2.onload = () => {
-      map.addImage(MARKER_ORANGE_IMAGE_ID, image2);
-    };
+    images.forEach(image => {
+      const img = new Image();
+      img.src = image.url;
+      img.onload = () => {
+        map.addImage(image.id, img);
+      };
+    });
 
     this.mapInstance = map;
     this.updateStyle();

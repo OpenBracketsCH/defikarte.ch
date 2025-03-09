@@ -1,4 +1,5 @@
 import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
+import { MARKER_GRADIENT_IMAGE_ID } from '../configuration/constants';
 
 const clusterFilter: FilterSpecification = ['has', 'point_count'];
 
@@ -7,14 +8,12 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
 
   const clusterPointLayer: LayerSpecification = {
     id: `${baseId}-cluster-point`,
-    type: 'circle',
+    type: 'symbol',
     source: source,
-    paint: {
-      'circle-radius': ['step', ['get', 'point_count'], 20, 10, 30, 100, 40, 1000, 50],
-      'circle-color': '#62AD4B',
-      'circle-stroke-width': ['step', ['get', 'point_count'], 8, 10, 10, 100, 12, 1000, 14],
-      'circle-stroke-opacity': 0.4,
-      'circle-stroke-color': '#93C460',
+    layout: {
+      'icon-allow-overlap': true,
+      'icon-image': MARKER_GRADIENT_IMAGE_ID,
+      'icon-size': ['step', ['get', 'point_count'], 0.9, 10, 1.3, 100, 1.7, 1000, 2.1],
     },
     filter: clusterFilter,
   };
@@ -30,6 +29,21 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
       'circle-stroke-width': 2,
       'circle-stroke-opacity': 1,
       'circle-stroke-color': '#FFFFFF',
+    },
+    filter: clusterFilter,
+  };
+
+  const clusterPointGreenStrokeLayer: LayerSpecification = {
+    id: `${baseId}-cluster-point-green-stroke`,
+    type: 'circle',
+    source: source,
+    paint: {
+      'circle-radius': ['step', ['get', 'point_count'], 20, 10, 30, 100, 40, 1000, 50],
+      'circle-color': '#FFFFFF',
+      'circle-opacity': 0,
+      'circle-stroke-width': ['step', ['get', 'point_count'], 8, 10, 10, 100, 12, 1000, 14],
+      'circle-stroke-opacity': 0.4,
+      'circle-stroke-color': '#93C460',
     },
     filter: clusterFilter,
   };
@@ -54,6 +68,7 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
   };
 
   result.push(clusterPointLayer);
+  result.push(clusterPointGreenStrokeLayer);
   result.push(clusterPointWhiteStrokeLayer);
   result.push(clusterCountLayer);
 

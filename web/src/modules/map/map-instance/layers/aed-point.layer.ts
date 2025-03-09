@@ -1,4 +1,5 @@
 import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
+import { MARKER_GREEN_IMAGE_ID, MARKER_ORANGE_IMAGE_ID } from '../configuration/constants';
 
 const noClusterFilter: FilterSpecification = ['!', ['has', 'point_count']];
 
@@ -11,7 +12,13 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
     type: 'symbol',
     layout: {
       'icon-allow-overlap': true,
-      'icon-image': ['match', ['get', 'opening_hours'], '24/7', 'marker-green', 'marker-orange'],
+      'icon-image': [
+        'match',
+        ['get', 'opening_hours'],
+        '24/7',
+        MARKER_GREEN_IMAGE_ID,
+        MARKER_ORANGE_IMAGE_ID,
+      ],
     },
     filter: noClusterFilter,
   };
