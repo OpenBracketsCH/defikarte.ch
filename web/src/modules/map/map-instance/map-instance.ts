@@ -1,4 +1,10 @@
-import { FilterSpecification, LngLatLike, Map, StyleSpecification } from 'maplibre-gl';
+import {
+  AttributionControl,
+  FilterSpecification,
+  LngLatLike,
+  Map,
+  StyleSpecification,
+} from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
@@ -42,8 +48,10 @@ export class MapInstance {
       style: MapConfiguration.baseLayers[this.activeBaseLayer],
       center: MapConfiguration.defaultCenter,
       zoom: MapConfiguration.defaultZoom,
+      attributionControl: false,
     });
 
+    map.addControl(new AttributionControl(), 'bottom-left');
     map.on('load', () => this.init(map));
   }
 
