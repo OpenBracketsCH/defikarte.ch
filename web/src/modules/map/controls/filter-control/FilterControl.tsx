@@ -30,7 +30,7 @@ export const FilterControl = (props: Props) => {
   }, [activeOverlay, props.map]);
 
   return (
-    <div style={{ zIndex: 10000, position: 'absolute', top: 0, right: 0 }}>
+    <div style={{ zIndex: 10000, position: 'absolute', top: 0, left: 0 }}>
       <input
         id="247"
         type="checkbox"

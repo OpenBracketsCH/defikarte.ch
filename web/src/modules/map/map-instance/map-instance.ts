@@ -103,6 +103,14 @@ export class MapInstance {
     });
   }
 
+  public zoomIn() {
+    this.mapInstance?.zoomIn();
+  }
+
+  public zoomOut() {
+    this.mapInstance?.zoomOut();
+  }
+
   public remove = () => {
     this.mapInstance?.remove();
   };

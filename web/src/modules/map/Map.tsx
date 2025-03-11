@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { FilterControl } from './controls/filter-control/FilterControl';
-import { LayerControl } from './controls/layer-control/LayerControl';
+import { MapControl } from './controls/map-control/MapControl';
 import { MapInstance } from './map-instance/map-instance';
 import { SearchBar } from './search-bar/search-bar';
 
@@ -19,7 +19,7 @@ const Map = () => {
   return (
     <div className="h-full w-full" ref={mapContainer}>
       <SearchBar map={mapInstance} />
-      <LayerControl map={mapInstance!} />
+      <MapControl map={mapInstance!} />
       <FilterControl map={mapInstance!} />
     </div>
   );
