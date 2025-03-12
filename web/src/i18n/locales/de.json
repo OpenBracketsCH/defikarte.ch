@@ -2,5 +2,5 @@
   "hello": "Hallo Welt",
   "basemap": "Grundkarte",
   "satellite": "Satellit",
-  "osm": "OpenStreetMap"
+  "osm": "OSM"
 }

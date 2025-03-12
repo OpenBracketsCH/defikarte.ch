@@ -1,25 +1,33 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
-import { MapInstance } from '../../map-instance/map-instance';
-import { useState } from 'react';
-import { MapIconButton } from '../../../../components/ui/map-icon-button/map-icon-button';
-import layerIconWhite from '../../../../assets/icons/icon-layers-white.svg';
 import layerIconGreen from '../../../../assets/icons/icon-layers-dark-green.svg';
+import layerIconWhite from '../../../../assets/icons/icon-layers-white.svg';
 import iconMinus from '../../../../assets/icons/icon-minus-dark-green.svg';
 import iconPlus from '../../../../assets/icons/icon-plus-dark-green.svg';
+import { MapIconButton } from '../../../../components/ui/map-icon-button/map-icon-button';
+import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
+import { MapInstance } from '../../map-instance/map-instance';
+import swisstopoImageryImage from './../../../../assets/images/map-preview-aerial-view.png';
+import swisstopoBaseMapImage from './../../../../assets/images/map-preview-base-map.png';
+import osmImage from './../../../../assets/images/map-preview-open-street.png';
+import { LayerSymbol } from './layer-symbol/LayerSymbol';
 
 type Props = {
   map: MapInstance | null;
 };
 
-export const MapControl = (props: Props) => {
+export const MapControl = ({ map }: Props) => {
   const { t } = useTranslation();
   const [isActive, setIsActive] = useState(false);
+  const [activeBaseLayer, setActiveBaseLayer] = useState(MapConfiguration.osmBaseMapId);
 
-  const map = props.map;
+  useEffect(() => {
+    map?.setActiveBaseLayer(activeBaseLayer);
+  }, [activeBaseLayer, map]);
+
   return (
     <div
-      className="absolute top-0 right-0 mr-6 mt-6 flex justify-end flex-row-reverse"
+      className="absolute top-0 right-0 mr-6 mt-6 flex justify-end h-0 flex-row-reverse"
       style={{ zIndex: 100000 }}
     >
       <div className="flex flex-col gap-1">
@@ -32,25 +40,27 @@ export const MapControl = (props: Props) => {
         <MapIconButton active={false} icon={iconMinus} onClick={() => map?.zoomOut()} />
       </div>
       {isActive && (
-        <div className="mr-3 flex flex-row">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => map?.setActiveBaseLayer(MapConfiguration.swisstopoBaseMapId)}
-          >
-            {t('basemap')}
-          </button>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => map?.setActiveBaseLayer(MapConfiguration.swisstopoImageryBaseMapId)}
-          >
-            {t('satellite')}
-          </button>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => map?.setActiveBaseLayer(MapConfiguration.osmBaseMapId)}
-          >
-            {t('osm')}
-          </button>
+        <div className="h-0">
+          <div className="mr-3 flex flex-row gap-2">
+            <LayerSymbol
+              active={activeBaseLayer === MapConfiguration.swisstopoBaseMapId}
+              img={swisstopoBaseMapImage}
+              label={t('basemap')}
+              onClick={() => setActiveBaseLayer(MapConfiguration.swisstopoBaseMapId)}
+            />
+            <LayerSymbol
+              active={activeBaseLayer === MapConfiguration.osmBaseMapId}
+              img={osmImage}
+              label={t('osm')}
+              onClick={() => setActiveBaseLayer(MapConfiguration.osmBaseMapId)}
+            />
+            <LayerSymbol
+              active={activeBaseLayer === MapConfiguration.swisstopoImageryBaseMapId}
+              img={swisstopoImageryImage}
+              label={t('satellite')}
+              onClick={() => setActiveBaseLayer(MapConfiguration.swisstopoImageryBaseMapId)}
+            />
+          </div>
         </div>
       )}
     </div>
