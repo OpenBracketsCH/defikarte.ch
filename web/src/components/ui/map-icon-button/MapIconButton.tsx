@@ -14,8 +14,6 @@ export const MapIconButton: React.FC<MapIconButtonProps> = ({ active, icon, ...p
     'gap-2.5',
     'justify-center',
     'items-center',
-    'w-7',
-    'h-7',
     {
       'bg-white': !active,
       'bg-[#93c460]': active,

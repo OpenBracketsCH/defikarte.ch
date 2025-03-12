@@ -4,7 +4,7 @@ import layerIconGreen from '../../../../assets/icons/icon-layers-dark-green.svg'
 import layerIconWhite from '../../../../assets/icons/icon-layers-white.svg';
 import iconMinus from '../../../../assets/icons/icon-minus-dark-green.svg';
 import iconPlus from '../../../../assets/icons/icon-plus-dark-green.svg';
-import { MapIconButton } from '../../../../components/ui/map-icon-button/map-icon-button';
+import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
 import { MapInstance } from '../../map-instance/map-instance';
 import swisstopoImageryImage from './../../../../assets/images/map-preview-aerial-view.png';
