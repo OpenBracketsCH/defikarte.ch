@@ -1,4 +1,5 @@
 import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
+import { COLORS, FEATURE_STATE, MARKER_GREEN_IMAGE_ID } from '../configuration/constants';
 
 const layerFilter: FilterSpecification = ['!', ['has', 'point_count']];
 
@@ -13,7 +14,7 @@ export const createAedAvailabilityPointLayers = (
     type: 'symbol',
     layout: {
       'icon-allow-overlap': true,
-      'icon-image': 'marker-green',
+      'icon-image': MARKER_GREEN_IMAGE_ID,
     },
     filter: layerFilter,
   };
@@ -23,10 +24,10 @@ export const createAedAvailabilityPointLayers = (
     source: source,
     type: 'circle',
     paint: {
-      'circle-color': '#93C460',
+      'circle-color': COLORS.SECONDARY_GREEN_01,
       'circle-radius': [
         'case',
-        ['boolean', ['feature-state', 'selected'], false],
+        ['boolean', ['feature-state', FEATURE_STATE.SELECTED], false],
         30, // selected
         20, // not selected
       ],

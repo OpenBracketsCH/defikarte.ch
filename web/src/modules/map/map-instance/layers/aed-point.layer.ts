@@ -1,5 +1,10 @@
 import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
-import { MARKER_GREEN_IMAGE_ID, MARKER_ORANGE_IMAGE_ID } from '../configuration/constants';
+import {
+  COLORS,
+  FEATURE_STATE,
+  MARKER_GREEN_IMAGE_ID,
+  MARKER_ORANGE_IMAGE_ID,
+} from '../configuration/constants';
 
 const noClusterFilter: FilterSpecification = ['!', ['has', 'point_count']];
 
@@ -28,10 +33,16 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
     source: source,
     type: 'circle',
     paint: {
-      'circle-color': ['match', ['get', 'opening_hours'], '24/7', '#93C460', '#FB8F01'],
+      'circle-color': [
+        'match',
+        ['get', 'opening_hours'],
+        '24/7',
+        COLORS.SECONDARY_GREEN_01,
+        COLORS.SECONDARY_ORANGE_02,
+      ],
       'circle-radius': [
         'case',
-        ['boolean', ['feature-state', 'selected'], false],
+        ['boolean', ['feature-state', FEATURE_STATE.SELECTED], false],
         30, // selected
         20, // not selected
       ],

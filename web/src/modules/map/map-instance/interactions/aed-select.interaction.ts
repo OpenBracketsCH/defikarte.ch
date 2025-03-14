@@ -1,4 +1,5 @@
 import { Map, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
+import { FEATURE_STATE } from '../configuration/constants';
 
 export default class AedSelectInteraction {
   private mapInstance: Map;
@@ -31,7 +32,7 @@ export default class AedSelectInteraction {
           source: source,
           id: this.selectedFeatureId[source],
         },
-        { selected: false }
+        { [FEATURE_STATE.SELECTED]: false }
       );
     }
 

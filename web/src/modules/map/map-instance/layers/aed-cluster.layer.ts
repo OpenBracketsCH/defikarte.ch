@@ -1,5 +1,6 @@
 import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
 import {
+  COLORS,
   MARKER_GRADIENT_M_IMAGE_ID,
   MARKER_GRADIENT_S_IMAGE_ID,
   MARKER_GRADIENT_XL_IMAGE_ID,
@@ -46,7 +47,7 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
       'text-offset': [-0.05, 0.1],
     },
     paint: {
-      'text-color': 'white',
+      'text-color': COLORS.PRIMARY_100_WHITE,
     },
     filter: clusterFilter,
   };
