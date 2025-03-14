@@ -67,7 +67,7 @@ export const SearchBar = (props: Props) => {
         <img src={iconSearch} alt="search-icon" />
         <input
           onChange={onSearchChange}
-          className="flex-grow border-none outline-none text-base"
+          className="grow border-none outline-hidden text-base"
           type="search"
           id="search"
           placeholder="Search for places"

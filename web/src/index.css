@@ -1,3 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --shadow-green-shadow: 0px 4px 15px 0px rgba(28, 59, 33, 0.1);
+}
