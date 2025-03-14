@@ -1,9 +1,0 @@
-.home-home {
-  height: calc(100% - 60px);
-}
-
-@media screen and (max-width: 768px) {
-  .home-home {
-    height: 100%;
-  }
-}
