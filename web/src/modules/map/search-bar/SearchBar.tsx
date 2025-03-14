@@ -63,18 +63,18 @@ export const SearchBar = (props: Props) => {
       style={{ zIndex: 100000, position: 'absolute' }}
       className="w-full flex justify-center h-0 mt-6"
     >
-      <div className="flex items-center rounded-full bg-white p-4 gap-4 w-[30%] h-[60px] shadow-green-shadow">
+      <div className="flex items-center rounded-full bg-primary-100-white p-4 gap-4 w-[30%] h-[60px] shadow-green-shadow">
         <img src={iconSearch} alt="search-icon" />
         <input
           onChange={onSearchChange}
-          className="grow border-none outline-hidden text-base"
+          className="grow border-none outline-hidden text-base font-normal text-primary-100-green-04 leading-6"
           type="search"
           id="search"
           placeholder="Search for places"
           list="search-results"
           value={searchText}
         />
-        <div className="flex justify-end gap-3">
+        <div className="flex justify-end gap-3 ">
           <MapIconButton
             active={false}
             icon={iconFilter}
@@ -83,6 +83,7 @@ export const SearchBar = (props: Props) => {
           <MapIconButton
             active={false}
             icon={isGpsActive ? iconGpsOn : iconGpsOff}
+            variant={isGpsActive ? 'gps-on' : 'gps-off'}
             onClick={() => setIsGpsActive(s => !s)}
           />
         </div>

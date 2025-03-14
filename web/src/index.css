@@ -1,5 +1,79 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Poppins';
+  src: local('Poppins'), url(./assets/fonts/Poppins-Regular.ttf) format('truetype');
+}
+
 @theme {
-  --shadow-green-shadow: 0px 4px 15px 0px rgba(28, 59, 33, 0.1);
+  /* colors */
+  --color-primary-100-white: #fff;
+  --color-primary-80-white: rgba(255, 255, 255, 0.8);
+  --color-primary-60-white: rgba(255, 255, 255, 0.6);
+  --color-primary-40-white: rgba(255, 255, 255, 0.4);
+  --color-primary-20-white: rgba(255, 255, 255, 0.2);
+  --color-primary-10-white: rgba(255, 255, 255, 0.1);
+
+  --color-primary-100-black: #000;
+  --color-primary-80-black: rgba(0, 0, 0, 0.8);
+  --color-primary-60-black: rgba(0, 0, 0, 0.6);
+  --color-primary-40-black: rgba(0, 0, 0, 0.4);
+  --color-primary-20-black: rgba(0, 0, 0, 0.2);
+  --color-primary-10-black: rgba(0, 0, 0, 0.1);
+
+  --color-primary-100-green-01: #c9dcb7;
+  --color-primary-80-green-01: rgba(201, 220, 183, 0.8);
+  --color-primary-60-green-01: rgba(201, 220, 183, 0.6);
+  --color-primary-40-green-01: rgba(201, 220, 183, 0.4);
+  --color-primary-20-green-01: rgba(201, 220, 183, 0.2);
+  --color-primary-10-green-01: rgba(201, 220, 183, 0.1);
+
+  --color-primary-100-green-02: #98c867;
+  --color-primary-80-green-02: rgba(152, 200, 103, 0.8);
+  --color-primary-60-green-02: rgba(152, 200, 103, 0.6);
+  --color-primary-40-green-02: rgba(152, 200, 103, 0.4);
+  --color-primary-20-green-02: rgba(152, 200, 103, 0.2);
+  --color-primary-10-green-02: rgba(152, 200, 103, 0.1);
+
+  --color-primary-100-green-03: #30805d;
+  --color-primary-80-green-03: rgba(48, 128, 93, 0.8);
+  --color-primary-60-green-03: rgba(48, 128, 93, 0.6);
+  --color-primary-40-green-03: rgba(48, 128, 93, 0.4);
+  --color-primary-20-green-03: rgba(48, 128, 93, 0.2);
+  --color-primary-10-green-03: rgba(48, 128, 93, 0.1);
+
+  --color-primary-100-green-04: #154430;
+  --color-primary-80-green-04: rgba(21, 68, 48, 0.8);
+  --color-primary-60-green-04: rgba(21, 68, 48, 0.6);
+  --color-primary-40-green-04: rgba(21, 68, 48, 0.4);
+  --color-primary-20-green-04: rgba(21, 68, 48, 0.2);
+  --color-primary-10-green-04: rgba(21, 68, 48, 0.1);
+
+  --color-primary-100-green-05: #123922;
+  --color-primary-80-green-05: rgba(18, 57, 34, 0.8);
+  --color-primary-60-green-05: rgba(18, 57, 34, 0.6);
+  --color-primary-40-green-05: rgba(18, 57, 34, 0.4);
+  --color-primary-20-green-05: rgba(18, 57, 34, 0.2);
+  --color-primary-10-green-05: rgba(18, 57, 34, 0.1);
+
+  --color-secondary-orange-01: #ffb875;
+  --color-secondary-orange-02: #fb8f01;
+  --color-secondary-red-01: #ffb0b0;
+  --color-secondary-red-02: #f00;
+  --color-secondary-green-01: #93c460;
+  --color-secondary-green-02: #62ad4b;
+
+  --color-graustufen-grau-a: #e5e5e5;
+  --color-graustufen-grau-b: #ccc;
+  --color-graustufen-grau-c: #999;
+  --color-graustufen-grau-d: #666;
+  --color-graustufen-grau-e: #333;
+
+  --color-green-hover: #f5f7f6;
+
+  /* shadow */
+  --shadow-custom: 0px 4px 15px 0px;
+
+  /* font */
+  --font-sans: 'Poppins', sans-serif;
 }

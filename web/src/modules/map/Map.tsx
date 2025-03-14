@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { FilterControl } from './controls/filter-control/FilterControl';
 import { MapControl } from './controls/map-control/MapControl';
 import { MapInstance } from './map-instance/map-instance';
+import { FilterControl } from './search-bar/filter-control/FilterControl';
 import { SearchBar } from './search-bar/SearchBar';
 
 const Map = () => {

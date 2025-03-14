@@ -4,25 +4,34 @@ import { ButtonHTMLAttributes } from 'react';
 interface MapIconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active: boolean;
   icon: string;
+  variant?: 'default' | 'gps-on' | 'gps-off';
 }
 
-export const MapIconButton: React.FC<MapIconButtonProps> = ({ active, icon, ...props }) => {
-  const buttonClass = className(
+export const MapIconButton: React.FC<MapIconButtonProps> = ({
+  active,
+  icon,
+  variant = 'default',
+  ...props
+}) => {
+  const imgClass = className(
     'p-1',
     'rounded-full',
-    'inline-flex',
-    'gap-2.5',
-    'justify-center',
-    'items-center',
+    'box-content',
+    'size-max',
     {
-      'bg-white': !active,
-      'bg-[#93c460]': active,
-    }
+      'hover:bg-green-hover': !active,
+      'bg-primary-100-white': !active && variant === 'default',
+      'bg-secondary-green-01': active,
+      'border-4': variant === 'gps-off' || variant === 'gps-on',
+      'border-transparent': variant === 'gps-off' || variant === 'gps-on',
+      'bg-primary-20-green-02': variant === 'gps-on',
+    },
+    {}
   );
 
   return (
-    <button className={buttonClass} {...props}>
-      <img src={icon} alt="map-icon" />
+    <button {...props}>
+      <img src={icon} alt="map-icon" className={imgClass} />
     </button>
   );
 };
