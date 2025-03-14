@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActiveOverlayType } from '../../../../model/map';
 import { MapInstance } from '../../map-instance/map-instance';
+import iconDefiGreen from './../../../../assets/icons/icon-defi-circle-green.svg';
+import iconDefiOrange from './../../../../assets/icons/icon-defi-circle-orange.svg';
+import iconOpeningHours from './../../../../assets/icons/icon-opening-times-circle-green.svg';
+import { FilterItem } from './filter-item/FilterItem';
 
 type Props = {
   map: MapInstance | null;
@@ -30,31 +34,25 @@ export const FilterControl = (props: Props) => {
   }, [activeOverlay, props.map]);
 
   return (
-    <div style={{ zIndex: 10000, position: 'absolute', top: 0, left: 0 }}>
-      <input
-        id="247"
-        type="checkbox"
-        className="m-1"
+    <li className="">
+      <FilterItem
+        label={t('247Available')}
         checked={activeOverlay?.includes('247')}
         onChange={e => onFilterChange(e, ['247'])}
+        icon={iconDefiGreen}
       />
-      <label htmlFor="247">{t('247')}</label>
-      <input
-        id="restricted"
-        type="checkbox"
-        className="m-1"
+      <FilterItem
+        label={t('withOpeningHours')}
         checked={activeOverlay?.includes('restricted')}
         onChange={e => onFilterChange(e, ['restricted'])}
+        icon={iconDefiOrange}
       />
-      <label htmlFor="247">{t('restricted')}</label>
-      <input
-        id="available-now"
-        type="checkbox"
-        className="m-1"
-        checked={activeOverlay === 'availability'}
+      <FilterItem
+        label={t('availableNow')}
+        checked={activeOverlay == 'availability'}
         onChange={e => onFilterChange(e, 'availability')}
+        icon={iconOpeningHours}
       />
-      <label htmlFor="available-now">{t('available-now')}</label>
-    </div>
+    </li>
   );
 };

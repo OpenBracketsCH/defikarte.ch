@@ -1,21 +1,27 @@
+import className from 'classnames';
 import { FeatureCollection, Point } from 'geojson';
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../components/ui/map-icon-button/MapIconButton';
 import { filterLabelContent, searchAddress } from '../../../services/address-search.service';
 import { MapInstance } from '../map-instance/map-instance';
+import iconClose from './../../../assets/icons/icon-close-dark-green.svg';
 import iconFilter from './../../../assets/icons/icon-filter-dark-green.svg';
 import iconGpsOff from './../../../assets/icons/icon-gps-off-circle-green.svg';
 import iconGpsOn from './../../../assets/icons/icon-gps-on-circle-green.svg';
 import iconSearch from './../../../assets/icons/icon-search-dark-green.svg';
+import { FilterControl } from './filter-control/FilterControl';
 
 type Props = {
   map: MapInstance | null;
 };
 
 export const SearchBar = (props: Props) => {
+  const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
   const [isGpsActive, setIsGpsActive] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
 
   const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
@@ -58,43 +64,62 @@ export const SearchBar = (props: Props) => {
     }
   }, [searchText, onSearch]);
 
+  const mainClasses = className(
+    'flex',
+    'items-center',
+    'bg-primary-100-white',
+    'p-4',
+    'gap-4',
+    'h-[60px]',
+    'shadow-green-shadow',
+    {
+      'rounded-[30px]': !showFilter,
+      'rounded-t-[30px]': showFilter,
+      'border-b': showFilter,
+      'border-b-primary-10-green-05': showFilter,
+    }
+  );
+
   return (
-    <div
-      style={{ zIndex: 100000, position: 'absolute' }}
-      className="w-full flex justify-center h-0 mt-6"
-    >
-      <div className="flex items-center rounded-full bg-primary-100-white p-4 gap-4 w-[30%] h-[60px] shadow-green-shadow">
-        <img src={iconSearch} alt="search-icon" />
-        <input
-          onChange={onSearchChange}
-          className="grow border-none outline-hidden text-base font-normal text-primary-100-green-04 leading-6"
-          type="search"
-          id="search"
-          placeholder="Search for places"
-          list="search-results"
-          value={searchText}
-        />
-        <div className="flex justify-end gap-3 ">
-          <MapIconButton
-            active={false}
-            icon={iconFilter}
-            onClick={() => console.log('show filter')}
+    <div style={{ zIndex: 100000 }} className="relative w-full flex flex-col items-center h-0 mt-6">
+      <div className="w-[30%]">
+        <div className={mainClasses}>
+          <img src={iconSearch} alt="search-icon" />
+          <input
+            onChange={onSearchChange}
+            className="grow border-none outline-hidden text-base font-normal text-primary-100-green-04 leading-6"
+            type="search"
+            id="search"
+            placeholder={t('enterLocationOrAddress')}
+            list="search-results"
+            value={searchText}
           />
-          <MapIconButton
-            active={false}
-            icon={isGpsActive ? iconGpsOn : iconGpsOff}
-            variant={isGpsActive ? 'gps-on' : 'gps-off'}
-            onClick={() => setIsGpsActive(s => !s)}
-          />
+          <div className="flex justify-end gap-2 ml-0">
+            {searchText && (
+              <MapIconButton active={false} icon={iconClose} onClick={() => setSearchText('')} />
+            )}
+            <MapIconButton
+              active={false}
+              icon={iconFilter}
+              onClick={() => setShowFilter(s => !s)}
+            />
+            <MapIconButton
+              active={false}
+              icon={isGpsActive ? iconGpsOn : iconGpsOff}
+              variant={isGpsActive ? 'gps-on' : 'gps-off'}
+              onClick={() => setIsGpsActive(s => !s)}
+            />
+          </div>
         </div>
+        {showFilter && <FilterControl map={props.map} />}
+        <datalist id="search-results">
+          {searchResults?.features.map(f => (
+            <option key={f.id} value={f.id}>
+              {filterLabelContent(f.properties?.label).join(' ')}
+            </option>
+          ))}
+        </datalist>
       </div>
-      <datalist id="search-results">
-        {searchResults?.features.map(f => (
-          <option key={f.id} value={f.id}>
-            {filterLabelContent(f.properties?.label).join(' ')}
-          </option>
-        ))}
-      </datalist>
     </div>
   );
 };
