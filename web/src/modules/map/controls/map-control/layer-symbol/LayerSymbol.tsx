@@ -17,6 +17,7 @@ export const LayerSymbol = ({ active, img, label, ...props }: LayerSymbolProps) 
     'shadow-custom',
     'flex',
     'flex-col',
+    'items-center',
     'gap-1',
     {
       'border-2 border-primary-100-green-02': active,

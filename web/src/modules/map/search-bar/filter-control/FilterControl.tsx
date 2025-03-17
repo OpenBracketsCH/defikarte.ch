@@ -34,7 +34,7 @@ export const FilterControl = (props: Props) => {
   }, [activeOverlay, props.map]);
 
   return (
-    <li className="">
+    <div className="mx-4 md:mx-0">
       <FilterItem
         label={t('247Available')}
         checked={activeOverlay?.includes('247')}
@@ -53,6 +53,6 @@ export const FilterControl = (props: Props) => {
         onChange={e => onFilterChange(e, 'availability')}
         icon={iconOpeningHours}
       />
-    </li>
+    </div>
   );
 };

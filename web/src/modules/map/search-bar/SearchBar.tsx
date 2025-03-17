@@ -68,21 +68,32 @@ export const SearchBar = (props: Props) => {
     'flex',
     'items-center',
     'bg-primary-100-white',
-    'p-4',
-    'gap-4',
-    'h-[60px]',
+    'mx-4',
+    'md:mx-0',
+    'p-3',
+    'md:p-4',
+    'gap-2',
+    'md:gap-4',
+    'h-5',
+    'md:h-7',
     'shadow-green-shadow',
+    'box-content',
     {
-      'rounded-[30px]': !showFilter,
-      'rounded-t-[30px]': showFilter,
+      'rounded-[22px]': !showFilter,
+      'md:rounded-[30px]': !showFilter,
+      'rounded-t-[22px]': showFilter,
+      'md:rounded-t-[30px]': showFilter,
       'border-b': showFilter,
       'border-b-primary-10-green-05': showFilter,
     }
   );
 
   return (
-    <div style={{ zIndex: 100000 }} className="relative w-full flex flex-col items-center h-0 mt-6">
-      <div className="w-[30%]">
+    <div
+      style={{ zIndex: 100000 }}
+      className="relative w-full flex flex-col items-center h-0 mt-4 md:mt-6"
+    >
+      <div className="w-full md:w-[550px] lg:w-[650px]">
         <div className={mainClasses}>
           <img src={iconSearch} alt="search-icon" />
           <input
