@@ -18,7 +18,10 @@ export const LayerSymbol = ({ active, img, label, ...props }: LayerSymbolProps) 
     'flex',
     'flex-col',
     'items-center',
-    'gap-1',
+    'gap-0.5',
+    'box-border',
+    'w-[70px]',
+    'h-[73px]',
     {
       'border-2 border-primary-100-green-02': active,
     }
@@ -27,7 +30,7 @@ export const LayerSymbol = ({ active, img, label, ...props }: LayerSymbolProps) 
   return (
     <button className={buttonClasses} {...props}>
       <img className="w-[54px] h-[41px] relative rounded-lg" src={img} alt={label} />
-      <span className="text-primary-100-green-04 leading-6">{label}</span>
+      <span className="text-primary-100-green-04 text-[9px] leading-6">{label}</span>
     </button>
   );
 };
