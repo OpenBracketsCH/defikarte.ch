@@ -1,6 +1,6 @@
 import className from 'classnames';
-import { FeatureCollection, Point } from 'geojson';
-import { useCallback, useEffect, useState } from 'react';
+import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../components/ui/map-icon-button/MapIconButton';
 import { filterLabelContent, searchAddress } from '../../../services/address-search.service';
@@ -11,6 +11,7 @@ import iconGpsOff from './../../../assets/icons/icon-gps-off-circle-green.svg';
 import iconGpsOn from './../../../assets/icons/icon-gps-on-circle-green.svg';
 import iconSearch from './../../../assets/icons/icon-search-dark-green.svg';
 import { FilterControl } from './filter-control/FilterControl';
+import { SearchResults } from './search-results/SearchResults';
 
 type Props = {
   map: MapInstance | null;
@@ -22,48 +23,62 @@ export const SearchBar = (props: Props) => {
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
   const [isGpsActive, setIsGpsActive] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let value = event.target.value;
+  useEffect(() => {
+    const search = async () => {
+      if (searchText.length > 2) {
+        const results = await searchAddress(searchText);
+        setSearchResults(results);
+        console.log(searchText, results);
+
+        if (results.features.length >= 0) {
+          setShowFilter(false);
+        }
+      }
+    };
+
+    const timer = setTimeout(() => {
+      search();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchText]);
+
+  const onSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
     if (!value) {
       setSearchText('');
       setSearchResults(null);
       return;
     }
 
-    if (!searchResults) {
-      setSearchText(value);
-      return;
-    }
-
-    const feature = searchResults.features.find(f => f.id?.toString() === value);
-    if (feature) {
-      value = filterLabelContent(feature.properties?.label).join(' ');
-      const bbox = feature.bbox;
-      if (bbox?.length === 4) {
-        props.map?.fitBounds([
-          [bbox[0], bbox[1]],
-          [bbox[2], bbox[3]],
-        ]);
-      } else {
-        props.map?.easyTo((feature.geometry as Point).coordinates as [number, number], 18);
-      }
-    }
-
     setSearchText(value);
   };
 
-  const onSearch = useCallback(async () => {
-    const results = await searchAddress(searchText);
-    setSearchResults(results);
-  }, [searchText]);
-
-  useEffect(() => {
-    if (searchText.length > 2) {
-      onSearch();
+  const onItemSelect = (feature: Feature<Geometry, GeoJsonProperties>) => {
+    const bbox = feature.bbox;
+    if (bbox?.length === 4) {
+      props.map?.fitBounds([
+        [bbox[0], bbox[1]],
+        [bbox[2], bbox[3]],
+      ]);
+    } else {
+      props.map?.easyTo((feature.geometry as Point).coordinates as [number, number], 18);
     }
-  }, [searchText, onSearch]);
 
+    const value = filterLabelContent(feature.properties?.label).join(' ');
+    setSearchText(value);
+  };
+
+  const onReset = () => {
+    setSearchText('');
+    setSearchResults(null);
+    searchInputRef.current?.focus();
+  };
+
+  const dropdownOpen =
+    showFilter || (searchResults?.features && searchResults.features.length > 0 === true);
   const mainClasses = className(
     'flex',
     'items-center',
@@ -79,12 +94,12 @@ export const SearchBar = (props: Props) => {
     'shadow-green-shadow',
     'box-content',
     {
-      'rounded-[22px]': !showFilter,
-      'md:rounded-[30px]': !showFilter,
-      'rounded-t-[22px]': showFilter,
-      'md:rounded-t-[30px]': showFilter,
-      'border-b': showFilter,
-      'border-b-primary-10-green-05': showFilter,
+      'rounded-[22px]': !dropdownOpen,
+      'md:rounded-[30px]': !dropdownOpen,
+      'rounded-t-[22px]': dropdownOpen,
+      'md:rounded-t-[30px]': dropdownOpen,
+      'border-b': dropdownOpen,
+      'border-b-primary-10-green-05': dropdownOpen,
     }
   );
 
@@ -104,10 +119,11 @@ export const SearchBar = (props: Props) => {
             placeholder={t('enterLocationOrAddress')}
             list="search-results"
             value={searchText}
+            ref={searchInputRef}
           />
           <div className="flex justify-end gap-2 ml-0">
             {searchText && (
-              <MapIconButton active={false} icon={iconClose} onClick={() => setSearchText('')} />
+              <MapIconButton active={false} icon={iconClose} onClick={() => onReset()} />
             )}
             <MapIconButton
               active={false}
@@ -123,13 +139,9 @@ export const SearchBar = (props: Props) => {
           </div>
         </div>
         {showFilter && <FilterControl map={props.map} />}
-        <datalist id="search-results">
-          {searchResults?.features.map(f => (
-            <option key={f.id} value={f.id}>
-              {filterLabelContent(f.properties?.label).join(' ')}
-            </option>
-          ))}
-        </datalist>
+        {!showFilter && searchResults && (
+          <SearchResults searchResults={searchResults} onItemSelect={onItemSelect} />
+        )}
       </div>
     </div>
   );
