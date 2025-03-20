@@ -30,7 +30,6 @@ export const SearchBar = (props: Props) => {
       if (searchText.length > 2) {
         const results = await searchAddress(searchText);
         setSearchResults(results);
-        console.log(searchText, results);
 
         if (results.features.length >= 0) {
           setShowFilter(false);
