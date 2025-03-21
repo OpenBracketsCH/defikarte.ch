@@ -11,6 +11,8 @@ import { createAedSource } from '../sources/aed.source';
 export class AedOverlayStrategy implements OverlayStrategy {
   private interactions: InteractionLayer[] = [];
   private filter: FilterSpecification | null = null;
+  private aedPointLayers: LayerSpecification[] = [];
+  private aedClusterLayers: LayerSpecification[] = [];
 
   constructor(filter: FilterSpecification | null = null) {
     this.filter = filter;
@@ -27,25 +29,35 @@ export class AedOverlayStrategy implements OverlayStrategy {
   createLayers(): LayerSpecification[] {
     const aedPointLayers = createAedPointLayers(
       MapConfiguration.aedPointLayerId,
-      MapConfiguration.aedSourceId
+      this.getSourceId()
     );
     const aedClusterLayers = createAedClusterLayers(
       MapConfiguration.aedPointLayerId,
-      MapConfiguration.aedSourceId
+      this.getSourceId()
     );
+
+    this.aedPointLayers = aedPointLayers;
+    this.aedClusterLayers = aedClusterLayers;
 
     return [...aedPointLayers, ...aedClusterLayers];
   }
 
-  createInteractions(map: Map) {
+  registerInteractions(map: Map) {
     const cursorClickableInteraction = new CursorClickableInteraction(map);
     const clusterZoomInteraction = new ClusterZoomInteraction(map);
-    const aedSelectInteraction = new ItemSelectInteraction(map);
+    const itemSelectInteraction = new ItemSelectInteraction(map);
 
-    const interactions = [cursorClickableInteraction, clusterZoomInteraction, aedSelectInteraction];
+    cursorClickableInteraction.on(this.aedPointLayers.map(layer => layer.id));
+    cursorClickableInteraction.on(this.aedClusterLayers.map(layer => layer.id));
+    clusterZoomInteraction.on(this.aedClusterLayers.map(layer => layer.id));
+    itemSelectInteraction.on(this.aedPointLayers.map(layer => layer.id));
+
+    const interactions = [
+      cursorClickableInteraction,
+      clusterZoomInteraction,
+      itemSelectInteraction,
+    ];
     this.interactions = interactions;
-
-    return interactions;
   }
 
   cleanup(map: Map) {

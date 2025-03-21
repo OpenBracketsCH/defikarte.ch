@@ -11,6 +11,6 @@ export interface OverlayStrategy {
   getSourceId(): string;
   createSource(): SourceSpecification | Promise<SourceSpecification>;
   createLayers(): LayerSpecification[];
-  createInteractions(map: Map): InteractionLayer[];
+  registerInteractions(map: Map): void;
   cleanup(map: Map): void;
 }

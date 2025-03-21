@@ -1,7 +1,7 @@
+import { Point } from 'geojson';
 import { Map, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
 import { InteractionLayer } from '../../../../model/map';
 import { FEATURE_STATE } from '../configuration/constants';
-import { Point } from 'geojson';
 
 export default class ItemSelectInteraction implements InteractionLayer {
   private mapInstance: Map;
@@ -10,15 +10,16 @@ export default class ItemSelectInteraction implements InteractionLayer {
 
   constructor(mapInstance: Map) {
     this.mapInstance = mapInstance;
-    this.mapInstance.on('click', e => this.unselectFeature(e));
   }
 
   public on = (layerIds: string[]): void => {
     this.layerIds = layerIds;
+    this.mapInstance.on('click', e => this.unselectFeature(e));
     this.mapInstance.on('click', this.layerIds, e => this.selectFeature(e));
   };
 
   public off = (): void => {
+    this.mapInstance.off('click', e => this.unselectFeature(e));
     this.mapInstance.off('click', this.layerIds, this.selectFeature);
   };
 

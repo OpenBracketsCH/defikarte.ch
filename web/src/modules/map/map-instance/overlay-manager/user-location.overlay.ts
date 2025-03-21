@@ -1,9 +1,9 @@
+import { FeatureCollection } from 'geojson';
 import { LayerSpecification, Map } from 'maplibre-gl';
 import { OverlayStrategy } from '../../../../model/map';
-import { createUserLocationSource } from '../sources/user-location.source';
-import { FeatureCollection } from 'geojson';
-import { createUserLocationLayers } from '../layers/user-location.layer';
 import { MapConfiguration } from '../configuration/map.configuration';
+import { createUserLocationLayers } from '../layers/user-location.layer';
+import { createUserLocationSource } from '../sources/user-location.source';
 
 export class UserLocationOverlayStrategy implements OverlayStrategy {
   getSourceId() {
@@ -11,11 +11,12 @@ export class UserLocationOverlayStrategy implements OverlayStrategy {
   }
 
   createSource() {
-    return Promise.resolve(
-      createUserLocationSource({ type: 'FeatureCollection', features: [] } as FeatureCollection)
-    );
+    return createUserLocationSource({
+      type: 'FeatureCollection',
+      features: [],
+    } as FeatureCollection);
   }
-  
+
   createLayers(): LayerSpecification[] {
     return createUserLocationLayers(
       MapConfiguration.userLocationLayerId,
@@ -23,8 +24,8 @@ export class UserLocationOverlayStrategy implements OverlayStrategy {
     );
   }
 
-  createInteractions() {
-    return [];
+  registerInteractions() {
+    // No interactions for user location
   }
 
   cleanup(map: Map) {

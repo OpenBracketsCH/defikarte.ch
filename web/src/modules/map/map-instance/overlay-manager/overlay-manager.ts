@@ -1,5 +1,5 @@
-import { OverlayStrategy } from '../../../../model/map';
 import { Map as MapInstance } from 'maplibre-gl';
+import { OverlayStrategy } from '../../../../model/map';
 
 export class OverlayManager {
   private overlays: Map<string, OverlayStrategy> = new Map();
@@ -15,7 +15,6 @@ export class OverlayManager {
     const sourceId = strategy.getSourceId();
     const source = await strategy.createSource();
     const layers = strategy.createLayers();
-    const interactions = strategy.createInteractions(map);
 
     if (!map.getSource(sourceId)) {
       map.addSource(sourceId, source);
@@ -27,14 +26,7 @@ export class OverlayManager {
       }
     });
 
-    interactions.forEach(interaction => {
-      console.log(
-        'interaction.on',
-        interaction,
-        layers.map(layer => layer.id)
-      );
-      interaction.on(layers.map(layer => layer.id));
-    });
+    strategy.registerInteractions(map);
   }
 
   removeOverlay(map: MapInstance, overlayName: string) {

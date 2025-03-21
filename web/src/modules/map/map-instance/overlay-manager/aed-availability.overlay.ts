@@ -11,6 +11,9 @@ import { createAedSource } from '../sources/aed.source';
 
 export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
   private interactions: InteractionLayer[] = [];
+  private aedPointLayers: LayerSpecification[] = [];
+  private aedClusterLayers: LayerSpecification[] = [];
+
   getSourceId() {
     return MapConfiguration.aedAvailabilitySourceId;
   }
@@ -23,25 +26,35 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
   createLayers(): LayerSpecification[] {
     const aedPointLayers = createAedPointLayers(
       MapConfiguration.aedAvailabilityPointLayerId,
-      MapConfiguration.aedAvailabilitySourceId
+      this.getSourceId()
     );
     const aedClusterLayers = createAedClusterLayers(
       MapConfiguration.aedAvailabilityPointLayerId,
-      MapConfiguration.aedAvailabilitySourceId
+      this.getSourceId()
     );
+
+    this.aedPointLayers = aedPointLayers;
+    this.aedClusterLayers = aedClusterLayers;
 
     return [...aedPointLayers, ...aedClusterLayers];
   }
 
-  createInteractions(map: Map) {
+  registerInteractions(map: Map) {
     const cursorClickableInteraction = new CursorClickableInteraction(map);
     const clusterZoomInteraction = new ClusterZoomInteraction(map);
-    const aedSelectInteraction = new ItemSelectInteraction(map);
+    const itemSelectInteraction = new ItemSelectInteraction(map);
 
-    const interactions = [cursorClickableInteraction, clusterZoomInteraction, aedSelectInteraction];
+    const interactions = [
+      cursorClickableInteraction,
+      clusterZoomInteraction,
+      itemSelectInteraction,
+    ];
     this.interactions = interactions;
 
-    return interactions;
+    cursorClickableInteraction.on(this.aedPointLayers.map(layer => layer.id));
+    cursorClickableInteraction.on(this.aedClusterLayers.map(layer => layer.id));
+    clusterZoomInteraction.on(this.aedClusterLayers.map(layer => layer.id));
+    itemSelectInteraction.on(this.aedPointLayers.map(layer => layer.id));
   }
 
   cleanup(map: Map) {
