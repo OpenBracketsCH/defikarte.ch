@@ -17,7 +17,7 @@ export const ResultItem = (props: Props) => {
   return (
     <div
       key={id}
-      className="flex first:pt-3 last:pb-4 px-3 md:px-4 py-1 cursor-pointer items-center"
+      className="flex first:pt-3 last:pb-4 px-3 md:px-4 py-1 cursor-pointer items-center last:rounded-b-[24px] last:md:rounded-b-[30px] bg-primary-100-white mx-4 md:mx-0"
       onClick={() => props.onClick(item)}
     >
       <img src={icon} alt="searc-result" />

@@ -8,9 +8,9 @@ type Props = {
 
 export const SearchResults = (props: Props) => {
   return (
-    <div className="max-h-56 overflow-auto rounded-b-[24px] md:rounded-b-[30px] bg-primary-100-white mx-4 md:mx-0">
-      {props.searchResults?.features.map(feature => (
-        <ResultItem item={feature} onClick={props.onItemSelect} />
+    <div className="overflow-auto">
+      {props.searchResults?.features.slice(0, 5).map(feature => (
+        <ResultItem item={feature} onClick={props.onItemSelect} key={feature.id} />
       ))}
     </div>
   );

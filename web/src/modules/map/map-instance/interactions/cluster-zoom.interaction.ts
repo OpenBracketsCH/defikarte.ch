@@ -1,14 +1,18 @@
 import { GeoJSONSource, Map, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
+import { InteractionLayer } from '../../../../model/map';
 
-export default class ClusterZoomInteraction {
+export default class ClusterZoomInteraction implements InteractionLayer {
   private mapInstance: Map;
+  private layerIds: string[] = [];
 
   constructor(mapInstance: Map) {
     this.mapInstance = mapInstance;
   }
 
-  public setup = (layerIds: string[]): void => {
-    this.mapInstance.on('click', layerIds, this.zoomToCluster);
+  public set = (layerIds: string[]): void => {
+    this.mapInstance.off('click', this.layerIds, this.zoomToCluster);
+    this.layerIds = layerIds;
+    this.mapInstance.on('click', this.layerIds, this.zoomToCluster);
   };
 
   private zoomToCluster = async (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {

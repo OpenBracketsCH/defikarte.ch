@@ -7,6 +7,7 @@ export const createOsmSource = (): RasterSourceSpecification => {
     tileSize: 256,
     minzoom: 0,
     maxzoom: 19,
-    attribution: '© OpenStreetMap contributors',
-  };
+    attribution:
+      '<a href="https://www.openstreetmap.org" target="_blank">© OpenStreetMap contributors</a>',
+  } as RasterSourceSpecification;
 };

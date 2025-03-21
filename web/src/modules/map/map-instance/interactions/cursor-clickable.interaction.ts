@@ -1,15 +1,20 @@
 import { Map, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
+import { InteractionLayer } from '../../../../model/map';
 
-export default class CursorClickableInteraction {
+export default class CursorClickableInteraction implements InteractionLayer {
   private mapInstance: Map;
+  private layerIds: string[] = [];
 
   constructor(mapInstance: Map) {
     this.mapInstance = mapInstance;
   }
 
-  public setup = (layerIds: string[]): void => {
-    this.mapInstance.on('mouseenter', layerIds, this.mouseenter);
-    this.mapInstance.on('mouseleave', layerIds, this.mouseleave);
+  public set = (layerIds: string[]): void => {
+    this.mapInstance.off('mouseenter', this.layerIds, this.mouseenter);
+    this.mapInstance.off('mouseleave', this.layerIds, this.mouseleave);
+    this.layerIds = layerIds;
+    this.mapInstance.on('mouseenter', this.layerIds, this.mouseenter);
+    this.mapInstance.on('mouseleave', this.layerIds, this.mouseleave);
   };
 
   private mouseenter = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {

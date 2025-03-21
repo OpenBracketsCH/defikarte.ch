@@ -1,17 +1,21 @@
 import { Map, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
+import { InteractionLayer } from '../../../../model/map';
 import { FEATURE_STATE } from '../configuration/constants';
 
-export default class AedSelectInteraction {
+export default class AedSelectInteraction implements InteractionLayer {
   private mapInstance: Map;
+  private layerIds: string[] = [];
   private selectedFeatureId: { [key: string]: number | null } = {};
 
   constructor(mapInstance: Map) {
     this.mapInstance = mapInstance;
+    this.mapInstance.on('click', e => this.unselectFeature(e));
   }
 
-  public setup = (layerIds: string[]): void => {
-    this.mapInstance.on('click', layerIds, e => this.selectFeature(e));
-    this.mapInstance.on('click', e => this.unselectFeature(e, layerIds));
+  public set = (layerIds: string[]): void => {
+    this.mapInstance.off('click', this.layerIds, this.selectFeature);
+    this.layerIds = layerIds;
+    this.mapInstance.on('click', this.layerIds, e => this.selectFeature(e));
   };
 
   private selectFeature = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {
@@ -40,19 +44,16 @@ export default class AedSelectInteraction {
     this.selectedFeatureId[source] = (featureId as number) ?? null;
   };
 
-  private unselectFeature = (
-    e: MapMouseEvent & { features?: MapGeoJSONFeature[] },
-    layerIds: string[]
-  ): void => {
+  private unselectFeature = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }): void => {
     const features = this.mapInstance.queryRenderedFeatures(e.point, {
-      layers: layerIds,
+      layers: this.layerIds,
     });
 
     if (features.length) {
       return;
     }
 
-    layerIds.forEach(layerId => {
+    this.layerIds.forEach(layerId => {
       const source = this.mapInstance.getLayer(layerId)?.source;
       if (source && this.selectedFeatureId[source]) {
         this.mapInstance.setFeatureState(

@@ -11,7 +11,8 @@ export const createAedSource = (
     cluster: true,
     clusterRadius: 75,
     clusterMaxZoom: 14,
-    attribution: '© OpenStreetMap contributors',
+    attribution:
+      '<a href="https://www.openstreetmap.org" target="_blank">© OpenStreetMap contributors</a>',
     filter: filter,
   } as GeoJSONSourceSpecification;
 };

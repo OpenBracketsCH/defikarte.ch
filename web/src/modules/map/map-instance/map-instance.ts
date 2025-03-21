@@ -1,8 +1,8 @@
 import {
-  AttributionControl,
   FilterSpecification,
   LngLatLike,
   Map,
+  MapEventType,
   StyleSpecification,
 } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -12,7 +12,7 @@ import markerGradientM from '../../../assets/icons/map-marker-count-gradient-m.s
 import markerGradientS from '../../../assets/icons/map-marker-count-gradient-s.svg';
 import markerGradientXl from '../../../assets/icons/map-marker-count-gradient-xl.svg';
 import markerGradientXs from '../../../assets/icons/map-marker-count-gradient-xs.svg';
-import { ActiveOverlayType } from '../../../model/map';
+import { ActiveOverlayType, InteractionLayer } from '../../../model/map';
 import { requestAedDataByCurrentAvailability } from '../../../services/aed-data.service';
 import { requestStyleSpecification } from '../../../services/map-style.service';
 import {
@@ -41,6 +41,9 @@ export class MapInstance {
   private mapInstance: Map | null = null;
   private activeBaseLayer: string = MapConfiguration.osmBaseMapId;
   private activeOverlay: ActiveOverlayType = ['247', 'restricted'];
+  private cursorClickableInteraction: InteractionLayer;
+  private clusterZoomInteraction: InteractionLayer;
+  private aedSelectInteraction: InteractionLayer;
 
   constructor(props: MapInstanceProps) {
     const map = new Map({
@@ -51,8 +54,11 @@ export class MapInstance {
       attributionControl: false,
     });
 
-    map.addControl(new AttributionControl(), 'bottom-left');
     map.on('load', () => this.init(map));
+
+    this.cursorClickableInteraction = new CursorClickableInteraction(map);
+    this.clusterZoomInteraction = new ClusterZoomInteraction(map);
+    this.aedSelectInteraction = new AedSelectInteraction(map);
   }
 
   public init = async (map: Map) => {
@@ -77,15 +83,27 @@ export class MapInstance {
     this.updateStyle();
   };
 
+  public on<T extends keyof MapEventType>(
+    type: T,
+    listener: (ev: MapEventType[T] & object) => void
+  ) {
+    this.mapInstance?.on(type, listener);
+  }
+
+  public off<T extends keyof MapEventType>(
+    type: T,
+    listener: (ev: MapEventType[T] & object) => void
+  ) {
+    this.mapInstance?.off(type, listener);
+  }
+
   public setActiveBaseLayer(id: string) {
     this.activeBaseLayer = id;
-
     this.updateStyle();
   }
 
   public setActiveOverlayLayer(overlay: ActiveOverlayType) {
     this.activeOverlay = overlay;
-
     this.updateStyle();
   }
 
@@ -173,15 +191,10 @@ export class MapInstance {
       MapConfiguration.aedSourceId
     );
 
-    const cursorClickableInteraction = new CursorClickableInteraction(this.mapInstance);
-    cursorClickableInteraction.setup(aedPointLayers.map(layer => layer.id));
-    cursorClickableInteraction.setup(aedClusterLayers.map(layer => layer.id));
-
-    const clusterZoomInteraction = new ClusterZoomInteraction(this.mapInstance);
-    clusterZoomInteraction.setup(aedClusterLayers.map(layer => layer.id));
-
-    const aedSelectInteraction = new AedSelectInteraction(this.mapInstance);
-    aedSelectInteraction.setup(aedPointLayers.map(layer => layer.id));
+    this.cursorClickableInteraction.set(aedPointLayers.map(layer => layer.id));
+    this.cursorClickableInteraction.set(aedClusterLayers.map(layer => layer.id));
+    this.clusterZoomInteraction.set(aedClusterLayers.map(layer => layer.id));
+    this.aedSelectInteraction.set(aedPointLayers.map(layer => layer.id));
 
     return {
       ...style,
@@ -209,15 +222,10 @@ export class MapInstance {
       MapConfiguration.aedAvailabilitySourceId
     );
 
-    const cursorClickableInteraction = new CursorClickableInteraction(this.mapInstance);
-    cursorClickableInteraction.setup(aedPointLayers.map(layer => layer.id));
-    cursorClickableInteraction.setup(aedClusterLayers.map(layer => layer.id));
-
-    const clusterZoomInteraction = new ClusterZoomInteraction(this.mapInstance);
-    clusterZoomInteraction.setup(aedClusterLayers.map(layer => layer.id));
-
-    const aedSelectInteraction = new AedSelectInteraction(this.mapInstance);
-    aedSelectInteraction.setup(aedPointLayers.map(layer => layer.id));
+    this.cursorClickableInteraction.set(aedPointLayers.map(layer => layer.id));
+    this.cursorClickableInteraction.set(aedClusterLayers.map(layer => layer.id));
+    this.clusterZoomInteraction.set(aedClusterLayers.map(layer => layer.id));
+    this.aedSelectInteraction.set(aedPointLayers.map(layer => layer.id));
 
     return {
       ...style,

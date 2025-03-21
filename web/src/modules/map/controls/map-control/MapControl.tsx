@@ -15,16 +15,18 @@ import { LayerSymbol } from './layer-symbol/LayerSymbol';
 
 type Props = {
   map: MapInstance | null;
+  setActiveBaseLayer: (id: string) => void;
 };
 
-export const MapControl = ({ map }: Props) => {
+export const MapControl = (props: Props) => {
   const { t } = useTranslation();
   const [isActive, setIsActive] = useState(false);
   const [activeBaseLayer, setActiveBaseLayer] = useState(MapConfiguration.osmBaseMapId);
 
   useEffect(() => {
-    map?.setActiveBaseLayer(activeBaseLayer);
-  }, [activeBaseLayer, map]);
+    props.map?.setActiveBaseLayer(activeBaseLayer);
+    props.setActiveBaseLayer(activeBaseLayer);
+  }, [activeBaseLayer, props]);
 
   const mainClasses = className(
     'absolute',
@@ -46,6 +48,7 @@ export const MapControl = ({ map }: Props) => {
     'right-0'
   );
 
+  const { map } = props;
   return (
     <div className={mainClasses} style={{ zIndex: 100000 }}>
       {isActive && (
