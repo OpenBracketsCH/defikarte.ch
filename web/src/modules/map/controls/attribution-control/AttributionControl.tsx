@@ -1,8 +1,6 @@
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
-import { MapInstance } from '../../map-instance/map-instance';
 
 type Props = {
-  map: MapInstance | null;
   activeBaseLayer: string;
 };
 

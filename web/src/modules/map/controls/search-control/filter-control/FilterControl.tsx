@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActiveOverlayType } from '../../../../model/map';
-import { MapInstance } from '../../map-instance/map-instance';
-import iconDefiGreen from './../../../../assets/icons/icon-defi-circle-green.svg';
-import iconDefiOrange from './../../../../assets/icons/icon-defi-circle-orange.svg';
-import iconOpeningHours from './../../../../assets/icons/icon-opening-times-circle-green.svg';
+import { ActiveOverlayType } from '../../../../../model/map';
+import { MapInstance } from '../../../map-instance/map-instance';
+import iconDefiGreen from './../../../../../assets/icons/icon-defi-circle-green.svg';
+import iconDefiOrange from './../../../../../assets/icons/icon-defi-circle-orange.svg';
+import iconOpeningHours from './../../../../../assets/icons/icon-opening-times-circle-green.svg';
 import { FilterItem } from './filter-item/FilterItem';
 
 type Props = {

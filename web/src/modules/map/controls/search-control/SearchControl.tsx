@@ -2,14 +2,14 @@ import className from 'classnames';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MapIconButton } from '../../../components/ui/map-icon-button/MapIconButton';
-import { filterLabelContent, searchAddress } from '../../../services/address-search.service';
-import { MapInstance } from '../map-instance/map-instance';
-import iconClose from './../../../assets/icons/icon-close-dark-green.svg';
-import iconFilter from './../../../assets/icons/icon-filter-dark-green.svg';
-import iconGpsOff from './../../../assets/icons/icon-gps-off-circle-green.svg';
-import iconGpsOn from './../../../assets/icons/icon-gps-on-circle-green.svg';
-import iconSearch from './../../../assets/icons/icon-search-dark-green.svg';
+import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
+import { filterLabelContent, searchAddress } from '../../../../services/address-search.service';
+import { MapInstance } from '../../map-instance/map-instance';
+import iconClose from './../../../../assets/icons/icon-close-dark-green.svg';
+import iconFilter from './../../../../assets/icons/icon-filter-dark-green.svg';
+import iconGpsOff from './../../../../assets/icons/icon-gps-off-circle-green.svg';
+import iconGpsOn from './../../../../assets/icons/icon-gps-on-circle-green.svg';
+import iconSearch from './../../../../assets/icons/icon-search-dark-green.svg';
 import { FilterControl } from './filter-control/FilterControl';
 import { SearchResults } from './search-results/SearchResults';
 
@@ -17,7 +17,7 @@ type Props = {
   map: MapInstance | null;
 };
 
-export const SearchBar = (props: Props) => {
+export const SearchControl = (props: Props) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);

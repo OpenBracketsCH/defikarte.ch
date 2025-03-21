@@ -1,6 +1,6 @@
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
-import { filterLabelContent } from '../../../../../services/address-search.service';
-import iconAddress from './../../../../../assets/icons/icon-marker-circle-green-m.svg';
+import { filterLabelContent } from '../../../../../../services/address-search.service';
+import iconAddress from './../../../../../../assets/icons/icon-marker-circle-green-m.svg';
 
 type Props = {
   item: Feature<Geometry, GeoJsonProperties>;
