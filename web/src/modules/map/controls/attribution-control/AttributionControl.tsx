@@ -15,8 +15,12 @@ export const AttributionControl = ({ activeBaseLayer }: Props) => {
       className="absolute bottom-0 left-4 px-1 bg-primary-80-white rounded-t-sm flex items-center"
       style={{ zIndex: 100000 }}
     >
-      <div className="flex items-center text-graustufen-grau-e leading-6">
-        <a href="https://maplibre.org/" target="_blank" className="text-[8px] md:text-[10px]">
+      <div className="flex items-center text-graustufen-grau-e">
+        <a
+          href="https://maplibre.org/"
+          target="_blank"
+          className="text-[8px] md:text-[10px] p-0 m-0 "
+        >
           MapLibre
         </a>
         <span className="text-[8px] md:text-[10px] mx-1">|</span>
