@@ -26,6 +26,9 @@ export class MapConfiguration {
   public static aedAvailabilityPointLayerId = 'aed-availability-layer';
   public static aedAvailabilitySourceId = 'aed-availability-source';
 
+  public static userLocationLayerId = 'user-location-layer';
+  public static userLocationSourceId = 'user-location-source';
+
   public static aedGeoJsonUrl = `${AppConfiguration.baseUrl}v2/defibrillator`;
 
   public static baseLayers: { [key: string]: string | StyleSpecification } = {

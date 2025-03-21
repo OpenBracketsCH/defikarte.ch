@@ -1,3 +1,4 @@
+import { Point } from 'geojson';
 import { GeoJSONSource, Map, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
 import { InteractionLayer } from '../../../../model/map';
 
@@ -9,10 +10,14 @@ export default class ClusterZoomInteraction implements InteractionLayer {
     this.mapInstance = mapInstance;
   }
 
-  public set = (layerIds: string[]): void => {
-    this.mapInstance.off('click', this.layerIds, this.zoomToCluster);
+  public on = (layerIds: string[]): void => {
     this.layerIds = layerIds;
     this.mapInstance.on('click', this.layerIds, this.zoomToCluster);
+  };
+
+  public off = (): void => {
+    this.mapInstance.off('click', this.layerIds, this.zoomToCluster);
+    this.layerIds = [];
   };
 
   private zoomToCluster = async (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {
@@ -31,8 +36,9 @@ export default class ClusterZoomInteraction implements InteractionLayer {
       this.mapInstance.getSource(source) as GeoJSONSource
     )?.getClusterExpansionZoom(clusterId);
 
+    const coordinates = (features[0].geometry as Point).coordinates;
     this.mapInstance.easeTo({
-      center: features[0].toJSON()['geometry']['coordinates'],
+      center: [coordinates[0], coordinates[1]],
       zoom,
     });
   };

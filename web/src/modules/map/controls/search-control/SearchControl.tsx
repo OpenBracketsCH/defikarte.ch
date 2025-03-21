@@ -26,6 +26,14 @@ export const SearchControl = (props: Props) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    if (isGpsActive) {
+      props.map?.watchUserPosition();
+    } else {
+      props.map?.clearUserPosition();
+    }
+  }, [isGpsActive, props]);
+
+  useEffect(() => {
     const search = async () => {
       if (searchText.length > 2) {
         const results = await searchAddress(searchText);
