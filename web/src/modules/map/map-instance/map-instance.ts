@@ -1,10 +1,5 @@
-import {
-  FilterSpecification,
-  LngLatLike,
-  Map,
-  MapEventType,
-  StyleSpecification,
-} from 'maplibre-gl';
+import { FeatureCollection } from 'geojson';
+import { LngLatLike, Map } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
@@ -12,9 +7,7 @@ import markerGradientM from '../../../assets/icons/map-marker-count-gradient-m.s
 import markerGradientS from '../../../assets/icons/map-marker-count-gradient-s.svg';
 import markerGradientXl from '../../../assets/icons/map-marker-count-gradient-xl.svg';
 import markerGradientXs from '../../../assets/icons/map-marker-count-gradient-xs.svg';
-import { ActiveOverlayType, InteractionLayer } from '../../../model/map';
-import { requestAedDataByCurrentAvailability } from '../../../services/aed-data.service';
-import { requestStyleSpecification } from '../../../services/map-style.service';
+import { ActiveOverlayType } from '../../../model/map';
 import {
   MARKER_GRADIENT_M_IMAGE_ID,
   MARKER_GRADIENT_S_IMAGE_ID,
@@ -25,13 +18,10 @@ import {
 } from './configuration/constants';
 import { MapConfiguration } from './configuration/map.configuration';
 import { alwaysAvailableFilterOverride, restrictedFilterOverride } from './filter/aed.filter';
-import AedSelectInteraction from './interactions/aed-select.interaction';
-import ClusterZoomInteraction from './interactions/cluster-zoom.interaction';
-import CursorClickableInteraction from './interactions/cursor-clickable.interaction';
-import { createAedAvailabilityPointLayers } from './layers/aed-availability-point.layer';
-import { createAedClusterLayers } from './layers/aed-cluster.layer';
-import { createAedPointLayers } from './layers/aed-point.layer';
-import { createAedSource } from './sources/aed.source';
+import { AedAvailabilityOverlayStrategy } from './overlay-manager/aed-availability.overlay';
+import { AedOverlayStrategy } from './overlay-manager/aed.overlay';
+import { OverlayManager } from './overlay-manager/overlay-manager';
+import { UserLocationOverlayStrategy } from './overlay-manager/user-location.overlay';
 
 type MapInstanceProps = {
   container: string | HTMLElement;
@@ -39,11 +29,9 @@ type MapInstanceProps = {
 
 export class MapInstance {
   private mapInstance: Map | null = null;
+  private overlayManager: OverlayManager = new OverlayManager();
   private activeBaseLayer: string = MapConfiguration.osmBaseMapId;
   private activeOverlay: ActiveOverlayType = ['247', 'restricted'];
-  private cursorClickableInteraction: InteractionLayer;
-  private clusterZoomInteraction: InteractionLayer;
-  private aedSelectInteraction: InteractionLayer;
 
   constructor(props: MapInstanceProps) {
     const map = new Map({
@@ -56,9 +44,24 @@ export class MapInstance {
 
     map.on('load', () => this.init(map));
 
-    this.cursorClickableInteraction = new CursorClickableInteraction(map);
-    this.clusterZoomInteraction = new ClusterZoomInteraction(map);
-    this.aedSelectInteraction = new AedSelectInteraction(map);
+    this.overlayManager.registerOverlay(
+      this.createOverlayName(['247', 'restricted']),
+      new AedOverlayStrategy()
+    );
+
+    this.overlayManager.registerOverlay(
+      this.createOverlayName(['restricted']),
+      new AedOverlayStrategy(restrictedFilterOverride)
+    );
+    this.overlayManager.registerOverlay(
+      this.createOverlayName(['247']),
+      new AedOverlayStrategy(alwaysAvailableFilterOverride)
+    );
+    this.overlayManager.registerOverlay(
+      this.createOverlayName('availability'),
+      new AedAvailabilityOverlayStrategy()
+    );
+    this.overlayManager.registerOverlay('userLocation', new UserLocationOverlayStrategy());
   }
 
   public init = async (map: Map) => {
@@ -80,29 +83,22 @@ export class MapInstance {
     });
 
     this.mapInstance = map;
-    this.updateStyle();
+    this.overlayManager.applyOverlay(this.mapInstance, this.createOverlayName(this.activeOverlay));
+    console.log('map initialized');
   };
-
-  public on<T extends keyof MapEventType>(
-    type: T,
-    listener: (ev: MapEventType[T] & object) => void
-  ) {
-    this.mapInstance?.on(type, listener);
-  }
-
-  public off<T extends keyof MapEventType>(
-    type: T,
-    listener: (ev: MapEventType[T] & object) => void
-  ) {
-    this.mapInstance?.off(type, listener);
-  }
 
   public setActiveBaseLayer(id: string) {
     this.activeBaseLayer = id;
     this.updateStyle();
   }
 
-  public setActiveOverlayLayer(overlay: ActiveOverlayType) {
+  public async setActiveOverlayLayer(overlay: ActiveOverlayType) {
+    if (!this.mapInstance || this.isEqualOverlay(overlay, this.activeOverlay)) {
+      return;
+    }
+
+    this.overlayManager.removeOverlay(this.mapInstance, this.createOverlayName(this.activeOverlay));
+    this.overlayManager.applyOverlay(this.mapInstance, this.createOverlayName(overlay));
     this.activeOverlay = overlay;
     this.updateStyle();
   }
@@ -137,7 +133,7 @@ export class MapInstance {
     if (!this.mapInstance) {
       return;
     }
-
+    /*
     const baseLayerStyle = MapConfiguration.baseLayers[this.activeBaseLayer];
 
     if (!baseLayerStyle) {
@@ -160,80 +156,45 @@ export class MapInstance {
       this.activeOverlay === 'availability'
         ? await this.extendAedAvailabilityLayers(styleSpec)
         : this.extendAedLayers(styleSpec, this.activeOverlay);
-    this.mapInstance.setStyle(updatedStyle, { diff: true });
+
+    const finalStyle = this.extendUserLocationLayer(updatedStyle);
+    console.log('finalStyle', finalStyle);
+    this.mapInstance.setStyle(finalStyle, { diff: true });
+    */
   };
 
-  private extendAedLayers = (
-    style: StyleSpecification,
-    activeOverlays: ('247' | 'restricted')[]
-  ) => {
-    if (!this.mapInstance) {
-      return style;
-    }
-
-    if (activeOverlays.length === 0) {
-      return style;
-    }
-
-    let sourceFilter: FilterSpecification | null = null;
-    if (activeOverlays.length === 1) {
-      sourceFilter =
-        activeOverlays[0] === '247' ? alwaysAvailableFilterOverride : restrictedFilterOverride;
-    }
-    const aedSource = createAedSource(MapConfiguration.aedGeoJsonUrl, sourceFilter);
-
-    const aedPointLayers = createAedPointLayers(
-      MapConfiguration.aedPointLayerId,
-      MapConfiguration.aedSourceId
-    );
-    const aedClusterLayers = createAedClusterLayers(
-      MapConfiguration.aedPointLayerId,
-      MapConfiguration.aedSourceId
-    );
-
-    this.cursorClickableInteraction.set(aedPointLayers.map(layer => layer.id));
-    this.cursorClickableInteraction.set(aedClusterLayers.map(layer => layer.id));
-    this.clusterZoomInteraction.set(aedClusterLayers.map(layer => layer.id));
-    this.aedSelectInteraction.set(aedPointLayers.map(layer => layer.id));
-
+  private createUserLocationData(coordinates: LngLatLike, accuracy: number) {
     return {
-      ...style,
-      sources: {
-        ...style.sources,
-        [MapConfiguration.aedSourceId]: aedSource,
-      },
-      layers: [...style.layers, ...aedPointLayers, ...aedClusterLayers],
-    };
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: coordinates,
+          },
+          properties: {
+            accuracy: accuracy,
+          },
+        },
+      ],
+    } as FeatureCollection;
+  }
+
+  private createOverlayName = (overlay: ActiveOverlayType) => {
+    return overlay === 'availability' ? overlay : overlay.sort().join('');
   };
 
-  private extendAedAvailabilityLayers = async (style: StyleSpecification) => {
-    if (!this.mapInstance) {
-      return style;
+  private isEqualOverlay(overlay1: ActiveOverlayType, overlay2: ActiveOverlayType): boolean {
+    if (typeof overlay1 === 'string' && typeof overlay2 === 'string') {
+      return overlay1 === overlay2;
+    } else if (Array.isArray(overlay1) && Array.isArray(overlay2)) {
+      return (
+        overlay1.length === overlay2.length &&
+        overlay1.every((value, index) => value === overlay2[index])
+      );
     }
 
-    const aedData = await requestAedDataByCurrentAvailability();
-    const aedSource = createAedSource(aedData);
-    const aedPointLayers = createAedAvailabilityPointLayers(
-      MapConfiguration.aedAvailabilityPointLayerId,
-      MapConfiguration.aedAvailabilitySourceId
-    );
-    const aedClusterLayers = createAedClusterLayers(
-      MapConfiguration.aedAvailabilityPointLayerId,
-      MapConfiguration.aedAvailabilitySourceId
-    );
-
-    this.cursorClickableInteraction.set(aedPointLayers.map(layer => layer.id));
-    this.cursorClickableInteraction.set(aedClusterLayers.map(layer => layer.id));
-    this.clusterZoomInteraction.set(aedClusterLayers.map(layer => layer.id));
-    this.aedSelectInteraction.set(aedPointLayers.map(layer => layer.id));
-
-    return {
-      ...style,
-      sources: {
-        ...style.sources,
-        [MapConfiguration.aedAvailabilitySourceId]: aedSource,
-      },
-      layers: [...style.layers, ...aedPointLayers, ...aedClusterLayers],
-    };
-  };
+    return false;
+  }
 }

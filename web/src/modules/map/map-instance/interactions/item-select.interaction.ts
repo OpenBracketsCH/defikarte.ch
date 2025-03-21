@@ -1,8 +1,9 @@
 import { Map, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
 import { InteractionLayer } from '../../../../model/map';
 import { FEATURE_STATE } from '../configuration/constants';
+import { Point } from 'geojson';
 
-export default class AedSelectInteraction implements InteractionLayer {
+export default class ItemSelectInteraction implements InteractionLayer {
   private mapInstance: Map;
   private layerIds: string[] = [];
   private selectedFeatureId: { [key: string]: number | null } = {};
@@ -12,10 +13,13 @@ export default class AedSelectInteraction implements InteractionLayer {
     this.mapInstance.on('click', e => this.unselectFeature(e));
   }
 
-  public set = (layerIds: string[]): void => {
-    this.mapInstance.off('click', this.layerIds, this.selectFeature);
+  public on = (layerIds: string[]): void => {
     this.layerIds = layerIds;
     this.mapInstance.on('click', this.layerIds, e => this.selectFeature(e));
+  };
+
+  public off = (): void => {
+    this.mapInstance.off('click', this.layerIds, this.selectFeature);
   };
 
   private selectFeature = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {
@@ -23,12 +27,14 @@ export default class AedSelectInteraction implements InteractionLayer {
       return;
     }
 
+    const coordinates = (e.features[0].geometry as Point).coordinates;
     const source = e.features[0].source;
     const zoom = this.mapInstance.getZoom();
     this.mapInstance.easeTo({
-      center: e.features[0].toJSON()['geometry']['coordinates'],
+      center: [coordinates[0], coordinates[1]],
       zoom,
     });
+
     const featureId = e.features[0].id;
     if (this.selectedFeatureId[source]) {
       this.mapInstance.setFeatureState(
