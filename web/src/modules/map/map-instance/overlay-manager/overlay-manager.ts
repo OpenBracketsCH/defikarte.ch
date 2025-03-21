@@ -1,4 +1,4 @@
-import { Map as MapInstance } from 'maplibre-gl';
+import { Map as MapInstance, StyleSpecification } from 'maplibre-gl';
 import { OverlayStrategy } from '../../../../model/map';
 
 export class OverlayManager {
@@ -8,7 +8,7 @@ export class OverlayManager {
     this.overlays.set(name, strategy);
   }
 
-  async applyOverlay(map: MapInstance, overlayName: string) {
+  async applyOverlay(map: MapInstance, overlayName: string): Promise<void> {
     const strategy = this.overlays.get(overlayName);
     if (!strategy) return;
 
@@ -27,6 +27,26 @@ export class OverlayManager {
     });
 
     strategy.registerInteractions(map);
+  }
+
+  async applyOverlayOnStyle(
+    overlayName: string,
+    style: StyleSpecification
+  ): Promise<StyleSpecification> {
+    const strategy = this.overlays.get(overlayName);
+    if (!strategy) return style;
+
+    const sourceId = strategy.getSourceId();
+    const source = await strategy.createSource();
+    const layers = strategy.createLayers();
+
+    const newStyle = {
+      ...style,
+      sources: { ...style.sources, [sourceId]: source },
+      layers: [...style.layers, ...layers],
+    };
+
+    return newStyle;
   }
 
   removeOverlay(map: MapInstance, overlayName: string) {

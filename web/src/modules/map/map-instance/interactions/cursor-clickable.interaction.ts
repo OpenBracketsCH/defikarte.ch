@@ -18,6 +18,7 @@ export default class CursorClickableInteraction implements InteractionLayer {
   public off = (): void => {
     this.mapInstance.off('mouseenter', this.layerIds, this.mouseenter);
     this.mapInstance.off('mouseleave', this.layerIds, this.mouseleave);
+    this.layerIds = [];
   };
 
   private mouseenter = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {

@@ -21,6 +21,7 @@ export default class ItemSelectInteraction implements InteractionLayer {
   public off = (): void => {
     this.mapInstance.off('click', e => this.unselectFeature(e));
     this.mapInstance.off('click', this.layerIds, this.selectFeature);
+    this.layerIds = [];
   };
 
   private selectFeature = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {

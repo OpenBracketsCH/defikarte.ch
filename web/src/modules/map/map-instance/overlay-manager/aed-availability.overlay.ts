@@ -44,12 +44,7 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
     const clusterZoomInteraction = new ClusterZoomInteraction(map);
     const itemSelectInteraction = new ItemSelectInteraction(map);
 
-    const interactions = [
-      cursorClickableInteraction,
-      clusterZoomInteraction,
-      itemSelectInteraction,
-    ];
-    this.interactions = interactions;
+    this.interactions = [cursorClickableInteraction, clusterZoomInteraction, itemSelectInteraction];
 
     cursorClickableInteraction.on(this.aedPointLayers.map(layer => layer.id));
     cursorClickableInteraction.on(this.aedClusterLayers.map(layer => layer.id));
@@ -58,7 +53,7 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
   }
 
   cleanup(map: Map) {
-    const layers = this.createLayers();
+    const layers = [...this.aedPointLayers, ...this.aedClusterLayers];
     layers.forEach(layer => {
       if (map.getLayer(layer.id)) {
         map.removeLayer(layer.id);

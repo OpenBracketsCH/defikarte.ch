@@ -12,7 +12,6 @@ import iconGpsOn from './../../../../assets/icons/icon-gps-on-circle-green.svg';
 import iconSearch from './../../../../assets/icons/icon-search-dark-green.svg';
 import { FilterControl } from './filter-control/FilterControl';
 import { SearchResults } from './search-results/SearchResults';
-import { useGeolocation } from '../../hooks/useGeolocation';
 
 type Props = {
   map: MapInstance | null;
@@ -25,16 +24,14 @@ export const SearchControl = (props: Props) => {
   const [isGpsActive, setIsGpsActive] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const geolocation = useGeolocation();
 
   useEffect(() => {
-    if (isGpsActive && geolocation.geolocation) {
-      props.map?.easyTo([
-        geolocation.geolocation.coords.longitude,
-        geolocation.geolocation.coords.latitude,
-      ]);
+    if (isGpsActive) {
+      props.map?.watchUserPosition();
+    } else {
+      props.map?.clearUserPosition();
     }
-  }, [geolocation.geolocation, isGpsActive, props]);
+  }, [isGpsActive, props]);
 
   useEffect(() => {
     const search = async () => {

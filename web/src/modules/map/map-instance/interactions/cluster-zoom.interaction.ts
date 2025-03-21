@@ -17,6 +17,7 @@ export default class ClusterZoomInteraction implements InteractionLayer {
 
   public off = (): void => {
     this.mapInstance.off('click', this.layerIds, this.zoomToCluster);
+    this.layerIds = [];
   };
 
   private zoomToCluster = async (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {

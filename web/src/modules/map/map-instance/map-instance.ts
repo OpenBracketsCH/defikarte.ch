@@ -1,5 +1,5 @@
 import { FeatureCollection } from 'geojson';
-import { LngLatLike, Map } from 'maplibre-gl';
+import { GeoJSONSource, LngLatLike, Map, StyleSpecification } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
@@ -8,6 +8,8 @@ import markerGradientS from '../../../assets/icons/map-marker-count-gradient-s.s
 import markerGradientXl from '../../../assets/icons/map-marker-count-gradient-xl.svg';
 import markerGradientXs from '../../../assets/icons/map-marker-count-gradient-xs.svg';
 import { ActiveOverlayType } from '../../../model/map';
+import { GeolocationService } from '../../../services/geolocation.service';
+import { requestStyleSpecification } from '../../../services/map-style.service';
 import {
   MARKER_GRADIENT_M_IMAGE_ID,
   MARKER_GRADIENT_S_IMAGE_ID,
@@ -30,6 +32,7 @@ type MapInstanceProps = {
 export class MapInstance {
   private mapInstance: Map | null = null;
   private overlayManager: OverlayManager = new OverlayManager();
+  private geolocationService: GeolocationService = new GeolocationService();
   private activeBaseLayer: string = MapConfiguration.osmBaseMapId;
   private activeOverlay: ActiveOverlayType = ['247', 'restricted'];
 
@@ -61,7 +64,10 @@ export class MapInstance {
       this.createOverlayName('availability'),
       new AedAvailabilityOverlayStrategy()
     );
-    this.overlayManager.registerOverlay('userLocation', new UserLocationOverlayStrategy());
+    this.overlayManager.registerOverlay(
+      MapConfiguration.userLocationLayerId,
+      new UserLocationOverlayStrategy(map)
+    );
   }
 
   public init = async (map: Map) => {
@@ -84,12 +90,29 @@ export class MapInstance {
 
     this.mapInstance = map;
     this.overlayManager.applyOverlay(this.mapInstance, this.createOverlayName(this.activeOverlay));
-    console.log('map initialized');
+    this.overlayManager.applyOverlay(this.mapInstance, MapConfiguration.userLocationLayerId);
+
+    console.log('Map initialized');
   };
 
-  public setActiveBaseLayer(id: string) {
+  public async setActiveBaseLayer(id: string) {
+    if (!this.mapInstance || this.activeBaseLayer === id) {
+      return;
+    }
+
+    let style = await this.getBaseLayerStyleSpec(id);
+    style = await this.overlayManager.applyOverlayOnStyle(
+      this.createOverlayName(this.activeOverlay),
+      style
+    );
+
+    style = await this.overlayManager.applyOverlayOnStyle(
+      MapConfiguration.userLocationLayerId,
+      style
+    );
+
     this.activeBaseLayer = id;
-    this.updateStyle();
+    this.mapInstance?.setStyle(style, { diff: true });
   }
 
   public async setActiveOverlayLayer(overlay: ActiveOverlayType) {
@@ -100,7 +123,6 @@ export class MapInstance {
     this.overlayManager.removeOverlay(this.mapInstance, this.createOverlayName(this.activeOverlay));
     this.overlayManager.applyOverlay(this.mapInstance, this.createOverlayName(overlay));
     this.activeOverlay = overlay;
-    this.updateStyle();
   }
 
   public easyTo(coordinates: LngLatLike, zoom?: number) {
@@ -129,15 +151,39 @@ export class MapInstance {
     this.mapInstance?.remove();
   };
 
-  private updateStyle = async () => {
+  public watchUserPosition = async () => {
     if (!this.mapInstance) {
       return;
     }
-    /*
-    const baseLayerStyle = MapConfiguration.baseLayers[this.activeBaseLayer];
 
-    if (!baseLayerStyle) {
+    const newWatch = this.geolocationService.watchPosition(e =>
+      this.setUserLocation(MapConfiguration.userLocationSourceId, e)
+    );
+
+    if (!newWatch) {
       return;
+    }
+
+    const currentPostion = await this.geolocationService.getCurrentPosition();
+    if (currentPostion) {
+      this.setUserLocation(MapConfiguration.userLocationSourceId, currentPostion);
+      this.easyTo([currentPostion?.coords.longitude || 0, currentPostion?.coords.latitude || 0]);
+    }
+  };
+
+  public clearUserPosition = () => {
+    if (!this.mapInstance) {
+      return;
+    }
+
+    this.setUserLocation(MapConfiguration.userLocationSourceId, null);
+    this.geolocationService.clearWatch();
+  };
+
+  private getBaseLayerStyleSpec = async (baseLayerId: string): Promise<StyleSpecification> => {
+    const baseLayerStyle = MapConfiguration.baseLayers[baseLayerId];
+    if (!this.mapInstance || !baseLayerStyle) {
+      return this.getEmptyStyleSpec();
     }
 
     let styleSpec: StyleSpecification | null = null;
@@ -148,19 +194,28 @@ export class MapInstance {
     }
 
     if (!styleSpec) {
-      this.mapInstance.setStyle({ layers: {}, sources: {}, version: 8 } as StyleSpecification);
+      return this.getEmptyStyleSpec();
+    }
+
+    return styleSpec;
+  };
+
+  private setUserLocation = (sourceId: string, e: GeolocationPosition | null) => {
+    const source = this.mapInstance?.getSource(sourceId) as GeoJSONSource;
+    if (!source) {
       return;
     }
 
-    const updatedStyle =
-      this.activeOverlay === 'availability'
-        ? await this.extendAedAvailabilityLayers(styleSpec)
-        : this.extendAedLayers(styleSpec, this.activeOverlay);
+    if (!e) {
+      source.setData({ type: 'FeatureCollection', features: [] });
+      return;
+    }
 
-    const finalStyle = this.extendUserLocationLayer(updatedStyle);
-    console.log('finalStyle', finalStyle);
-    this.mapInstance.setStyle(finalStyle, { diff: true });
-    */
+    const data = this.createUserLocationData(
+      [e.coords.longitude, e.coords.latitude],
+      e.coords.accuracy
+    );
+    source.setData(data);
   };
 
   private createUserLocationData(coordinates: LngLatLike, accuracy: number) {
@@ -197,4 +252,8 @@ export class MapInstance {
 
     return false;
   }
+
+  private getEmptyStyleSpec = (): StyleSpecification => {
+    return { layers: {}, sources: {}, version: 8 } as StyleSpecification;
+  };
 }
