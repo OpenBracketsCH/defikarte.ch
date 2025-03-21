@@ -27,7 +27,7 @@ export const createUserLocationLayers = (baseId: string, source: string): LayerS
       'circle-opacity': 1,
       'circle-radius': 10,
       'circle-blur': 0,
-      'circle-stroke-width': 5,
+      'circle-stroke-width': ['step', ['get', 'accuracy'], 7, 50, 12, 200, 30],
       'circle-stroke-color': COLORS.USER_LOCATION,
       'circle-stroke-opacity': 0.3,
     },
