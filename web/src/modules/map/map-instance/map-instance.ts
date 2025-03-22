@@ -151,24 +151,33 @@ export class MapInstance {
     this.mapInstance?.remove();
   };
 
-  public watchUserPosition = async () => {
+  public watchUserPosition = async (): Promise<boolean> => {
+    let success = false;
     if (!this.mapInstance) {
-      return;
+      return success;
     }
 
-    const newWatch = this.geolocationService.watchPosition(e =>
-      this.setUserLocation(MapConfiguration.userLocationSourceId, e)
+    const isNewWatch = this.geolocationService.watchPosition(
+      pos => {
+        this.setUserLocation(MapConfiguration.userLocationSourceId, pos);
+      },
+      error => {
+        console.error('User location error', error);
+      }
     );
 
-    if (!newWatch) {
-      return;
+    if (!isNewWatch) {
+      return success;
     }
 
     const currentPostion = await this.geolocationService.getCurrentPosition();
     if (currentPostion) {
       this.setUserLocation(MapConfiguration.userLocationSourceId, currentPostion);
       this.easyTo([currentPostion?.coords.longitude || 0, currentPostion?.coords.latitude || 0]);
+      success = true;
     }
+
+    return success;
   };
 
   public clearUserPosition = () => {

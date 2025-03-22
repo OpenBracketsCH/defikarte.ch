@@ -26,11 +26,18 @@ export const SearchControl = (props: Props) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (isGpsActive) {
-      props.map?.watchUserPosition();
-    } else {
-      props.map?.clearUserPosition();
-    }
+    const init = async () => {
+      if (isGpsActive) {
+        const success = await props.map?.watchUserPosition();
+        if (!success) {
+          setIsGpsActive(false);
+        }
+      } else {
+        props.map?.clearUserPosition();
+      }
+    };
+
+    init();
   }, [isGpsActive, props]);
 
   useEffect(() => {
