@@ -54,16 +54,22 @@ export const MapControl = (props: Props) => {
       {isActive && (
         <div className="md:mr-3 flex flex-col md:flex-row gap-2">
           <LayerSymbol
-            active={activeBaseLayer === MapConfiguration.swisstopoBaseMapId}
+            active={activeBaseLayer === MapConfiguration.osmVectorBasemapId}
             img={swisstopoBaseMapImage}
             label={t('basemap')}
-            onClick={() => setActiveBaseLayer(MapConfiguration.swisstopoBaseMapId)}
+            onClick={() => setActiveBaseLayer(MapConfiguration.osmVectorBasemapId)}
           />
           <LayerSymbol
             active={activeBaseLayer === MapConfiguration.osmBaseMapId}
             img={osmImage}
             label={t('osm')}
             onClick={() => setActiveBaseLayer(MapConfiguration.osmBaseMapId)}
+          />
+          <LayerSymbol
+            active={activeBaseLayer === MapConfiguration.swisstopoBaseMapId}
+            img={swisstopoBaseMapImage}
+            label={t('basemap')}
+            onClick={() => setActiveBaseLayer(MapConfiguration.swisstopoBaseMapId)}
           />
           <LayerSymbol
             active={activeBaseLayer === MapConfiguration.swisstopoImageryBaseMapId}

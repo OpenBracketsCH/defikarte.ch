@@ -7,18 +7,13 @@ export class MapConfiguration {
   public static defaultCenter: [number, number] = [7.4, 46.95];
   public static defaultZoom: number = 10;
 
+  public static osmVectorBasemapId = 'osm-vector';
   public static osmBaseMapId = 'osm-common';
   public static swisstopoBaseMapId = 'swisstopo-basemap';
   public static swisstopoImageryBaseMapId = 'swisstopo-imagery-basemap';
 
   public static osmBaseMapLayerId = 'osm-common-layer';
   public static osmLayerSourceId = 'osm-common-source';
-
-  public static swisstopoBaseMapLayerId = 'siwsstopo-basemap-layer';
-  public static swisstopoBaseMapLayerSourceId = 'siwsstopo-basemap-source';
-
-  public static swisstopoImageryBaseMapLayerId = 'swisstopo-imagery-basemap-layer';
-  public static swisstopoImageryBaseMapLayerSourceId = 'swisstopo-imagery-basemap-source';
 
   public static aedPointLayerId = 'aed-layer';
   public static aedSourceId = 'aed-source';
@@ -32,6 +27,8 @@ export class MapConfiguration {
   public static aedGeoJsonUrl = `${AppConfiguration.baseUrl}v2/defibrillator`;
 
   public static baseLayers: { [key: string]: string | StyleSpecification } = {
+    [this.osmVectorBasemapId]:
+      'https://api.maptiler.com/maps/0195c3eb-ac1e-7b68-a394-3508e7d9f182/style.json?key=rkkVBvinLq3noddWXK67',
     [this.osmBaseMapId]: {
       version: 8,
       sources: {
