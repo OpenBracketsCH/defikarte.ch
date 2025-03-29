@@ -13,6 +13,7 @@ import iconGpsOn from './../../../../assets/icons/icon-gps-on-circle-green.svg';
 import iconSearch from './../../../../assets/icons/icon-search-dark-green.svg';
 import { FilterControl } from './filter-control/FilterControl';
 import { SearchResults } from './search-results/SearchResults';
+import { useUserLocation } from '../../hooks/useUserLocation';
 
 type Props = {
   map: MapInstance | null;
@@ -23,24 +24,9 @@ export const SearchControl = (props: Props) => {
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
   const [activeOverlay, setActiveOverlay] = useState<ActiveOverlayType>(['247', 'restricted']);
-  const [isGpsActive, setIsGpsActive] = useState(false);
+  const { isGpsActive, setIsGpsActive } = useUserLocation({ map: props.map });
   const [showFilter, setShowFilter] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const init = async () => {
-      if (isGpsActive) {
-        const success = await props.map?.watchUserPosition();
-        if (!success) {
-          setIsGpsActive(false);
-        }
-      } else {
-        props.map?.clearUserPosition();
-      }
-    };
-
-    init();
-  }, [isGpsActive, props]);
 
   useEffect(() => {
     const search = async () => {

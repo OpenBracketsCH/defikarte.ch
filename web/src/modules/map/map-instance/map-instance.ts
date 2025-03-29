@@ -151,35 +151,25 @@ export class MapInstance {
     this.mapInstance?.remove();
   };
 
-  public watchUserPosition = async (): Promise<boolean> => {
-    if (!this.mapInstance) {
-      return false;
+  public setUserLocation = (sourceId: string, e: GeolocationPosition | null) => {
+    const source = this.mapInstance?.getSource(sourceId) as GeoJSONSource;
+    if (!source) {
+      return;
     }
 
-    const isNewWatch = this.geolocationService.watchPosition(
-      pos => {
-        this.setUserLocation(MapConfiguration.userLocationSourceId, pos);
-      },
-      error => {
-        console.error('User location error', error);
-      }
+    if (!e) {
+      source.setData({ type: 'FeatureCollection', features: [] });
+      return;
+    }
+
+    const data = this.createUserLocationData(
+      [e.coords.longitude, e.coords.latitude],
+      e.coords.accuracy
     );
-
-    if (!isNewWatch) {
-      return true;
-    }
-
-    const currentPostion = await this.geolocationService.getCurrentPosition();
-    if (currentPostion) {
-      this.setUserLocation(MapConfiguration.userLocationSourceId, currentPostion);
-      this.easyTo([currentPostion?.coords.longitude || 0, currentPostion?.coords.latitude || 0]);
-      return true;
-    }
-
-    return false;
+    source.setData(data);
   };
 
-  public clearUserPosition = () => {
+  public clearUserLocation = () => {
     if (!this.mapInstance) {
       return;
     }
@@ -206,24 +196,6 @@ export class MapInstance {
     }
 
     return styleSpec;
-  };
-
-  private setUserLocation = (sourceId: string, e: GeolocationPosition | null) => {
-    const source = this.mapInstance?.getSource(sourceId) as GeoJSONSource;
-    if (!source) {
-      return;
-    }
-
-    if (!e) {
-      source.setData({ type: 'FeatureCollection', features: [] });
-      return;
-    }
-
-    const data = this.createUserLocationData(
-      [e.coords.longitude, e.coords.latitude],
-      e.coords.accuracy
-    );
-    source.setData(data);
   };
 
   private createUserLocationData(coordinates: LngLatLike, accuracy: number) {
