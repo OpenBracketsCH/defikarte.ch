@@ -152,9 +152,8 @@ export class MapInstance {
   };
 
   public watchUserPosition = async (): Promise<boolean> => {
-    let success = false;
     if (!this.mapInstance) {
-      return success;
+      return false;
     }
 
     const isNewWatch = this.geolocationService.watchPosition(
@@ -167,17 +166,17 @@ export class MapInstance {
     );
 
     if (!isNewWatch) {
-      return success;
+      return true;
     }
 
     const currentPostion = await this.geolocationService.getCurrentPosition();
     if (currentPostion) {
       this.setUserLocation(MapConfiguration.userLocationSourceId, currentPostion);
       this.easyTo([currentPostion?.coords.longitude || 0, currentPostion?.coords.latitude || 0]);
-      success = true;
+      return true;
     }
 
-    return success;
+    return false;
   };
 
   public clearUserPosition = () => {

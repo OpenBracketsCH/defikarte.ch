@@ -3,6 +3,7 @@ import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Point } from '
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
+import { ActiveOverlayType } from '../../../../model/map';
 import { filterLabelContent, searchAddress } from '../../../../services/address-search.service';
 import { MapInstance } from '../../map-instance/map-instance';
 import iconClose from './../../../../assets/icons/icon-close-dark-green.svg';
@@ -21,6 +22,7 @@ export const SearchControl = (props: Props) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
+  const [activeOverlay, setActiveOverlay] = useState<ActiveOverlayType>(['247', 'restricted']);
   const [isGpsActive, setIsGpsActive] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -152,7 +154,13 @@ export const SearchControl = (props: Props) => {
             />
           </div>
         </div>
-        {showFilter && <FilterControl map={props.map} />}
+        {showFilter && (
+          <FilterControl
+            map={props.map}
+            activeOverlay={activeOverlay}
+            setActiveOverlay={setActiveOverlay}
+          />
+        )}
         {!showFilter && searchResults && (
           <SearchResults searchResults={searchResults} onItemSelect={onItemSelect} />
         )}

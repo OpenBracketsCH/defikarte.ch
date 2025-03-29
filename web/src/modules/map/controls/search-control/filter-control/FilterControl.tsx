@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActiveOverlayType } from '../../../../../model/map';
 import { MapInstance } from '../../../map-instance/map-instance';
@@ -9,11 +9,12 @@ import { FilterItem } from './filter-item/FilterItem';
 
 type Props = {
   map: MapInstance | null;
+  activeOverlay: ActiveOverlayType;
+  setActiveOverlay: React.Dispatch<React.SetStateAction<ActiveOverlayType>>;
 };
 
-export const FilterControl = (props: Props) => {
+export const FilterControl = ({ map, activeOverlay, setActiveOverlay }: Props) => {
   const { t } = useTranslation();
-  const [activeOverlay, setActiveOverlay] = useState<ActiveOverlayType>(['247', 'restricted']);
 
   const onFilterChange = (e: React.ChangeEvent<HTMLInputElement>, value: ActiveOverlayType) => {
     setActiveOverlay(a => {
@@ -30,8 +31,8 @@ export const FilterControl = (props: Props) => {
   };
 
   useEffect(() => {
-    props.map?.setActiveOverlayLayer(activeOverlay);
-  }, [activeOverlay, props.map]);
+    map?.setActiveOverlayLayer(activeOverlay);
+  }, [map, activeOverlay, setActiveOverlay]);
 
   return (
     <div className="mx-4 md:mx-0">
