@@ -16,20 +16,16 @@ export const createUserLocationLayers = (baseId: string, source: string): LayerS
       'circle-stroke-width': 3,
       'circle-stroke-color': COLORS.PRIMARY_100_WHITE,
     },
+    filter: ['==', ['geometry-type'], 'Point'],
   };
 
   const singlePointStrokeLayer: LayerSpecification = {
     id: `${baseId}-single-point-stroke`,
     source: source,
-    type: 'circle',
+    type: 'fill',
     paint: {
-      'circle-color': 'transparent',
-      'circle-opacity': 1,
-      'circle-radius': 10,
-      'circle-blur': 0,
-      'circle-stroke-width': ['step', ['get', 'accuracy'], 7, 50, 12, 200, 30],
-      'circle-stroke-color': COLORS.USER_LOCATION,
-      'circle-stroke-opacity': 0.3,
+      'fill-color': COLORS.USER_LOCATION,
+      'fill-opacity': 0.3,
     },
   };
 

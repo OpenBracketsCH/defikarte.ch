@@ -1,10 +1,12 @@
 import className from 'classnames';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson';
 import { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { ActiveOverlayType } from '../../../../model/map';
 import { filterLabelContent, searchAddress } from '../../../../services/address-search.service';
+import { useUserLocation } from '../../hooks/useUserLocation';
 import { MapInstance } from '../../map-instance/map-instance';
 import iconClose from './../../../../assets/icons/icon-close-dark-green.svg';
 import iconFilter from './../../../../assets/icons/icon-filter-dark-green.svg';
@@ -13,7 +15,6 @@ import iconGpsOn from './../../../../assets/icons/icon-gps-on-circle-green.svg';
 import iconSearch from './../../../../assets/icons/icon-search-dark-green.svg';
 import { FilterControl } from './filter-control/FilterControl';
 import { SearchResults } from './search-results/SearchResults';
-import { useUserLocation } from '../../hooks/useUserLocation';
 
 type Props = {
   map: MapInstance | null;
@@ -24,9 +25,21 @@ export const SearchControl = (props: Props) => {
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
   const [activeOverlay, setActiveOverlay] = useState<ActiveOverlayType>(['247', 'restricted']);
-  const { isGpsActive, setIsGpsActive } = useUserLocation({ map: props.map });
+  const {
+    isActive: isGpsActive,
+    setIsActive: setIsGpsActive,
+    error: locationError,
+  } = useUserLocation({
+    map: props.map,
+  });
   const [showFilter, setShowFilter] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (locationError) {
+      toast.error(t(locationError));
+    }
+  }, [locationError, setIsGpsActive, t]);
 
   useEffect(() => {
     const search = async () => {
