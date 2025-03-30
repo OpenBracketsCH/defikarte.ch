@@ -1,5 +1,6 @@
-import { FeatureCollection } from 'geojson';
-import { GeoJSONSource, LngLatLike, Map, StyleSpecification } from 'maplibre-gl';
+import { circle } from '@turf/circle';
+import { Feature, FeatureCollection, Point } from 'geojson';
+import { GeoJSONSource, LngLatBoundsLike, LngLatLike, Map, StyleSpecification } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
@@ -8,7 +9,6 @@ import markerGradientS from '../../../assets/icons/map-marker-count-gradient-s.s
 import markerGradientXl from '../../../assets/icons/map-marker-count-gradient-xl.svg';
 import markerGradientXs from '../../../assets/icons/map-marker-count-gradient-xs.svg';
 import { ActiveOverlayType } from '../../../model/map';
-import { GeolocationService } from '../../../services/geolocation.service';
 import { requestStyleSpecification } from '../../../services/map-style.service';
 import {
   MARKER_GRADIENT_M_IMAGE_ID,
@@ -32,7 +32,6 @@ type MapInstanceProps = {
 export class MapInstance {
   private mapInstance: Map | null = null;
   private overlayManager: OverlayManager = new OverlayManager();
-  private geolocationService: GeolocationService = new GeolocationService();
   private activeBaseLayer: string = MapConfiguration.osmBaseMapId;
   private activeOverlay: ActiveOverlayType = ['247', 'restricted'];
 
@@ -132,7 +131,7 @@ export class MapInstance {
     });
   }
 
-  public fitBounds(bounds: [[number, number], [number, number]]) {
+  public fitBounds(bounds: LngLatBoundsLike) {
     this.mapInstance?.fitBounds(bounds, {
       padding: 10,
       maxZoom: 18,
@@ -151,41 +150,30 @@ export class MapInstance {
     this.mapInstance?.remove();
   };
 
-  public watchUserPosition = async (): Promise<boolean> => {
-    if (!this.mapInstance) {
-      return false;
+  public setUserLocation = (sourceId: string, e: GeolocationPosition | null) => {
+    const source = this.mapInstance?.getSource(sourceId) as GeoJSONSource;
+    if (!source) {
+      return;
     }
 
-    const isNewWatch = this.geolocationService.watchPosition(
-      pos => {
-        this.setUserLocation(MapConfiguration.userLocationSourceId, pos);
-      },
-      error => {
-        console.error('User location error', error);
-      }
+    if (!e) {
+      source.setData({ type: 'FeatureCollection', features: [] });
+      return;
+    }
+
+    const data = this.createUserLocationData(
+      [e.coords.longitude, e.coords.latitude],
+      e.coords.accuracy
     );
-
-    if (!isNewWatch) {
-      return true;
-    }
-
-    const currentPostion = await this.geolocationService.getCurrentPosition();
-    if (currentPostion) {
-      this.setUserLocation(MapConfiguration.userLocationSourceId, currentPostion);
-      this.easyTo([currentPostion?.coords.longitude || 0, currentPostion?.coords.latitude || 0]);
-      return true;
-    }
-
-    return false;
+    source.setData(data);
   };
 
-  public clearUserPosition = () => {
+  public clearUserLocation = () => {
     if (!this.mapInstance) {
       return;
     }
 
     this.setUserLocation(MapConfiguration.userLocationSourceId, null);
-    this.geolocationService.clearWatch();
   };
 
   private getBaseLayerStyleSpec = async (baseLayerId: string): Promise<StyleSpecification> => {
@@ -208,39 +196,24 @@ export class MapInstance {
     return styleSpec;
   };
 
-  private setUserLocation = (sourceId: string, e: GeolocationPosition | null) => {
-    const source = this.mapInstance?.getSource(sourceId) as GeoJSONSource;
-    if (!source) {
-      return;
-    }
-
-    if (!e) {
-      source.setData({ type: 'FeatureCollection', features: [] });
-      return;
-    }
-
-    const data = this.createUserLocationData(
-      [e.coords.longitude, e.coords.latitude],
-      e.coords.accuracy
-    );
-    source.setData(data);
-  };
-
   private createUserLocationData(coordinates: LngLatLike, accuracy: number) {
+    const userLocationPoint = {
+      geometry: { type: 'Point', coordinates: coordinates },
+      type: 'Feature',
+      properties: { accuracy },
+    } as Feature<Point>;
+
+    const userLocation = circle(userLocationPoint, accuracy / 1000, {
+      steps: 64,
+      units: 'kilometers',
+      properties: {
+        accuracy: accuracy,
+      },
+    });
+
     return {
       type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: coordinates,
-          },
-          properties: {
-            accuracy: accuracy,
-          },
-        },
-      ],
+      features: [userLocation, userLocationPoint],
     } as FeatureCollection;
   }
 

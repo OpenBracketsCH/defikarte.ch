@@ -1,10 +1,13 @@
 export class GeolocationService {
   private watchId: number = 0;
 
-  public getCurrentPosition(): Promise<GeolocationPosition | null> {
-    return new Promise<GeolocationPosition | null>(resolve => {
+  public getCurrentPosition(options?: PositionOptions): Promise<GeolocationPosition | null> {
+    return new Promise<GeolocationPosition | null>((resolve, reject) => {
       if (!navigator.geolocation) {
-        resolve(null);
+        reject({
+          code: GeolocationPositionError.POSITION_UNAVAILABLE,
+          message: 'Geolocation is not available',
+        } as GeolocationPositionError);
         return;
       }
 
@@ -12,13 +15,11 @@ export class GeolocationService {
         resolve(position);
       };
 
-      const errorCallback = () => {
-        resolve(null);
+      const errorCallback = (e: GeolocationPositionError) => {
+        reject(e);
       };
 
-      navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
-        timeout: 5000,
-      });
+      navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
     });
   }
 
@@ -26,13 +27,10 @@ export class GeolocationService {
     successCallback: PositionCallback,
     errorCallback?: PositionErrorCallback,
     options?: PositionOptions
-  ): boolean {
+  ): void {
     if (navigator.geolocation && this.watchId === 0) {
       this.watchId = navigator.geolocation.watchPosition(successCallback, errorCallback, options);
-      return true;
     }
-
-    return false;
   }
 
   public clearWatch(): void {

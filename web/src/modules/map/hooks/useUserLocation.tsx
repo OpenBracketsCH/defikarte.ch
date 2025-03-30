@@ -1,0 +1,116 @@
+import circle from '@turf/circle';
+import { Position } from 'geojson';
+import { LngLatBounds, LngLatLike } from 'maplibre-gl';
+import { useCallback, useEffect, useState } from 'react';
+import { GeolocationService } from '../../../services/geolocation.service';
+import { MapConfiguration } from '../map-instance/configuration/map.configuration';
+import { MapInstance } from '../map-instance/map-instance';
+import { usePrevious } from './usePrevious';
+
+const calculateBounds = (position: GeolocationPosition): LngLatBounds => {
+  const userLocationExtend = circle(
+    [position.coords.longitude, position.coords.latitude],
+    position.coords.accuracy / 1000,
+    {
+      units: 'kilometers',
+    }
+  );
+  const bounds = new LngLatBounds();
+  userLocationExtend.geometry.coordinates[0].forEach((coordinate: Position) => {
+    bounds.extend(coordinate as LngLatLike);
+  });
+
+  return bounds;
+};
+
+const geolicationOptions: PositionOptions = {
+  enableHighAccuracy: true,
+  maximumAge: 1000 * 60 * 5, // 5 minutes
+};
+
+const locationErrorMessages = {
+  [`${GeolocationPositionError.PERMISSION_DENIED}`]: 'locationPermissionDenied',
+  [`${GeolocationPositionError.POSITION_UNAVAILABLE}`]: 'locationUnavailable',
+  [`${GeolocationPositionError.TIMEOUT}`]: 'locationTimeout',
+};
+
+type Props = {
+  map: MapInstance | null;
+};
+
+export const useUserLocation = ({ map }: Props) => {
+  const [geolocationService] = useState(() => new GeolocationService());
+  const [isActive, setIsActive] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const previousIsActive = usePrevious(isActive);
+
+  const isPositionValid = (position: GeolocationPosition): boolean => {
+    const isAccurate = position.coords.accuracy < 1000;
+    return isAccurate;
+  };
+
+  const handleError = useCallback((msg: string) => {
+    setError(msg);
+    setIsActive(false);
+  }, []);
+
+  const watchUserPosition = useCallback(() => {
+    if (!map) {
+      return;
+    }
+
+    geolocationService.watchPosition(
+      pos => {
+        if (!isPositionValid(pos)) {
+          handleError('locationNotAccurate');
+          return;
+        }
+
+        setError(null);
+        map.setUserLocation(MapConfiguration.userLocationSourceId, pos);
+      },
+      error => {
+        handleError(locationErrorMessages[error.code]);
+      },
+      geolicationOptions
+    );
+  }, [geolocationService, handleError, map]);
+
+  useEffect(() => {
+    const handelIsActive = async () => {
+      setError(null);
+      if (isActive) {
+        watchUserPosition();
+        try {
+          const currentPostion = await geolocationService.getCurrentPosition({
+            ...geolicationOptions,
+            timeout: 5000,
+          });
+
+          if (
+            previousIsActive !== isActive &&
+            isActive &&
+            currentPostion &&
+            isPositionValid(currentPostion)
+          ) {
+            map?.setUserLocation(MapConfiguration.userLocationSourceId, currentPostion);
+            map?.fitBounds(calculateBounds(currentPostion));
+          }
+        } catch (error) {
+          if (error instanceof GeolocationPositionError) {
+            handleError(locationErrorMessages[error.code]);
+          } else {
+            handleError('unknownLocationErrorOccurred');
+          }
+        }
+      } else {
+        map?.clearUserLocation();
+        geolocationService.clearWatch();
+      }
+    };
+
+    handelIsActive();
+  }, [geolocationService, isActive, previousIsActive, map, handleError, watchUserPosition]);
+
+  return { isActive, error, setIsActive };
+};

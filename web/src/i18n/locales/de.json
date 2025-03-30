@@ -1,5 +1,4 @@
 {
-  "hello": "Hallo Welt",
   "basemap": "Grundkarte",
   "satellite": "Satellit",
   "osm": "OSM",
@@ -7,5 +6,10 @@
   "withOpeningHours": "mit Öffnungszeiten",
   "availableNow": "Jetzt verfügbar",
   "enterLocationOrAddress": "Ortsnamen oder Adresse eingeben...",
-  "partner": "Partner"
+  "partner": "Partner",
+  "locationPermissionDenied": "Standort Zugriff verweigert",
+  "locationUnavailable": "Standort nicht verfügbar",
+  "locationTimeout": "Standort konnte nicht ermittelt werden",
+  "locationNotAccurate": "Standort ungenau",
+  "unknownLocationErrorOccurred": "Standort konnte nicht ermittelt werden"
 }
