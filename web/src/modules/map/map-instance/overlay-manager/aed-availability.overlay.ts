@@ -1,4 +1,4 @@
-import { LayerSpecification, Map } from 'maplibre-gl';
+import { GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
 import { InteractionLayer, OverlayStrategy } from '../../../../model/map';
 import { requestAedDataByCurrentAvailability } from '../../../../services/aed-data.service';
 import { MapConfiguration } from '../configuration/map.configuration';
@@ -13,12 +13,24 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
   private interactions: InteractionLayer[] = [];
   private aedPointLayers: LayerSpecification[] = [];
   private aedClusterLayers: LayerSpecification[] = [];
+  private map: Map;
+
+  constructor(map: Map) {
+    this.map = map;
+  }
 
   getSourceId() {
     return MapConfiguration.aedAvailabilitySourceId;
   }
 
   async createSource() {
+    // optimize performance when base-layer changes and source is already loaded
+    const source = this.map.getSource(this.getSourceId()) as GeoJSONSource;
+    if (source) {
+      return source.serialize();
+    }
+
+    // takes long, but on the backend I am not able to filter by availability
     const data = await requestAedDataByCurrentAvailability();
     return createAedSource(data);
   }

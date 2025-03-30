@@ -61,7 +61,7 @@ export class MapInstance {
     );
     this.overlayManager.registerOverlay(
       this.createOverlayName('availability'),
-      new AedAvailabilityOverlayStrategy()
+      new AedAvailabilityOverlayStrategy(map)
     );
     this.overlayManager.registerOverlay(
       MapConfiguration.userLocationLayerId,
