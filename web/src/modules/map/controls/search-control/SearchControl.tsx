@@ -48,7 +48,15 @@ export const SearchControl = ({ map }: Props) => {
       if (searchText.length > 2) {
         const results = await searchAddress(searchText);
         const mapResults =
-          (map && (await searchAed(searchText, MapConfiguration.aedSourceId, map))) || [];
+          (map &&
+            (await searchAed(
+              searchText,
+              activeOverlay === 'availability'
+                ? MapConfiguration.aedAvailabilitySourceId
+                : MapConfiguration.aedSourceId,
+              map
+            ))) ||
+          [];
         setSearchResults({
           type: 'FeatureCollection',
           features: [...results.features.slice(0, 10), ...mapResults.slice(0, 10)],
