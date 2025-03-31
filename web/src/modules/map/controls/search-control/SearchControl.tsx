@@ -6,7 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { ActiveOverlayType } from '../../../../model/map';
 import { filterLabelContent, searchAddress } from '../../../../services/address-search.service';
+import { searchAed } from '../../../../services/aed-search.service';
 import { useUserLocation } from '../../hooks/useUserLocation';
+import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
 import { MapInstance } from '../../map-instance/map-instance';
 import iconClose from './../../../../assets/icons/icon-close-dark-green.svg';
 import iconFilter from './../../../../assets/icons/icon-filter-dark-green.svg';
@@ -20,7 +22,7 @@ type Props = {
   map: MapInstance | null;
 };
 
-export const SearchControl = (props: Props) => {
+export const SearchControl = ({ map }: Props) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
@@ -30,7 +32,7 @@ export const SearchControl = (props: Props) => {
     setIsActive: setIsGpsActive,
     error: locationError,
   } = useUserLocation({
-    map: props.map,
+    map: map,
   });
   const [showFilter, setShowFilter] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -45,7 +47,20 @@ export const SearchControl = (props: Props) => {
     const search = async () => {
       if (searchText.length > 2) {
         const results = await searchAddress(searchText);
-        setSearchResults(results);
+        const mapResults =
+          (map &&
+            (await searchAed(
+              searchText,
+              activeOverlay === 'availability'
+                ? MapConfiguration.aedAvailabilitySourceId
+                : MapConfiguration.aedSourceId,
+              map
+            ))) ||
+          [];
+        setSearchResults({
+          type: 'FeatureCollection',
+          features: [...results.features.slice(0, 10), ...mapResults.slice(0, 10)],
+        });
 
         if (results.features.length >= 0) {
           setShowFilter(false);
@@ -58,7 +73,7 @@ export const SearchControl = (props: Props) => {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [searchText]);
+  }, [searchText, map]);
 
   const onSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -74,12 +89,12 @@ export const SearchControl = (props: Props) => {
   const onItemSelect = (feature: Feature<Geometry, GeoJsonProperties>) => {
     const bbox = feature.bbox;
     if (bbox?.length === 4) {
-      props.map?.fitBounds([
+      map?.fitBounds([
         [bbox[0], bbox[1]],
         [bbox[2], bbox[3]],
       ]);
     } else {
-      props.map?.easyTo((feature.geometry as Point).coordinates as [number, number], 18);
+      map?.easyTo((feature.geometry as Point).coordinates as [number, number], 18);
     }
 
     const value = filterLabelContent(feature.properties?.label).join(' ');
@@ -135,6 +150,7 @@ export const SearchControl = (props: Props) => {
             list="search-results"
             value={searchText}
             ref={searchInputRef}
+            autoComplete="off"
           />
           <div className="flex justify-end gap-2 ml-0">
             {searchText && (
@@ -155,12 +171,12 @@ export const SearchControl = (props: Props) => {
         </div>
         {showFilter && (
           <FilterControl
-            map={props.map}
+            map={map}
             activeOverlay={activeOverlay}
             setActiveOverlay={setActiveOverlay}
           />
         )}
-        {!showFilter && searchResults && (
+        {!showFilter && searchResults && searchResults?.features.length > 0 && (
           <SearchResults searchResults={searchResults} onItemSelect={onItemSelect} />
         )}
       </div>

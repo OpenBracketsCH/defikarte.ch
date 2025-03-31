@@ -176,6 +176,19 @@ export class MapInstance {
     this.setUserLocation(MapConfiguration.userLocationSourceId, null);
   };
 
+  public async getGeoJsonSourceData(sourceId: string): Promise<FeatureCollection> {
+    if (!this.mapInstance) {
+      return { type: 'FeatureCollection', features: [] };
+    }
+
+    const source = this.mapInstance.getSource(sourceId) as GeoJSONSource;
+    if (!source) {
+      return { type: 'FeatureCollection', features: [] };
+    }
+
+    return (await source.getData()) as FeatureCollection;
+  }
+
   private getBaseLayerStyleSpec = async (baseLayerId: string): Promise<StyleSpecification> => {
     const baseLayerStyle = MapConfiguration.baseLayers[baseLayerId];
     if (!this.mapInstance || !baseLayerStyle) {
