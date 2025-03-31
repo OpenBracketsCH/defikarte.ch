@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { ActiveOverlayType } from '../../../../model/map';
 import { filterLabelContent, searchAddress } from '../../../../services/address-search.service';
-import { AedSearchService } from '../../../../services/aed-search.service';
+import { searchAed } from '../../../../services/aed-search.service';
 import { useUserLocation } from '../../hooks/useUserLocation';
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
 import { MapInstance } from '../../map-instance/map-instance';
@@ -47,15 +47,11 @@ export const SearchControl = ({ map }: Props) => {
     const search = async () => {
       if (searchText.length > 2) {
         const results = await searchAddress(searchText);
-        const aedSearchService = new AedSearchService(map!);
-        const mapResults = await aedSearchService.searchAed(
-          searchText,
-          MapConfiguration.aedSourceId
-        );
-        console.log('mapResults', mapResults);
+        const mapResults =
+          (map && (await searchAed(searchText, MapConfiguration.aedSourceId, map))) || [];
         setSearchResults({
           type: 'FeatureCollection',
-          features: [...mapResults, ...results.features], // ...(mapResults || []),
+          features: [...results.features.slice(0, 10), ...mapResults.slice(0, 10)],
         });
 
         if (results.features.length >= 0) {
@@ -146,6 +142,7 @@ export const SearchControl = ({ map }: Props) => {
             list="search-results"
             value={searchText}
             ref={searchInputRef}
+            autoComplete="off"
           />
           <div className="flex justify-end gap-2 ml-0">
             {searchText && (
@@ -171,7 +168,7 @@ export const SearchControl = ({ map }: Props) => {
             setActiveOverlay={setActiveOverlay}
           />
         )}
-        {!showFilter && searchResults && (
+        {!showFilter && searchResults && searchResults?.features.length > 0 && (
           <SearchResults searchResults={searchResults} onItemSelect={onItemSelect} />
         )}
       </div>
