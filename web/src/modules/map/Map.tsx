@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { AttributionControl } from './controls/attribution-control/AttributionControl';
+import { DetailView } from './controls/detail-view/DetailView';
 import { MapControl } from './controls/map-control/MapControl';
-import { MapInstance } from './map-instance/map-instance';
 import { SearchControl } from './controls/search-control/SearchControl';
 import { SponsorControl } from './controls/sponsor-control/SponsorControl';
+import { MapInstance } from './map-instance/map-instance';
 
 const Map = () => {
   const [mapInstance, setMapInstance] = useState<MapInstance | null>(null);
@@ -24,6 +25,7 @@ const Map = () => {
       <MapControl map={mapInstance!} setActiveBaseLayer={setActiveBaseLayer} />
       <AttributionControl activeBaseLayer={activeBaseLayer} />
       <SponsorControl />
+      <DetailView />
     </div>
   );
 };

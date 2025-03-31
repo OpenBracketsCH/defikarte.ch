@@ -7,7 +7,7 @@ export const SponsorControl = () => {
 
   return (
     <div
-      className="absolute bottom-0 right-6 bg-primary-100-white rounded-t-2xl hidden md:visible md:flex items-center px-4 py-1"
+      className="absolute bottom-0 right-6 bg-primary-100-white rounded-t-2xl hidden md:visible md:flex items-center px-4 py-1 w-[300px]"
       style={{ zIndex: 100000 }}
     >
       <p className="text-primary-100-green-04 text-xs leading-[150%]">{t('partner')}</p>

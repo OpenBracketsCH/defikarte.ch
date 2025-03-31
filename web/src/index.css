@@ -71,8 +71,11 @@
 
   --color-green-hover: #f5f7f6;
 
+  --color-green-shadow-64: rgba(8, 52, 19, 0.5);
+
   /* shadow */
   --shadow-custom: 0px 4px 15px 0px;
+  --shadow-custom-lg: 0px 0px 64px 0px;
 
   /* font */
   --font-sans: 'Poppins', sans-serif;
