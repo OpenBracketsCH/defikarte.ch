@@ -10,7 +10,7 @@ type Props = {
 export const ResultItem = (props: Props) => {
   const { item } = props;
 
-  const values = filterLabelContent(item.properties?.label);
+  const values = filterLabelContent(item.properties?.label || '');
   const id = item.id?.toString();
   const icon = iconAddress;
 
