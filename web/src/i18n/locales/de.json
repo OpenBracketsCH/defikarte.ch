@@ -11,5 +11,6 @@
   "locationUnavailable": "Standort nicht verfügbar",
   "locationTimeout": "Standort konnte nicht ermittelt werden",
   "locationNotAccurate": "Standort ungenau",
-  "unknownLocationErrorOccurred": "Standort konnte nicht ermittelt werden"
+  "unknownLocationErrorOccurred": "Standort konnte nicht ermittelt werden",
+  "navigate": "Navigieren"
 }

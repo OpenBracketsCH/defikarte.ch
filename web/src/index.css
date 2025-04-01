@@ -55,9 +55,11 @@
   --color-primary-40-green-05: rgba(18, 57, 34, 0.4);
   --color-primary-20-green-05: rgba(18, 57, 34, 0.2);
   --color-primary-10-green-05: rgba(18, 57, 34, 0.1);
+  --color-primary-05-green-05: rgba(18, 57, 34, 0.05);
 
   --color-secondary-orange-01: #ffb875;
   --color-secondary-orange-02: #fb8f01;
+  --color-secondary-orange-03: #ffa52f; /* not defiend in list */
   --color-secondary-red-01: #ffb0b0;
   --color-secondary-red-02: #f00;
   --color-secondary-green-01: #93c460;
@@ -69,7 +71,9 @@
   --color-graustufen-grau-d: #666;
   --color-graustufen-grau-e: #333;
 
-  --color-green-hover: #f5f7f6;
+  --color-graustufen-grau-disabled: rgba(205, 205, 205, 0.2);
+
+  --color-green-custom: #f5f7f6;
 
   --color-green-shadow-64: rgba(8, 52, 19, 0.5);
 

@@ -73,7 +73,7 @@ export const SearchControl = ({ map }: Props) => {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [searchText, map]);
+  }, [activeOverlay, searchText, map]);
 
   const onSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
