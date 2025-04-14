@@ -20,7 +20,8 @@ const Map = () => {
   }, []);
 
   return (
-    <div className="h-full w-full" ref={mapContainer}>
+    <div className="h-full w-full">
+      <div className="h-full w-full" ref={mapContainer} />
       <SearchControl map={mapInstance} />
       <MapControl map={mapInstance!} setActiveBaseLayer={setActiveBaseLayer} />
       <AttributionControl activeBaseLayer={activeBaseLayer} />
