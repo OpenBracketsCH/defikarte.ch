@@ -83,6 +83,9 @@ export class MapInstance {
       const img = new Image();
       img.src = image.url;
       img.onload = () => {
+        // need to scale the image to 4x for hig-res displays
+        img.width = img.width * 4;
+        img.height = img.height * 4;
         map.addImage(image.id, img);
       };
     });

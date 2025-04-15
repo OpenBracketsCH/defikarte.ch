@@ -29,6 +29,7 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
         1000,
         MARKER_GRADIENT_XL_IMAGE_ID,
       ],
+      'icon-size': 0.25,
     },
     filter: clusterFilter,
   };
