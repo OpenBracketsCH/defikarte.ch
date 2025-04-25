@@ -5,9 +5,7 @@ type Props = {
 };
 
 export const AttributionControl = ({ activeBaseLayer }: Props) => {
-  const isSwisstopoLayerActive =
-    activeBaseLayer === MapConfiguration.swisstopoBaseMapId ||
-    activeBaseLayer === MapConfiguration.swisstopoImageryBaseMapId;
+  const isSwisstopoLayerActive = activeBaseLayer === MapConfiguration.swisstopoImageryBaseMapId;
   return (
     <div
       className="absolute bottom-0 left-4 px-1 bg-primary-80-white rounded-t-sm flex items-center"
