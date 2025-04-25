@@ -15,6 +15,7 @@ export const createAedAvailabilityPointLayers = (
     layout: {
       'icon-allow-overlap': true,
       'icon-image': MARKER_GREEN_IMAGE_ID,
+      'icon-size': 0.25,
     },
     filter: layerFilter,
   };

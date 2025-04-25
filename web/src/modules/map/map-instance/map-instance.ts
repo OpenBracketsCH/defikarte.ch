@@ -1,6 +1,13 @@
 import { circle } from '@turf/circle';
 import { Feature, FeatureCollection, Point } from 'geojson';
-import { GeoJSONSource, LngLatBoundsLike, LngLatLike, Map, StyleSpecification } from 'maplibre-gl';
+import {
+  FeatureState,
+  GeoJSONSource,
+  LngLatBoundsLike,
+  LngLatLike,
+  Map,
+  StyleSpecification,
+} from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
@@ -8,7 +15,7 @@ import markerGradientM from '../../../assets/icons/map-marker-count-gradient-m.s
 import markerGradientS from '../../../assets/icons/map-marker-count-gradient-s.svg';
 import markerGradientXl from '../../../assets/icons/map-marker-count-gradient-xl.svg';
 import markerGradientXs from '../../../assets/icons/map-marker-count-gradient-xs.svg';
-import { ActiveOverlayType } from '../../../model/map';
+import { ActiveOverlayType, MapEventCallback } from '../../../model/map';
 import { requestStyleSpecification } from '../../../services/map-style.service';
 import {
   MARKER_GRADIENT_M_IMAGE_ID,
@@ -27,15 +34,17 @@ import { UserLocationOverlayStrategy } from './overlay-manager/user-location.ove
 
 type MapInstanceProps = {
   container: string | HTMLElement;
+  onEvent?: MapEventCallback;
 };
 
 export class MapInstance {
   private mapInstance: Map | null = null;
-  private overlayManager: OverlayManager = new OverlayManager();
-  private activeBaseLayer: string = MapConfiguration.osmBaseMapId;
+  private overlayManager: OverlayManager;
+  private activeBaseLayer: string = MapConfiguration.osmVectorBasemapId;
   private activeOverlay: ActiveOverlayType = ['247', 'restricted'];
 
   constructor(props: MapInstanceProps) {
+    this.overlayManager = new OverlayManager(props.onEvent);
     const map = new Map({
       container: props.container,
       style: MapConfiguration.baseLayers[this.activeBaseLayer],
@@ -45,7 +54,6 @@ export class MapInstance {
     });
 
     map.on('load', () => this.init(map));
-
     this.overlayManager.registerOverlay(
       this.createOverlayName(['247', 'restricted']),
       new AedOverlayStrategy()
@@ -83,6 +91,9 @@ export class MapInstance {
       const img = new Image();
       img.src = image.url;
       img.onload = () => {
+        // need to scale the image to 4x for hig-res displays
+        img.width = img.width * 4;
+        img.height = img.height * 4;
         map.addImage(image.id, img);
       };
     });
@@ -148,6 +159,10 @@ export class MapInstance {
 
   public remove = () => {
     this.mapInstance?.remove();
+  };
+
+  public setFeatureState = (source?: string, featureId?: string | number, state?: FeatureState) => {
+    this.mapInstance?.setFeatureState({ source: source || '', id: featureId }, state);
   };
 
   public setUserLocation = (sourceId: string, e: GeolocationPosition | null) => {

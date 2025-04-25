@@ -73,7 +73,7 @@ export const SearchControl = ({ map }: Props) => {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [searchText, map]);
+  }, [activeOverlay, searchText, map]);
 
   const onSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -136,7 +136,7 @@ export const SearchControl = ({ map }: Props) => {
   return (
     <div
       style={{ zIndex: 100000 }}
-      className="relative w-full flex flex-col items-center h-0 mt-4 md:mt-6"
+      className="absolute top-4 md:top-6 m-auto w-full flex flex-col items-center h-0"
     >
       <div className="w-full md:w-[550px] lg:w-[650px]">
         <div className={mainClasses}>

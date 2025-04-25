@@ -24,6 +24,7 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
         MARKER_GREEN_IMAGE_ID,
         MARKER_ORANGE_IMAGE_ID,
       ],
+      'icon-size': 0.25,
     },
     filter: noClusterFilter,
   };

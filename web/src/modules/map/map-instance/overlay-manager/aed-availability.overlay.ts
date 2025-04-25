@@ -1,5 +1,5 @@
 import { GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
-import { InteractionLayer, OverlayStrategy } from '../../../../model/map';
+import { InteractionLayer, MapEventCallback, OverlayStrategy } from '../../../../model/map';
 import { requestAedDataByCurrentAvailability } from '../../../../services/aed-data.service';
 import { MapConfiguration } from '../configuration/map.configuration';
 import ClusterZoomInteraction from '../interactions/cluster-zoom.interaction';
@@ -51,10 +51,10 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
     return [...aedPointLayers, ...aedClusterLayers];
   }
 
-  registerInteractions(map: Map) {
+  registerInteractions(map: Map, onEvent?: MapEventCallback) {
     const cursorClickableInteraction = new CursorClickableInteraction(map);
     const clusterZoomInteraction = new ClusterZoomInteraction(map);
-    const itemSelectInteraction = new ItemSelectInteraction(map);
+    const itemSelectInteraction = new ItemSelectInteraction(map, onEvent);
 
     this.interactions = [cursorClickableInteraction, clusterZoomInteraction, itemSelectInteraction];
 
