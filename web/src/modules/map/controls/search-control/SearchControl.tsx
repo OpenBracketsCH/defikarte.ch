@@ -1,13 +1,11 @@
 import className from 'classnames';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson';
-import { useEffect, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { ActiveOverlayType } from '../../../../model/map';
 import { filterLabelContent, searchAddress } from '../../../../services/address-search.service';
 import { searchAed } from '../../../../services/aed-search.service';
-import { useUserLocation } from '../../hooks/useUserLocation';
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
 import { MapInstance } from '../../map-instance/map-instance';
 import iconClose from './../../../../assets/icons/icon-close-dark-green.svg';
@@ -20,28 +18,17 @@ import { SearchResults } from './search-results/SearchResults';
 
 type Props = {
   map: MapInstance | null;
+  isGpsActive: boolean;
+  setIsGpsActive: Dispatch<SetStateAction<boolean>>;
 };
 
-export const SearchControl = ({ map }: Props) => {
+export const SearchControl = ({ map, isGpsActive, setIsGpsActive }: Props) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
   const [activeOverlay, setActiveOverlay] = useState<ActiveOverlayType>(['247', 'restricted']);
-  const {
-    isActive: isGpsActive,
-    setIsActive: setIsGpsActive,
-    error: locationError,
-  } = useUserLocation({
-    map: map,
-  });
   const [showFilter, setShowFilter] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (locationError) {
-      toast.error(t(locationError));
-    }
-  }, [locationError, setIsGpsActive, t]);
 
   useEffect(() => {
     const search = async () => {

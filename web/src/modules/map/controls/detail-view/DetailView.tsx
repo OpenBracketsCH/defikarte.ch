@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Feature } from 'geojson';
+import { Feature, Point } from 'geojson';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import iconAccessDarkGreen from '../../../../assets/icons/icon-access-dark-green.svg';
@@ -15,15 +15,17 @@ import iconTimeWhite from '../../../../assets/icons/icon-time-white.svg';
 import { Button } from '../../../../components/ui/button/Button';
 import { IconButton } from '../../../../components/ui/icon-button/IconButton';
 import { Tag } from '../../../../components/ui/tag/Tag';
+import { distanceBetweenPoints } from '../../../../services/coordinate-calculation.service';
 import { isOpenNow } from '../../../../services/opening-hours.service';
 import { FeaturePropsList } from './property-list/FeaturePropsList';
 
 type DetailViewProps = {
   feature: Feature | null;
   onClose: () => void;
+  userLocation: GeolocationPosition | null;
 };
 
-export const DetailView = ({ feature, onClose }: DetailViewProps) => {
+export const DetailView = ({ feature, onClose, userLocation }: DetailViewProps) => {
   const { t } = useTranslation();
   const [propsVisible, setPropsVisible] = useState(false);
   if (!feature || !feature?.properties) {
@@ -31,15 +33,29 @@ export const DetailView = ({ feature, onClose }: DetailViewProps) => {
   }
 
   const props = feature.properties || {};
+  const coords = (feature.geometry as Point)?.coordinates;
   const isOpen = isOpenNow(props.opening_hours);
   const isOutdoor = props.indoor === 'no';
   const isAccess = props.access === 'yes';
-  const isSmallerThan1000 = props.distance < 1000;
-  const distance = isSmallerThan1000 ? props.distance : (props.distance / 1000).toFixed(1);
-  const distanceText = t('distanceAway', {
-    distance: distance,
-    unit: isSmallerThan1000 ? 'm' : 'km',
-  });
+  const distance = userLocation
+    ? distanceBetweenPoints(
+        {
+          lat: userLocation?.coords.latitude,
+          lon: userLocation.coords.longitude,
+        },
+        {
+          lat: coords[1],
+          lon: coords[0],
+        }
+      )
+    : null;
+  const isSmallerThan1000 = distance && distance < 1000;
+  const distanceText =
+    distance &&
+    t('distanceAway', {
+      distance: isSmallerThan1000 ? distance.toFixed(0) : (distance / 1000).toFixed(1),
+      unit: isSmallerThan1000 ? 'm' : 'km',
+    });
   const name = props['defibrillator:location'] ?? props.description ?? props.operator ?? 'n/A';
 
   const containerClass = classNames(
@@ -86,12 +102,14 @@ export const DetailView = ({ feature, onClose }: DetailViewProps) => {
               {t('closed')}
             </Tag>
           )}
-          <Tag
-            variant={isOpen ? 'tint' : 'secondary'}
-            icon={isOpen ? iconNavigationDarkGreen : iconNavigationGrey}
-          >
-            {distanceText}
-          </Tag>
+          {distance && (
+            <Tag
+              variant={isOpen ? 'tint' : 'secondary'}
+              icon={isOpen ? iconNavigationDarkGreen : iconNavigationGrey}
+            >
+              {distanceText}
+            </Tag>
+          )}
           {props.access && (
             <Tag
               variant={isOpen ? 'tint' : 'secondary'}

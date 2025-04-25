@@ -40,6 +40,7 @@ type Props = {
 
 export const useUserLocation = ({ map }: Props) => {
   const [geolocationService] = useState(() => new GeolocationService());
+  const [userLocation, setUserLocation] = useState<GeolocationPosition | null>(null);
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const previousIsActive = usePrevious(isActive);
@@ -68,6 +69,7 @@ export const useUserLocation = ({ map }: Props) => {
 
         setError(null);
         map.setUserLocation(MapConfiguration.userLocationSourceId, pos);
+        setUserLocation(pos);
       },
       error => {
         handleError(locationErrorMessages[error.code]);
@@ -77,7 +79,7 @@ export const useUserLocation = ({ map }: Props) => {
   }, [geolocationService, handleError, map]);
 
   useEffect(() => {
-    const handelIsActive = async () => {
+    const handleIsActive = async () => {
       setError(null);
       if (isActive) {
         watchUserPosition();
@@ -109,8 +111,8 @@ export const useUserLocation = ({ map }: Props) => {
       }
     };
 
-    handelIsActive();
+    handleIsActive();
   }, [geolocationService, isActive, previousIsActive, map, handleError, watchUserPosition]);
 
-  return { isActive, error, setIsActive };
+  return { userLocation, isActive, error, setIsActive };
 };
