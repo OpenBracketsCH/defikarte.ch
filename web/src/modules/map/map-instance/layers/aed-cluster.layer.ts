@@ -45,7 +45,6 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
       'text-pitch-alignment': 'map',
       'text-allow-overlap': true,
       'text-anchor': 'center',
-      'text-offset': [-0.05, 0.1],
     },
     paint: {
       'text-color': COLORS.PRIMARY_100_WHITE,

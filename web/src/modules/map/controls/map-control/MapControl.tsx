@@ -66,12 +66,6 @@ export const MapControl = (props: Props) => {
             onClick={() => setActiveBaseLayer(MapConfiguration.osmBaseMapId)}
           />
           <LayerSymbol
-            active={activeBaseLayer === MapConfiguration.swisstopoBaseMapId}
-            img={swisstopoBaseMapImage}
-            label={t('basemap')}
-            onClick={() => setActiveBaseLayer(MapConfiguration.swisstopoBaseMapId)}
-          />
-          <LayerSymbol
             active={activeBaseLayer === MapConfiguration.swisstopoImageryBaseMapId}
             img={swisstopoImageryImage}
             label={t('satellite')}

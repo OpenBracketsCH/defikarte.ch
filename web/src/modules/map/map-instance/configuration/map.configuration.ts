@@ -9,7 +9,6 @@ export class MapConfiguration {
 
   public static osmVectorBasemapId = 'osm-vector';
   public static osmBaseMapId = 'osm-common';
-  public static swisstopoBaseMapId = 'swisstopo-basemap';
   public static swisstopoImageryBaseMapId = 'swisstopo-imagery-basemap';
 
   public static osmBaseMapLayerId = 'osm-common-layer';
@@ -37,8 +36,6 @@ export class MapConfiguration {
       glyphs: 'https://vectortiles.geo.admin.ch/fonts/{fontstack}/{range}.pbf',
       layers: [createOsmLayer(this.osmBaseMapLayerId, this.osmLayerSourceId)],
     },
-    [this.swisstopoBaseMapId]:
-      'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.lightbasemap.vt/style.json',
     [this.swisstopoImageryBaseMapId]:
       'https://vectortiles.geo.admin.ch/styles/ch.swisstopo.imagerybasemap.vt/style.json',
   };
