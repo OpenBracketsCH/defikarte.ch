@@ -1,6 +1,13 @@
 import { circle } from '@turf/circle';
 import { Feature, FeatureCollection, Point } from 'geojson';
-import { GeoJSONSource, LngLatBoundsLike, LngLatLike, Map, StyleSpecification } from 'maplibre-gl';
+import {
+  FeatureState,
+  GeoJSONSource,
+  LngLatBoundsLike,
+  LngLatLike,
+  Map,
+  StyleSpecification,
+} from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
@@ -33,7 +40,7 @@ type MapInstanceProps = {
 export class MapInstance {
   private mapInstance: Map | null = null;
   private overlayManager: OverlayManager;
-  private activeBaseLayer: string = MapConfiguration.osmBaseMapId;
+  private activeBaseLayer: string = MapConfiguration.osmVectorBasemapId;
   private activeOverlay: ActiveOverlayType = ['247', 'restricted'];
 
   constructor(props: MapInstanceProps) {
@@ -152,6 +159,10 @@ export class MapInstance {
 
   public remove = () => {
     this.mapInstance?.remove();
+  };
+
+  public setFeatureState = (source?: string, featureId?: string | number, state?: FeatureState) => {
+    this.mapInstance?.setFeatureState({ source: source || '', id: featureId }, state);
   };
 
   public setUserLocation = (sourceId: string, e: GeolocationPosition | null) => {

@@ -1,5 +1,5 @@
 import className from 'classnames';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import layerIconGreen from '../../../../assets/icons/icon-layers-dark-green.svg';
 import layerIconWhite from '../../../../assets/icons/icon-layers-white.svg';
@@ -16,17 +16,17 @@ import { LayerSymbol } from './layer-symbol/LayerSymbol';
 type Props = {
   map: MapInstance | null;
   setActiveBaseLayer: (id: string) => void;
+  activeBaseLayer: string;
 };
 
 export const MapControl = (props: Props) => {
   const { t } = useTranslation();
   const [isActive, setIsActive] = useState(false);
-  const [activeBaseLayer, setActiveBaseLayer] = useState(MapConfiguration.osmBaseMapId);
 
-  useEffect(() => {
-    props.map?.setActiveBaseLayer(activeBaseLayer);
-    props.setActiveBaseLayer(activeBaseLayer);
-  }, [activeBaseLayer, props]);
+  const setActiveBaseLayer = (id: string) => {
+    props.map?.setActiveBaseLayer(id);
+    props.setActiveBaseLayer(id);
+  };
 
   const mainClasses = className(
     'absolute',
@@ -48,7 +48,7 @@ export const MapControl = (props: Props) => {
     'right-0'
   );
 
-  const { map } = props;
+  const { map, activeBaseLayer } = props;
   return (
     <div className={mainClasses} style={{ zIndex: 100000 }}>
       {isActive && (

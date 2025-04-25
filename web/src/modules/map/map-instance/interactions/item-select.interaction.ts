@@ -16,12 +16,12 @@ export default class ItemSelectInteraction implements InteractionLayer {
 
   public on = (layerIds: string[]): void => {
     this.layerIds = layerIds;
-    this.mapInstance.on('click', e => this.unselectFeature(e));
+    this.mapInstance.on('click', e => this.deselectFeature(e));
     this.mapInstance.on('click', this.layerIds, e => this.selectFeature(e));
   };
 
   public off = (): void => {
-    this.mapInstance.off('click', e => this.unselectFeature(e));
+    this.mapInstance.off('click', e => this.deselectFeature(e));
     this.mapInstance.off('click', this.layerIds, this.selectFeature);
     this.layerIds = [];
   };
@@ -50,7 +50,10 @@ export default class ItemSelectInteraction implements InteractionLayer {
       );
     }
 
-    this.mapInstance.setFeatureState({ source: source, id: featureId }, { selected: true });
+    this.mapInstance.setFeatureState(
+      { source: source, id: featureId },
+      { [FEATURE_STATE.SELECTED]: true }
+    );
     this.selectedFeatureId[source] = (featureId as number) ?? null;
 
     this.onEvent?.({
@@ -61,12 +64,8 @@ export default class ItemSelectInteraction implements InteractionLayer {
     });
   };
 
-  private unselectFeature = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }): void => {
-    const features = this.mapInstance.queryRenderedFeatures(e.point, {
-      layers: this.layerIds,
-    });
-
-    if (features.length) {
+  private deselectFeature = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }): void => {
+    if (e.features?.length) {
       return;
     }
 
@@ -78,7 +77,7 @@ export default class ItemSelectInteraction implements InteractionLayer {
             source: source,
             id: this.selectedFeatureId[source],
           },
-          { selected: false }
+          { [FEATURE_STATE.SELECTED]: false }
         );
       }
     });

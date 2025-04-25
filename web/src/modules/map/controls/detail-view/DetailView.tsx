@@ -32,10 +32,10 @@ import ItemProperty from './item-property/ItemProperty';
 
 type DetailViewProps = {
   feature: Feature | null;
-  onClose?: () => void;
+  onClose: () => void;
 };
 
-export const DetailView = ({ feature }: DetailViewProps) => {
+export const DetailView = ({ feature, onClose }: DetailViewProps) => {
   const { t } = useTranslation();
   if (!feature || !feature?.properties) {
     return null;
@@ -58,10 +58,10 @@ export const DetailView = ({ feature }: DetailViewProps) => {
       style={{ zIndex: 100000 }}
     >
       <div className="px-4 py-3 flex justify-between w-full items-start border-b border-primary-05-green-05">
-        <p className="text-wrap text-sm font-normal leading-[150%] text-primary-100-green-04 w-64">
+        <p className="text-wrap text-sm font-normal leading-[150%] text-primary-100-green-04 w-60">
           {name}
         </p>
-        <IconButton icon={iconCloseDarkGreen} variant="white" />
+        <IconButton icon={iconCloseDarkGreen} variant="white" onClick={() => onClose()} />
       </div>
       <div className="px-4 pt-4 overflow-auto gap-6 flex flex-col">
         <div className="flex flex-wrap items-start justify-start gap-1.5">
