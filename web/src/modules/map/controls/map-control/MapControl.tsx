@@ -83,13 +83,13 @@ export const MapControl = (props: Props) => {
           active={false}
           icon={iconPlus}
           onClick={() => map?.zoomIn()}
-          className="h-0 invisible md:visible md:h-auto"
+          className="hidden md:flex"
         />
         <MapIconButton
           active={false}
           icon={iconMinus}
           onClick={() => map?.zoomOut()}
-          className="h-0 invisible md:visible md:h-auto"
+          className="hidden md:flex"
         />
       </div>
     </div>
