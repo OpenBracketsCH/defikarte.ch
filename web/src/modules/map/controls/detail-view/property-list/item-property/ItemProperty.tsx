@@ -6,7 +6,7 @@ interface ItemPropertyProps {
   value: string | number;
 }
 
-const ItemProperty: React.FC<ItemPropertyProps> = ({ icon, title, value }) => {
+export const ItemProperty: React.FC<ItemPropertyProps> = ({ icon, title, value }) => {
   return (
     <div className="flex items-start gap-2">
       <img src={icon} />
@@ -17,5 +17,3 @@ const ItemProperty: React.FC<ItemPropertyProps> = ({ icon, title, value }) => {
     </div>
   );
 };
-
-export default ItemProperty;

@@ -26,5 +26,7 @@
   "level": "Stockwerk",
   "description": "Beschreibung",
   "operator": "Betreiber",
-  "operatorPhone": "Betreiber Telefon"
+  "operatorPhone": "Betreiber Telefon",
+  "details": "Details",
+  "hide": "Ausblenden"
 }

@@ -11,9 +11,11 @@ export const Button = ({
   size = 'regular',
   icon,
   children,
+  className,
   ...props
 }: Props) => {
   const buttonClass = classNames(
+    className,
     'flex',
     'gap-2',
     'items-center',
