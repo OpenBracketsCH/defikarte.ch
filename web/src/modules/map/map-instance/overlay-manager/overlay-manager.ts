@@ -1,8 +1,13 @@
 import { Map as MapInstance, StyleSpecification } from 'maplibre-gl';
-import { OverlayStrategy } from '../../../../model/map';
+import { MapEventCallback, OverlayStrategy } from '../../../../model/map';
 
 export class OverlayManager {
   private overlays: Map<string, OverlayStrategy> = new Map();
+  private onEvent: MapEventCallback | undefined;
+
+  constructor(onEvent?: MapEventCallback) {
+    this.onEvent = onEvent;
+  }
 
   registerOverlay(name: string, strategy: OverlayStrategy) {
     this.overlays.set(name, strategy);
@@ -26,7 +31,7 @@ export class OverlayManager {
       }
     });
 
-    strategy.registerInteractions(map);
+    strategy.registerInteractions(map, this.onEvent);
   }
 
   async applyOverlayOnStyle(

@@ -20,10 +20,10 @@ export const Tag: React.FC<TagProps> = ({ children, icon, variant = 'tint', ...p
     'rounded-2xl',
     'box-content',
     'size-max',
-    'cursor-pointer',
     'font-normal',
     'text-xs',
     'leading-[150%]',
+    'cursor-default',
     {
       'bg-primary-100-green-02': variant === 'primary',
       'text-primary-100-white': variant === 'primary' || variant === 'orange',

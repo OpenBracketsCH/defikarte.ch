@@ -8,7 +8,7 @@ import markerGradientM from '../../../assets/icons/map-marker-count-gradient-m.s
 import markerGradientS from '../../../assets/icons/map-marker-count-gradient-s.svg';
 import markerGradientXl from '../../../assets/icons/map-marker-count-gradient-xl.svg';
 import markerGradientXs from '../../../assets/icons/map-marker-count-gradient-xs.svg';
-import { ActiveOverlayType } from '../../../model/map';
+import { ActiveOverlayType, MapEventCallback } from '../../../model/map';
 import { requestStyleSpecification } from '../../../services/map-style.service';
 import {
   MARKER_GRADIENT_M_IMAGE_ID,
@@ -27,15 +27,17 @@ import { UserLocationOverlayStrategy } from './overlay-manager/user-location.ove
 
 type MapInstanceProps = {
   container: string | HTMLElement;
+  onEvent?: MapEventCallback;
 };
 
 export class MapInstance {
   private mapInstance: Map | null = null;
-  private overlayManager: OverlayManager = new OverlayManager();
+  private overlayManager: OverlayManager;
   private activeBaseLayer: string = MapConfiguration.osmBaseMapId;
   private activeOverlay: ActiveOverlayType = ['247', 'restricted'];
 
   constructor(props: MapInstanceProps) {
+    this.overlayManager = new OverlayManager(props.onEvent);
     const map = new Map({
       container: props.container,
       style: MapConfiguration.baseLayers[this.activeBaseLayer],
@@ -45,7 +47,6 @@ export class MapInstance {
     });
 
     map.on('load', () => this.init(map));
-
     this.overlayManager.registerOverlay(
       this.createOverlayName(['247', 'restricted']),
       new AedOverlayStrategy()

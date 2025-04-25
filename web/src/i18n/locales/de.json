@@ -12,5 +12,19 @@
   "locationTimeout": "Standort konnte nicht ermittelt werden",
   "locationNotAccurate": "Standort ungenau",
   "unknownLocationErrorOccurred": "Standort konnte nicht ermittelt werden",
-  "navigate": "Navigieren"
+  "navigate": "Navigieren",
+  "distanceAway": "{{distance}}{{unit}} entfernt",
+  "public": "Öffentlich",
+  "private": "Privat",
+  "outdoor": "Outdoor",
+  "indoor": "Indoor",
+  "open": "Geöffnet",
+  "closed": "Geschlossen",
+  "openingHours": "Öffnungszeiten",
+  "access": "Zugang",
+  "isIndoor": "Befindet sich im Gebäude",
+  "level": "Stockwerk",
+  "description": "Beschreibung",
+  "operator": "Betreiber",
+  "operatorPhone": "Betreiber Telefon"
 }
