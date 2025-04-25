@@ -24,7 +24,7 @@ export const MapIconButton: React.FC<MapIconButtonProps> = ({
   });
 
   return (
-    <button {...props}>
+    <button {...props} className="w-max h-max">
       <img src={icon} alt="map-icon" className={imgClass} />
     </button>
   );

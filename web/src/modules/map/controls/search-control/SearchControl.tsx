@@ -143,7 +143,7 @@ export const SearchControl = ({ map }: Props) => {
           <img src={iconSearch} alt="search-icon" />
           <input
             onChange={onSearchChange}
-            className="grow border-none outline-hidden text-base font-normal text-primary-100-green-04 leading-6"
+            className="grow min-w-0 outline-hidden text-base font-normal text-primary-100-green-04 leading-6"
             type="search"
             id="search"
             placeholder={t('enterLocationOrAddress')}
@@ -152,7 +152,7 @@ export const SearchControl = ({ map }: Props) => {
             ref={searchInputRef}
             autoComplete="off"
           />
-          <div className="flex justify-end gap-2 ml-0">
+          <div className="flex justify-end items-center gap-2 ml-0">
             {searchText && (
               <MapIconButton active={false} icon={iconClose} onClick={() => onReset()} />
             )}
