@@ -1,4 +1,4 @@
-import className from 'classnames';
+import classNames from 'classnames';
 import { ButtonHTMLAttributes } from 'react';
 
 interface MapIconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,9 +11,11 @@ export const MapIconButton: React.FC<MapIconButtonProps> = ({
   active,
   icon,
   variant = 'default',
+  className,
   ...props
 }) => {
-  const imgClass = className('p-1', 'rounded-full', 'box-content', 'size-max', 'cursor-pointer', {
+  const buttonClass = classNames(className, 'w-max', 'h-max');
+  const imgClass = classNames('p-1', 'rounded-full', 'box-content', 'size-max', 'cursor-pointer', {
     'hover:bg-green-custom': !active,
     'bg-primary-100-white': !active && variant === 'default',
     'bg-secondary-green-01': active,
@@ -24,7 +26,7 @@ export const MapIconButton: React.FC<MapIconButtonProps> = ({
   });
 
   return (
-    <button {...props} className="w-max h-max">
+    <button {...props} className={buttonClass}>
       <img src={icon} alt="map-icon" className={imgClass} />
     </button>
   );
