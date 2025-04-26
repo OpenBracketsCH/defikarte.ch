@@ -23,7 +23,7 @@ const calculateBounds = (position: GeolocationPosition): LngLatBounds => {
   return bounds;
 };
 
-const geolicationOptions: PositionOptions = {
+const geolocationOptions: PositionOptions = {
   enableHighAccuracy: true,
   maximumAge: 1000 * 60 * 5, // 5 minutes
 };
@@ -53,6 +53,7 @@ export const useUserLocation = ({ map }: Props) => {
   const handleError = useCallback((msg: string) => {
     setError(msg);
     setIsActive(false);
+    setUserLocation(null);
   }, []);
 
   const watchUserPosition = useCallback(() => {
@@ -74,7 +75,7 @@ export const useUserLocation = ({ map }: Props) => {
       error => {
         handleError(locationErrorMessages[error.code]);
       },
-      geolicationOptions
+      geolocationOptions
     );
   }, [geolocationService, handleError, map]);
 
@@ -82,10 +83,9 @@ export const useUserLocation = ({ map }: Props) => {
     const handleIsActive = async () => {
       setError(null);
       if (isActive) {
-        watchUserPosition();
         try {
           const currentPostion = await geolocationService.getCurrentPosition({
-            ...geolicationOptions,
+            ...geolocationOptions,
             timeout: 5000,
           });
 
@@ -97,7 +97,11 @@ export const useUserLocation = ({ map }: Props) => {
           ) {
             map?.setUserLocation(MapConfiguration.userLocationSourceId, currentPostion);
             map?.fitBounds(calculateBounds(currentPostion));
+            setUserLocation(currentPostion);
+            setError(null);
           }
+
+          watchUserPosition();
         } catch (error) {
           if (error instanceof GeolocationPositionError) {
             handleError(locationErrorMessages[error.code]);
@@ -108,11 +112,20 @@ export const useUserLocation = ({ map }: Props) => {
       } else {
         map?.clearUserLocation();
         geolocationService.clearWatch();
+        setUserLocation(null);
       }
     };
 
     handleIsActive();
-  }, [geolocationService, isActive, previousIsActive, map, handleError, watchUserPosition]);
+  }, [
+    geolocationService,
+    isActive,
+    previousIsActive,
+    map,
+    handleError,
+    watchUserPosition,
+    setUserLocation,
+  ]);
 
   return { userLocation, isActive, error, setIsActive };
 };
