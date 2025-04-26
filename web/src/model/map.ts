@@ -1,5 +1,4 @@
-import { Feature } from 'geojson';
-import { LayerSpecification, Map, SourceSpecification } from 'maplibre-gl';
+import { LayerSpecification, Map, MapGeoJSONFeature, SourceSpecification } from 'maplibre-gl';
 
 export type ActiveOverlayType = ('247' | 'restricted')[] | 'availability';
 
@@ -13,6 +12,7 @@ export interface OverlayStrategy {
   createSource(): SourceSpecification | Promise<SourceSpecification>;
   createLayers(): LayerSpecification[];
   registerInteractions(map: Map, onEvent?: MapEventCallback): void;
+  getInteractions(): readonly InteractionLayer[] | null;
   cleanup(map: Map): void;
 }
 export type MapEventCallback = (event: MapEvent) => void;
@@ -26,5 +26,5 @@ export interface BaseEvent {
 
 export interface ItemSelectEvent {
   type: 'item-select';
-  data: Feature | null;
+  data: MapGeoJSONFeature | null;
 }

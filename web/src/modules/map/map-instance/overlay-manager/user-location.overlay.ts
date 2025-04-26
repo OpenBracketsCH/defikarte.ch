@@ -1,6 +1,6 @@
 import { FeatureCollection } from 'geojson';
 import { GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
-import { OverlayStrategy } from '../../../../model/map';
+import { InteractionLayer, OverlayStrategy } from '../../../../model/map';
 import { MapConfiguration } from '../configuration/map.configuration';
 import { createUserLocationLayers } from '../layers/user-location.layer';
 import { createUserLocationSource } from '../sources/user-location.source';
@@ -35,6 +35,10 @@ export class UserLocationOverlayStrategy implements OverlayStrategy {
 
   registerInteractions() {
     // No interactions for user location
+  }
+
+  getInteractions(): readonly InteractionLayer[] | null {
+    return null;
   }
 
   cleanup(map: Map) {

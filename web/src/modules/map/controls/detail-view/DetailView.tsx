@@ -85,12 +85,13 @@ export const DetailView = ({ feature, onClose, userLocation }: DetailViewProps) 
   return (
     <div className={containerClass} style={{ zIndex: 100000 }}>
       <div className="px-4 py-3 flex justify-between w-full items-start border-b border-primary-05-green-05">
-        <p className="text-wrap text-sm font-normal leading-[150%] text-primary-100-green-04 w-60">
+        <p className="text-wrap text-sm font-normal leading-[150%] text-primary-100-green-04 w-full md:w-60">
           {name}
         </p>
         <IconButton
           icon={iconCloseDarkGreen}
           variant="white"
+          title={t('close')}
           onClick={() => {
             setPropsVisible(false);
             onClose();
@@ -140,6 +141,7 @@ export const DetailView = ({ feature, onClose, userLocation }: DetailViewProps) 
           className={cn({ hidden: !propsVisible, 'md:flex': !propsVisible })}
         />
         <IconButton
+          title={t('edit')}
           icon={iconEditDarkGreen}
           variant={isOpen ? 'tint' : 'secondary'}
           className={cn(
@@ -158,6 +160,7 @@ export const DetailView = ({ feature, onClose, userLocation }: DetailViewProps) 
       <div className="pt-6 pb-4 px-4 flex-grow flex w-full items-end">
         <div className="flex justify-between items-center w-full flex-row-reverse h-10">
           <IconButton
+            title={t('edit')}
             icon={iconEditDarkGreen}
             variant={isOpen ? 'tint' : 'secondary'}
             className="hidden md:visible md:flex"

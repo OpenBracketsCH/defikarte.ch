@@ -54,7 +54,7 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
   registerInteractions(map: Map, onEvent?: MapEventCallback) {
     const cursorClickableInteraction = new CursorClickableInteraction(map);
     const clusterZoomInteraction = new ClusterZoomInteraction(map);
-    const itemSelectInteraction = new ItemSelectInteraction(map, onEvent);
+    const itemSelectInteraction = new ItemSelectInteraction(map, this.getSourceId(), onEvent);
 
     this.interactions = [cursorClickableInteraction, clusterZoomInteraction, itemSelectInteraction];
 
@@ -62,6 +62,10 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
     cursorClickableInteraction.on(this.aedClusterLayers.map(layer => layer.id));
     clusterZoomInteraction.on(this.aedClusterLayers.map(layer => layer.id));
     itemSelectInteraction.on(this.aedPointLayers.map(layer => layer.id));
+  }
+
+  getInteractions() {
+    return this.interactions as readonly InteractionLayer[];
   }
 
   cleanup(map: Map) {

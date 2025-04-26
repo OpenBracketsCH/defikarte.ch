@@ -75,17 +75,20 @@ export const MapControl = (props: Props) => {
       )}
       <div className="flex flex-col gap-1 mt-2 md:mt-0">
         <MapIconButton
+          title={t('layers')}
           active={isActive}
           icon={isActive ? layerIconWhite : layerIconGreen}
           onClick={() => setIsActive(s => !s)}
         />
         <MapIconButton
+          title={t('zoomIn')}
           active={false}
           icon={iconPlus}
           onClick={() => map?.zoomIn()}
           className="hidden md:flex"
         />
         <MapIconButton
+          title={t('zoomOut')}
           active={false}
           icon={iconMinus}
           onClick={() => map?.zoomOut()}

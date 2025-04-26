@@ -28,5 +28,13 @@
   "operator": "Betreiber",
   "operatorPhone": "Betreiber Telefon",
   "details": "Details",
-  "hide": "Ausblenden"
+  "hide": "Ausblenden",
+  "close": "Schliessen",
+  "edit": "Bearbeiten",
+  "clear": "Löschen",
+  "filter": "Filter",
+  "showLocation": "Deinen Standort anzeigen",
+  "layers": "Layer",
+  "zoomIn": "Zoom +",
+  "zoomOut": "Zoom -"
 }

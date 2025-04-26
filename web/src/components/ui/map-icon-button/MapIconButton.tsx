@@ -14,7 +14,7 @@ export const MapIconButton: React.FC<MapIconButtonProps> = ({
   className,
   ...props
 }) => {
-  const buttonClass = classNames(className, 'w-max', 'h-max');
+  const buttonClass = classNames(className, 'size-max');
   const imgClass = classNames('p-1', 'rounded-full', 'box-content', 'size-max', 'cursor-pointer', {
     'hover:bg-green-custom': !active,
     'bg-primary-100-white': !active && variant === 'default',

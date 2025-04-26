@@ -135,7 +135,7 @@ export class MapInstance {
     this.activeOverlay = overlay;
   }
 
-  public easyTo(coordinates: LngLatLike, zoom?: number) {
+  public easeTo(coordinates: LngLatLike, zoom?: number) {
     this.mapInstance?.easeTo({
       center: coordinates,
       zoom: zoom ?? this.mapInstance.getZoom(),
@@ -159,6 +159,14 @@ export class MapInstance {
 
   public remove = () => {
     this.mapInstance?.remove();
+  };
+
+  public getActiveMapInteractions = () => {
+    return this.overlayManager.getActiveMapInteractions();
+  };
+
+  public getActiveOverlaySourceIds = () => {
+    return this.overlayManager.getActiveSourceIds();
   };
 
   public setFeatureState = (source?: string, featureId?: string | number, state?: FeatureState) => {

@@ -1,3 +1,5 @@
+import { Point } from 'geojson';
+import { MapGeoJSONFeature } from 'maplibre-gl';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -8,8 +10,8 @@ import { MapControl } from './controls/map-control/MapControl';
 import { SearchControl } from './controls/search-control/SearchControl';
 import { SponsorControl } from './controls/sponsor-control/SponsorControl';
 import { useUserLocation } from './hooks/useUserLocation';
-import { FEATURE_STATE } from './map-instance/configuration/constants';
 import { MapConfiguration } from './map-instance/configuration/map.configuration';
+import ItemSelectInteraction from './map-instance/interactions/item-select.interaction';
 import { MapInstance } from './map-instance/map-instance';
 
 export const Map = () => {
@@ -18,7 +20,7 @@ export const Map = () => {
   const [activeBaseLayer, setActiveBaseLayer] = useState<string>(
     MapConfiguration.osmVectorBasemapId
   );
-  const [selectedMapEvent, setSelectedMapEvent] = useState<MapEvent | null>(null);
+  const [selectedFeature, setSelectedFeature] = useState<MapEvent | null>(null);
   const mapContainer = useRef<HTMLDivElement>(null);
   const {
     userLocation,
@@ -31,16 +33,44 @@ export const Map = () => {
 
   const onMapEvent: MapEventCallback = event => {
     if (event.type === 'item-select') {
-      setSelectedMapEvent(event);
+      setSelectedFeature(event);
     }
   };
 
-  const onDetailViewClose = () => {
-    const featureId = selectedMapEvent?.data?.id;
-    mapInstance?.setFeatureState(selectedMapEvent?.source, featureId, {
-      [FEATURE_STATE.SELECTED]: false,
+  const onFeatureDeselect = () => {
+    mapInstance?.getActiveMapInteractions()?.forEach(interaction => {
+      if (interaction instanceof ItemSelectInteraction) {
+        interaction.deselectFeatures();
+      }
     });
-    setSelectedMapEvent(null);
+  };
+
+  const onFeatureSelect = (event: MapEvent) => {
+    if (!event.data) return;
+
+    console.log('onFeatureSelect', event.data.source);
+    let interactionExecuted = false;
+    mapInstance?.getActiveMapInteractions()?.forEach(interaction => {
+      if (
+        interaction instanceof ItemSelectInteraction &&
+        interaction.sourceId === event.data?.source
+      ) {
+        interaction.selectFeature(event.data as MapGeoJSONFeature, null);
+        interactionExecuted = true;
+      }
+    });
+
+    if (!interactionExecuted) {
+      const bbox = event.data.geometry.bbox;
+      if (bbox && bbox.length === 4) {
+        mapInstance?.fitBounds([
+          [bbox[0], bbox[1]],
+          [bbox[2], bbox[3]],
+        ]);
+      }
+      const coordinates = (event.data.geometry as Point).coordinates;
+      mapInstance?.easeTo(coordinates as [number, number], 18);
+    }
   };
 
   useEffect(() => {
@@ -63,7 +93,12 @@ export const Map = () => {
   return (
     <div className="h-full w-full">
       <div className="h-full w-full" ref={mapContainer} />
-      <SearchControl map={mapInstance} isGpsActive={isGpsActive} setIsGpsActive={setIsGpsActive} />
+      <SearchControl
+        map={mapInstance}
+        isGpsActive={isGpsActive}
+        setIsGpsActive={setIsGpsActive}
+        onFeatureSelect={onFeatureSelect}
+      />
       <MapControl
         map={mapInstance!}
         setActiveBaseLayer={setActiveBaseLayer}
@@ -71,10 +106,10 @@ export const Map = () => {
       />
       <AttributionControl activeBaseLayer={activeBaseLayer} />
       <SponsorControl />
-      {selectedMapEvent && (
+      {selectedFeature && (
         <DetailView
-          feature={selectedMapEvent.data}
-          onClose={onDetailViewClose}
+          feature={selectedFeature.data}
+          onClose={onFeatureDeselect}
           userLocation={userLocation}
         />
       )}

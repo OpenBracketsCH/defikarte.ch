@@ -8,7 +8,10 @@ const BOLD_TAG_END = '</b>';
 const TAG_LIST = [ICON_TAG, ICON_TAG_END, BOLD_TAG, BOLD_TAG_END];
 
 // ToDo: Do that on backend
-export const filterLabelContent = (label: string) => {
+export const filterLabelContent = (label: string | null): string[] | null => {
+  if (label === null) {
+    return label;
+  }
   const parts: string[] = label
     .split(/(<\/?i>|<\/?b>)/)
     .map((part: string) => part.trim())

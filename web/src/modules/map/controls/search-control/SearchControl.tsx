@@ -1,12 +1,12 @@
 import className from 'classnames';
-import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson';
+import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
+import { MapGeoJSONFeature } from 'maplibre-gl';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
-import { ActiveOverlayType } from '../../../../model/map';
+import { ActiveOverlayType, MapEvent } from '../../../../model/map';
 import { filterLabelContent, searchAddress } from '../../../../services/address-search.service';
 import { searchAed } from '../../../../services/aed-search.service';
-import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
 import { MapInstance } from '../../map-instance/map-instance';
 import iconClose from './../../../../assets/icons/icon-close-dark-green.svg';
 import iconFilter from './../../../../assets/icons/icon-filter-dark-green.svg';
@@ -20,9 +20,10 @@ type Props = {
   map: MapInstance | null;
   isGpsActive: boolean;
   setIsGpsActive: Dispatch<SetStateAction<boolean>>;
+  onFeatureSelect: (event: MapEvent) => void;
 };
 
-export const SearchControl = ({ map, isGpsActive, setIsGpsActive }: Props) => {
+export const SearchControl = ({ map, isGpsActive, setIsGpsActive, onFeatureSelect }: Props) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
@@ -35,18 +36,10 @@ export const SearchControl = ({ map, isGpsActive, setIsGpsActive }: Props) => {
       if (searchText.length > 2) {
         const results = await searchAddress(searchText);
         const mapResults =
-          (map &&
-            (await searchAed(
-              searchText,
-              activeOverlay === 'availability'
-                ? MapConfiguration.aedAvailabilitySourceId
-                : MapConfiguration.aedSourceId,
-              map
-            ))) ||
-          [];
+          (map && (await searchAed(searchText, map.getActiveOverlaySourceIds(), map))) || [];
         setSearchResults({
           type: 'FeatureCollection',
-          features: [...results.features.slice(0, 10), ...mapResults.slice(0, 10)],
+          features: [...results.features.slice(0, 4), ...mapResults.slice(0, 2)],
         });
 
         if (results.features.length >= 0) {
@@ -74,18 +67,24 @@ export const SearchControl = ({ map, isGpsActive, setIsGpsActive }: Props) => {
   };
 
   const onItemSelect = (feature: Feature<Geometry, GeoJsonProperties>) => {
-    const bbox = feature.bbox;
-    if (bbox?.length === 4) {
-      map?.fitBounds([
-        [bbox[0], bbox[1]],
-        [bbox[2], bbox[3]],
-      ]);
-    } else {
-      map?.easyTo((feature.geometry as Point).coordinates as [number, number], 18);
-    }
+    const mapGeoJSONFeature = {
+      geometry: feature.geometry,
+      properties: feature.properties,
+      id: feature.id,
+      type: feature.type,
+      source: feature.properties?.source,
+    } as MapGeoJSONFeature;
 
-    const value = filterLabelContent(feature.properties?.label).join(' ');
-    setSearchText(value);
+    onFeatureSelect({
+      source: mapGeoJSONFeature.source,
+      data: mapGeoJSONFeature,
+      type: 'item-select',
+    });
+
+    const value = filterLabelContent(feature.properties?.label);
+    if (value) {
+      setSearchText(value.join(' '));
+    }
   };
 
   const onReset = () => {
@@ -141,14 +140,21 @@ export const SearchControl = ({ map, isGpsActive, setIsGpsActive }: Props) => {
           />
           <div className="flex justify-end items-center gap-2 ml-0">
             {searchText && (
-              <MapIconButton active={false} icon={iconClose} onClick={() => onReset()} />
+              <MapIconButton
+                title={t('clear')}
+                active={false}
+                icon={iconClose}
+                onClick={() => onReset()}
+              />
             )}
             <MapIconButton
+              title={t('filter')}
               active={false}
               icon={iconFilter}
               onClick={() => setShowFilter(s => !s)}
             />
             <MapIconButton
+              title={t('showLocation')}
               active={false}
               icon={isGpsActive ? iconGpsOn : iconGpsOff}
               variant={isGpsActive ? 'gps-on' : 'gps-off'}
