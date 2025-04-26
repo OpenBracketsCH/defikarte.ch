@@ -19,10 +19,13 @@ export const Button = ({
     'flex',
     'gap-2',
     'items-center',
-    'rounded-[40px]',
+    'rounded-[theme(space.10)]',
     'cursor-pointer',
+
     {
       'bg-linear-to-r from-primary-100-green-03 to-primary-100-green-02 text-primary-100-white':
+        variant === 'primary',
+      'hover:bg-linear-to-r hover:from-green-custom-02 hover:to-primary-100-green-02':
         variant === 'primary',
       'bg-primary-100-white text-primary-100-green-03': variant === 'secondary',
       'ps-3 pe-4 py-2': size === 'regular',
@@ -37,10 +40,15 @@ export const Button = ({
     'color-primary-100-green-03': variant === 'secondary',
   });
 
+  const textClass = classNames('leading-[150%]', {
+    'font-semibold': variant === 'primary',
+    'font-normal': variant === 'secondary',
+  });
+
   return (
     <button className={buttonClass} {...props}>
       {icon && <img src={icon} alt="icon" className={iconClass} />}
-      <span className="font-semibold lining-[150%]">{children}</span>
+      <span className={textClass}>{children}</span>
     </button>
   );
 };
