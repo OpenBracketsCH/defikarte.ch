@@ -15,7 +15,7 @@ export const AttributionControl = ({ activeBaseLayer }: Props) => {
         <a
           href="https://maplibre.org/"
           target="_blank"
-          className="text-[8px] md:text-[10px] p-0 m-0 "
+          className="text-[8px] md:text-[10px] p-0 m-0 leading-[150%]"
         >
           MapLibre
         </a>
@@ -23,14 +23,18 @@ export const AttributionControl = ({ activeBaseLayer }: Props) => {
         <a
           href="https://www.openstreetmap.org"
           target="_blank"
-          className="text-[8px] md:text-[10px]"
+          className="text-[8px] md:text-[10px] leading-[150%]"
         >
           © OpenStreetMap contributors
         </a>
         {isSwisstopoLayerActive && (
           <>
             <span className="text-[8px] md:text-[10px] mx-1">|</span>
-            <a target="_blank" className="text-[8px] md:text-[10px]">
+            <a
+              href="https://www.swisstopo.admin.ch/"
+              target="_blank"
+              className="text-[8px] md:text-[10px] leading-[150%]"
+            >
               © swisstopo
             </a>
           </>
