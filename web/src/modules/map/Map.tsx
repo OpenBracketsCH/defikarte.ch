@@ -12,7 +12,7 @@ import { FEATURE_STATE } from './map-instance/configuration/constants';
 import { MapConfiguration } from './map-instance/configuration/map.configuration';
 import { MapInstance } from './map-instance/map-instance';
 
-const Map = () => {
+export const Map = () => {
   const { t } = useTranslation();
   const [mapInstance, setMapInstance] = useState<MapInstance | null>(null);
   const [activeBaseLayer, setActiveBaseLayer] = useState<string>(
@@ -81,5 +81,3 @@ const Map = () => {
     </div>
   );
 };
-
-export default Map;

@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import cn from 'classnames';
 import { Feature, Point } from 'geojson';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -58,7 +58,7 @@ export const DetailView = ({ feature, onClose, userLocation }: DetailViewProps) 
     });
   const name = props['defibrillator:location'] ?? props.description ?? props.operator ?? 'n/A';
 
-  const containerClass = classNames(
+  const containerClass = cn(
     'absolute',
     'flex',
     'flex-col',
@@ -88,7 +88,14 @@ export const DetailView = ({ feature, onClose, userLocation }: DetailViewProps) 
         <p className="text-wrap text-sm font-normal leading-[150%] text-primary-100-green-04 w-60">
           {name}
         </p>
-        <IconButton icon={iconCloseDarkGreen} variant="white" onClick={() => onClose()} />
+        <IconButton
+          icon={iconCloseDarkGreen}
+          variant="white"
+          onClick={() => {
+            setPropsVisible(false);
+            onClose();
+          }}
+        />
       </div>
       <div className="px-4 pt-4 overflow-auto gap-6 flex flex-col w-full">
         <div className="flex flex-wrap items-start justify-start gap-1.5">
@@ -130,7 +137,22 @@ export const DetailView = ({ feature, onClose, userLocation }: DetailViewProps) 
         <FeaturePropsList
           feature={feature}
           isOpen={isOpen}
-          className={classNames({ hidden: !propsVisible, 'md:flex': !propsVisible })}
+          className={cn({ hidden: !propsVisible, 'md:flex': !propsVisible })}
+        />
+        <IconButton
+          icon={iconEditDarkGreen}
+          variant={isOpen ? 'tint' : 'secondary'}
+          className={cn(
+            'md:hidden',
+            'w-full',
+            'flex',
+            'justify-end',
+            'items-end',
+            'pt-1',
+            'pb-4',
+            'pe-4',
+            { hidden: !propsVisible, 'md:flex': !propsVisible }
+          )}
         />
       </div>
       <div className="pt-6 pb-4 px-4 flex-grow flex w-full items-end">

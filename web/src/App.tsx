@@ -1,7 +1,7 @@
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router';
-import Map from './modules/map/Map';
+import { Map } from './modules/map/Map';
 
 const App: React.FC = () => {
   return (
