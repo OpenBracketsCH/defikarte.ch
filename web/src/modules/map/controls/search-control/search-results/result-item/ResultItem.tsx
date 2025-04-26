@@ -21,7 +21,7 @@ export const ResultItem = (props: Props) => {
         'n/A';
       return [value];
     }
-    return filterLabelContent(item.properties?.label || '');
+    return filterLabelContent(item.properties?.label) || [];
   };
 
   const values = getLabel(item.properties || {});
