@@ -113,8 +113,9 @@ export const Map = () => {
       {selectedFeature && (
         <DetailView
           feature={selectedFeature.data}
-          onClose={onFeatureDeselect}
           userLocation={userLocationData}
+          onCenterFeature={() => onFeatureSelect(selectedFeature)}
+          onClose={onFeatureDeselect}
         />
       )}
     </div>

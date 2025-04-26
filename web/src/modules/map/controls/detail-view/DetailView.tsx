@@ -21,11 +21,17 @@ import { FeaturePropsList } from './property-list/FeaturePropsList';
 
 type DetailViewProps = {
   feature: Feature | null;
-  onClose: () => void;
   userLocation: GeolocationPosition | null;
+  onCenterFeature: () => void;
+  onClose: () => void;
 };
 
-export const DetailView = ({ feature, onClose, userLocation }: DetailViewProps) => {
+export const DetailView = ({
+  feature,
+  userLocation,
+  onCenterFeature,
+  onClose,
+}: DetailViewProps) => {
   const { t } = useTranslation();
   const [propsVisible, setPropsVisible] = useState(false);
   if (!feature || !feature?.properties) {
@@ -84,7 +90,10 @@ export const DetailView = ({ feature, onClose, userLocation }: DetailViewProps) 
   );
   return (
     <div className={containerClass} style={{ zIndex: 100000 }}>
-      <div className="px-4 py-3 flex justify-between w-full items-start border-b border-primary-05-green-05">
+      <div
+        className="px-4 py-3 flex justify-between w-full items-start border-b border-primary-05-green-05 cursor-pointer"
+        onClick={() => onCenterFeature()}
+      >
         <p className="text-wrap text-sm font-normal leading-[150%] text-primary-100-green-04 w-full md:w-60">
           {name}
         </p>
@@ -92,9 +101,10 @@ export const DetailView = ({ feature, onClose, userLocation }: DetailViewProps) 
           icon={iconCloseDarkGreen}
           variant="white"
           title={t('close')}
-          onClick={() => {
+          onClick={e => {
             setPropsVisible(false);
             onClose();
+            e.stopPropagation();
           }}
         />
       </div>
