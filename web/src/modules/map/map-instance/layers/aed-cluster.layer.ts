@@ -1,6 +1,7 @@
 import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
 import {
   COLORS,
+  IMAGE_SCALE,
   MARKER_GRADIENT_M_IMAGE_ID,
   MARKER_GRADIENT_S_IMAGE_ID,
   MARKER_GRADIENT_XL_IMAGE_ID,
@@ -29,7 +30,7 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
         1000,
         MARKER_GRADIENT_XL_IMAGE_ID,
       ],
-      'icon-size': 0.25,
+      'icon-size': IMAGE_SCALE,
     },
     filter: clusterFilter,
   };

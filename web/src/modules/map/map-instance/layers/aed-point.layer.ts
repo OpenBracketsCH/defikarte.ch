@@ -2,6 +2,7 @@ import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
 import {
   COLORS,
   FEATURE_STATE,
+  IMAGE_SCALE,
   MARKER_GREEN_IMAGE_ID,
   MARKER_ORANGE_IMAGE_ID,
 } from '../configuration/constants';
@@ -24,7 +25,7 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
         MARKER_GREEN_IMAGE_ID,
         MARKER_ORANGE_IMAGE_ID,
       ],
-      'icon-size': 0.25,
+      'icon-size': IMAGE_SCALE,
     },
     filter: noClusterFilter,
   };
@@ -47,7 +48,7 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
         30, // selected
         20, // not selected
       ],
-      'circle-opacity': 0.4,
+      'circle-opacity': ['match', ['get', 'opening_hours'], '24/7', 0.6, 0.4],
     },
     filter: noClusterFilter,
   };

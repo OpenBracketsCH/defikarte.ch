@@ -1,9 +1,9 @@
 import { FeatureCollection } from 'geojson';
 import { GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
-import { InteractionLayer, OverlayStrategy } from '../../../../model/map';
-import { MapConfiguration } from '../configuration/map.configuration';
-import { createUserLocationLayers } from '../layers/user-location.layer';
-import { createUserLocationSource } from '../sources/user-location.source';
+import { InteractionLayer, OverlayStrategy } from '../../../../../model/map';
+import { MapConfiguration } from '../../configuration/map.configuration';
+import { createUserLocationLayers } from '../../layers/user-location.layer';
+import { createGeoJSONSource } from '../../sources/geojson.source';
 
 export class UserLocationOverlayStrategy implements OverlayStrategy {
   private map: Map;
@@ -26,7 +26,7 @@ export class UserLocationOverlayStrategy implements OverlayStrategy {
       data = await source.getData();
     }
 
-    return createUserLocationSource(data);
+    return createGeoJSONSource(data);
   }
 
   createLayers(): LayerSpecification[] {

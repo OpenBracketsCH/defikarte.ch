@@ -4,7 +4,7 @@ import { MapGeoJSONFeature } from 'maplibre-gl';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
-import { ActiveOverlayType, MapEvent } from '../../../../model/map';
+import { FilterType, MapEvent } from '../../../../model/map';
 import { filterLabelContent, searchAddress } from '../../../../services/address-search.service';
 import { searchAed } from '../../../../services/aed-search.service';
 import { MapInstance } from '../../map-instance/map-instance';
@@ -21,8 +21,8 @@ type Props = {
   isGpsActive: boolean;
   setIsGpsActive: Dispatch<SetStateAction<boolean>>;
   onFeatureSelect: (event: MapEvent) => void;
-  activeOverlay: ActiveOverlayType;
-  setActiveOverlay: Dispatch<SetStateAction<ActiveOverlayType>>;
+  activeOverlays: FilterType[];
+  setActiveOverlays: Dispatch<SetStateAction<FilterType[]>>;
 };
 
 export const SearchControl = ({
@@ -30,8 +30,8 @@ export const SearchControl = ({
   isGpsActive,
   setIsGpsActive,
   onFeatureSelect,
-  activeOverlay,
-  setActiveOverlay,
+  activeOverlays,
+  setActiveOverlays,
 }: Props) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string>('');
@@ -61,7 +61,7 @@ export const SearchControl = ({
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [activeOverlay, searchText, map]);
+  }, [searchText, map]);
 
   const onSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -171,11 +171,7 @@ export const SearchControl = ({
           </div>
         </div>
         {showFilter && (
-          <FilterControl
-            map={map}
-            activeOverlay={activeOverlay}
-            setActiveOverlay={setActiveOverlay}
-          />
+          <FilterControl activeOverlays={activeOverlays} setActiveOverlays={setActiveOverlays} />
         )}
         {!showFilter && searchResults && searchResults?.features.length > 0 && (
           <SearchResults searchResults={searchResults} onItemSelect={onItemSelect} />

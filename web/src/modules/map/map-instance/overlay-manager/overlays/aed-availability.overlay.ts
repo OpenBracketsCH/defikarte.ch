@@ -1,13 +1,13 @@
 import { GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
-import { InteractionLayer, MapEventCallback, OverlayStrategy } from '../../../../model/map';
-import { requestAedDataByCurrentAvailability } from '../../../../services/aed-data.service';
-import { MapConfiguration } from '../configuration/map.configuration';
-import ClusterZoomInteraction from '../interactions/cluster-zoom.interaction';
-import CursorClickableInteraction from '../interactions/cursor-clickable.interaction';
-import ItemSelectInteraction from '../interactions/item-select.interaction';
-import { createAedClusterLayers } from '../layers/aed-cluster.layer';
-import { createAedPointLayers } from '../layers/aed-point.layer';
-import { createAedSource } from '../sources/aed.source';
+import { InteractionLayer, MapEventCallback, OverlayStrategy } from '../../../../../model/map';
+import { requestAedDataByCurrentAvailability } from '../../../../../services/aed-data.service';
+import { MapConfiguration } from '../../configuration/map.configuration';
+import ClusterZoomInteraction from '../../interactions/cluster-zoom.interaction';
+import CursorClickableInteraction from '../../interactions/cursor-clickable.interaction';
+import ItemSelectInteraction from '../../interactions/item-select.interaction';
+import { createAedAvailabilityPointLayers } from '../../layers/aed-availability-point.layer';
+import { createAedClusterLayers } from '../../layers/aed-cluster.layer';
+import { createAedSource } from '../../sources/aed.source';
 
 export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
   private interactions: InteractionLayer[] = [];
@@ -36,7 +36,7 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
   }
 
   createLayers(): LayerSpecification[] {
-    const aedPointLayers = createAedPointLayers(
+    const aedPointLayers = createAedAvailabilityPointLayers(
       MapConfiguration.aedAvailabilityPointLayerId,
       this.getSourceId()
     );

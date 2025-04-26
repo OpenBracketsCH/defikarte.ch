@@ -1,5 +1,5 @@
 import circle from '@turf/circle';
-import { Position } from 'geojson';
+import { Feature, FeatureCollection, Point, Position } from 'geojson';
 import { LngLatBounds, LngLatLike } from 'maplibre-gl';
 import { useCallback, useEffect, useState } from 'react';
 import { GeolocationService } from '../../../services/geolocation.service';
@@ -21,6 +21,29 @@ const calculateBounds = (position: GeolocationPosition): LngLatBounds => {
   });
 
   return bounds;
+};
+
+const createUserLocationData = (position: GeolocationPosition) => {
+  const coordinates = [position.coords.longitude, position.coords.latitude];
+  const accuracy = position.coords.accuracy;
+  const userLocationPoint = {
+    geometry: { type: 'Point', coordinates: coordinates },
+    type: 'Feature',
+    properties: { accuracy },
+  } as Feature<Point>;
+
+  const userLocation = circle(userLocationPoint, accuracy / 1000, {
+    steps: 64,
+    units: 'kilometers',
+    properties: {
+      accuracy: accuracy,
+    },
+  });
+
+  return {
+    type: 'FeatureCollection',
+    features: [userLocation, userLocationPoint],
+  } as FeatureCollection;
 };
 
 const geolocationOptions: PositionOptions = {
@@ -69,7 +92,10 @@ export const useUserLocation = ({ map }: Props) => {
         }
 
         setError(null);
-        map.setUserLocation(MapConfiguration.userLocationSourceId, pos);
+        map.setGeoJSONSourceData(
+          MapConfiguration.userLocationSourceId,
+          createUserLocationData(pos)
+        );
         setUserLocation(pos);
       },
       error => {
@@ -95,7 +121,10 @@ export const useUserLocation = ({ map }: Props) => {
             currentPostion &&
             isPositionValid(currentPostion)
           ) {
-            map?.setUserLocation(MapConfiguration.userLocationSourceId, currentPostion);
+            map?.setGeoJSONSourceData(
+              MapConfiguration.userLocationSourceId,
+              createUserLocationData(currentPostion)
+            );
             map?.fitBounds(calculateBounds(currentPostion));
             setUserLocation(currentPostion);
             setError(null);
@@ -110,7 +139,7 @@ export const useUserLocation = ({ map }: Props) => {
           }
         }
       } else {
-        map?.clearUserLocation();
+        map?.setGeoJSONSourceData(MapConfiguration.userLocationSourceId, null);
         geolocationService.clearWatch();
         setUserLocation(null);
       }

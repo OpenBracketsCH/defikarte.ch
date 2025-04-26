@@ -1,28 +1,21 @@
-import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
-import {
-  COLORS,
-  FEATURE_STATE,
-  IMAGE_SCALE,
-  MARKER_GREEN_IMAGE_ID,
-} from '../configuration/constants';
+import { LayerSpecification } from 'maplibre-gl';
+import { COLORS, IMAGE_SCALE, MARKER_PLUS_GREEN_IMAGE_ID } from '../configuration/constants';
 
-const layerFilter: FilterSpecification = ['!', ['has', 'point_count']];
-
-export const createAedAvailabilityPointLayers = (
+export const createAedCreateMarkerLayers = (
   baseId: string,
   source: string
 ): LayerSpecification[] => {
   const result = [];
+
   const singlePointLayer: LayerSpecification = {
     id: `${baseId}-single-point`,
     source: source,
     type: 'symbol',
     layout: {
       'icon-allow-overlap': true,
-      'icon-image': MARKER_GREEN_IMAGE_ID,
+      'icon-image': MARKER_PLUS_GREEN_IMAGE_ID,
       'icon-size': IMAGE_SCALE,
     },
-    filter: layerFilter,
   };
 
   const singlePointCircleLayer: LayerSpecification = {
@@ -31,17 +24,12 @@ export const createAedAvailabilityPointLayers = (
     type: 'circle',
     paint: {
       'circle-color': COLORS.SECONDARY_GREEN_01,
-      'circle-radius': [
-        'case',
-        ['boolean', ['feature-state', FEATURE_STATE.SELECTED], false],
-        30, // selected
-        20, // not selected
-      ],
+      'circle-radius': 30,
       'circle-opacity': 0.6,
     },
-    filter: layerFilter,
   };
 
+  // order is important
   result.push(singlePointCircleLayer);
   result.push(singlePointLayer);
 

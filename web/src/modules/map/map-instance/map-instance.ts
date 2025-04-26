@@ -1,21 +1,14 @@
-import { circle } from '@turf/circle';
-import { Feature, FeatureCollection, Point } from 'geojson';
-import {
-  FeatureState,
-  GeoJSONSource,
-  LngLatBoundsLike,
-  LngLatLike,
-  Map,
-  StyleSpecification,
-} from 'maplibre-gl';
+import { FeatureCollection } from 'geojson';
+import { GeoJSONSource, LngLatBoundsLike, LngLatLike, Map, StyleSpecification } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
+import markerPlusGreen from '../../../assets/icons/defi-map-marker-plus-green.svg';
 import markerGradientM from '../../../assets/icons/map-marker-count-gradient-m.svg';
 import markerGradientS from '../../../assets/icons/map-marker-count-gradient-s.svg';
 import markerGradientXl from '../../../assets/icons/map-marker-count-gradient-xl.svg';
 import markerGradientXs from '../../../assets/icons/map-marker-count-gradient-xs.svg';
-import { ActiveOverlayType, MapEventCallback } from '../../../model/map';
+import { MapEventCallback, OverlayType } from '../../../model/map';
 import { requestStyleSpecification } from '../../../services/map-style.service';
 import {
   MARKER_GRADIENT_M_IMAGE_ID,
@@ -24,18 +17,20 @@ import {
   MARKER_GRADIENT_XS_IMAGE_ID,
   MARKER_GREEN_IMAGE_ID,
   MARKER_ORANGE_IMAGE_ID,
+  MARKER_PLUS_GREEN_IMAGE_ID,
 } from './configuration/constants';
 import { MapConfiguration } from './configuration/map.configuration';
 import { alwaysAvailableFilterOverride, restrictedFilterOverride } from './filter/aed.filter';
-import { AedAvailabilityOverlayStrategy } from './overlay-manager/aed-availability.overlay';
-import { AedOverlayStrategy } from './overlay-manager/aed.overlay';
 import { OverlayManager } from './overlay-manager/overlay-manager';
-import { UserLocationOverlayStrategy } from './overlay-manager/user-location.overlay';
+import { AedAvailabilityOverlayStrategy } from './overlay-manager/overlays/aed-availability.overlay';
+import { AedCreateOverlayStrategy } from './overlay-manager/overlays/aed-create.overlay';
+import { AedOverlayStrategy } from './overlay-manager/overlays/aed.overlay';
+import { UserLocationOverlayStrategy } from './overlay-manager/overlays/user-location.overlay';
 
 type MapInstanceProps = {
   container: string | HTMLElement;
   baseLayer: string;
-  overlay: ActiveOverlayType;
+  overlays: OverlayType[];
   onEvent?: MapEventCallback;
 };
 
@@ -43,12 +38,10 @@ export class MapInstance {
   private mapInstance: Map | null = null;
   private overlayManager: OverlayManager;
   private activeBaseLayer: string;
-  private activeOverlay: ActiveOverlayType;
 
   constructor(props: MapInstanceProps) {
     this.overlayManager = new OverlayManager(props.onEvent);
     this.activeBaseLayer = props.baseLayer;
-    this.activeOverlay = props.overlay;
     const map = new Map({
       container: props.container,
       style: MapConfiguration.baseLayers[this.activeBaseLayer],
@@ -57,31 +50,29 @@ export class MapInstance {
       attributionControl: false,
     });
 
-    map.on('load', () => this.init(map));
+    this.overlayManager.registerOverlay(OverlayType.aed, new AedOverlayStrategy());
     this.overlayManager.registerOverlay(
-      this.createOverlayName(['247', 'restricted']),
-      new AedOverlayStrategy()
-    );
-
-    this.overlayManager.registerOverlay(
-      this.createOverlayName(['restricted']),
+      OverlayType.aedRestricted,
       new AedOverlayStrategy(restrictedFilterOverride)
     );
     this.overlayManager.registerOverlay(
-      this.createOverlayName(['247']),
+      OverlayType.aed247,
       new AedOverlayStrategy(alwaysAvailableFilterOverride)
     );
     this.overlayManager.registerOverlay(
-      this.createOverlayName('availability'),
+      OverlayType.aedAvailability,
       new AedAvailabilityOverlayStrategy(map)
     );
     this.overlayManager.registerOverlay(
-      MapConfiguration.userLocationLayerId,
+      OverlayType.userLocation,
       new UserLocationOverlayStrategy(map)
     );
+    this.overlayManager.registerOverlay(OverlayType.aedCreate, new AedCreateOverlayStrategy());
+
+    map.on('load', () => this.init(map, props.overlays));
   }
 
-  public init = async (map: Map) => {
+  public init = async (map: Map, overlays: OverlayType[]) => {
     const images = [
       { id: MARKER_GREEN_IMAGE_ID, url: markerGreen },
       { id: MARKER_ORANGE_IMAGE_ID, url: markerOrange },
@@ -89,6 +80,7 @@ export class MapInstance {
       { id: MARKER_GRADIENT_S_IMAGE_ID, url: markerGradientS },
       { id: MARKER_GRADIENT_M_IMAGE_ID, url: markerGradientM },
       { id: MARKER_GRADIENT_XL_IMAGE_ID, url: markerGradientXl },
+      { id: MARKER_PLUS_GREEN_IMAGE_ID, url: markerPlusGreen },
     ];
 
     images.forEach(image => {
@@ -103,9 +95,9 @@ export class MapInstance {
     });
 
     this.mapInstance = map;
-    this.overlayManager.applyOverlay(this.mapInstance, this.createOverlayName(this.activeOverlay));
-    this.overlayManager.applyOverlay(this.mapInstance, MapConfiguration.userLocationLayerId);
-
+    for (const overlay of overlays) {
+      this.overlayManager.applyOverlay(this.mapInstance, overlay);
+    }
     console.log('Map initialized');
   };
 
@@ -115,28 +107,28 @@ export class MapInstance {
     }
 
     let style = await this.getBaseLayerStyleSpec(id);
-    style = await this.overlayManager.applyOverlayOnStyle(
-      this.createOverlayName(this.activeOverlay),
-      style
-    );
-
-    style = await this.overlayManager.applyOverlayOnStyle(
-      MapConfiguration.userLocationLayerId,
-      style
-    );
+    for (const overlay of this.overlayManager.getActiveOverlays()) {
+      style = await this.overlayManager.applyOverlayOnStyle(overlay, style);
+    }
 
     this.activeBaseLayer = id;
     this.mapInstance?.setStyle(style, { diff: true });
   }
 
-  public async setActiveOverlayLayer(overlay: ActiveOverlayType) {
-    if (!this.mapInstance || this.isEqualOverlay(overlay, this.activeOverlay)) {
+  public applyOverlay(overlayId: OverlayType) {
+    if (!this.mapInstance) {
       return;
     }
 
-    this.overlayManager.removeOverlay(this.mapInstance, this.createOverlayName(this.activeOverlay));
-    this.overlayManager.applyOverlay(this.mapInstance, this.createOverlayName(overlay));
-    this.activeOverlay = overlay;
+    this.overlayManager.applyOverlay(this.mapInstance, overlayId);
+  }
+
+  public removeOverlay(overlayId: OverlayType) {
+    if (!this.mapInstance) {
+      return;
+    }
+
+    this.overlayManager.removeOverlay(this.mapInstance, overlayId);
   }
 
   public easeTo(coordinates: LngLatLike, zoom?: number) {
@@ -173,34 +165,18 @@ export class MapInstance {
     return this.overlayManager.getActiveSourceIds();
   };
 
-  public setFeatureState = (source?: string, featureId?: string | number, state?: FeatureState) => {
-    this.mapInstance?.setFeatureState({ source: source || '', id: featureId }, state);
-  };
-
-  public setUserLocation = (sourceId: string, e: GeolocationPosition | null) => {
+  public setGeoJSONSourceData = (sourceId: string, data: FeatureCollection | null) => {
     const source = this.mapInstance?.getSource(sourceId) as GeoJSONSource;
     if (!source) {
       return;
     }
 
-    if (!e) {
+    if (!data) {
       source.setData({ type: 'FeatureCollection', features: [] });
       return;
     }
 
-    const data = this.createUserLocationData(
-      [e.coords.longitude, e.coords.latitude],
-      e.coords.accuracy
-    );
     source.setData(data);
-  };
-
-  public clearUserLocation = () => {
-    if (!this.mapInstance) {
-      return;
-    }
-
-    this.setUserLocation(MapConfiguration.userLocationSourceId, null);
   };
 
   public async getGeoJsonSourceData(sourceId: string): Promise<FeatureCollection> {
@@ -235,44 +211,6 @@ export class MapInstance {
 
     return styleSpec;
   };
-
-  private createUserLocationData(coordinates: LngLatLike, accuracy: number) {
-    const userLocationPoint = {
-      geometry: { type: 'Point', coordinates: coordinates },
-      type: 'Feature',
-      properties: { accuracy },
-    } as Feature<Point>;
-
-    const userLocation = circle(userLocationPoint, accuracy / 1000, {
-      steps: 64,
-      units: 'kilometers',
-      properties: {
-        accuracy: accuracy,
-      },
-    });
-
-    return {
-      type: 'FeatureCollection',
-      features: [userLocation, userLocationPoint],
-    } as FeatureCollection;
-  }
-
-  private createOverlayName = (overlay: ActiveOverlayType) => {
-    return overlay === 'availability' ? overlay : overlay.sort().join('');
-  };
-
-  private isEqualOverlay(overlay1: ActiveOverlayType, overlay2: ActiveOverlayType): boolean {
-    if (typeof overlay1 === 'string' && typeof overlay2 === 'string') {
-      return overlay1 === overlay2;
-    } else if (Array.isArray(overlay1) && Array.isArray(overlay2)) {
-      return (
-        overlay1.length === overlay2.length &&
-        overlay1.every((value, index) => value === overlay2[index])
-      );
-    }
-
-    return false;
-  }
 
   private getEmptyStyleSpec = (): StyleSpecification => {
     return { layers: {}, sources: {}, version: 8 } as StyleSpecification;

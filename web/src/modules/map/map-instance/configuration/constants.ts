@@ -4,6 +4,9 @@ export const MARKER_GRADIENT_XS_IMAGE_ID = 'marker-gradient-xs';
 export const MARKER_GRADIENT_S_IMAGE_ID = 'marker-gradient-s';
 export const MARKER_GRADIENT_M_IMAGE_ID = 'marker-gradient-m';
 export const MARKER_GRADIENT_XL_IMAGE_ID = 'marker-gradient-xl';
+export const MARKER_PLUS_GREEN_IMAGE_ID = 'marker-plus-green';
+
+export const IMAGE_SCALE = 0.25;
 
 export const COLORS = {
   PRIMARY_100_WHITE: '#FFF',

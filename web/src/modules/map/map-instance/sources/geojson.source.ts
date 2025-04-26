@@ -1,7 +1,7 @@
 import { GeoJSON, GeoJsonProperties, Geometry } from 'geojson';
 import { GeoJSONSourceSpecification } from 'maplibre-gl';
 
-export const createUserLocationSource = (
+export const createGeoJSONSource = (
   data: string | GeoJSON<Geometry, GeoJsonProperties>
 ): GeoJSONSourceSpecification => {
   return {

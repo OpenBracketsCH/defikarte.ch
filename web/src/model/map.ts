@@ -1,6 +1,20 @@
+import { Feature, GeoJsonProperties, Point } from 'geojson';
 import { LayerSpecification, Map, MapGeoJSONFeature, SourceSpecification } from 'maplibre-gl';
 
-export type ActiveOverlayType = ('247' | 'restricted')[] | 'availability';
+export enum FilterType {
+  'alwaysAvailable' = 'alwaysAvailable',
+  'restricted' = 'restricted',
+  'availability' = 'availability',
+}
+
+export enum OverlayType {
+  'aed' = 'aed',
+  'aed247' = 'aed247',
+  'aedRestricted' = 'aedRestricted',
+  'aedAvailability' = 'aedAvailability',
+  'userLocation' = 'userLocation',
+  'aedCreate' = 'aedCreate',
+}
 
 export interface InteractionLayer {
   on(layerIds: string[]): void;
@@ -17,7 +31,7 @@ export interface OverlayStrategy {
 }
 export type MapEventCallback = (event: MapEvent) => void;
 
-export type MapEvent = ItemSelectEvent & BaseEvent;
+export type MapEvent = (ItemSelectEvent | ItemMoveEvent) & BaseEvent;
 
 export interface BaseEvent {
   layerIds?: string[];
@@ -27,4 +41,9 @@ export interface BaseEvent {
 export interface ItemSelectEvent {
   type: 'item-select';
   data: MapGeoJSONFeature | null;
+}
+
+export interface ItemMoveEvent {
+  type: 'item-move';
+  data: Feature<Point, GeoJsonProperties> | null;
 }

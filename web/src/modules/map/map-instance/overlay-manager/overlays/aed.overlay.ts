@@ -1,12 +1,12 @@
 import { FilterSpecification, LayerSpecification, Map } from 'maplibre-gl';
-import { InteractionLayer, MapEventCallback, OverlayStrategy } from '../../../../model/map';
-import { MapConfiguration } from '../configuration/map.configuration';
-import ClusterZoomInteraction from '../interactions/cluster-zoom.interaction';
-import CursorClickableInteraction from '../interactions/cursor-clickable.interaction';
-import ItemSelectInteraction from '../interactions/item-select.interaction';
-import { createAedClusterLayers } from '../layers/aed-cluster.layer';
-import { createAedPointLayers } from '../layers/aed-point.layer';
-import { createAedSource } from '../sources/aed.source';
+import { InteractionLayer, MapEventCallback, OverlayStrategy } from '../../../../../model/map';
+import { MapConfiguration } from '../../configuration/map.configuration';
+import ClusterZoomInteraction from '../../interactions/cluster-zoom.interaction';
+import CursorClickableInteraction from '../../interactions/cursor-clickable.interaction';
+import ItemSelectInteraction from '../../interactions/item-select.interaction';
+import { createAedClusterLayers } from '../../layers/aed-cluster.layer';
+import { createAedPointLayers } from '../../layers/aed-point.layer';
+import { createAedSource } from '../../sources/aed.source';
 
 export class AedOverlayStrategy implements OverlayStrategy {
   private interactions: InteractionLayer[] = [];
