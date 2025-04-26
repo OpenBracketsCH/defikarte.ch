@@ -3,7 +3,7 @@ import { MapGeoJSONFeature } from 'maplibre-gl';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { MapEvent, MapEventCallback } from '../../model/map';
+import { ActiveOverlayType, MapEvent, MapEventCallback } from '../../model/map';
 import { AttributionControl } from './controls/attribution-control/AttributionControl';
 import { DetailView } from './controls/detail-view/DetailView';
 import { MapControl } from './controls/map-control/MapControl';
@@ -14,22 +14,23 @@ import { MapConfiguration } from './map-instance/configuration/map.configuration
 import ItemSelectInteraction from './map-instance/interactions/item-select.interaction';
 import { MapInstance } from './map-instance/map-instance';
 
+const baseLayer: string = MapConfiguration.osmVectorBasemapId;
+const overlay: ActiveOverlayType = ['247', 'restricted'];
+
 export const Map = () => {
   const { t } = useTranslation();
   const [mapInstance, setMapInstance] = useState<MapInstance | null>(null);
-  const [activeBaseLayer, setActiveBaseLayer] = useState<string>(
-    MapConfiguration.osmVectorBasemapId
-  );
+  const [activeBaseLayer, setActiveBaseLayer] = useState<string>(baseLayer);
+  const [activeOverlay, setActiveOverlay] = useState<ActiveOverlayType>(overlay);
   const [selectedFeature, setSelectedFeature] = useState<MapEvent | null>(null);
   const mapContainer = useRef<HTMLDivElement>(null);
+  const userLocation = useUserLocation({ map: mapInstance });
   const {
-    userLocation,
+    userLocation: userLocationData,
     isActive: isGpsActive,
     setIsActive: setIsGpsActive,
     error: locationError,
-  } = useUserLocation({
-    map: mapInstance,
-  });
+  } = userLocation;
 
   const onMapEvent: MapEventCallback = event => {
     if (event.type === 'item-select') {
@@ -48,7 +49,6 @@ export const Map = () => {
   const onFeatureSelect = (event: MapEvent) => {
     if (!event.data) return;
 
-    console.log('onFeatureSelect', event.data.source);
     let interactionExecuted = false;
     mapInstance?.getActiveMapInteractions()?.forEach(interaction => {
       if (
@@ -83,6 +83,8 @@ export const Map = () => {
     if (mapContainer.current) {
       const map = new MapInstance({
         container: mapContainer.current,
+        baseLayer: baseLayer,
+        overlay: overlay,
         onEvent: onMapEvent,
       });
       setMapInstance(map);
@@ -98,6 +100,8 @@ export const Map = () => {
         isGpsActive={isGpsActive}
         setIsGpsActive={setIsGpsActive}
         onFeatureSelect={onFeatureSelect}
+        activeOverlay={activeOverlay}
+        setActiveOverlay={setActiveOverlay}
       />
       <MapControl
         map={mapInstance!}
@@ -110,7 +114,7 @@ export const Map = () => {
         <DetailView
           feature={selectedFeature.data}
           onClose={onFeatureDeselect}
-          userLocation={userLocation}
+          userLocation={userLocationData}
         />
       )}
     </div>

@@ -21,13 +21,21 @@ type Props = {
   isGpsActive: boolean;
   setIsGpsActive: Dispatch<SetStateAction<boolean>>;
   onFeatureSelect: (event: MapEvent) => void;
+  activeOverlay: ActiveOverlayType;
+  setActiveOverlay: Dispatch<SetStateAction<ActiveOverlayType>>;
 };
 
-export const SearchControl = ({ map, isGpsActive, setIsGpsActive, onFeatureSelect }: Props) => {
+export const SearchControl = ({
+  map,
+  isGpsActive,
+  setIsGpsActive,
+  onFeatureSelect,
+  activeOverlay,
+  setActiveOverlay,
+}: Props) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
-  const [activeOverlay, setActiveOverlay] = useState<ActiveOverlayType>(['247', 'restricted']);
   const [showFilter, setShowFilter] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 

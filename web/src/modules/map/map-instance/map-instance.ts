@@ -34,17 +34,21 @@ import { UserLocationOverlayStrategy } from './overlay-manager/user-location.ove
 
 type MapInstanceProps = {
   container: string | HTMLElement;
+  baseLayer: string;
+  overlay: ActiveOverlayType;
   onEvent?: MapEventCallback;
 };
 
 export class MapInstance {
   private mapInstance: Map | null = null;
   private overlayManager: OverlayManager;
-  private activeBaseLayer: string = MapConfiguration.osmVectorBasemapId;
-  private activeOverlay: ActiveOverlayType = ['247', 'restricted'];
+  private activeBaseLayer: string;
+  private activeOverlay: ActiveOverlayType;
 
   constructor(props: MapInstanceProps) {
     this.overlayManager = new OverlayManager(props.onEvent);
+    this.activeBaseLayer = props.baseLayer;
+    this.activeOverlay = props.overlay;
     const map = new Map({
       container: props.container,
       style: MapConfiguration.baseLayers[this.activeBaseLayer],
