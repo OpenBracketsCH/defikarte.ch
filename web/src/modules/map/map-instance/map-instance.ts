@@ -107,9 +107,7 @@ export class MapInstance {
     }
 
     let style = await this.getBaseLayerStyleSpec(id);
-    for (const overlay of this.overlayManager.getActiveOverlays()) {
-      style = await this.overlayManager.applyOverlayOnStyle(overlay, style);
-    }
+    style = await this.overlayManager.applyActiveOverlaysOnStyle(style);
 
     this.activeBaseLayer = id;
     this.mapInstance?.setStyle(style, { diff: true });

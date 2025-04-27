@@ -42,26 +42,23 @@ export class OverlayManager {
     this.activeOverlays.push(overlay);
   }
 
-  public async applyOverlayOnStyle(
-    overlay: OverlayType,
-    style: StyleSpecification
-  ): Promise<StyleSpecification> {
-    if (this.activeOverlays.includes(overlay)) return style;
-    const strategy = this.overlays.get(overlay);
-    if (!strategy) return style;
+  public async applyActiveOverlaysOnStyle(style: StyleSpecification): Promise<StyleSpecification> {
+    for (const overlay of this.activeOverlays) {
+      const strategy = this.overlays.get(overlay);
+      if (!strategy) return style;
 
-    const sourceId = strategy.getSourceId();
-    const source = await strategy.createSource();
-    const layers = strategy.createLayers();
+      const sourceId = strategy.getSourceId();
+      const source = await strategy.createSource();
+      const layers = strategy.createLayers();
 
-    const newStyle = {
-      ...style,
-      sources: { ...style.sources, [sourceId]: source },
-      layers: [...style.layers, ...layers],
-    };
+      style = {
+        ...style,
+        sources: { ...style.sources, [sourceId]: source },
+        layers: [...style.layers, ...layers],
+      };
+    }
 
-    this.activeOverlays.push(overlay);
-    return newStyle;
+    return style;
   }
 
   public removeOverlay(map: MapInstance, overlay: OverlayType) {

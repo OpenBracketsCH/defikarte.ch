@@ -1,10 +1,10 @@
-import i18n from "i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
-import { initReactI18next } from "react-i18next";
-import de from "./locales/de.json";
-import en from "./locales/en.json";
-import fr from "./locales/fr.json";
-import it from "./locales/it.json";
+import i18n from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import { initReactI18next } from 'react-i18next';
+import de from './locales/de.json';
+import en from './locales/en.json';
+import fr from './locales/fr.json';
+import it from './locales/it.json';
 
 const resources = {
   en: { translation: en },
@@ -22,8 +22,8 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    debug: true,
-    fallbackLng: "de",
+    debug: import.meta.env.DEV,
+    fallbackLng: 'de',
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
