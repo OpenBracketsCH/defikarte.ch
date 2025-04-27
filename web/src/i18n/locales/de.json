@@ -39,5 +39,6 @@
   "zoomOut": "Zoom -",
   "create": "Erfassen",
   "cancel": "Abbrechen",
-  "choosePositionForNewAedOnMap": "Wählen Sie die Position des Defibrillators auf der Karte aus"
+  "choosePositionForNewAedOnMap": "Wählen Sie die Position des Defibrillators auf der Karte aus",
+  "confirmPosition": "Position bestätigen"
 }

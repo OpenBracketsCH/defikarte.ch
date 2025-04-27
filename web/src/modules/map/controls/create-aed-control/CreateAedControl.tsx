@@ -1,6 +1,7 @@
 import { FeatureCollection } from 'geojson';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import iconCheckWhite from '../../../../assets/icons/icon-check-white.svg';
 import iconCloseDarkGreen from '../../../../assets/icons/icon-close-dark-green.svg';
 import iconCloseMiddleGreen from '../../../../assets/icons/icon-close-middle-green.svg';
 import iconInfoCircleGreenM from '../../../../assets/icons/icon-info-circle-green-m.svg';
@@ -104,21 +105,44 @@ export const CreateAedControl = ({
       {isCreating && (
         <>
           <div className="absolute top-6 z-[100000] w-full flex flex-row justify-center items-start h-0">
-            <div className="bg-primary-100-white flex rounded-[50px] px-5 py-4 gap-2.5 text-base leading-[150%] items-center text-primary-100-green-04">
+            <div className="bg-primary-100-white flex rounded-[50px] px-3  md:px-5 py-2 md:py-4 gap-2.5 text-xs md:text-base leading-[150%] items-center text-primary-100-green-04">
               <img src={iconInfoCircleGreenM} />
-              <p>{t('choosePositionForNewAedOnMap')}</p>
+              <span>{t('choosePositionForNewAedOnMap')}</span>
             </div>
           </div>
           <div className="absolute bottom-6 z-[100000] w-full flex flex-row justify-center items-end h-0">
-            <Button
-              variant="white"
-              size="large"
-              icon={iconCloseMiddleGreen}
-              iconHover={iconCloseDarkGreen}
-              onClick={() => setIsCreating(false)}
-            >
-              {t('cancel')}
-            </Button>
+            <div className="flex-row justify-center items-end gap-2 hidden md:flex">
+              <Button variant="primary" size="large" icon={iconCheckWhite}>
+                {t('confirmPosition')}
+              </Button>
+              <Button
+                variant="white"
+                size="large"
+                icon={iconCloseMiddleGreen}
+                iconHover={iconCloseDarkGreen}
+                onClick={() => setIsCreating(false)}
+              >
+                {t('cancel')}
+              </Button>
+            </div>
+            <div className="flex-row justify-center items-end gap-2 md:hidden flex">
+              <Button
+                variant="primary"
+                size="large"
+                icon={iconCheckWhite}
+                iconOnly
+                title={t('confirmPosition')}
+              />
+              <Button
+                variant="white"
+                size="large"
+                iconOnly
+                icon={iconCloseMiddleGreen}
+                iconHover={iconCloseDarkGreen}
+                onClick={() => setIsCreating(false)}
+                title={t('cancel')}
+              />
+            </div>
           </div>
         </>
       )}
