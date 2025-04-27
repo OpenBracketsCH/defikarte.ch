@@ -67,7 +67,7 @@ export class MapInstance {
       OverlayType.userLocation,
       new UserLocationOverlayStrategy(map)
     );
-    this.overlayManager.registerOverlay(OverlayType.aedCreate, new AedCreateOverlayStrategy());
+    this.overlayManager.registerOverlay(OverlayType.aedCreate, new AedCreateOverlayStrategy(map));
 
     map.on('load', () => this.init(map, props.overlays));
   }
@@ -113,12 +113,12 @@ export class MapInstance {
     this.mapInstance?.setStyle(style, { diff: true });
   }
 
-  public applyOverlay(overlayId: OverlayType) {
+  public async applyOverlay(overlayId: OverlayType) {
     if (!this.mapInstance) {
       return;
     }
 
-    this.overlayManager.applyOverlay(this.mapInstance, overlayId);
+    await this.overlayManager.applyOverlay(this.mapInstance, overlayId);
   }
 
   public removeOverlay(overlayId: OverlayType) {
@@ -151,6 +151,10 @@ export class MapInstance {
     this.mapInstance?.zoomOut();
   }
 
+  public getCenter = () => {
+    return this.mapInstance?.getCenter().toArray() ?? MapConfiguration.defaultCenter;
+  };
+
   public remove = () => {
     this.mapInstance?.remove();
   };
@@ -166,6 +170,7 @@ export class MapInstance {
   public setGeoJSONSourceData = (sourceId: string, data: FeatureCollection | null) => {
     const source = this.mapInstance?.getSource(sourceId) as GeoJSONSource;
     if (!source) {
+      console.warn('Source not found', sourceId);
       return;
     }
 

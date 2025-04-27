@@ -1,10 +1,11 @@
 import { Point } from 'geojson';
 import { MapGeoJSONFeature } from 'maplibre-gl';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { FilterType, MapEvent, MapEventCallback, OverlayType } from '../../model/map';
 import { AttributionControl } from './controls/attribution-control/AttributionControl';
+import { CreateAedControl } from './controls/create-aed-control/CreateAedControl';
 import { DetailView } from './controls/detail-view/DetailView';
 import { MapControl } from './controls/map-control/MapControl';
 import { SearchControl } from './controls/search-control/SearchControl';
@@ -37,6 +38,7 @@ export const Map = () => {
   const [activeBaseLayer, setActiveBaseLayer] = useState<string>(baseLayer);
   const [activeOverlays, setActiveOverlays] = useState<FilterType[]>(overlay);
   const [selectedFeature, setSelectedFeature] = useState<MapEvent | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
   const mapContainer = useRef<HTMLDivElement>(null);
   const userLocation = useUserLocation({ map: mapInstance });
   const {
@@ -52,13 +54,13 @@ export const Map = () => {
     }
   };
 
-  const onFeatureDeselect = () => {
+  const onFeatureDeselect = useCallback(() => {
     mapInstance?.getActiveMapInteractions()?.forEach(interaction => {
       if (interaction instanceof ItemSelectInteraction) {
         interaction.deselectFeatures();
       }
     });
-  };
+  }, [mapInstance]);
 
   const onFeatureSelect = (event: MapEvent) => {
     if (event.type !== 'item-select' || !event.data) return;
@@ -126,28 +128,39 @@ export const Map = () => {
   return (
     <div className="h-full w-full">
       <div className="h-full w-full" ref={mapContainer} />
-      <SearchControl
+      <AttributionControl activeBaseLayer={activeBaseLayer} />
+      <CreateAedControl
         map={mapInstance}
-        isGpsActive={isGpsActive}
-        setIsGpsActive={setIsGpsActive}
-        onFeatureSelect={onFeatureSelect}
-        activeOverlays={activeOverlays}
-        setActiveOverlays={setActiveOverlays}
+        isCreating={isCreating}
+        setIsCreating={setIsCreating}
+        featureDeselect={onFeatureDeselect}
       />
       <MapControl
         map={mapInstance!}
         setActiveBaseLayer={setActiveBaseLayer}
         activeBaseLayer={activeBaseLayer}
       />
-      <AttributionControl activeBaseLayer={activeBaseLayer} />
-      <SponsorControl />
-      {selectedFeature && (
-        <DetailView
-          feature={selectedFeature.data}
-          userLocation={userLocationData}
-          onCenterFeature={() => onFeatureSelect(selectedFeature)}
-          onClose={onFeatureDeselect}
-        />
+      {!isCreating && (
+        <>
+          <SearchControl
+            map={mapInstance}
+            isGpsActive={isGpsActive}
+            setIsGpsActive={setIsGpsActive}
+            onFeatureSelect={onFeatureSelect}
+            activeOverlays={activeOverlays}
+            setActiveOverlays={setActiveOverlays}
+          />
+
+          <SponsorControl />
+          {selectedFeature && (
+            <DetailView
+              feature={selectedFeature.data}
+              userLocation={userLocationData}
+              onCenterFeature={() => onFeatureSelect(selectedFeature)}
+              onClose={onFeatureDeselect}
+            />
+          )}
+        </>
       )}
     </div>
   );

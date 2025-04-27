@@ -1,13 +1,10 @@
 import { FeatureCollection, GeoJsonProperties, Point } from 'geojson';
 import { GeoJSONSource, Map, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
 import { InteractionLayer, MapEventCallback } from '../../../../model/map';
-import { MapConfiguration } from '../configuration/map.configuration';
 
 export default class ItemMoveInteraction implements InteractionLayer {
   private mapInstance: Map;
-  private moveFeatureId: { [key: string]: string | number | null } = {
-    [MapConfiguration.aedCreateSourceId]: 123456,
-  };
+  private moveFeatureId: { [key: string]: string | number | null } = {};
   private onEvent?: MapEventCallback;
 
   constructor(mapInstance: Map, sourceId: string, onEvent?: MapEventCallback) {
@@ -19,11 +16,11 @@ export default class ItemMoveInteraction implements InteractionLayer {
   public readonly sourceId: string;
 
   public on = (): void => {
-    this.mapInstance.on('click', e => this.setFeaturePositionMapEvent(e));
+    this.mapInstance.on('click', this.setFeaturePositionMapEvent);
   };
 
   public off = (): void => {
-    this.mapInstance.off('click', e => this.setFeaturePositionMapEvent(e));
+    this.mapInstance.off('click', this.setFeaturePositionMapEvent);
   };
 
   public setFeaturePosition = async (
@@ -45,7 +42,7 @@ export default class ItemMoveInteraction implements InteractionLayer {
     const geojson = (await source.getData()) as FeatureCollection<Point, GeoJsonProperties>;
     const feature = geojson.features.find(f => f.id === featureId);
     if (!feature) {
-      console.warn('Feature not found');
+      console.warn('Feature not found', featureId);
       return;
     }
 

@@ -9,24 +9,23 @@ export default class ItemSelectInteraction implements InteractionLayer {
   private selectedFeatureId: { [key: string]: number | null } = {};
   private onEvent?: MapEventCallback;
 
-  constructor(mapInstance: Map, sourceId: string, onEvent?: MapEventCallback) {
+  constructor(mapInstance: Map, sourceId: string, layerIds: string[], onEvent?: MapEventCallback) {
     this.mapInstance = mapInstance;
     this.sourceId = sourceId;
+    this.layerIds = layerIds;
     this.onEvent = onEvent;
   }
 
   public readonly sourceId: string;
 
-  public on = (layerIds: string[]): void => {
-    this.layerIds = layerIds;
-    this.mapInstance.on('click', e => this.deselectFeaturesMapEvent(e));
-    this.mapInstance.on('click', this.layerIds, e => this.selectFeatureMapEvent(e));
+  public on = (): void => {
+    this.mapInstance.on('click', this.deselectFeaturesMapEvent);
+    this.mapInstance.on('click', this.layerIds, this.selectFeatureMapEvent);
   };
 
   public off = (): void => {
-    this.mapInstance.off('click', e => this.deselectFeaturesMapEvent(e));
+    this.mapInstance.off('click', this.deselectFeaturesMapEvent);
     this.mapInstance.off('click', this.layerIds, this.selectFeatureMapEvent);
-    this.layerIds = [];
     this.selectedFeatureId = {};
     this.deselectFeatures();
   };

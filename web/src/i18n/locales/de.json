@@ -36,5 +36,8 @@
   "showLocation": "Deinen Standort anzeigen",
   "layers": "Layer",
   "zoomIn": "Zoom +",
-  "zoomOut": "Zoom -"
+  "zoomOut": "Zoom -",
+  "create": "Erfassen",
+  "cancel": "Abbrechen",
+  "choosePositionForNewAedOnMap": "Wählen Sie die Position des Defibrillators auf der Karte aus"
 }

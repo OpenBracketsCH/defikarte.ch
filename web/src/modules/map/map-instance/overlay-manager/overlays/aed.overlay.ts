@@ -43,16 +43,27 @@ export class AedOverlayStrategy implements OverlayStrategy {
   }
 
   registerInteractions(map: Map, onEvent?: MapEventCallback) {
-    const cursorClickableInteraction = new CursorClickableInteraction(map);
-    const clusterZoomInteraction = new ClusterZoomInteraction(map);
-    const itemSelectInteraction = new ItemSelectInteraction(map, this.getSourceId(), onEvent);
+    const layers = [
+      ...this.aedPointLayers.map(layer => layer.id),
+      ...this.aedClusterLayers.map(layer => layer.id),
+    ];
+    const cursorClickableInteraction = new CursorClickableInteraction(map, layers);
+    const clusterZoomInteraction = new ClusterZoomInteraction(
+      map,
+      this.aedClusterLayers.map(layer => layer.id)
+    );
+    const itemSelectInteraction = new ItemSelectInteraction(
+      map,
+      this.getSourceId(),
+      this.aedPointLayers.map(layer => layer.id),
+      onEvent
+    );
 
     this.interactions = [cursorClickableInteraction, clusterZoomInteraction, itemSelectInteraction];
 
-    cursorClickableInteraction.on(this.aedPointLayers.map(layer => layer.id));
-    cursorClickableInteraction.on(this.aedClusterLayers.map(layer => layer.id));
-    clusterZoomInteraction.on(this.aedClusterLayers.map(layer => layer.id));
-    itemSelectInteraction.on(this.aedPointLayers.map(layer => layer.id));
+    cursorClickableInteraction.on();
+    clusterZoomInteraction.on();
+    itemSelectInteraction.on();
   }
 
   getInteractions() {
