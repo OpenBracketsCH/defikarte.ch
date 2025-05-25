@@ -40,5 +40,8 @@
   "create": "Erfassen",
   "cancel": "Abbrechen",
   "choosePositionForNewAedOnMap": "Wählen Sie die Position des Defibrillators auf der Karte aus",
-  "confirmPosition": "Position bestätigen"
+  "confirmPosition": "Position bestätigen",
+  "createAed": "Defibrillator erfassen",
+  "editAed": "Defibrillator bearbeiten",
+  "submit": "Abschliessen"
 }

@@ -47,6 +47,7 @@ export const Button = ({
   const textClass = classNames('leading-[150%]', {
     'font-semibold': variant === 'primary' || variant === 'white',
     'font-normal': variant === 'secondary',
+    hidden: iconOnly,
   });
 
   return (
@@ -57,7 +58,7 @@ export const Button = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {icon && <img src={isHovered ? iconHover : icon} alt="icon" className={iconClass} />}
-      {!iconOnly && <span className={textClass}>{children}</span>}
+      <span className={textClass}>{children}</span>
     </button>
   );
 };

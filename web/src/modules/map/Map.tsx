@@ -3,7 +3,7 @@ import { MapGeoJSONFeature } from 'maplibre-gl';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { FilterType, MapEvent, MapEventCallback, OverlayType } from '../../model/map';
+import { CreateMode, FilterType, MapEvent, MapEventCallback, OverlayType } from '../../model/map';
 import { AttributionControl } from './controls/attribution-control/AttributionControl';
 import { CreateAedControl } from './controls/create-aed-control/CreateAedControl';
 import { DetailView } from './controls/detail-view/DetailView';
@@ -38,7 +38,7 @@ export const Map = () => {
   const [activeBaseLayer, setActiveBaseLayer] = useState<string>(baseLayer);
   const [activeOverlays, setActiveOverlays] = useState<FilterType[]>(overlay);
   const [selectedFeature, setSelectedFeature] = useState<MapEvent | null>(null);
-  const [isCreating, setIsCreating] = useState(false);
+  const [createMode, setCreateMode] = useState<CreateMode>(CreateMode.none);
   const mapContainer = useRef<HTMLDivElement>(null);
   const userLocation = useUserLocation({ map: mapInstance });
   const {
@@ -129,18 +129,18 @@ export const Map = () => {
     <div className="h-full w-full">
       <div className="h-full w-full" ref={mapContainer} />
       <AttributionControl activeBaseLayer={activeBaseLayer} />
-      <CreateAedControl
-        map={mapInstance}
-        isCreating={isCreating}
-        setIsCreating={setIsCreating}
-        featureDeselect={onFeatureDeselect}
-      />
       <MapControl
         map={mapInstance!}
         setActiveBaseLayer={setActiveBaseLayer}
         activeBaseLayer={activeBaseLayer}
       />
-      {!isCreating && (
+      <CreateAedControl
+        map={mapInstance}
+        createMode={createMode}
+        setCreateMode={setCreateMode}
+        featureDeselect={onFeatureDeselect}
+      />
+      {createMode === CreateMode.none && (
         <>
           <SearchControl
             map={mapInstance}
@@ -150,7 +150,6 @@ export const Map = () => {
             activeOverlays={activeOverlays}
             setActiveOverlays={setActiveOverlays}
           />
-
           <SponsorControl />
           {selectedFeature && (
             <DetailView

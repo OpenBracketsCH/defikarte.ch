@@ -2,18 +2,24 @@ import { Feature, GeoJsonProperties, Point } from 'geojson';
 import { LayerSpecification, Map, MapGeoJSONFeature, SourceSpecification } from 'maplibre-gl';
 
 export enum FilterType {
-  'alwaysAvailable' = 'alwaysAvailable',
-  'restricted' = 'restricted',
-  'availability' = 'availability',
+  'alwaysAvailable',
+  'restricted',
+  'availability',
 }
 
 export enum OverlayType {
-  'aed' = 'aed',
-  'aed247' = 'aed247',
-  'aedRestricted' = 'aedRestricted',
-  'aedAvailability' = 'aedAvailability',
-  'userLocation' = 'userLocation',
-  'aedCreate' = 'aedCreate',
+  'aed',
+  'aed247',
+  'aedRestricted',
+  'aedAvailability',
+  'userLocation',
+  'aedCreate',
+}
+
+export enum CreateMode {
+  'none',
+  'position',
+  'form',
 }
 
 export interface InteractionLayer {

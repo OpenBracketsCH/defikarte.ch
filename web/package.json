@@ -20,6 +20,7 @@
     "opening_hours": "^3.8.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-hook-form": "^7.56.4",
     "react-hot-toast": "^2.5.2",
     "react-i18next": "^15.4.0",
     "react-router": "^7.1.5"
