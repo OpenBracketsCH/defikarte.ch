@@ -15,11 +15,20 @@ export const FilterControl = ({ activeOverlays, setActiveOverlays }: Props) => {
 
   const onFilterChange = (e: React.ChangeEvent<HTMLInputElement>, value: FilterType) => {
     setActiveOverlays(a => {
-      if (a.includes(FilterType.availability) || value === FilterType.availability) {
-        return e.target.checked ? [value] : [];
+      if (value === FilterType.availability && e.target.checked) {
+        return [FilterType.availability];
       }
 
-      return e.target.checked ? [...a, value] : [...a.filter(x => !value.includes(x))];
+      if (value === FilterType.availability && !e.target.checked) {
+        return [FilterType.alwaysAvailable, FilterType.restricted];
+      }
+
+      let result = a;
+      if (result.includes(FilterType.availability)) {
+        result = result.filter(x => x !== FilterType.availability);
+      }
+
+      return e.target.checked ? [...result, value] : [...result.filter(x => x !== value)];
     });
   };
 

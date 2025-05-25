@@ -100,9 +100,7 @@ export const Map = () => {
       mapInstance?.removeOverlay(overlay);
     }
 
-    if (activeOverlay) {
-      mapInstance?.applyOverlay(activeOverlay);
-    }
+    mapInstance?.applyOverlay(activeOverlay);
   }, [mapInstance, activeOverlays]);
 
   useEffect(() => {
