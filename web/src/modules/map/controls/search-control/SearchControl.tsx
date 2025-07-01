@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { FilterType, MapEvent } from '../../../../model/map';
-import { filterLabelContent, searchAddress } from '../../../../services/address-search.service';
+import { searchAddress } from '../../../../services/address-search.service';
 import { searchAed } from '../../../../services/aed-search.service';
 import { MapInstance } from '../../map-instance/map-instance';
 import iconClose from './../../../../assets/icons/icon-close-dark-green.svg';
@@ -89,9 +89,10 @@ export const SearchControl = ({
       type: 'item-select',
     });
 
-    const value = filterLabelContent(feature.properties?.label);
+    const value =
+      `${feature.properties?.addressPrimary} ${feature.properties?.addressSecondary}`.trim();
     if (value) {
-      setSearchText(value.join(' '));
+      setSearchText(value);
     }
   };
 

@@ -1,5 +1,4 @@
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
-import { filterLabelContent } from '../../../../../../services/address-search.service';
 import iconDefiGreen from './../../../../../../assets/icons/icon-defi-circle-green.svg';
 import iconDefiOrange from './../../../../../../assets/icons/icon-defi-circle-orange.svg';
 import iconAddress from './../../../../../../assets/icons/icon-marker-circle-green-m.svg';
@@ -21,7 +20,9 @@ export const ResultItem = (props: Props) => {
         'n/A';
       return [value];
     }
-    return filterLabelContent(item.properties?.label) || [];
+    return [properties?.addressPrimary, properties?.addressSecondary].filter(
+      x => x !== null || x !== undefined || x !== ''
+    );
   };
 
   const values = getLabel(item.properties || {});
