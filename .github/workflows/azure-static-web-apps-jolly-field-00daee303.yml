@@ -40,3 +40,6 @@ jobs:
           output_location: "dist" # Built app content directory - optional
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
+        env:
+          VITE_BACKEND_API: ${{ secrets.BACKEND_API_URL }}
+          VITE_BACKEND_API_KEY: ${{ secrets.BACKEND_API_KEY }}
