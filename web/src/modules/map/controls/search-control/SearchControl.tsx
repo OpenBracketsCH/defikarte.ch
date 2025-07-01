@@ -89,8 +89,9 @@ export const SearchControl = ({
       type: 'item-select',
     });
 
-    const value =
-      `${feature.properties?.addressPrimary} ${feature.properties?.addressSecondary}`.trim();
+    const value = `${feature.properties?.addressPrimary ?? ''} ${
+      feature.properties?.addressSecondary ?? ''
+    }`.trim();
     if (value) {
       setSearchText(value);
     }
