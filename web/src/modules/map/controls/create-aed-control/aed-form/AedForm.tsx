@@ -16,6 +16,8 @@ import {
   isPhoneNumberValid,
 } from '../../../../../services/custom-validation.service';
 
+const toastId = 'aed-toast';
+
 type AedFormProps = {
   form: ReturnType<typeof useForm<AedData>>;
   setCreateMode: Dispatch<SetStateAction<CreateMode>>;
@@ -33,25 +35,35 @@ export const AedForm = ({ form, setCreateMode }: AedFormProps) => {
   const onSubmit = async (data: AedData) => {
     try {
       await postAedData(data);
-      toast.custom(toastInstance => (
-        <CustomToast
-          icon={iconPlusDarkGreen}
-          toastInstance={toastInstance}
-          title={t('createAedSuccessTitle')}
-          message={t('createAedSuccessMessage')}
-        />
-      ));
+      toast.custom(
+        toastInstance => (
+          <CustomToast
+            icon={iconPlusDarkGreen}
+            toastInstance={toastInstance}
+            title={t('createAedSuccessTitle')}
+            message={t('createAedSuccessMessage')}
+          />
+        ),
+        {
+          id: toastId,
+        }
+      );
       setCreateMode(CreateMode.none);
       form.reset();
     } catch (error) {
-      toast.custom(toastInstance => (
-        <CustomToast
-          icon={iconGpsWarningCircleRed}
-          toastInstance={toastInstance}
-          title={t('createAedErrorTitle')}
-          message={error instanceof Error ? error.message : t('createAedError')}
-        />
-      ));
+      toast.custom(
+        toastInstance => (
+          <CustomToast
+            icon={iconGpsWarningCircleRed}
+            toastInstance={toastInstance}
+            title={t('createAedErrorTitle')}
+            message={error instanceof Error ? error.message : t('createAedError')}
+          />
+        ),
+        {
+          id: toastId,
+        }
+      );
     }
   };
 
