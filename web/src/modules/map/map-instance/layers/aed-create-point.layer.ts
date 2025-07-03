@@ -1,5 +1,5 @@
 import { LayerSpecification } from 'maplibre-gl';
-import { COLORS, IMAGE_SCALE, MARKER_PLUS_GREEN_IMAGE_ID } from '../configuration/constants';
+import { COLORS, IMAGE_SCALE, MARKER_PLUS_BLUE_IMAGE_ID } from '../configuration/constants';
 
 export const createAedCreateMarkerLayers = (
   baseId: string,
@@ -13,7 +13,7 @@ export const createAedCreateMarkerLayers = (
     type: 'symbol',
     layout: {
       'icon-allow-overlap': true,
-      'icon-image': MARKER_PLUS_GREEN_IMAGE_ID,
+      'icon-image': MARKER_PLUS_BLUE_IMAGE_ID,
       'icon-size': IMAGE_SCALE,
     },
   };
@@ -23,7 +23,7 @@ export const createAedCreateMarkerLayers = (
     source: source,
     type: 'circle',
     paint: {
-      'circle-color': COLORS.SECONDARY_GREEN_01,
+      'circle-color': COLORS.SECONDARY_BLUE_01,
       'circle-radius': 30,
       'circle-opacity': 0.6,
     },

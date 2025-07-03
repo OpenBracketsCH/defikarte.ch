@@ -1,15 +1,16 @@
 export interface AedData {
-  id: string;
-  name: string;
-  address: string;
+  id?: string;
+  reporter: string;
+  location: string;
+  level?: string;
+  description?: string;
+  openingHours?: string; // Opening hours of the AED location
+  operator?: string; // Name of the organization or person responsible for the AED
+  operatorPhone?: string; // Contact phone number for the operator
+  access?: 'yes' | 'permissive' | 'private';
+  indoor?: 'yes' | 'no';
   latitude: number;
   longitude: number;
-  description?: string;
-  phone?: string;
-  imageUrl?: string;
-  isAvailable?: boolean; // Indicates if the AED is available for use
-  createdAt?: Date; // Timestamp of when the AED was created
-  updatedAt?: Date; // Timestamp of when the AED was last updated
 }
 
 export interface TooltipData {

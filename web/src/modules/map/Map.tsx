@@ -3,6 +3,8 @@ import { MapGeoJSONFeature } from 'maplibre-gl';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import iconGpsWarningCircleRed from '../../assets/icons/icon-gps-warning-circle-red.svg';
+import { CustomToast } from '../../components/ui/custom-toast/CustomToast';
 import { CreateMode, FilterType, MapEvent, MapEventCallback, OverlayType } from '../../model/map';
 import { AttributionControl } from './controls/attribution-control/AttributionControl';
 import { CreateAedControl } from './controls/create-aed-control/CreateAedControl';
@@ -34,7 +36,8 @@ const filterToOverlayMapping = {
 
 export const Map = () => {
   const { t } = useTranslation();
-  const [mapInstance, setMapInstance] = useState<MapInstance | null>(null);
+  const mapInstanceRef = useRef<MapInstance | null>(null);
+  const mapInstance = mapInstanceRef.current;
   const [activeBaseLayer, setActiveBaseLayer] = useState<string>(baseLayer);
   const [activeOverlays, setActiveOverlays] = useState<FilterType[]>(overlay);
   const [selectedFeature, setSelectedFeature] = useState<MapEvent | null>(null);
@@ -47,6 +50,47 @@ export const Map = () => {
     setIsActive: setIsGpsActive,
     error: locationError,
   } = userLocation;
+
+  useEffect(() => {
+    const filterKey = createFilterKey(activeOverlays);
+    const activeOverlay = filterToOverlayMapping[filterKey];
+    const inactiveOverlays = Object.values(filterToOverlayMapping).filter(
+      overlay => overlay !== activeOverlay
+    );
+
+    for (const overlay of inactiveOverlays) {
+      mapInstance?.removeOverlay(overlay);
+    }
+
+    mapInstance?.applyOverlay(activeOverlay);
+  }, [mapInstance, activeOverlays]);
+
+  useEffect(() => {
+    if (locationError) {
+      toast.custom(toastInstance => (
+        <CustomToast
+          toastInstance={toastInstance}
+          title={t('locationErrorTitle')}
+          message={t(locationError)}
+          icon={iconGpsWarningCircleRed}
+        />
+      ));
+    }
+  }, [locationError, t]);
+
+  useEffect(() => {
+    if (mapContainer.current && !mapInstanceRef.current) {
+      const activeOverlay = filterToOverlayMapping[createFilterKey(overlay)] || OverlayType.aed;
+      const map = new MapInstance({
+        container: mapContainer.current,
+        baseLayer: baseLayer,
+        overlays: [activeOverlay, OverlayType.userLocation],
+        onEvent: onMapEvent,
+      });
+      mapInstanceRef.current = map;
+      return () => mapInstanceRef.current?.remove();
+    }
+  }, []);
 
   const onMapEvent: MapEventCallback = event => {
     if (event.type === 'item-select') {
@@ -88,40 +132,6 @@ export const Map = () => {
       mapInstance?.easeTo(coordinates as [number, number], 18);
     }
   };
-
-  useEffect(() => {
-    const filterKey = createFilterKey(activeOverlays);
-    const activeOverlay = filterToOverlayMapping[filterKey];
-    const inactiveOverlays = Object.values(filterToOverlayMapping).filter(
-      overlay => overlay !== activeOverlay
-    );
-
-    for (const overlay of inactiveOverlays) {
-      mapInstance?.removeOverlay(overlay);
-    }
-
-    mapInstance?.applyOverlay(activeOverlay);
-  }, [mapInstance, activeOverlays]);
-
-  useEffect(() => {
-    if (locationError) {
-      toast.error(t(locationError));
-    }
-  }, [locationError, t]);
-
-  useEffect(() => {
-    if (mapContainer.current) {
-      const activeOverlay = filterToOverlayMapping[createFilterKey(overlay)] || OverlayType.aed;
-      const map = new MapInstance({
-        container: mapContainer.current,
-        baseLayer: baseLayer,
-        overlays: [activeOverlay, OverlayType.userLocation],
-        onEvent: onMapEvent,
-      });
-      setMapInstance(map);
-      return () => map.remove();
-    }
-  }, []);
 
   return (
     <div className="h-full w-full">

@@ -16,6 +16,7 @@
     "geojson": "^0.5.0",
     "i18next": "^24.2.2",
     "i18next-browser-languagedetector": "^8.0.4",
+    "libphonenumber-js": "^1.12.9",
     "maplibre-gl": "^4.7.1",
     "opening_hours": "^3.8.0",
     "react": "19.0.0",

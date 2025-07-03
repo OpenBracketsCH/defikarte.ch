@@ -3,16 +3,23 @@ import { useTranslation } from 'react-i18next';
 import iconCheckWhite from '../../../../../assets/icons/icon-check-white.svg';
 import iconCloseDarkGreen from '../../../../../assets/icons/icon-close-dark-green.svg';
 import iconCloseMiddleGreen from '../../../../../assets/icons/icon-close-middle-green.svg';
+import iconEditWhite from '../../../../../assets/icons/icon-edit-white.svg';
 import { Button } from '../../../../../components/ui/button/Button';
 import { CreateMode } from '../../../../../model/map';
 
 type MapButtonProps = {
   createMode: CreateMode;
   handleCancel: () => void;
-  handleConfirmation: () => void;
+  handleConfirmPosition: () => void;
+  handleChangePosition: () => void;
 };
 
-export const MapButtons = ({ createMode, handleCancel, handleConfirmation }: MapButtonProps) => {
+export const MapButtons = ({
+  createMode,
+  handleCancel,
+  handleConfirmPosition,
+  handleChangePosition,
+}: MapButtonProps) => {
   const { t } = useTranslation();
 
   const buttonContainerClass = cn(
@@ -32,26 +39,38 @@ export const MapButtons = ({ createMode, handleCancel, handleConfirmation }: Map
 
   return (
     <>
-     
       <div className={buttonContainerClass}>
         <div className="flex-row justify-center items-end gap-2 flex">
           <Button
             variant="primary"
             size="large"
             icon={iconCheckWhite}
-            onClick={handleConfirmation}
+            onClick={handleConfirmPosition}
             iconOnly
             className="md:hidden"
           />
-          <Button
-            variant="primary"
-            size="large"
-            icon={iconCheckWhite}
-            onClick={handleConfirmation}
-            className="hidden md:flex"
-          >
-            {t('confirmPosition')}
-          </Button>
+          {createMode === CreateMode.position && (
+            <Button
+              variant="primary"
+              size="large"
+              icon={iconCheckWhite}
+              onClick={handleConfirmPosition}
+              className="hidden md:flex"
+            >
+              {t('confirmPosition')}
+            </Button>
+          )}
+          {createMode === CreateMode.form && (
+            <Button
+              variant="primary"
+              size="large"
+              icon={iconEditWhite}
+              onClick={handleChangePosition}
+              className="hidden md:flex"
+            >
+              {t('changePosition')}
+            </Button>
+          )}
           <Button
             variant="white"
             size="large"

@@ -1,8 +1,11 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Point } from 'geojson';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import iconInfoCircleGreenM from '../../../../assets/icons/icon-info-circle-green-m.svg';
 import iconPlusWhite from '../../../../assets/icons/icon-plus-white.svg';
 import { Button } from '../../../../components/ui/button/Button';
+import { AedData } from '../../../../model/app';
 import { CreateMode, OverlayType } from '../../../../model/map';
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
 import ItemMoveInteraction from '../../map-instance/interactions/item-move.interaction';
@@ -10,6 +13,8 @@ import { MapInstance } from '../../map-instance/map-instance';
 import { AedForm } from './aed-form/AedForm';
 import { createFeature, getMoveInteraction, getRelevantInteractions } from './helper';
 import { MapButtons } from './map-buttons/MapButtons';
+
+const featureId = 42;
 
 type CreateAedControlProps = {
   map: MapInstance | null;
@@ -25,20 +30,37 @@ export const CreateAedControl = ({
   featureDeselect,
 }: CreateAedControlProps) => {
   const { t } = useTranslation();
-  const featureId = 42;
+  const form = useForm<AedData>({ shouldUseNativeValidation: true, reValidateMode: 'onChange' });
+  const prevCreateModeRef = useRef<CreateMode>(CreateMode.none);
 
   const handleCancel = () => {
-    setCreateMode(s => {
-      return s === CreateMode.form ? s : CreateMode.none;
-    });
+    form.reset();
+    setCreateMode(CreateMode.none);
   };
 
-  const handleConfirmation = () => {
+  const handleConfirmPosition = async () => {
+    const data = await map?.getGeoJsonSourceData(MapConfiguration.aedCreateSourceId);
+    if (!data) {
+      setCreateMode(CreateMode.none);
+      return;
+    }
+
+    const feature = data.features[0];
+    const lat = (feature.geometry as Point).coordinates[1];
+    const lng = (feature.geometry as Point).coordinates[0];
+    form.setValue('latitude', lat);
+    form.setValue('longitude', lng);
     setCreateMode(CreateMode.form);
   };
 
+  const handleChangePosition = () => {
+    setCreateMode(CreateMode.position);
+  };
+
   useEffect(() => {
-    if (createMode !== CreateMode.none) {
+    const prevCreateMode = prevCreateModeRef.current;
+    // case start creating or editing AED
+    if (createMode !== CreateMode.none && prevCreateMode === CreateMode.none) {
       featureDeselect();
       getRelevantInteractions(map?.getActiveMapInteractions())?.forEach(interaction => {
         interaction.off();
@@ -49,18 +71,34 @@ export const CreateAedControl = ({
         const center = map?.getCenter();
         const data = createFeature(featureId, center!);
         map?.setGeoJSONSourceData(MapConfiguration.aedCreateSourceId, data);
-
         const interaction: ItemMoveInteraction | undefined = getMoveInteraction(map);
         interaction?.setFeaturePosition(featureId, center!);
       };
 
       init();
-    } else {
+    }
+
+    // case change position of AED
+    if (createMode === CreateMode.position) {
+      const interaction: ItemMoveInteraction | undefined = getMoveInteraction(map);
+      interaction?.on();
+    }
+
+    // case only change attribtutes, edit of position not allowed
+    if (createMode === CreateMode.form) {
+      const interaction: ItemMoveInteraction | undefined = getMoveInteraction(map);
+      interaction?.off();
+    }
+
+    // case edit or create is cancelled / finished
+    if (createMode === CreateMode.none && prevCreateMode !== CreateMode.none) {
       map?.removeOverlay(OverlayType.aedCreate);
       getRelevantInteractions(map?.getActiveMapInteractions())?.forEach(interaction => {
         interaction.on();
       });
     }
+
+    prevCreateModeRef.current = createMode;
   }, [map, createMode, featureDeselect]);
 
   return (
@@ -89,10 +127,11 @@ export const CreateAedControl = ({
         <MapButtons
           createMode={createMode}
           handleCancel={handleCancel}
-          handleConfirmation={handleConfirmation}
+          handleConfirmPosition={handleConfirmPosition}
+          handleChangePosition={handleChangePosition}
         />
       )}
-      {createMode === CreateMode.form && <AedForm />}
+      {createMode === CreateMode.form && <AedForm form={form} setCreateMode={setCreateMode} />}
     </>
   );
 };

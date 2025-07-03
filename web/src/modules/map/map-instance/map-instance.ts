@@ -3,7 +3,7 @@ import { GeoJSONSource, LngLatBoundsLike, LngLatLike, Map, StyleSpecification } 
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
-import markerPlusGreen from '../../../assets/icons/defi-map-marker-plus-green.svg';
+import markerPlusBlue from '../../../assets/icons/defi-map-marker-plus-blue.svg';
 import markerGradientM from '../../../assets/icons/map-marker-count-gradient-m.svg';
 import markerGradientS from '../../../assets/icons/map-marker-count-gradient-s.svg';
 import markerGradientXl from '../../../assets/icons/map-marker-count-gradient-xl.svg';
@@ -17,7 +17,7 @@ import {
   MARKER_GRADIENT_XS_IMAGE_ID,
   MARKER_GREEN_IMAGE_ID,
   MARKER_ORANGE_IMAGE_ID,
-  MARKER_PLUS_GREEN_IMAGE_ID,
+  MARKER_PLUS_BLUE_IMAGE_ID,
 } from './configuration/constants';
 import { MapConfiguration } from './configuration/map.configuration';
 import { alwaysAvailableFilterOverride, restrictedFilterOverride } from './filter/aed.filter';
@@ -80,7 +80,7 @@ export class MapInstance {
       { id: MARKER_GRADIENT_S_IMAGE_ID, url: markerGradientS },
       { id: MARKER_GRADIENT_M_IMAGE_ID, url: markerGradientM },
       { id: MARKER_GRADIENT_XL_IMAGE_ID, url: markerGradientXl },
-      { id: MARKER_PLUS_GREEN_IMAGE_ID, url: markerPlusGreen },
+      { id: MARKER_PLUS_BLUE_IMAGE_ID, url: markerPlusBlue },
     ];
 
     images.forEach(image => {
@@ -94,10 +94,10 @@ export class MapInstance {
       };
     });
 
-    this.mapInstance = map;
     for (const overlay of overlays) {
-      this.overlayManager.applyOverlay(this.mapInstance, overlay);
+      this.overlayManager.applyOverlay(map, overlay);
     }
+    this.mapInstance = map;
     console.log('Map initialized');
   };
 
@@ -168,9 +168,13 @@ export class MapInstance {
   };
 
   public setGeoJSONSourceData = (sourceId: string, data: FeatureCollection | null) => {
+    if (!this.mapInstance) {
+      return;
+    }
+
     const source = this.mapInstance?.getSource(sourceId) as GeoJSONSource;
     if (!source) {
-      console.warn('Source not found', sourceId);
+      console.debug('Source not found', sourceId);
       return;
     }
 

@@ -59,7 +59,7 @@ export const Tooltip = ({ tooltip }: TooltipProps) => {
             <div className="absolute ms-2 left-full top-0 w-3.5 h-3.5 bg-primary-100-white transform rotate-45 z-100"></div>
             <div
               ref={tooltipRef}
-              className="absolute ms-3.5 left-full p-4 w-80 rounded-2xl text-xs leading-[150%] text-primary-100-green-04 bg-primary-100-white z-10"
+              className="absolute ms-3.5 left-full p-4 w-80 rounded-2xl text-xs leading-[150%] text-primary-100-green-04 bg-primary-100-white z-10 shadow-custom-lg shadow-green-shadow-64"
             >
               <h3 className="font-semibold">{title}</h3>
               <p className="mt-2 mb-3 font-normal">{content}</p>
