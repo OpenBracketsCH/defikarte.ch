@@ -1,11 +1,9 @@
-import { AxiosError } from 'axios';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import iconGpsWarningCircleRed from '../../../../../assets/icons/icon-gps-warning-circle-red.svg';
 import iconPlusDarkGreen from '../../../../../assets/icons/icon-plus-dark-green.svg';
-
 import { Button } from '../../../../../components/ui/button/Button';
 import { CustomToast } from '../../../../../components/ui/custom-toast/CustomToast';
 import { SelectField } from '../../../../../components/ui/select-field/SelectField';
@@ -46,8 +44,6 @@ export const AedForm = ({ form, setCreateMode }: AedFormProps) => {
       setCreateMode(CreateMode.none);
       form.reset();
     } catch (error) {
-      console.error(error);
-      console.log(error instanceof AxiosError ? error.response?.data : t('createAedError'));
       toast.custom(toastInstance => (
         <CustomToast
           icon={iconGpsWarningCircleRed}
