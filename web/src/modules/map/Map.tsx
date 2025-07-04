@@ -173,6 +173,7 @@ export const Map = () => {
           map={mapInstance}
           createMode={createMode}
           feature={editFeature?.data || null}
+          setEditFeature={setEditFeature}
           setCreateMode={setCreateMode}
           onFeatureSelect={selectFeatureOnMap}
         />

@@ -51,6 +51,7 @@ type CreateAedControlProps = {
   map: MapInstance | null;
   createMode: CreateMode;
   feature: Feature | null;
+  setEditFeature: Dispatch<SetStateAction<MapEvent | null>>;
   setCreateMode: Dispatch<SetStateAction<CreateMode>>;
   onFeatureSelect: (event: MapEvent) => void;
 };
@@ -59,6 +60,7 @@ export const CreateAedControl = ({
   map,
   createMode,
   feature,
+  setEditFeature,
   setCreateMode,
   onFeatureSelect,
 }: CreateAedControlProps) => {
@@ -71,6 +73,7 @@ export const CreateAedControl = ({
 
   const handleCancel = () => {
     form.reset();
+    setEditFeature(null);
     setCreateMode(CreateMode.none);
   };
 
