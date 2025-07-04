@@ -1,11 +1,11 @@
 import { FeatureCollection } from 'geojson';
-import { InteractionLayer } from '../../../../model/map';
-import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
-import ClusterZoomInteraction from '../../map-instance/interactions/cluster-zoom.interaction';
-import CursorClickableInteraction from '../../map-instance/interactions/cursor-clickable.interaction';
-import ItemMoveInteraction from '../../map-instance/interactions/item-move.interaction';
-import ItemSelectInteraction from '../../map-instance/interactions/item-select.interaction';
-import { MapInstance } from '../../map-instance/map-instance';
+import { InteractionLayer } from '../../model/map';
+import { MapConfiguration } from './map-instance/configuration/map.configuration';
+import ClusterZoomInteraction from './map-instance/interactions/cluster-zoom.interaction';
+import CursorClickableInteraction from './map-instance/interactions/cursor-clickable.interaction';
+import ItemMoveInteraction from './map-instance/interactions/item-move.interaction';
+import ItemSelectInteraction from './map-instance/interactions/item-select.interaction';
+import { MapInstance } from './map-instance/map-instance';
 
 export const getRelevantInteractions = (interactions: readonly InteractionLayer[] | undefined) => {
   return interactions?.filter(
@@ -36,4 +36,12 @@ export const getMoveInteraction = (map: MapInstance | null) => {
     .find(
       i => i instanceof ItemMoveInteraction && i.sourceId === MapConfiguration.aedCreateSourceId
     ) as ItemMoveInteraction;
+};
+
+export const deselectAllFeatures = (map: MapInstance | null) => {
+  map?.getActiveMapInteractions()?.forEach(interaction => {
+    if (interaction instanceof ItemSelectInteraction) {
+      interaction.deselectFeatures();
+    }
+  });
 };

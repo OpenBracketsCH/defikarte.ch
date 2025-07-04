@@ -1,5 +1,10 @@
-import { FilterSpecification, LayerSpecification, Map } from 'maplibre-gl';
-import { InteractionLayer, MapEventCallback, OverlayStrategy } from '../../../../../model/map';
+import { FilterSpecification, GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
+import {
+  InteractionLayer,
+  MapEventCallback,
+  OverlayStrategy,
+  RefreshableOverlayStrategy,
+} from '../../../../../model/map';
 import { MapConfiguration } from '../../configuration/map.configuration';
 import ClusterZoomInteraction from '../../interactions/cluster-zoom.interaction';
 import CursorClickableInteraction from '../../interactions/cursor-clickable.interaction';
@@ -8,7 +13,7 @@ import { createAedClusterLayers } from '../../layers/aed-cluster.layer';
 import { createAedPointLayers } from '../../layers/aed-point.layer';
 import { createAedSource } from '../../sources/aed.source';
 
-export class AedOverlayStrategy implements OverlayStrategy {
+export class AedOverlayStrategy implements OverlayStrategy, RefreshableOverlayStrategy {
   private interactions: InteractionLayer[] = [];
   private filter: FilterSpecification | null = null;
   private aedPointLayers: LayerSpecification[] = [];
@@ -24,6 +29,17 @@ export class AedOverlayStrategy implements OverlayStrategy {
 
   createSource() {
     return createAedSource(MapConfiguration.aedGeoJsonUrl, this.filter);
+  }
+
+  refreshSourceData(map: Map): Promise<void> {
+    const source = map.getSource(this.getSourceId()) as GeoJSONSource;
+    if (!source) {
+      console.warn('Source not found', this.getSourceId());
+      return Promise.resolve();
+    }
+
+    source.setData(MapConfiguration.aedGeoJsonUrl);
+    return Promise.resolve();
   }
 
   createLayers(): LayerSpecification[] {

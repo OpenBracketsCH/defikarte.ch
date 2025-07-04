@@ -129,6 +129,14 @@ export class MapInstance {
     this.overlayManager.removeOverlay(this.mapInstance, overlayId);
   }
 
+  public async refreshActiveOverlays() {
+    if (!this.mapInstance) {
+      return;
+    }
+
+    await this.overlayManager.refreshActiveOverlays(this.mapInstance);
+  }
+
   public easeTo(coordinates: LngLatLike, zoom?: number) {
     this.mapInstance?.easeTo({
       center: coordinates,
@@ -198,6 +206,18 @@ export class MapInstance {
 
     return (await source.getData()) as FeatureCollection;
   }
+
+  public setFeatureState = (
+    sourceId: string,
+    featureId: string | number | undefined,
+    state: { [key: string]: boolean | string | number }
+  ) => {
+    if (!this.mapInstance) {
+      return;
+    }
+
+    this.mapInstance.setFeatureState({ source: sourceId, id: featureId }, state);
+  };
 
   private getBaseLayerStyleSpec = async (baseLayerId: string): Promise<StyleSpecification> => {
     const baseLayerStyle = MapConfiguration.baseLayers[baseLayerId];

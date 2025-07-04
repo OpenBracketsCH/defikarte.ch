@@ -19,4 +19,5 @@ export const COLORS = {
 
 export const FEATURE_STATE = {
   SELECTED: 'selected',
+  EDITING: 'editing',
 };

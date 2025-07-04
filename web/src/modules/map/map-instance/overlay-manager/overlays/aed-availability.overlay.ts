@@ -1,5 +1,10 @@
 import { GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
-import { InteractionLayer, MapEventCallback, OverlayStrategy } from '../../../../../model/map';
+import {
+  InteractionLayer,
+  MapEventCallback,
+  OverlayStrategy,
+  RefreshableOverlayStrategy,
+} from '../../../../../model/map';
 import { requestAedDataByCurrentAvailability } from '../../../../../services/aed-data.service';
 import { MapConfiguration } from '../../configuration/map.configuration';
 import ClusterZoomInteraction from '../../interactions/cluster-zoom.interaction';
@@ -9,7 +14,7 @@ import { createAedAvailabilityPointLayers } from '../../layers/aed-availability-
 import { createAedClusterLayers } from '../../layers/aed-cluster.layer';
 import { createAedSource } from '../../sources/aed.source';
 
-export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
+export class AedAvailabilityOverlayStrategy implements OverlayStrategy, RefreshableOverlayStrategy {
   private interactions: InteractionLayer[] = [];
   private aedPointLayers: LayerSpecification[] = [];
   private aedClusterLayers: LayerSpecification[] = [];
@@ -33,6 +38,17 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy {
     // takes long, but on the backend I am not able to filter by availability
     const data = await requestAedDataByCurrentAvailability();
     return createAedSource(data);
+  }
+
+  async refreshSourceData(map: Map): Promise<void> {
+    const source = map.getSource(this.getSourceId()) as GeoJSONSource;
+    if (!source) {
+      console.warn('Source not found', this.getSourceId());
+      return;
+    }
+
+    const data = await requestAedDataByCurrentAvailability();
+    source.setData(data);
   }
 
   createLayers(): LayerSpecification[] {

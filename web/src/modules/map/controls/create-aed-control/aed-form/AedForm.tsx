@@ -1,3 +1,4 @@
+import { Feature, FeatureCollection } from 'geojson';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -10,20 +11,23 @@ import { SelectField } from '../../../../../components/ui/select-field/SelectFie
 import { TextField } from '../../../../../components/ui/text-field/TextField';
 import { AedData } from '../../../../../model/app';
 import { CreateMode } from '../../../../../model/map';
-import { postAedData } from '../../../../../services/aed-data.service';
+import { postAedData, putAedData } from '../../../../../services/aed-data.service';
 import {
   areOpeningHoursValid,
   isPhoneNumberValid,
 } from '../../../../../services/custom-validation.service';
+import { MapInstance } from '../../../map-instance/map-instance';
 
 const toastId = 'aed-toast';
 
 type AedFormProps = {
+  map: MapInstance | null;
   form: ReturnType<typeof useForm<AedData>>;
   setCreateMode: Dispatch<SetStateAction<CreateMode>>;
+  onFeatureSelect: (feature: Feature) => void;
 };
 
-export const AedForm = ({ form, setCreateMode }: AedFormProps) => {
+export const AedForm = ({ map, form, setCreateMode, onFeatureSelect }: AedFormProps) => {
   const { t } = useTranslation();
   const {
     register,
@@ -34,22 +38,32 @@ export const AedForm = ({ form, setCreateMode }: AedFormProps) => {
 
   const onSubmit = async (data: AedData) => {
     try {
-      await postAedData(data);
+      let result: FeatureCollection | undefined = undefined;
+      const isEdit = data.id;
+      if (isEdit) {
+        const response = await putAedData(data);
+        result = response.data;
+      } else {
+        const response = await postAedData(data);
+        result = response.data;
+      }
       toast.custom(
         toastInstance => (
           <CustomToast
             icon={iconPlusDarkGreen}
             toastInstance={toastInstance}
-            title={t('createAedSuccessTitle')}
-            message={t('createAedSuccessMessage')}
+            title={isEdit ? t('editAedSuccessTitle') : t('createAedSuccessTitle')}
+            message={isEdit ? t('editAedSuccessMessage') : t('createAedSuccessMessage')}
           />
         ),
         {
           id: toastId,
         }
       );
+      await map?.refreshActiveOverlays();
       setCreateMode(CreateMode.none);
       form.reset();
+      onFeatureSelect(result.features[0]);
     } catch (error) {
       toast.custom(
         toastInstance => (
@@ -69,10 +83,11 @@ export const AedForm = ({ form, setCreateMode }: AedFormProps) => {
 
   const longitude = watch('longitude');
   const latitude = watch('latitude');
+  const title = watch('id') ? t('editAed') : t('createAed');
   return (
     <div className="absolute z-[10000] w-[555px] rounded-2xl bottom-6 top-6 right-6 bg-primary-100-white shadow-custom-lg shadow-green-shadow-64">
       <form className="flex flex-col h-[100%]" onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="border-b p-4 border-primary-05-green-05">{t('createAed')}</h1>
+        <h1 className="border-b p-4 border-primary-05-green-05">{title}</h1>
         <div className="flex flex-col justify-start px-4 pt-5 pb-4 gap-4 overflow-auto">
           <TextField
             label={t('coordinates')}
@@ -82,7 +97,7 @@ export const AedForm = ({ form, setCreateMode }: AedFormProps) => {
               title: t('coordinatesTooltipTitle'),
               content: t('coordinatesTooltipContent'),
             }}
-            value={longitude && latitude && `${longitude.toFixed(5)}, ${latitude.toFixed(5)}`}
+            value={longitude && latitude && `${longitude.toFixed(7)}, ${latitude.toFixed(7)}`}
             readOnly
           />
           <TextField

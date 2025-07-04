@@ -24,6 +24,7 @@ type DetailViewProps = {
   userLocation: GeolocationPosition | null;
   onCenterFeature: () => void;
   onClose: () => void;
+  onEdit: () => void;
 };
 
 export const DetailView = ({
@@ -31,6 +32,7 @@ export const DetailView = ({
   userLocation,
   onCenterFeature,
   onClose,
+  onEdit,
 }: DetailViewProps) => {
   const { t } = useTranslation();
   const [propsVisible, setPropsVisible] = useState(false);
@@ -89,7 +91,7 @@ export const DetailView = ({
     'shadow-green-shadow-64'
   );
   return (
-    <div className={containerClass} style={{ zIndex: 100000 }}>
+    <div className={containerClass} style={{ zIndex: 10000 }}>
       <div
         className="px-4 py-3 flex justify-between w-full items-start border-b border-primary-05-green-05 cursor-pointer"
         onClick={() => onCenterFeature()}
@@ -174,6 +176,7 @@ export const DetailView = ({
             icon={iconEditDarkGreen}
             variant={isOpen ? 'tint' : 'secondary'}
             className="hidden md:visible md:flex"
+            onClick={onEdit}
           />
           <Button
             className="md:hidden"

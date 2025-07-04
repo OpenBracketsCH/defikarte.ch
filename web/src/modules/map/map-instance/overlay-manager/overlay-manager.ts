@@ -4,6 +4,7 @@ import {
   MapEventCallback,
   OverlayStrategy,
   OverlayType,
+  RefreshableOverlayStrategy,
 } from '../../../../model/map';
 
 export class OverlayManager {
@@ -70,6 +71,17 @@ export class OverlayManager {
     this.activeOverlays = this.activeOverlays.filter(name => name !== overlay);
   }
 
+  public async refreshActiveOverlays(map: MapInstance) {
+    await Promise.all(
+      this.activeOverlays.map(async overlayName => {
+        const strategy = this.overlays.get(overlayName);
+        if (strategy && this.isRefreshableOverlayStrategy(strategy)) {
+          await strategy.refreshSourceData(map);
+        }
+      })
+    );
+  }
+
   public getActiveOverlays = () => this.activeOverlays as readonly OverlayType[];
 
   public getActiveMapInteractions(): readonly InteractionLayer[] {
@@ -101,5 +113,11 @@ export class OverlayManager {
     });
 
     return sourceIds;
+  }
+
+  private isRefreshableOverlayStrategy(
+    strategy: OverlayStrategy
+  ): strategy is OverlayStrategy & RefreshableOverlayStrategy {
+    return 'refreshSourceData' in strategy;
   }
 }

@@ -11,6 +11,7 @@ export interface AedData {
   indoor?: 'yes' | 'no';
   latitude: number;
   longitude: number;
+  source?: string; // Source of the data, e.g., 'local_knowledge, defikarte.ch'
 }
 
 export interface TooltipData {

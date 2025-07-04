@@ -1,7 +1,7 @@
-import backend from '../api/backend';
 import { Feature, FeatureCollection, Geometry } from 'geojson';
-import { isOpenNow } from './opening-hours.service';
+import backend from '../api/backend';
 import { AedData } from '../model/app';
+import { isOpenNow } from './opening-hours.service';
 
 export const requestAedData = async (): Promise<FeatureCollection> => {
   try {
@@ -37,7 +37,18 @@ export const requestAedDataByCurrentAvailability = async (): Promise<FeatureColl
 };
 
 export const postAedData = async (data: AedData) => {
-  return await backend.post('v2/defibrillator', {
+  return await backend.post<FeatureCollection>('v2/defibrillator', {
+    ...data,
+    source: 'local_knowledge, defikarte.ch',
+  });
+};
+
+export const putAedData = async (data: AedData) => {
+  if (!data.id) {
+    throw new Error('AED data must have an id to be updated');
+  }
+
+  return await backend.put<FeatureCollection>(`v2/defibrillator/${data.id}`, {
     ...data,
     source: 'local_knowledge, defikarte.ch',
   });

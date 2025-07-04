@@ -35,6 +35,11 @@ export interface OverlayStrategy {
   getInteractions(): readonly InteractionLayer[] | null;
   cleanup(map: Map): void;
 }
+
+export interface RefreshableOverlayStrategy {
+  refreshSourceData(map: Map): Promise<void>;
+}
+
 export type MapEventCallback = (event: MapEvent) => void;
 
 export type MapEvent = (ItemSelectEvent | ItemMoveEvent) & BaseEvent;

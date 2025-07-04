@@ -71,5 +71,7 @@
   "createAedErrorTitle": "Fehler beim Erfassen des Defibrillators",
   "createAedErrorMessage": "Der Defibrillator konnte nicht erfasst werden.",
   "createAedSuccessTitle": "Defibrillator erfasst",
-  "createAedSuccessMessage": "Der Defibrillator wurde erfolgreich erfasst."
+  "createAedSuccessMessage": "Der Defibrillator wurde erfolgreich erfasst.",
+  "editAedSuccessTitle": "Defibrillator aktualisiert",
+  "editAedSuccessMessage": "Der Defibrillator wurde erfolgreich aktualisiert."
 }
