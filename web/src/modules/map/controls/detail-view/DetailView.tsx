@@ -67,6 +67,7 @@ export const DetailView = ({
   const name = props['defibrillator:location'] ?? props.description ?? props.operator ?? 'n/A';
 
   const containerClass = cn(
+    'z-10',
     'absolute',
     'flex',
     'flex-col',
@@ -91,7 +92,7 @@ export const DetailView = ({
     'shadow-green-shadow-64'
   );
   return (
-    <div className={containerClass} style={{ zIndex: 10000 }}>
+    <div className={containerClass}>
       <div
         className="px-4 py-3 flex justify-between w-full items-start border-b border-primary-05-green-05 cursor-pointer"
         onClick={() => onCenterFeature()}

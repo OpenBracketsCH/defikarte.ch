@@ -21,7 +21,7 @@ const App: React.FC = () => {
       <Toaster
         position={position}
         containerStyle={{
-          zIndex: 10015,
+          zIndex: 15,
           top: isMobile ? 'auto' : '1.5rem',
           bottom: isMobile ? '1.25rem' : 'auto',
           left: isMobile ? '1rem' : 'auto',

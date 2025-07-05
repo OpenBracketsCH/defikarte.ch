@@ -42,7 +42,9 @@ export interface RefreshableOverlayStrategy {
 
 export type MapEventCallback = (event: MapEvent) => void;
 
-export type MapEvent = (ItemSelectEvent | ItemMoveEvent) & BaseEvent;
+export type MapEvent = MapInteractionEvent | MapStateEvent;
+
+export type MapInteractionEvent = (ItemSelectEvent | ItemMoveEvent) & BaseEvent;
 
 export interface BaseEvent {
   layerIds?: string[];
@@ -57,4 +59,10 @@ export interface ItemSelectEvent {
 export interface ItemMoveEvent {
   type: 'item-move';
   data: Feature<Point, GeoJsonProperties> | null;
+}
+
+export interface MapStateEvent {
+  type: 'map-state';
+  source: string;
+  state: 'loading' | 'loaded' | 'abort' | 'error';
 }

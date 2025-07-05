@@ -13,7 +13,7 @@ type CustomToastProps = {
 
 export const CustomToast = ({ toastInstance, message, title, icon }: CustomToastProps) => {
   const containerClass = cn(
-    'flex items-start p-3 max-w-full md:max-w-xs w-full bg-primary-100-white shadow-green-custom shadow-custom rounded-2xl z-[10000] ',
+    'flex items-start p-3 max-w-full md:max-w-xs w-full bg-primary-100-white shadow-green-custom shadow-custom rounded-2xl z-20 ',
     {
       'animate-enter': toastInstance.visible,
       'animate-leave': !toastInstance.visible,

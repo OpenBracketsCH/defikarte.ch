@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import iconInfoCircleGreenM from '../../../../assets/icons/icon-info-circle-green-m.svg';
 import { AedData } from '../../../../model/app';
-import { CreateMode, MapEvent } from '../../../../model/map';
+import { CreateMode, MapInteractionEvent } from '../../../../model/map';
 import { getActiveAedOverlay } from '../../helper';
 import { FEATURE_STATE } from '../../map-instance/configuration/constants';
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
@@ -52,10 +52,10 @@ const createDefaultValues = (feature: Feature | null): AedData | undefined => {
 type CreateAedControlProps = {
   map: MapInstance | null;
   createMode: CreateMode;
-  feature: MapEvent | null;
-  setEditFeature: Dispatch<SetStateAction<MapEvent | null>>;
+  feature: MapInteractionEvent | null;
+  setEditFeature: Dispatch<SetStateAction<MapInteractionEvent | null>>;
   setCreateMode: Dispatch<SetStateAction<CreateMode>>;
-  onFeatureSelect: (event: MapEvent) => void;
+  onFeatureSelect: (event: MapInteractionEvent) => void;
 };
 
 export const CreateAedControl = ({
@@ -135,7 +135,7 @@ export const CreateAedControl = ({
         handleChangePosition={handleChangePosition}
       />
       {createMode === CreateMode.position && (
-        <div className="absolute top-6 z-[100000] w-full flex flex-row justify-center items-start h-0">
+        <div className="absolute top-6 z-10 w-full flex flex-row justify-center items-start h-0">
           <div className="flex items-center px-3 md:px-5 py-2 md:py-4 gap-2.5 mx-9 md:mx-0 rounded-[50px] text-xs md:text-base leading-[150%] bg-primary-100-white text-primary-100-green-04">
             <img src={iconInfoCircleGreenM} />
             <span>{t('choosePositionForNewAedOnMap')}</span>

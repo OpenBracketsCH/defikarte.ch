@@ -26,7 +26,7 @@ export const MapButtons = ({
     'absolute',
     'bottom-4',
     'md:bottom-6',
-    'z-[100000]',
+    'z-10',
     'w-full',
     'flex',
     'flex-row',

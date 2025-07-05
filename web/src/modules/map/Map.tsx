@@ -5,7 +5,15 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import iconGpsWarningCircleRed from '../../assets/icons/icon-gps-warning-circle-red.svg';
 import { CustomToast } from '../../components/ui/custom-toast/CustomToast';
-import { CreateMode, FilterType, MapEvent, MapEventCallback, OverlayType } from '../../model/map';
+import { SplashScreen } from '../../components/ui/splash-screen/SplashScreen';
+import {
+  CreateMode,
+  FilterType,
+  MapEvent,
+  MapEventCallback,
+  MapInteractionEvent,
+  OverlayType,
+} from '../../model/map';
 import { AttributionControl } from './controls/attribution-control/AttributionControl';
 import { CreateAedControl } from './controls/create-aed-control/CreateAedControl';
 import { CreateButtonControl } from './controls/create-button-control/CreateButtonControl';
@@ -15,6 +23,7 @@ import { SearchControl } from './controls/search-control/SearchControl';
 import { SponsorControl } from './controls/sponsor-control/SponsorControl';
 import { deselectAllFeatures } from './helper';
 import { useHandleCreateMode } from './hooks/useHandleCreateMode';
+import { useMapEvents } from './hooks/useMapEvents';
 import { useUserLocation } from './hooks/useUserLocation';
 import { FEATURE_STATE } from './map-instance/configuration/constants';
 import { MapConfiguration } from './map-instance/configuration/map.configuration';
@@ -42,10 +51,11 @@ export const Map = () => {
   const { t } = useTranslation();
   const mapInstanceRef = useRef<MapInstance | null>(null);
   const mapInstance = mapInstanceRef.current;
+  const { isInitialized, handleMapEvent } = useMapEvents();
   const [activeBaseLayer, setActiveBaseLayer] = useState<string>(baseLayer);
   const [activeOverlays, setActiveOverlays] = useState<FilterType[]>(overlay);
-  const [selectedFeature, setSelectedFeature] = useState<MapEvent | null>(null);
-  const [editFeature, setEditFeature] = useState<MapEvent | null>(null);
+  const [selectedFeature, setSelectedFeature] = useState<MapInteractionEvent | null>(null);
+  const [editFeature, setEditFeature] = useState<MapInteractionEvent | null>(null);
   const mapContainer = useRef<HTMLDivElement>(null);
   const [createMode, setCreateMode] = useHandleCreateMode({
     map: mapInstance,
@@ -108,6 +118,8 @@ export const Map = () => {
     if (event.type === 'item-select') {
       setSelectedFeature(event);
     }
+
+    handleMapEvent(event);
   };
 
   const handleSelectOrCenterFeatureOnMap = (event: MapEvent) => {
@@ -119,7 +131,7 @@ export const Map = () => {
     }
   };
 
-  const selectFeatureOnMap = (event: MapEvent): boolean => {
+  const selectFeatureOnMap = (event: MapInteractionEvent): boolean => {
     if (event.type !== 'item-select' || !event.data) return false;
 
     let result = false;
@@ -136,7 +148,7 @@ export const Map = () => {
     return result;
   };
 
-  const centerFeatureOnMap = (event: MapEvent | null) => {
+  const centerFeatureOnMap = (event: MapInteractionEvent | null) => {
     if (!event || !event.data) return;
     const bbox = event.data.geometry.bbox;
     if (bbox && bbox.length === 4) {
@@ -149,7 +161,7 @@ export const Map = () => {
     mapInstance?.easeTo(coordinates as [number, number], 18);
   };
 
-  const handleEditFeature = (event: MapEvent) => {
+  const handleEditFeature = (event: MapInteractionEvent) => {
     if (!event || !event.data) return;
     centerFeatureOnMap(event);
     setEditFeature(event);
@@ -162,6 +174,7 @@ export const Map = () => {
   return (
     <div className="h-full w-full">
       <div className="h-full w-full" ref={mapContainer} />
+      {!isInitialized && <SplashScreen />}
       <MapControl
         map={mapInstance!}
         setActiveBaseLayer={setActiveBaseLayer}

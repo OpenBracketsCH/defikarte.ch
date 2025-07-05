@@ -29,6 +29,7 @@ export const MapControl = (props: Props) => {
   };
 
   const mainClasses = className(
+    'z-10',
     'absolute',
     'flex',
     'flex-col',
@@ -50,7 +51,7 @@ export const MapControl = (props: Props) => {
 
   const { map, activeBaseLayer } = props;
   return (
-<div className={mainClasses} style={{ zIndex: 10000 }}>
+    <div className={mainClasses}>
       {isActive && (
         <div className="md:mr-3 flex flex-col md:flex-row gap-2">
           <LayerSymbol

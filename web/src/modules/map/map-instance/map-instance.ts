@@ -40,8 +40,12 @@ export class MapInstance {
   private mapInstance: Map | null = null;
   private overlayManager: OverlayManager;
   private activeBaseLayer: string;
+  private onEvent: MapEventCallback | undefined;
 
   constructor(props: MapInstanceProps) {
+    this.onEvent = props.onEvent;
+    this.handleMapEvent('init', 'loading');
+
     this.overlayManager = new OverlayManager(props.onEvent);
     this.activeBaseLayer = props.baseLayer;
     const map = new Map({
@@ -72,6 +76,15 @@ export class MapInstance {
     this.overlayManager.registerOverlay(OverlayType.aedCreate, new AedCreateOverlayStrategy(map));
 
     map.on('load', () => this.init(map, props.overlays));
+    map.on('sourcedataloading', e => {
+      this.handleMapEvent(e.sourceId, 'loading');
+    });
+    map.on('sourcedata', e => {
+      this.handleMapEvent(e.sourceId, e.isSourceLoaded ? 'loaded' : 'loading');
+    });
+    map.on('sourcedataabort', e => {
+      this.handleMapEvent(e.sourceId, 'abort');
+    });
   }
 
   public init = async (map: Map, overlays: OverlayType[]) => {
@@ -98,10 +111,12 @@ export class MapInstance {
     });
 
     for (const overlay of overlays) {
-      this.overlayManager.applyOverlay(map, overlay);
+      await this.overlayManager.applyOverlay(map, overlay);
     }
+
     this.mapInstance = map;
     console.log('Map initialized');
+    this.handleMapEvent('init', 'loaded');
   };
 
   public async setActiveBaseLayer(id: string) {
@@ -245,4 +260,12 @@ export class MapInstance {
   private getEmptyStyleSpec = (): StyleSpecification => {
     return { layers: {}, sources: {}, version: 8 } as StyleSpecification;
   };
+
+  private handleMapEvent(source: string, state: 'loading' | 'loaded' | 'abort' | 'error') {
+    this.onEvent?.({
+      type: 'map-state',
+      source: source,
+      state: state,
+    });
+  }
 }

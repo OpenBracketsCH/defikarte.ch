@@ -7,10 +7,7 @@ type Props = {
 export const AttributionControl = ({ activeBaseLayer }: Props) => {
   const isSwisstopoLayerActive = activeBaseLayer === MapConfiguration.swisstopoImageryBaseMapId;
   return (
-    <div
-      className="absolute bottom-0 left-4 px-1 bg-primary-80-white rounded-t-sm flex items-center"
-      style={{ zIndex: 100000 }}
-    >
+    <div className="z-30 absolute bottom-0 left-4 px-1 bg-primary-80-white rounded-t-sm flex items-center">
       <div className="flex items-center text-graustufen-grau-e">
         <a
           href="https://maplibre.org/"

@@ -11,7 +11,7 @@ type CreateButtonControlProps = {
 export const CreateButtonControl = ({ setCreateMode }: CreateButtonControlProps) => {
   const { t } = useTranslation();
   return (
-    <div className="absolute flex flex-col z-[10000] bottom-5 md:bottom-6 left-4 md:left-6">
+    <div className="absolute flex flex-col z-10 bottom-5 md:bottom-6 left-4 md:left-6">
       <Button
         variant="primary"
         size="large"
