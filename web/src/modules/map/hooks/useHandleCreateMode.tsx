@@ -1,6 +1,6 @@
 import { Feature, Point } from 'geojson';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { CreateMode, MapEvent, OverlayType } from '../../../model/map';
+import { CreateMode, MapInteractionEvent, OverlayType } from '../../../model/map';
 import {
   createFeature,
   deselectAllFeatures,
@@ -23,7 +23,7 @@ const getFeaturePosition = (feature: Feature | null): [number, number] => {
 
 type UseHandleCreateModeProps = {
   map: MapInstance | null;
-  feature: MapEvent | null;
+  feature: MapInteractionEvent | null;
 };
 
 export const useHandleCreateMode = ({
