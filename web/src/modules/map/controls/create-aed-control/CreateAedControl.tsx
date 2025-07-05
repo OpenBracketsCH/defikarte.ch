@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import iconInfoCircleGreenM from '../../../../assets/icons/icon-info-circle-green-m.svg';
 import { AedData } from '../../../../model/app';
 import { CreateMode, MapEvent } from '../../../../model/map';
+import { getActiveAedOverlay } from '../../helper';
+import { FEATURE_STATE } from '../../map-instance/configuration/constants';
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
 import { MapInstance } from '../../map-instance/map-instance';
 import { AedForm } from './aed-form/AedForm';
@@ -50,7 +52,7 @@ const createDefaultValues = (feature: Feature | null): AedData | undefined => {
 type CreateAedControlProps = {
   map: MapInstance | null;
   createMode: CreateMode;
-  feature: Feature | null;
+  feature: MapEvent | null;
   setEditFeature: Dispatch<SetStateAction<MapEvent | null>>;
   setCreateMode: Dispatch<SetStateAction<CreateMode>>;
   onFeatureSelect: (event: MapEvent) => void;
@@ -68,11 +70,16 @@ export const CreateAedControl = ({
   const form = useForm<AedData>({
     shouldUseNativeValidation: true,
     reValidateMode: 'onChange',
-    defaultValues: createDefaultValues(feature),
+    defaultValues: createDefaultValues(feature?.data || null),
   });
 
   const handleCancel = () => {
     form.reset();
+    if (feature) {
+      map?.setFeatureState(feature.source || '', feature.data?.id, {
+        [FEATURE_STATE.EDITING]: false,
+      });
+    }
     setEditFeature(null);
     setCreateMode(CreateMode.none);
   };
@@ -96,13 +103,20 @@ export const CreateAedControl = ({
     setCreateMode(CreateMode.position);
   };
 
-  const onItemSelect = (feature: Feature<Geometry, GeoJsonProperties>) => {
+  const handleOnSuccess = (successFeature: Feature<Geometry, GeoJsonProperties>) => {
+    if (feature) {
+      map?.setFeatureState(feature.source || '', feature.data?.id, {
+        [FEATURE_STATE.EDITING]: false,
+      });
+    }
+
+    const activeSourceId = getActiveAedOverlay(map);
     const mapGeoJSONFeature = {
-      geometry: feature.geometry,
-      properties: feature.properties,
-      id: feature.id,
-      type: feature.type,
-      source: 'aed-source',
+      geometry: successFeature.geometry,
+      properties: successFeature.properties,
+      id: successFeature.id,
+      type: successFeature.type,
+      source: feature?.source || activeSourceId,
     } as MapGeoJSONFeature;
 
     onFeatureSelect({
@@ -129,12 +143,7 @@ export const CreateAedControl = ({
         </div>
       )}
       {createMode === CreateMode.form && (
-        <AedForm
-          map={map}
-          onFeatureSelect={onItemSelect}
-          form={form}
-          setCreateMode={setCreateMode}
-        />
+        <AedForm map={map} onSuccess={handleOnSuccess} form={form} setCreateMode={setCreateMode} />
       )}
     </>
   );

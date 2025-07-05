@@ -1,6 +1,7 @@
 import { FeatureCollection } from 'geojson';
 import { GeoJSONSource, LngLatBoundsLike, LngLatLike, Map, StyleSpecification } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import markerBlue from '../../../assets/icons/defi-map-marker-blue.svg';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
 import markerOrange from '../../../assets/icons/defi-map-marker-orange.svg';
 import markerPlusBlue from '../../../assets/icons/defi-map-marker-plus-blue.svg';
@@ -11,6 +12,7 @@ import markerGradientXs from '../../../assets/icons/map-marker-count-gradient-xs
 import { MapEventCallback, OverlayType } from '../../../model/map';
 import { requestStyleSpecification } from '../../../services/map-style.service';
 import {
+  MARKER_BLUE_IMAGE_ID,
   MARKER_GRADIENT_M_IMAGE_ID,
   MARKER_GRADIENT_S_IMAGE_ID,
   MARKER_GRADIENT_XL_IMAGE_ID,
@@ -81,6 +83,7 @@ export class MapInstance {
       { id: MARKER_GRADIENT_M_IMAGE_ID, url: markerGradientM },
       { id: MARKER_GRADIENT_XL_IMAGE_ID, url: markerGradientXl },
       { id: MARKER_PLUS_BLUE_IMAGE_ID, url: markerPlusBlue },
+      { id: MARKER_BLUE_IMAGE_ID, url: markerBlue },
     ];
 
     images.forEach(image => {

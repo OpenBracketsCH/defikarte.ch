@@ -17,10 +17,14 @@ export const createAedAvailabilityPointLayers = (
     id: `${baseId}-single-point`,
     source: source,
     type: 'symbol',
+    paint: {
+      'icon-opacity': ['case', ['boolean', ['feature-state', FEATURE_STATE.EDITING], false], 0, 1],
+    },
     layout: {
       'icon-allow-overlap': true,
       'icon-image': MARKER_GREEN_IMAGE_ID,
       'icon-size': IMAGE_SCALE,
+      'icon-anchor': 'bottom',
     },
     filter: layerFilter,
   };
@@ -33,11 +37,17 @@ export const createAedAvailabilityPointLayers = (
       'circle-color': COLORS.SECONDARY_GREEN_01,
       'circle-radius': [
         'case',
-        ['boolean', ['feature-state', FEATURE_STATE.SELECTED], false],
-        30, // selected
-        20, // not selected
+        ['boolean', ['feature-state', FEATURE_STATE.EDITING], false],
+        0,
+        [
+          'case',
+          ['boolean', ['feature-state', FEATURE_STATE.SELECTED], false],
+          30, // selected
+          20, // not selected
+        ],
       ],
       'circle-opacity': 0.6,
+      'circle-translate': [0, -18],
     },
     filter: layerFilter,
   };

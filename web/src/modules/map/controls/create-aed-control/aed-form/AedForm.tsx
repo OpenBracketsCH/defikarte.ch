@@ -24,10 +24,10 @@ type AedFormProps = {
   map: MapInstance | null;
   form: ReturnType<typeof useForm<AedData>>;
   setCreateMode: Dispatch<SetStateAction<CreateMode>>;
-  onFeatureSelect: (feature: Feature) => void;
+  onSuccess: (feature: Feature) => void;
 };
 
-export const AedForm = ({ map, form, setCreateMode, onFeatureSelect }: AedFormProps) => {
+export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) => {
   const { t } = useTranslation();
   const {
     register,
@@ -63,7 +63,7 @@ export const AedForm = ({ map, form, setCreateMode, onFeatureSelect }: AedFormPr
       await map?.refreshActiveOverlays();
       setCreateMode(CreateMode.none);
       form.reset();
-      onFeatureSelect(result.features[0]);
+      onSuccess(result.features[0]);
     } catch (error) {
       toast.custom(
         toastInstance => (

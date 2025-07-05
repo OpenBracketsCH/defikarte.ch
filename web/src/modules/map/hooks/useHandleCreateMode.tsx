@@ -1,6 +1,6 @@
 import { Feature, Point } from 'geojson';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { CreateMode, OverlayType } from '../../../model/map';
+import { CreateMode, MapEvent, OverlayType } from '../../../model/map';
 import {
   createFeature,
   deselectAllFeatures,
@@ -23,7 +23,7 @@ const getFeaturePosition = (feature: Feature | null): [number, number] => {
 
 type UseHandleCreateModeProps = {
   map: MapInstance | null;
-  feature: Feature | null;
+  feature: MapEvent | null;
 };
 
 export const useHandleCreateMode = ({
@@ -36,6 +36,7 @@ export const useHandleCreateMode = ({
   useEffect(() => {
     const init = async () => {
       const prevCreateMode = prevCreateModeRef.current;
+
       // case start creating or editing AED
       if (createMode !== CreateMode.none && prevCreateMode === CreateMode.none) {
         deselectAllFeatures(map);
@@ -44,8 +45,10 @@ export const useHandleCreateMode = ({
         });
 
         await map?.applyOverlay(OverlayType.aedCreate);
-        const center = feature ? getFeaturePosition(feature) : map?.getCenter();
-        const data = createFeature(featureId, center!);
+
+        const isEdit = !!feature;
+        const center = isEdit ? getFeaturePosition(feature.data) : map?.getCenter();
+        const data = createFeature(featureId, center!, isEdit);
         map?.setGeoJSONSourceData(MapConfiguration.aedCreateSourceId, data);
         const interaction: ItemMoveInteraction | undefined = getMoveInteraction(map);
         interaction?.setFeaturePosition(featureId, center!);

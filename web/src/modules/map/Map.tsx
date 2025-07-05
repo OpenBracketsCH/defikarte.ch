@@ -49,7 +49,7 @@ export const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const [createMode, setCreateMode] = useHandleCreateMode({
     map: mapInstance,
-    feature: editFeature?.data || null,
+    feature: editFeature || null,
   });
   const userLocation = useUserLocation({ map: mapInstance });
   const {
@@ -151,11 +151,11 @@ export const Map = () => {
 
   const handleEditFeature = (event: MapEvent) => {
     if (!event || !event.data) return;
+    centerFeatureOnMap(event);
     setEditFeature(event);
     mapInstance?.setFeatureState(event.source || '', event.data.id, {
       [FEATURE_STATE.EDITING]: true,
     });
-    centerFeatureOnMap(event);
     setCreateMode(CreateMode.form);
   };
 
@@ -172,7 +172,7 @@ export const Map = () => {
         <CreateAedControl
           map={mapInstance}
           createMode={createMode}
-          feature={editFeature?.data || null}
+          feature={editFeature}
           setEditFeature={setEditFeature}
           setCreateMode={setCreateMode}
           onFeatureSelect={selectFeatureOnMap}

@@ -16,14 +16,16 @@ export const getRelevantInteractions = (interactions: readonly InteractionLayer[
   );
 };
 
-export const createFeature = (featureId: number | string, center: number[]) => {
+export const createFeature = (featureId: number | string, center: number[], isEdit: boolean) => {
   return {
     type: 'FeatureCollection',
     features: [
       {
         geometry: { coordinates: center, type: 'Point' },
         type: 'Feature',
-        properties: {},
+        properties: {
+          isEdit: isEdit,
+        },
         id: featureId,
       },
     ],
@@ -44,4 +46,12 @@ export const deselectAllFeatures = (map: MapInstance | null) => {
       interaction.deselectFeatures();
     }
   });
+};
+
+export const getActiveAedOverlay = (map: MapInstance | null) => {
+  return map
+    ?.getActiveOverlaySourceIds()
+    .find(
+      id => id === MapConfiguration.aedSourceId || id === MapConfiguration.aedAvailabilitySourceId
+    );
 };

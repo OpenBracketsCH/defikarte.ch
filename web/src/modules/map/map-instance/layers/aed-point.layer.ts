@@ -16,6 +16,9 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
     id: `${baseId}-single-point`,
     source: source,
     type: 'symbol',
+    paint: {
+      'icon-opacity': ['case', ['boolean', ['feature-state', FEATURE_STATE.EDITING], false], 0, 1],
+    },
     layout: {
       'icon-allow-overlap': true,
       'icon-image': [
@@ -26,6 +29,7 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
         MARKER_ORANGE_IMAGE_ID,
       ],
       'icon-size': IMAGE_SCALE,
+      'icon-anchor': 'bottom',
     },
     filter: noClusterFilter,
   };
@@ -44,11 +48,17 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
       ],
       'circle-radius': [
         'case',
-        ['boolean', ['feature-state', FEATURE_STATE.SELECTED], false],
-        30, // selected
-        20, // not selected
+        ['boolean', ['feature-state', FEATURE_STATE.EDITING], false],
+        0,
+        [
+          'case',
+          ['boolean', ['feature-state', FEATURE_STATE.SELECTED], false],
+          30, // selected
+          20, // not selected
+        ],
       ],
       'circle-opacity': ['match', ['get', 'opening_hours'], '24/7', 0.6, 0.4],
+      'circle-translate': [0, -18],
     },
     filter: noClusterFilter,
   };
