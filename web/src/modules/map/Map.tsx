@@ -172,8 +172,8 @@ export const Map = () => {
   };
 
   return (
-    <div className="h-full w-full">
-      <div className="h-full w-full" ref={mapContainer} />
+    <div className="relative flex-grow w-[100%]">
+      <div className="h-[100%] w-[100%]" ref={mapContainer} />
       {!isInitialized && <SplashScreen />}
       <MapControl
         map={mapInstance!}

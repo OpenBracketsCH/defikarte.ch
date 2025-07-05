@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { Route, Routes } from 'react-router';
-import { Map } from './modules/map/Map';
 import { useMediaQuery } from 'react-responsive';
+import { Route, Routes } from 'react-router';
+import { Home } from './modules/home/Home';
+import { Navbar } from './modules/nav-bar/NavBar';
 
 const App: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -17,7 +18,7 @@ const App: React.FC = () => {
   }, [isMobile]);
 
   return (
-    <div className="h-screen">
+    <div className="h-screen flex flex-col">
       <Toaster
         position={position}
         containerStyle={{
@@ -30,8 +31,9 @@ const App: React.FC = () => {
         }}
         toastOptions={{ duration: 7200 }}
       />
-      <Routes>
-        <Route path="/" element={<Map />} />
+      <Navbar />
+      <Routes location={'/home'}>
+        <Route path="/home" element={<Home />} />
       </Routes>
     </div>
   );

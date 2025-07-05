@@ -73,5 +73,10 @@
   "createAedSuccessTitle": "Defibrillator erfasst",
   "createAedSuccessMessage": "Der Defibrillator wurde erfolgreich erfasst.",
   "editAedSuccessTitle": "Defibrillator aktualisiert",
-  "editAedSuccessMessage": "Der Defibrillator wurde erfolgreich aktualisiert."
+  "editAedSuccessMessage": "Der Defibrillator wurde erfolgreich aktualisiert.",
+  "emergency": "Notruf",
+  "home": "Home",
+  "knowledge": "Wissen",
+  "project": "Projekt",
+  "support": "Unterstützen"
 }
