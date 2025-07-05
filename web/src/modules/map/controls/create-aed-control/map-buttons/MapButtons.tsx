@@ -24,7 +24,8 @@ export const MapButtons = ({
 
   const buttonContainerClass = cn(
     'absolute',
-    'bottom-6',
+    'bottom-4',
+    'md:bottom-6',
     'z-[100000]',
     'w-full',
     'flex',
@@ -33,7 +34,7 @@ export const MapButtons = ({
     'h-0',
     {
       'justify-center': createMode === CreateMode.position,
-      'justify-center md:justify-start md:ps-6': createMode === CreateMode.form,
+      'justify-center lg:justify-start lg:ps-6': createMode === CreateMode.form,
     }
   );
 
@@ -41,35 +42,47 @@ export const MapButtons = ({
     <>
       <div className={buttonContainerClass}>
         <div className="flex-row justify-center items-end gap-2 flex">
-          <Button
-            variant="primary"
-            size="large"
-            icon={iconCheckWhite}
-            onClick={handleConfirmPosition}
-            iconOnly
-            className="md:hidden"
-          />
           {createMode === CreateMode.position && (
-            <Button
-              variant="primary"
-              size="large"
-              icon={iconCheckWhite}
-              onClick={handleConfirmPosition}
-              className="hidden md:flex"
-            >
-              {t('confirmPosition')}
-            </Button>
+            <>
+              <Button
+                variant="primary"
+                size="large"
+                icon={iconCheckWhite}
+                onClick={handleConfirmPosition}
+                iconOnly
+                className="md:hidden"
+              />
+              <Button
+                variant="primary"
+                size="large"
+                icon={iconCheckWhite}
+                onClick={handleConfirmPosition}
+                className="hidden md:flex"
+              >
+                {t('confirmPosition')}
+              </Button>
+            </>
           )}
           {createMode === CreateMode.form && (
-            <Button
-              variant="primary"
-              size="large"
-              icon={iconEditWhite}
-              onClick={handleChangePosition}
-              className="hidden md:flex"
-            >
-              {t('changePosition')}
-            </Button>
+            <>
+              <Button
+                variant="primary"
+                size="large"
+                icon={iconEditWhite}
+                onClick={handleChangePosition}
+                iconOnly
+                className="md:hidden"
+              />
+              <Button
+                variant="primary"
+                size="large"
+                icon={iconEditWhite}
+                onClick={handleChangePosition}
+                className="hidden md:flex"
+              >
+                {t('changePosition')}
+              </Button>
+            </>
           )}
           <Button
             variant="white"

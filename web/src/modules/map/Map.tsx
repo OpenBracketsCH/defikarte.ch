@@ -162,7 +162,6 @@ export const Map = () => {
   return (
     <div className="h-full w-full">
       <div className="h-full w-full" ref={mapContainer} />
-      <AttributionControl activeBaseLayer={activeBaseLayer} />
       <MapControl
         map={mapInstance!}
         setActiveBaseLayer={setActiveBaseLayer}
@@ -190,6 +189,7 @@ export const Map = () => {
           />
           <CreateButtonControl setCreateMode={setCreateMode} />
           <SponsorControl />
+          <AttributionControl activeBaseLayer={activeBaseLayer} />
           {selectedFeature && (
             <DetailView
               feature={selectedFeature.data}

@@ -131,7 +131,7 @@ export const SearchControl = ({
 
   return (
     <div
-      style={{ zIndex: 100000 }}
+      style={{ zIndex: 10000 }}
       className="absolute top-4 md:top-6 m-auto w-full flex flex-col items-center h-0"
     >
       <div className="w-full md:w-[550px] lg:w-[650px]">

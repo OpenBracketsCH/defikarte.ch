@@ -85,7 +85,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
   const latitude = watch('latitude');
   const title = watch('id') ? t('editAed') : t('createAed');
   return (
-    <div className="absolute z-[10000] w-[555px] rounded-2xl bottom-6 top-6 right-6 bg-primary-100-white shadow-custom-lg shadow-green-shadow-64">
+    <div className="absolute z-[10000] h-auto md:h-[600px] lg:h-auto lg:w-[555px] rounded-2xl bottom-16 top-4 right-4 left-4 lg:bottom-6 md:top-6 md:right-6 md:left-6 lg:left-auto bg-primary-100-white shadow-custom-lg shadow-green-shadow-64">
       <form className="flex flex-col h-[100%]" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="border-b p-4 border-primary-05-green-05">{title}</h1>
         <div className="flex flex-col justify-start px-4 pt-5 pb-4 gap-4 overflow-auto">
@@ -235,7 +235,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             type="submit"
             variant="primary"
             size="large"
-            className="w-fit"
+            className="w-full md:w-fit"
             disabled={isSubmitting}
           >
             {t('submit')}

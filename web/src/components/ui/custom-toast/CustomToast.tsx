@@ -13,7 +13,7 @@ type CustomToastProps = {
 
 export const CustomToast = ({ toastInstance, message, title, icon }: CustomToastProps) => {
   const containerClass = cn(
-    'flex items-start p-3 max-w-xs w-full bg-primary-100-white shadow-green-custom shadow-custom rounded-2xl z-[10000] ',
+    'flex items-start p-3 max-w-full md:max-w-xs w-full bg-primary-100-white shadow-green-custom shadow-custom rounded-2xl z-[10000] ',
     {
       'animate-enter': toastInstance.visible,
       'animate-leave': !toastInstance.visible,
@@ -23,9 +23,9 @@ export const CustomToast = ({ toastInstance, message, title, icon }: CustomToast
   return (
     <div className={containerClass}>
       <div className="flex-shrink-0">
-        <img src={icon} />
+        <img src={icon} className="w-6 h-6 md:h-auto md:w-auto" />
       </div>
-      <div className="ps-3 pe-2 text-primary-100-green-04">
+      <div className="ps-2 md:ps-3 pe-1 md:pe-2 text-primary-100-green-04">
         <h4 className="font-semibold pb-1">{title}</h4>
         <p className="text-wrap">{message}</p>
       </div>

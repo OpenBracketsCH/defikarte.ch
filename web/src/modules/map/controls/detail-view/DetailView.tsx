@@ -156,6 +156,7 @@ export const DetailView = ({
           title={t('edit')}
           icon={iconEditDarkGreen}
           variant={isOpen ? 'tint' : 'secondary'}
+          onClick={onEdit}
           className={cn(
             'md:hidden',
             'w-full',

@@ -52,7 +52,7 @@ export const Button = ({
     'color-primary-100-green-03': variant === 'secondary',
   });
 
-  const textClass = classNames('leading-[150%]', {
+  const textClass = classNames('leading-[150%]', 'text-center', 'w-full', {
     'font-semibold': variant === 'primary' || variant === 'white',
     'font-normal': variant === 'secondary',
     hidden: iconOnly,
