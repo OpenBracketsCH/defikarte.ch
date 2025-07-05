@@ -15,9 +15,16 @@ import iconTimeWhite from '../../../../assets/icons/icon-time-white.svg';
 import { Button } from '../../../../components/ui/button/Button';
 import { IconButton } from '../../../../components/ui/icon-button/IconButton';
 import { Tag } from '../../../../components/ui/tag/Tag';
+import AppConfiguration from '../../../../configuration/app.configuration';
 import { distanceBetweenPoints } from '../../../../services/coordinate-calculation.service';
 import { isOpenNow } from '../../../../services/opening-hours.service';
 import { FeaturePropsList } from './property-list/FeaturePropsList';
+
+const generateGoogleMapsWalkingLink = (lon: number, lat: number): string => {
+  const endCoordinates = encodeURIComponent(`${lat},${lon}`);
+  const directionUrl = `${AppConfiguration.googleMapsDirectionsUrl}&travelmode=walking&destination=${endCoordinates}`;
+  return directionUrl;
+};
 
 type DetailViewProps = {
   feature: Feature | null;
@@ -52,8 +59,8 @@ export const DetailView = ({
           lon: userLocation.coords.longitude,
         },
         {
-          lat: coords[1],
           lon: coords[0],
+          lat: coords[1],
         }
       )
     : null;
@@ -66,6 +73,7 @@ export const DetailView = ({
     });
   const name = props['defibrillator:location'] ?? props.description ?? props.operator ?? 'n/A';
 
+  const directionsUrl = generateGoogleMapsWalkingLink(coords[0], coords[1]);
   const containerClass = cn(
     'z-10',
     'absolute',
@@ -188,9 +196,11 @@ export const DetailView = ({
             {propsVisible ? t('hide') : t('details')}
           </Button>
           {isOpen && (
-            <Button variant="primary" icon={iconNavigationWhite}>
-              {t('navigate')}
-            </Button>
+            <a href={directionsUrl} target="_blank">
+              <Button variant="primary" icon={iconNavigationWhite}>
+                {t('navigate')}
+              </Button>
+            </a>
           )}
         </div>
       </div>
