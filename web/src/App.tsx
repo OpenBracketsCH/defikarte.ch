@@ -32,8 +32,8 @@ const App: React.FC = () => {
         toastOptions={{ duration: 7200 }}
       />
       <Navbar />
-      <Routes location={'/home'}>
-        <Route path="/home" element={<Home />} />
+      <Routes location={'/'}>
+        <Route path="/" element={<Home />} />
       </Routes>
     </div>
   );
