@@ -18,7 +18,7 @@ const App: React.FC = () => {
   }, [isMobile]);
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="flex flex-col">
       <Toaster
         position={position}
         containerStyle={{

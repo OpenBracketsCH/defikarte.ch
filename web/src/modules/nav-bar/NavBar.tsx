@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 import iconCloseDarkGreen from '../../assets/icons/icon-close-middle-green.svg';
@@ -10,6 +10,15 @@ import procamedLogoWhite from '../../assets/navigation/procamed-logo-white.svg';
 export const Navbar = () => {
   const { t } = useTranslation();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileOpen ? 'hidden' : 'auto';
+
+    // Clean up the effect by enabling scrolling again
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isMobileOpen]);
 
   const routes = ['home', 'knowledge', 'project', 'support'].map(key => {
     return { key: key, route: key === 'home' ? '/' : `/${key}` };
@@ -26,9 +35,10 @@ export const Navbar = () => {
     <>
       <nav
         className={cn(
-          'flex flex-col lg:flex-row items-center justify-between bg-primary-100-green-04 py-3 px-4 lg:px-6 text-white',
+          'flex flex-col lg:flex-row items-center justify-between bg-primary-100-green-04 py-3 px-4 lg:px-6 text-white  lg:h-16',
           {
-            'z-40 absolute flex-col top-0 left-0 right-0 bottom-0 bg-primary-100-green-04 justify-start':
+            'h-[52px]': !isMobileOpen,
+            'z-50 absolute flex-col top-0 left-0 right-0 bottom-0 justify-start overflow-auto':
               isMobileOpen,
           }
         )}
@@ -60,11 +70,11 @@ export const Navbar = () => {
         <div
           className={cn('lg:flex', 'lg:top-auto lg:right-auto lg:left-auto lg:bottom-auto', {
             hidden: !isMobileOpen,
-            'flex flex-col w-[100%] pt-14 pb-10 px-6 grow': isMobileOpen,
+            'flex flex-col w-[100%] pt-10 md:pt-14 pb-8 md:pb-10 px-4 md:px-6 grow': isMobileOpen,
           })}
         >
-          <div className="flex justify-end pb-10">
-            <p className={cn('z-40', { hidden: !isMobileOpen })}>language mobile</p>
+          <div className="flex justify-end pb-8 md:pb-10">
+            <p className={cn('z-50', { hidden: !isMobileOpen })}>language mobile</p>
           </div>
           <ul
             className={cn(
@@ -84,7 +94,8 @@ export const Navbar = () => {
                     'text-base',
                     'lg:text-sm',
                     'font-medium',
-                    'py-10',
+                    'py-4',
+                    'md:py-10',
                     'lg:p-0',
                     'lg:m-0',
                     'border-t',
@@ -102,7 +113,7 @@ export const Navbar = () => {
               </NavLink>
             ))}
           </ul>
-          <div className="flex lg:hidden grow flex-col gap-4 justify-end ">
+          <div className="flex lg:hidden grow flex-col gap-4 justify-end pt-8 md:pt-10">
             <p className="text-xs font-medium leading-[150%] text-primary-100-green-02">
               {t('supportedBy')}
             </p>
