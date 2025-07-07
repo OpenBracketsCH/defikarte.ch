@@ -48,6 +48,7 @@ export const createAedAvailabilityPointLayers = (
       ],
       'circle-opacity': 0.6,
       'circle-translate': [0, -18],
+      'circle-translate-anchor': 'viewport',
     },
     filter: layerFilter,
   };

@@ -59,6 +59,7 @@ export const createAedPointLayers = (baseId: string, source: string): LayerSpeci
       ],
       'circle-opacity': ['match', ['get', 'opening_hours'], '24/7', 0.6, 0.4],
       'circle-translate': [0, -18],
+      'circle-translate-anchor': 'viewport',
     },
     filter: noClusterFilter,
   };
