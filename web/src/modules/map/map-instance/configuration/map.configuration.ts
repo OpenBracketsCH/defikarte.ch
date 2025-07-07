@@ -4,8 +4,8 @@ import { createOsmLayer } from '../layers/osm.layer';
 import { createOsmSource } from '../sources/osm.source';
 
 export class MapConfiguration {
-  public static defaultCenter: [number, number] = [7.4, 46.95];
-  public static defaultZoom: number = 10;
+  public static defaultCenter: [number, number] = [8.12, 46.8];
+  public static defaultZoom: number = 7;
 
   public static osmVectorBasemapId = 'osm-vector';
   public static osmBaseMapId = 'osm-common';
