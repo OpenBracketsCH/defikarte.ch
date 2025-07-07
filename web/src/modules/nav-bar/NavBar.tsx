@@ -2,11 +2,12 @@ import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
-import iconCloseWhite from '../../assets/navigation/icon-close-white.svg';
-import iconBurgerWhite from '../../assets/navigation/icon-burger-white.svg';
 import logoWhite from '../../assets/navigation/defikarte-logo.svg';
+import iconBurgerWhite from '../../assets/navigation/icon-burger-white.svg';
+import iconCloseWhite from '../../assets/navigation/icon-close-white.svg';
 import lifetecLogoWhite from '../../assets/navigation/lifetec-logo-white.svg';
 import procamedLogoWhite from '../../assets/navigation/procamed-logo-white.svg';
+import { LanguageMenu } from './language-menu/LanguageMenu';
 
 export const Navbar = () => {
   const { t } = useTranslation();
@@ -73,8 +74,8 @@ export const Navbar = () => {
             'flex flex-col w-[100%] pt-10 md:pt-14 pb-8 md:pb-10 px-4 md:px-6 grow': isMobileOpen,
           })}
         >
-          <div className="flex justify-end pb-8 md:pb-10">
-            <p className={cn('z-50', { hidden: !isMobileOpen })}>language mobile</p>
+          <div className={cn('flex justify-end pb-8 md:pb-10', { hidden: !isMobileOpen })}>
+            <LanguageMenu variant="light" />
           </div>
           <ul
             className={cn(
@@ -126,7 +127,7 @@ export const Navbar = () => {
         <div className="hidden lg:flex items-center gap-6">
           <EmergencyText />
           <div className="flex items-center">
-            <span>{t('language')}</span>
+            <LanguageMenu variant="dark" />
           </div>
         </div>
       </nav>
