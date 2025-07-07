@@ -2,7 +2,8 @@ import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
-import iconCloseDarkGreen from '../../assets/icons/icon-close-middle-green.svg';
+import iconCloseWhite from '../../assets/navigation/icon-close-white.svg';
+import iconBurgerWhite from '../../assets/navigation/icon-burger-white.svg';
 import logoWhite from '../../assets/navigation/defikarte-logo.svg';
 import lifetecLogoWhite from '../../assets/navigation/lifetec-logo-white.svg';
 import procamedLogoWhite from '../../assets/navigation/procamed-logo-white.svg';
@@ -51,11 +52,10 @@ export const Navbar = () => {
           </NavLink>
           <button
             onClick={() => setIsMobileOpen(true)}
-            className={cn(
-              'lg:hidden border-t-2 border-b-2 border-primary-100-white h-2 w-5 cursor-pointer',
-              { hidden: isMobileOpen }
-            )}
-          ></button>
+            className={cn('lg:hidden cursor-pointer', { hidden: isMobileOpen })}
+          >
+            <img src={iconBurgerWhite} alt="open" />
+          </button>
         </div>
         <div
           className={cn('z-50 lg:hidden flex justify-between w-full', {
@@ -64,7 +64,7 @@ export const Navbar = () => {
         >
           <EmergencyText />
           <button onClick={() => setIsMobileOpen(false)}>
-            <img src={iconCloseDarkGreen} alt="close" />
+            <img src={iconCloseWhite} alt="close" />
           </button>
         </div>
         <div
