@@ -1,11 +1,12 @@
 import { Point } from 'geojson';
 import { MapGeoJSONFeature } from 'maplibre-gl';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import iconGpsWarningCircleRed from '../../assets/icons/icon-gps-warning-circle-red.svg';
 import { CustomToast } from '../../components/ui/custom-toast/CustomToast';
 import { SplashScreen } from '../../components/ui/splash-screen/SplashScreen';
+import AppConfiguration from '../../configuration/app.configuration';
 import {
   CreateMode,
   FilterType,
@@ -24,6 +25,7 @@ import { SponsorControl } from './controls/sponsor-control/SponsorControl';
 import { deselectAllFeatures } from './helper';
 import { useHandleCreateMode } from './hooks/useHandleCreateMode';
 import { useMapEvents } from './hooks/useMapEvents';
+import { usePersistenceState } from './hooks/usePersistenceState';
 import { useUserLocation } from './hooks/useUserLocation';
 import { FEATURE_STATE } from './map-instance/configuration/constants';
 import { MapConfiguration } from './map-instance/configuration/map.configuration';
@@ -52,7 +54,10 @@ export const Map = () => {
   const mapInstanceRef = useRef<MapInstance | null>(null);
   const mapInstance = mapInstanceRef.current;
   const { isInitialized, handleMapEvent } = useMapEvents();
-  const [activeBaseLayer, setActiveBaseLayer] = useState<string>(baseLayer);
+  const [activeBaseLayer, setActiveBaseLayer] = usePersistenceState<string>(
+    AppConfiguration.baseLayerLocalStorageKey,
+    baseLayer
+  );
   const [activeOverlays, setActiveOverlays] = useState<FilterType[]>(overlay);
   const [selectedFeature, setSelectedFeature] = useState<MapInteractionEvent | null>(null);
   const [editFeature, setEditFeature] = useState<MapInteractionEvent | null>(null);
@@ -68,6 +73,18 @@ export const Map = () => {
     setIsActive: setIsGpsActive,
     error: locationError,
   } = userLocation;
+
+  // map event handling
+  const onMapEvent: MapEventCallback = useCallback(
+    event => {
+      if (event.type === 'item-select') {
+        setSelectedFeature(event);
+      }
+
+      handleMapEvent(event);
+    },
+    [handleMapEvent]
+  );
 
   // overlay handling
   useEffect(() => {
@@ -100,27 +117,18 @@ export const Map = () => {
 
   // map initialization
   useEffect(() => {
-    if (mapContainer.current && !mapInstanceRef.current) {
+    if (mapContainer.current && !mapInstanceRef.current && activeBaseLayer) {
       const activeOverlay = filterToOverlayMapping[createFilterKey(overlay)] || OverlayType.aed;
       const map = new MapInstance({
         container: mapContainer.current,
-        baseLayer: baseLayer,
+        baseLayer: activeBaseLayer,
         overlays: [activeOverlay, OverlayType.userLocation],
         onEvent: onMapEvent,
       });
       mapInstanceRef.current = map;
       return () => mapInstanceRef.current?.remove();
     }
-  }, []);
-
-  // map event handling
-  const onMapEvent: MapEventCallback = event => {
-    if (event.type === 'item-select') {
-      setSelectedFeature(event);
-    }
-
-    handleMapEvent(event);
-  };
+  }, [activeBaseLayer, onMapEvent]);
 
   const handleSelectOrCenterFeatureOnMap = (event: MapEvent) => {
     if (event.type !== 'item-select' || !event.data) return;
