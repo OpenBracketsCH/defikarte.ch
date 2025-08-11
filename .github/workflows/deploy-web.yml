@@ -42,7 +42,7 @@ jobs:
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
             rm -rf $path/*
