@@ -1,0 +1,50 @@
+name: Build and Deploy defikarte.ch web
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build React App
+        run: npm run build
+
+      - name: Determine Deployment Path
+        env:
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        id: deployment_path
+        run: |
+          if [ "${GITHUB_REF##*/}" == "main" ]; then
+            echo "path=/home/$DEPLOY_USER/www/production.defikarte.ch" >> $GITHUB_ENV
+          else
+            echo "path=/home/$DEPLOY_USER/www/staging.defikarte.ch" >> $GITHUB_ENV
+          fi
+
+      - name: Deploy to Server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $DEPLOY_USER@$SERVER_IP "rm -rf $path/*"
+          rsync -ave "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" build/ $DEPLOY_USER@$SERVER_IP:$path
