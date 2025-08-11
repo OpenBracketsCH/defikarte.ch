@@ -19,9 +19,11 @@ jobs:
           node-version: "20"
 
       - name: Install Dependencies
+        working-directory: ./web
         run: npm install
 
       - name: Build React App
+        working-directory: ./web
         run: npm run build
 
       - name: Determine Deployment Path
@@ -47,4 +49,4 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $DEPLOY_USER@$SERVER_IP "rm -rf $path/*"
-          rsync -ave "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" build/ $DEPLOY_USER@$SERVER_IP:$path
+          rsync -ave "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ./web/build/ $DEPLOY_USER@$SERVER_IP:$path
