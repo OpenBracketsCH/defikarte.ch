@@ -44,9 +44,7 @@ jobs:
           SERVER_IP: ${{ secrets.SERVER_IP }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $DEPLOY_USER@$SERVER_IP "rm -rf $path/*"
-          rsync -ave "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ./web/build/ $DEPLOY_USER@$SERVER_IP:$path
+          eval $(ssh-agent -s)
+          ssh-add <(echo "$SSH_PRIVATE_KEY")
+            ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o HostkeyAlgorithms='ssh-rsa' $DEPLOY_USER@$SERVER_IP "rm -rf $path/*"
+          rsync -ave "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" -e "ssh -o 'UserKnownHostsFile=/dev/null' -o 'StrictHostKeyChecking=no' -o HostkeyAlgorithms='ssh-rsa'" ./web/build/ $DEPLOY_USER@$SERVER_IP:$path
