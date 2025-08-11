@@ -13,7 +13,7 @@ This is the repository for the redisgn of defikarte.ch. The goal is to create a 
 - serve `dist` with your preffered webserver
 
 
-# todp
+# todo
 * setup libraries:
   - i18n :white_check_mark:
   - axios :white_check_mark:
