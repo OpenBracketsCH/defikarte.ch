@@ -47,5 +47,4 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            rm -rf $path/*
             rsync -avz --delete ./web/build/ $path/
