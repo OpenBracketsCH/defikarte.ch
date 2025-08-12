@@ -51,4 +51,4 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: ./web/dist/
           target: ${{ env.DEPLYOMENT_PATH }}
-          strip_components: web/dist/
+          strip_components: true
