@@ -39,7 +39,8 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            echo ${{ env.DEPLYOMENT_PATH }}/*
+            echo ${{ env.DEPLYOMENT_PATH }}
+            rm -rf ${{ env.DEPLYOMENT_PATH }}/*
 
       - name: Copy build artifacts to server
         uses: appleboy/scp-action@v0.1.7
@@ -48,6 +49,6 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: ./web/dist/*
+          source: ./web/dist/
           target: ${{ env.DEPLYOMENT_PATH }}
           strip_components: true
