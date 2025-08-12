@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env: 
-  DEPLYOMENT_PATH: "${{ github.ref == 'refs/heads/main' && '/home/$DEPLOY_USER/www/production.defikarte.ch' || '/home/$DEPLOY_USER/www/staging.defikarte.ch' }}"
+  DEPLYOMENT_PATH: "${{ github.ref == 'refs/heads/main' && './www/production.defikarte.ch' || './www/staging.defikarte.ch' }}"
 
 jobs:
   build:
