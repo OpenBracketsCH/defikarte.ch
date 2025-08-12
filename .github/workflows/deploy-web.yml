@@ -8,6 +8,9 @@ on:
 
   workflow_dispatch:
 
+env: 
+  DEPLYOMENT_PATH: "${{ github.ref == 'refs/heads/main' && '/home/$DEPLOY_USER/www/production.defikarte.ch' || '/home/$DEPLOY_USER/www/staging.defikarte.ch' }}"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +18,7 @@ jobs:
       - name: Check Out Code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js 
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20"
@@ -28,18 +31,7 @@ jobs:
         working-directory: ./web
         run: npm run build
 
-      - name: Determine Deployment Path
-        env:
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-        id: deployment_path
-        run: |
-          if [ "${GITHUB_REF##*/}" == "main" ]; then
-            echo "path=/home/$DEPLOY_USER/www/production.defikarte.ch" >> $GITHUB_ENV
-          else
-            echo "path=/home/$DEPLOY_USER/www/staging.defikarte.ch" >> $GITHUB_ENV
-          fi
-
-      - name: Deploy to server
+      - name: Clean target directory on server
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -47,4 +39,14 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            rsync -avz --delete ./web/build/ $path/
+            echo ${{ env.DEPLYOMENT_PATH }}/*
+
+      - name: Copy build artifacts to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          source: ./web/build/*
+          target: ${{ env.DEPLYOMENT_PATH }}
