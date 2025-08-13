@@ -8,7 +8,7 @@ on:
 
   workflow_dispatch:
 
-env: 
+env:
   DEPLYOMENT_PATH: "${{ github.ref == 'refs/heads/main' && './www/production.defikarte.ch' || './www/staging.defikarte.ch' }}"
 
 jobs:
@@ -51,4 +51,4 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: ./web/dist/
           target: ${{ env.DEPLYOMENT_PATH }}
-          strip_components: 2
+          strip_components: 3
