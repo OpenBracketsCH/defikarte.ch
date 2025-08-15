@@ -5,29 +5,29 @@ import de from './locales/de.json';
 import en from './locales/en.json';
 import fr from './locales/fr.json';
 import it from './locales/it.json';
+import deStatic from './locales/static/de.json';
+import enStatic from './locales/static/en.json';
+import frStatic from './locales/static/fr.json';
+import itStatic from './locales/static/it.json';
 
 const resources = {
-  en: { translation: en },
-  de: { translation: de },
-  fr: { translation: fr },
-  it: { translation: it },
+  en: { translation: en, static: enStatic },
+  de: { translation: de, static: deStatic },
+  fr: { translation: fr, static: frStatic },
+  it: { translation: it, static: itStatic },
 };
 
 i18n
-  // detect user language
-  // learn more: https://github.com/i18next/i18next-browser-languageDetector
   .use(LanguageDetector)
-  // pass the i18n instance to react-i18next.
   .use(initReactI18next)
-  // init i18next
-  // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     debug: false, // import.meta.env.DEV,
     fallbackLng: 'de',
     interpolation: {
-      escapeValue: false, // not needed for react as it escapes by default
+      escapeValue: false,
     },
     resources: resources,
+    defaultNS: 'translation',
   });
 
 export default i18n;

@@ -1,8 +1,10 @@
 import { useRef } from 'react';
 import { Map } from '../map/Map';
 import { MapFooter } from './map-footer/MapFooter';
+import { useTranslation } from 'react-i18next';
 
 export const Home = () => {
+  const { t } = useTranslation('static');
   const firstViewRef = useRef<HTMLDivElement>(null);
 
   const handleNextViewClick = () => {
@@ -21,7 +23,7 @@ export const Home = () => {
         ref={firstViewRef}
         className="flex justify-center items-center h-100 bg-primary-100-green-04 text-primary-100-white"
       >
-        <p>example content</p>
+        <p>{t('exampleContent')}</p>
       </div>
     </>
   );
