@@ -1,0 +1,25 @@
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+
+export const useLocalizedAsset = () => {
+  const { i18n } = useTranslation();
+
+  /**
+   * Returns the localized asset path by replacing '/en/' with the current language.
+   * @param {string} assetPath - The asset path containing '/en/'
+   * @returns {string} - The localized asset path
+   */
+  const getLocalizedAsset = useCallback(
+    (assetPath: string) => {
+      const currentLanguage = i18n.language;
+      // Replace '/en/' or '_en.' or '-en.' with the current language
+      // Handles svg, png, jpg, etc.
+      return assetPath
+        .replace(/([/_-])en([._])/g, `$1${currentLanguage}$2`)
+        .replace(/([/_-])en\//g, `$1${currentLanguage}/`);
+    },
+    [i18n.language]
+  );
+
+  return { a: getLocalizedAsset };
+};

@@ -79,5 +79,8 @@
   "knowledge": "Wissen",
   "project": "Projekt",
   "support": "Unterstützen",
-  "supportedBy": "Unterstützt durch"
+  "supportedBy": "Unterstützt durch",
+  "projectOf": "Ein Projekt von",
+  "legal": "Impressum",
+  "dataPrivacy": "Datenschutz"
 }

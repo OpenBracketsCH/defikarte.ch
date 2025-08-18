@@ -11,7 +11,7 @@ export const MapFooter = ({ onNextViewClick }: MapFooterProps) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
   return (
-    <div className="flex items-center justify-center h-[58px] md:h-[75px]">
+    <div className="flex items-center justify-center h-[58px] md:h-[75px] bg-beige">
       <IconButton
         icon={isMobile ? iconChevronDownMiddleGreenS : iconChevronDownMiddleGreenM}
         variant="white"

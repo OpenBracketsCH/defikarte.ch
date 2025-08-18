@@ -7,6 +7,7 @@ import iconBurgerWhite from '../../assets/navigation/icon-burger-white.svg';
 import iconCloseWhite from '../../assets/navigation/icon-close-white.svg';
 import lifetecLogoWhite from '../../assets/navigation/lifetec-logo-white.svg';
 import procamedLogoWhite from '../../assets/navigation/procamed-logo-white.svg';
+import AppConfiguration from '../../configuration/app.configuration';
 import { LanguageMenu } from './language-menu/LanguageMenu';
 
 export const Navbar = () => {
@@ -21,10 +22,6 @@ export const Navbar = () => {
       document.body.style.overflow = 'auto';
     };
   }, [isMobileOpen]);
-
-  const routes = ['home', 'knowledge', 'project', 'support'].map(key => {
-    return { key: key, route: key === 'home' ? '/' : `/${key}` };
-  });
 
   const EmergencyText = () => (
     <div className="leading-[150%]">
@@ -85,7 +82,7 @@ export const Navbar = () => {
               }
             )}
           >
-            {routes.map(r => (
+            {AppConfiguration.routes.map(r => (
               <NavLink
                 onClick={() => setIsMobileOpen(false)}
                 key={r.key}
