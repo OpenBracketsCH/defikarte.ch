@@ -34,7 +34,7 @@ export const Navbar = () => {
     <>
       <nav
         className={cn(
-          'flex flex-col lg:flex-row items-center justify-between bg-primary-100-green-04 py-3 px-4 lg:px-6 text-white  lg:h-16',
+          'flex flex-col lg:flex-row items-center justify-between bg-primary-100-green-04 py-3 px-4 lg:px-6 text-white lg:h-16',
           {
             'h-[52px]': !isMobileOpen,
             'z-50 absolute flex-col top-0 left-0 right-0 bottom-0 justify-start overflow-auto':
