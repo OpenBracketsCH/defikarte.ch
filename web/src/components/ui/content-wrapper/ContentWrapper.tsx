@@ -31,9 +31,9 @@ export const ContentWrapper = ({
     'lg:w-[800px]',
     'xl:w-[1000px]',
     {
-      'py-20': paddingY === 'small',
-      'py-28': paddingY === 'regular',
-      'py-32': paddingY === 'large',
+      'py-12 md:py-20': paddingY === 'small',
+      'py-16 md:py-28': paddingY === 'regular',
+      'py-16 md:py-32': paddingY === 'large',
     },
     className
   );

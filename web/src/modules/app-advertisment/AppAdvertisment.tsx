@@ -14,7 +14,7 @@ export const AppAdvertisment = () => {
     <ContentWrapper
       variant="green-gradient"
       paddingY="regular"
-      className="pb-0 xl:pt-0 flex-col xl:flex-row"
+      className="pb-0 md:pb-0 xl:pt-0 flex-col xl:flex-row"
     >
       <div>
         <Text size="large" variant="tint" weight="bold" className="pb-8 text-center xl:text-left">

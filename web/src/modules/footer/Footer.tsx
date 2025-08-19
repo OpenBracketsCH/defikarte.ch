@@ -11,7 +11,7 @@ import AppConfiguration from '../../configuration/app.configuration';
 export const Footer = () => {
   const { t } = useTranslation();
   return (
-    <ContentWrapper variant="green" className="pt-20 pb-10 flex-col">
+    <ContentWrapper variant="green" className="pt-20 md:pt-20 pb-10 md:pb-10 flex-col">
       <div className="w-full md:pb-20 flex flex-col md:flex-row md:justify-between">
         <div>
           <img
