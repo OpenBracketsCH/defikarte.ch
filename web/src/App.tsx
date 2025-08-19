@@ -7,6 +7,7 @@ import { Navbar } from './modules/nav-bar/NavBar';
 
 const App: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isMedium = useMediaQuery({ maxWidth: 1024 });
   const [position, setPosition] = useState<'top-right' | 'bottom-center'>('top-right');
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const App: React.FC = () => {
         position={position}
         containerStyle={{
           zIndex: 50,
-          top: isMobile ? 'auto' : '1.5rem',
+          top: isMobile ? 'auto' : isMedium ? '4.75rem' : '5.5rem',
           bottom: isMobile ? '1.25rem' : 'auto',
           left: isMobile ? '1rem' : 'auto',
           right: isMobile ? '1rem' : '1.5rem',
