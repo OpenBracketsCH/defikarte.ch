@@ -12,7 +12,7 @@ export const Footer = () => {
   const { t } = useTranslation();
   return (
     <ContentWrapper variant="green" className="pt-20 pb-10 flex-col">
-      <div className="w-full pb-20 flex justify-between">
+      <div className="w-full md:pb-20 flex flex-col md:flex-row md:justify-between">
         <div>
           <img
             src={defikarteLogoQuerGruenNegativRgb}
@@ -26,7 +26,7 @@ export const Footer = () => {
             <img src={openbracketsLogoWhite} alt="OpenBracktes.ch" />
           </div>
         </div>
-        <div className="w-1/2 grid grid-cols-3 grid-flow-col grid-rows-3 gap-3">
+        <div className="w-full md:w-1/2 grid md:grid-cols-3 md:grid-flow-col md:grid-rows-3 gap-3 pt-10 md:pt-0">
           <a
             href="/"
             className="text-primary-100-white font-normal leading-[150%] text-sm cursor-pointer"
@@ -76,14 +76,19 @@ export const Footer = () => {
           </a>
         </div>
       </div>
-      <div className="w-full flex items-center gap-6">
-        <p className="text-[8px] text-primary-100-white leading-[150%] me-auto">
+      <div className="w-full flex flex-col md:flex-row items-start md:items-center gap-6 py-14 md:py-0">
+        <p className="text-[8px] text-primary-100-white leading-[150%] me-auto hidden md:flex">
           © {new Date().getFullYear()} defikarte.ch
         </p>
         <p className="text-xs text-primary-100-white leading-[150%]">{t('supportedBy')}</p>
-        <img src={procamedLogoWhite} alt="procamed" className="h-[25px]" />
-        <img src={lifetectLogoWhite} alt="lifetec one" className="h-[25px]" />
+        <div className="flex items-center gap-6">
+          <img src={procamedLogoWhite} alt="procamed" className="h-[25px]" />
+          <img src={lifetectLogoWhite} alt="lifetec one" className="h-[25px]" />
+        </div>
       </div>
+      <p className="text-[8px] text-primary-100-white leading-[150%] me-auto md:hidden">
+        © {new Date().getFullYear()} defikarte.ch
+      </p>
     </ContentWrapper>
   );
 };

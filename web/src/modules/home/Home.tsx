@@ -37,31 +37,31 @@ export const Home = () => {
           <Text size="regular" weight="light" center>
             {t('SectionHomeContent')}
           </Text>
-          <div className="pt-20 flex w-full justify-between">
-            <div className="w-[300px]">
+          <div className="pt-20 flex w-full flex-col lg:flex-row justify-center items-center lg:items-baseline lg:justify-between gap-20 lg:gap-0">
+            <div className="w-[300px] md:w-[288px] lg:w-[232px] xl:w-[300px]">
               <img src={a(illustrationFeaturesFastEn)} />
-              <Text size="medium" weight="bold" className="pt-10 pb-4">
+              <Text size="medium" weight="bold" className="pt-10 pb-4 text-center lg:text-left">
                 {t('SectionHomeClaimOneTitle')}
               </Text>
-              <Text size="small" weight="regular">
+              <Text size="small" weight="regular" className="text-center lg:text-left">
                 {t('SectionHomeClaimOneContent')}
               </Text>
             </div>
-            <div className="w-[300px]">
+            <div className="w-[300px] md:w-[288px] lg:w-[232px] xl:w-[300px]">
               <img src={a(illustrationFeaturesCorrectEn)} />
-              <Text size="medium" weight="bold" className="pt-10 pb-4">
+              <Text size="medium" weight="bold" className="pt-10 pb-4 text-center lg:text-left">
                 {t('SectionHomeClaimTwoTitle')}
               </Text>
-              <Text size="small" weight="regular">
+              <Text size="small" weight="regular" className="text-center lg:text-left">
                 {t('SectionHomeClaimTwoContent')}
               </Text>
             </div>
-            <div className="w-[300px]">
+            <div className="w-[300px] md:w-[288px] lg:w-[232px] xl:w-[300px]">
               <img src={a(illustrationFeaturesCaptureEn)} />
-              <Text size="medium" weight="bold" className="pt-10 pb-4">
+              <Text size="medium" weight="bold" className="pt-10 pb-4 text-center lg:text-left">
                 {t('SectionHomeClaimThreeTitle')}
               </Text>
-              <Text size="small" weight="regular">
+              <Text size="small" weight="regular" className="text-center lg:text-left">
                 {t('SectionHomeClaimThreeContent')}
               </Text>
             </div>
@@ -69,11 +69,11 @@ export const Home = () => {
         </ContentWrapper>
         <AppAdvertisment />
         <ContentWrapper className="flex-col" variant="beige" paddingY="regular">
-          <Text size="x-large" weight="bold" className="pb-4">
+          <Text size="x-large" weight="bold" className="pb-4 text-center md:text-left">
             {t('SectionFAQTitle')}
           </Text>
-          <Text>{t('SectionFAQContent')}</Text>
-          <div className="pt-12 w-[100%] flex flex-col gap-2">
+          <Text className="text-center md:text-left">{t('SectionFAQContent')}</Text>
+          <div className="pt-12 w-full flex flex-col gap-2">
             <Accordion title={t('SectionFAQQuestionOne')} content={t('SectionFAQAnswerOne')} />
             <Accordion title={t('SectionFAQQuestionTwo')} content={t('SectionFAQAnswerTwo')} />
             <Accordion title={t('SectionFAQQuestionThree')} content={t('SectionFAQAnswerThree')} />

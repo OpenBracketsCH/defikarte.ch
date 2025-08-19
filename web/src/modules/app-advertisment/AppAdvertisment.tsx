@@ -11,20 +11,24 @@ export const AppAdvertisment = () => {
   const { a } = useLocalizedAsset();
 
   return (
-    <ContentWrapper variant="green-gradient" className="pb-0 pt-0">
+    <ContentWrapper
+      variant="green-gradient"
+      paddingY="regular"
+      className="pb-0 xl:pt-0 flex-col xl:flex-row"
+    >
       <div>
-        <Text size="large" variant="tint" weight="bold" className="pb-8">
+        <Text size="large" variant="tint" weight="bold" className="pb-8 text-center xl:text-left">
           {t('SectionAppTitle')}
         </Text>
-        <Text size="small" variant="white" weight="regular">
+        <Text size="small" variant="white" weight="regular" className="text-center xl:text-left">
           {t('SectionAppContent')}
         </Text>
-        <div className="flex flex-row gap-4 pt-10">
-          <img src={appStoreImage} />
-          <img src={googlePlayStoreImage} />
+        <div className="flex flex-row gap-2 md:gap-4 pt-10 justify-center xl:justify-start">
+          <img src={appStoreImage} className="h-8 md:h-auto" />
+          <img src={googlePlayStoreImage} className="h-8 md:h-auto" />
         </div>
       </div>
-      <img src={a(appScreenShadowEn)} className="max-w-[570px]" />
+      <img src={a(appScreenShadowEn)} className="max-w-[307px] md:max-w-[469px] xl:max-w-[570px]" />
     </ContentWrapper>
   );
 };

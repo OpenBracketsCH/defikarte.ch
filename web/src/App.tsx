@@ -25,7 +25,7 @@ const App: React.FC = () => {
         containerStyle={{
           zIndex: 50,
           top: isMobile ? 'auto' : isMedium ? '4.75rem' : '5.5rem',
-          bottom: isMobile ? '4.2rem' : 'auto',
+          bottom: isMobile ? '4.875rem' : 'auto',
           left: isMobile ? '1rem' : 'auto',
           right: isMobile ? '1rem' : '1.5rem',
           width: isMobile ? 'auto' : '100%',
