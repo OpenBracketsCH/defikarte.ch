@@ -3,8 +3,9 @@ import { Toaster } from 'react-hot-toast';
 import { useMediaQuery } from 'react-responsive';
 import { Route, Routes } from 'react-router';
 import { Home } from './modules/home/Home';
-import { Navbar } from './modules/nav-bar/NavBar';
 import { Knowledge } from './modules/knowledge/Knowledge';
+import { Navbar } from './modules/nav-bar/NavBar';
+import { Project } from './modules/project/Project';
 
 const App: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -37,6 +38,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/knowledge" element={<Knowledge />} />
+        <Route path="/project" element={<Project />} />
       </Routes>
     </div>
   );

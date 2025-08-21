@@ -16,6 +16,7 @@ import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapp
 import { Text } from '../../components/ui/text/Text';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 import { Footer } from '../footer/Footer';
+import { Hero } from '../../components/ui/hero/Hero';
 
 export const Knowledge = () => {
   const { t } = useTranslation('static');
@@ -23,18 +24,13 @@ export const Knowledge = () => {
 
   return (
     <div>
-      <ContentWrapper variant="green" paddingY="regular" className="flex-col 2xl:w-[1200px]">
-        <Text size="x-large" variant="tint" weight="bold" center className="pb-6">
-          {t('SectionKnowledgeTitle')}
-        </Text>
-        <Text size="regular" variant="white" weight="light" center className="pb-10">
-          {t('SectionKnowledgeContent')}
-        </Text>
-        <Button icon={iconArrowDownWhite} size="large">
-          {t('InformKnow')}
-        </Button>
-        <img src={imageDefikarteWissenTeaser} className="mt-20 rounded-2xl" />
-      </ContentWrapper>
+      <Hero
+        title={t('SectionKnowledgeTitle')}
+        description={t('SectionKnowledgeContent')}
+        buttonText={t('InformKnow')}
+        buttonIcon={iconArrowDownWhite}
+        image={imageDefikarteWissenTeaser}
+      />
       <ContentWrapper variant="beige" paddingY="large" className="flex-col lg:flex-row">
         <div>
           <Text size="large" weight="bold" className="pb-6">

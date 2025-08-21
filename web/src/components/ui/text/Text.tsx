@@ -19,6 +19,7 @@ export const Text = ({
   const classNames = cn(
     'max-w-[700px]',
     {
+      // todo: font size must be adjusted to mobile devices
       'text-base': size === 'small',
       'text-xl': size === 'regular',
       'text-[26px]': size === 'medium',

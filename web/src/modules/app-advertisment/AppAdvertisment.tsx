@@ -1,34 +1,62 @@
 import { useTranslation } from 'react-i18next';
-import appStoreImage from '../../assets/landingpages/apple-app-store-white-de.svg';
-import googlePlayStoreImage from '../../assets/landingpages/google-play-store-white-de.svg';
-import appScreenShadowEn from '../../assets/landingpages/home/app-screen-shadow-en.png';
+import imageAppleAppStoreGreenDe from '../../assets/landingpages/apple-app-store-green-de.svg';
+import imageAppleAppStoreWhiteDe from '../../assets/landingpages/apple-app-store-white-de.svg';
+import imageGooglePlayStoreGreenDe from '../../assets/landingpages/google-play-store-green-de.svg';
+import imageGooglePlayStoreWhiteDe from '../../assets/landingpages/google-play-store-white-de.svg';
+import imageAppScreenBlankEn from '../../assets/landingpages/home/app-screen-blank-en.png';
+import imageAppScreenShadowEn from '../../assets/landingpages/home/app-screen-shadow-en.png';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
 import { Text } from '../../components/ui/text/Text';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 
-export const AppAdvertisment = () => {
+type AppAdvertismentProps = {
+  variant?: 'white' | 'green';
+};
+
+export const AppAdvertisment = ({ variant = 'green' }: AppAdvertismentProps) => {
   const { t } = useTranslation('static');
   const { a } = useLocalizedAsset();
 
+  const titleText = variant === 'green' ? t('SectionAppTitle') : t('SectionProjectAppTitle');
+  const contentText = variant === 'green' ? t('SectionAppContent') : t('SectionProjectAppContent');
   return (
     <ContentWrapper
-      variant="green-gradient"
+      variant={variant === 'green' ? 'green-gradient' : 'white'}
       paddingY="regular"
       className="pb-0 md:pb-0 xl:pt-0 flex-col xl:flex-row"
     >
       <div>
-        <Text size="large" variant="tint" weight="bold" className="pb-8 text-center xl:text-left">
-          {t('SectionAppTitle')}
+        <Text
+          size="large"
+          variant={variant === 'green' ? 'tint' : 'primary'}
+          weight="bold"
+          className="pb-8 text-center xl:text-left"
+        >
+          {titleText}
         </Text>
-        <Text size="small" variant="white" weight="regular" className="text-center xl:text-left">
-          {t('SectionAppContent')}
+        <Text
+          size="small"
+          variant={variant === 'green' ? 'white' : 'primary'}
+          weight="regular"
+          className="text-center xl:text-left"
+        >
+          {contentText}
         </Text>
         <div className="flex flex-row gap-2 md:gap-4 pt-10 justify-center xl:justify-start">
-          <img src={appStoreImage} className="h-8 md:h-auto" />
-          <img src={googlePlayStoreImage} className="h-8 md:h-auto" />
+          <img
+            src={variant === 'green' ? imageAppleAppStoreWhiteDe : imageAppleAppStoreGreenDe}
+            className="h-8 md:h-auto"
+          />
+          <img
+            src={variant === 'green' ? imageGooglePlayStoreWhiteDe : imageGooglePlayStoreGreenDe}
+            className="h-8 md:h-auto"
+          />
         </div>
       </div>
-      <img src={a(appScreenShadowEn)} className="max-w-[307px] md:max-w-[469px] xl:max-w-[570px]" />
+      <img
+        src={a(variant === 'green' ? imageAppScreenShadowEn : imageAppScreenBlankEn)}
+        className="max-w-[307px] md:max-w-[469px] xl:max-w-[570px]"
+      />
     </ContentWrapper>
   );
 };
