@@ -3,13 +3,14 @@ import iconArrowDownWhite from '../../assets/landingpages/icon-arrow-down-white.
 import imageDefikartePortraitChristian from '../../assets/landingpages/projekt/defikarte-portrait-christian.jpg';
 import imageDefikarteProjectTeaserEn from '../../assets/landingpages/projekt/defikarte-projekt-teaser-en.jpg';
 import iconZitat from '../../assets/landingpages/projekt/icon-zitat.svg';
+import imageIllustrationFeaturesEmergencyEn from '../../assets/landingpages/projekt/illustration-features-emergency-en.png';
+import imageIllustrationFeaturesFindEn from '../../assets/landingpages/projekt/illustration-features-find-en.png';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
 import { Hero } from '../../components/ui/hero/Hero';
 import { Text } from '../../components/ui/text/Text';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 import { Footer } from '../footer/Footer';
-import imageIllustrationFeaturesEmergencyEn from '../../assets/landingpages/projekt/illustration-features-emergency-en.png';
 
 type InfoCardProps = {
   title: string;
@@ -73,7 +74,7 @@ export const Project = () => {
       </ContentWrapper>
       <AppAdvertisment variant="white" />
       <ContentWrapper variant="beige" paddingY="regular" className="grid grid-cols-2 gap-20">
-        <img src={imageIllustrationFeaturesEmergencyEn} className="w-[460px]" />
+        <img src={imageIllustrationFeaturesFindEn} className="w-[460px]" />
         <div>
           <Text weight="bold" size="large" className="pb-4">
             {t('SectionProjectAppDescriptionOneTitle')}
@@ -83,9 +84,9 @@ export const Project = () => {
         <img src={imageIllustrationFeaturesEmergencyEn} className="w-[460px]" />
         <div>
           <Text weight="bold" size="large" className="pb-4">
-            {t('SectionProjectAppDescriptionOneTitle')}
+            {t('SectionProjectAppDescriptionTwoTitle')}
           </Text>
-          <Text size="small">{t('SectionProjectAppDescriptionOneContent')}</Text>
+          <Text size="small">{t('SectionProjectAppDescriptionTwoContent')}</Text>
         </div>
       </ContentWrapper>
       <ContentWrapper
