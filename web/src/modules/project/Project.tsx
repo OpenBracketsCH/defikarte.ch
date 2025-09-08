@@ -11,6 +11,9 @@ import { Text } from '../../components/ui/text/Text';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 import { Footer } from '../footer/Footer';
+import imageOpenBracketLogoWhite from '../../assets/navigation/openbrackets-logo-white.svg';
+import { Button } from '../../components/ui/button/Button';
+import iconExternalLinkMiddleGreen from '../../assets/icons/icon-external-link-middle-green.svg';
 
 type InfoCardProps = {
   title: string;
@@ -50,20 +53,24 @@ export const Project = () => {
         <InfoCard title="12" description={t('SectionProjectFactThree')} />
         <InfoCard title="50+" description={t('SectionProjectFactFour')} />
       </ContentWrapper>
-      <ContentWrapper variant="white" paddingY="large" className="gap-10 xl:gap-16">
+      <ContentWrapper
+        variant="white"
+        paddingY="large"
+        className="gap-10 xl:gap-16 flex-col lg:flex-row lg:items-start xl:items-center"
+      >
         <img src={imageDefikartePortraitChristian} className="rounded-2xl w-[419px]" />
-        <div className="w-full">
-          <img src={iconZitat} />
-          <Text size="large" weight="bold" className="pt-8 pb-4">
+        <div className="w-full flex flex-col justify-center lg:justify-start lg:items-start">
+          <img src={iconZitat} className="h-[34px]" />
+          <Text size="large" weight="bold" className="pt-8 pb-4 text-center lg:text-start">
             {t('SectionProjectStatementTitle')}
           </Text>
-          <Text size="small" className="pb-12">
+          <Text size="small" className="pb-12 text-center lg:text-start">
             {t('SectionProjectStatementContent')}
           </Text>
-          <Text weight="bold" size="small">
+          <Text weight="bold" size="small" className="text-center lg:text-start">
             {t('SectionProjectNameFounder')}
           </Text>
-          <Text>{t('SectionProjectTitleFounder')}</Text>
+          <Text className="text-center lg:text-start">{t('SectionProjectTitleFounder')}</Text>
         </div>
       </ContentWrapper>
       <ContentWrapper variant="beige" paddingY="regular" className="flex-col">
@@ -73,26 +80,45 @@ export const Project = () => {
         <Text className="w-full whitespace-pre-line">{t('SectionProjectHistoryContent')}</Text>
       </ContentWrapper>
       <AppAdvertisment variant="white" />
-      <ContentWrapper variant="beige" paddingY="regular" className="grid grid-cols-2 gap-20">
-        <img src={imageIllustrationFeaturesFindEn} className="w-[460px]" />
-        <div>
-          <Text weight="bold" size="large" className="pb-4">
-            {t('SectionProjectAppDescriptionOneTitle')}
-          </Text>
-          <Text size="small">{t('SectionProjectAppDescriptionOneContent')}</Text>
+      <ContentWrapper variant="beige" paddingY="regular" className="flex-col gap-26">
+        <div className="flex flex-col lg:flex-row gap-10 xl:gap-20">
+          <div className="flex justify-center">
+            <img src={imageIllustrationFeaturesFindEn} className="w-72 md:w-[380px] lg:w-[460px]" />
+          </div>
+          <div className="w-auto md:w-[380px] lg:w-auto mx-auto lg:mx-0 flex flex-col justify-center">
+            <Text weight="bold" size="large" className="pb-4">
+              {t('SectionProjectAppDescriptionOneTitle')}
+            </Text>
+            <Text size="small">{t('SectionProjectAppDescriptionOneContent')}</Text>
+          </div>
         </div>
-        <img src={imageIllustrationFeaturesEmergencyEn} className="w-[460px]" />
-        <div>
-          <Text weight="bold" size="large" className="pb-4">
-            {t('SectionProjectAppDescriptionTwoTitle')}
-          </Text>
-          <Text size="small">{t('SectionProjectAppDescriptionTwoContent')}</Text>
+        <div className="flex flex-col lg:flex-row gap-10 xl:gap-20">
+          <div className="flex justify-center">
+            <img
+              src={imageIllustrationFeaturesEmergencyEn}
+              className="w-72 md:w-[380px] lg:w-[460px]"
+            />
+          </div>
+          <div className="w-auto md:w-[380px] lg:w-auto mx-auto lg:mx-0 flex flex-col justify-center">
+            <Text weight="bold" size="large" className="pb-4">
+              {t('SectionProjectAppDescriptionTwoTitle')}
+            </Text>
+            <Text size="small">{t('SectionProjectAppDescriptionTwoContent')}</Text>
+          </div>
         </div>
       </ContentWrapper>
-      <ContentWrapper
-        variant="green-gradient"
-        className="py-[179px] md:py-[179px]"
-      ></ContentWrapper>
+      <ContentWrapper variant="green-gradient" className="py-16 md:py-[179px] flex-col">
+        <Text variant="tint" size="large" weight="bold" className="pb-8 text-center">
+          {t('SectionProjectOpenbracketsTitle')}
+        </Text>
+        <img src={imageOpenBracketLogoWhite} className="w-[200px] pb-10" />
+        <Text variant="white" size="regular" weight="light" center className="pb-10">
+          {t('SectionProjectOpenbracketsContent')}
+        </Text>
+        <Button variant="white" icon={iconExternalLinkMiddleGreen}>
+          OpenBrackets.ch
+        </Button>
+      </ContentWrapper>
       <Footer />
     </div>
   );
