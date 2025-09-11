@@ -21,10 +21,10 @@ export const Text = ({
     {
       // todo: font size must be adjusted to mobile devices
       'text-base': size === 'small',
-      'text-xl': size === 'regular',
+      'text-lg md:text-xl': size === 'regular',
       'text-[26px]': size === 'medium',
-      'text-[34px]': size === 'large',
-      'text-[44px]': size === 'x-large',
+      'text-[28px] md:text-[34px]': size === 'large',
+      'text-[32px] text-[44px]': size === 'x-large',
       'font-light': weight === 'light',
       'font-normal': weight === 'regular',
       'font-medium': weight === 'bold',

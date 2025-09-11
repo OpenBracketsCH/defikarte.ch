@@ -6,6 +6,7 @@ import { Home } from './modules/home/Home';
 import { Knowledge } from './modules/knowledge/Knowledge';
 import { Navbar } from './modules/nav-bar/NavBar';
 import { Project } from './modules/project/Project';
+import { Sponsors } from './modules/sponsors/Sponsors';
 
 const App: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -39,6 +40,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/knowledge" element={<Knowledge />} />
         <Route path="/project" element={<Project />} />
+        <Route path="/sponsors" element={<Sponsors />} />
       </Routes>
     </div>
   );

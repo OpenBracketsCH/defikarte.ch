@@ -1,19 +1,19 @@
 import { useTranslation } from 'react-i18next';
+import iconExternalLinkMiddleGreen from '../../assets/icons/icon-external-link-middle-green.svg';
 import iconArrowDownWhite from '../../assets/landingpages/icon-arrow-down-white.svg';
 import imageDefikartePortraitChristian from '../../assets/landingpages/projekt/defikarte-portrait-christian.jpg';
 import imageDefikarteProjectTeaserEn from '../../assets/landingpages/projekt/defikarte-projekt-teaser-en.jpg';
 import iconZitat from '../../assets/landingpages/projekt/icon-zitat.svg';
 import imageIllustrationFeaturesEmergencyEn from '../../assets/landingpages/projekt/illustration-features-emergency-en.png';
 import imageIllustrationFeaturesFindEn from '../../assets/landingpages/projekt/illustration-features-find-en.png';
+import imageOpenBracketLogoWhite from '../../assets/navigation/openbrackets-logo-white.svg';
+import { Button } from '../../components/ui/button/Button';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
 import { Hero } from '../../components/ui/hero/Hero';
 import { Text } from '../../components/ui/text/Text';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 import { Footer } from '../footer/Footer';
-import imageOpenBracketLogoWhite from '../../assets/navigation/openbrackets-logo-white.svg';
-import { Button } from '../../components/ui/button/Button';
-import iconExternalLinkMiddleGreen from '../../assets/icons/icon-external-link-middle-green.svg';
 
 type InfoCardProps = {
   title: string;
