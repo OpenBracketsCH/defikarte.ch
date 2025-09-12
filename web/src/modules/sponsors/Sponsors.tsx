@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import iconExternalLinkMiddleGreen from '../../assets/icons/icon-external-link-middle-green.svg';
 import iconArrowDownWhite from '../../assets/landingpages/icon-arrow-down-white.svg';
 import iconEmailWhite from '../../assets/landingpages/icon-email-white.svg';
 import iconExternalLinkWhite from '../../assets/landingpages/icon-external-link-white.svg';
@@ -21,12 +20,13 @@ import imageDefikarteSackmesser from '../../assets/landingpages/wissen/defikarte
 import { Button } from '../../components/ui/button/Button';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
 import { Hero } from '../../components/ui/hero/Hero';
-import { IconButton } from '../../components/ui/icon-button/IconButton';
 import { Text } from '../../components/ui/text/Text';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 import { Footer } from '../footer/Footer';
 import { SponsorCard } from './sponsor-card/SponsorCard';
+import { SponsorPlatinCard } from './sponsor-platin-card/SponsorPlatinCard';
+import { TwintButton } from './twint-button/TwintButton';
 
 export const Sponsors = () => {
   const { t } = useTranslation('static');
@@ -79,9 +79,7 @@ export const Sponsors = () => {
             <Text size="regular" className="pb-8">
               {t('SectionSponsorsTwintContent')}
             </Text>
-            <button className="bg-primary-100-black text-primary-100-white py-3 px-4 rounded-2xl font-semibold cursor-pointer break-words">
-              Mit TWINT bezahlen
-            </button>
+            <TwintButton />
           </div>
         </div>
       </ContentWrapper>
@@ -93,34 +91,18 @@ export const Sponsors = () => {
           {t('SectionSponsorsPlatinContent')}
         </Text>
         <div className="flex flex-col lg:flex-row w-full gap-9">
-          <div className="bg-beige rounded-2xl lg:w-1/2 flex flex-col h-112">
-            <div className="bg-primary-100-white rounded-t-2xl flex justify-center items-center grow-1">
-              <img src={imageDefikartePartnerProcamed} className="w-[230px]" />
-            </div>
-            <div className="p-8">
-              <Text size="medium" weight="bold" className="pb-3">
-                Procamed AG
-              </Text>
-              <div className="flex flex-row gap-9 items-end">
-                <Text>{t('ClaimSponsorsProcamed')}</Text>
-                <IconButton size="large" variant="white" icon={iconExternalLinkMiddleGreen} />
-              </div>
-            </div>
-          </div>
-          <div className="bg-beige rounded-2xl lg:w-1/2 flex flex-col h-112">
-            <div className="bg-primary-100-white rounded-t-2xl flex justify-center items-center grow-1">
-              <img src={imageDefikartePartnerLifetec} className="w-[230px]" />
-            </div>
-            <div className="p-8">
-              <Text size="medium" weight="bold" className="pb-3">
-                Lifetec AG
-              </Text>
-              <div className="flex flex-row gap-9 items-end">
-                <Text>{t('ClaimSponsorsLifetec')}</Text>
-                <IconButton size="large" variant="white" icon={iconExternalLinkMiddleGreen} />
-              </div>
-            </div>
-          </div>
+          <SponsorPlatinCard
+            description={t('ClaimSponsorsProcamed')}
+            title="Procamed AG"
+            href=""
+            src={imageDefikartePartnerProcamed}
+          />
+          <SponsorPlatinCard
+            description={t('ClaimSponsorsLifetec')}
+            title="Lifetec AG"
+            href=""
+            src={imageDefikartePartnerLifetec}
+          />
         </div>
       </ContentWrapper>
       <ContentWrapper variant="beige" paddingY="regular" className="flex-col">
