@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router';
 import { Home } from './modules/home/Home';
 import { Knowledge } from './modules/knowledge/Knowledge';
 import { Navbar } from './modules/nav-bar/NavBar';
+import { Privacy } from './modules/privacy/Privacy';
 import { Project } from './modules/project/Project';
 import { Sponsors } from './modules/sponsors/Sponsors';
 
@@ -41,6 +42,7 @@ const App: React.FC = () => {
         <Route path="/knowledge" element={<Knowledge />} />
         <Route path="/project" element={<Project />} />
         <Route path="/sponsors" element={<Sponsors />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Routes>
     </div>
   );

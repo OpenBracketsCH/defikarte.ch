@@ -36,7 +36,7 @@ export const Sponsors = () => {
     <div>
       <Hero
         title={t('SectionSponsorsTitle')}
-        description={t('SectionSponsorsContent')}
+        description={[t('SectionSponsorsContent')]}
         image={imageDefikarteUnterstuetzungTeaser}
         buttonText={t('InformKnow')}
         buttonIcon={iconArrowDownWhite}

@@ -26,7 +26,7 @@ export const Knowledge = () => {
     <div>
       <Hero
         title={t('SectionKnowledgeTitle')}
-        description={t('SectionKnowledgeContent')}
+        description={[t('SectionKnowledgeContent')]}
         buttonText={t('InformKnow')}
         buttonIcon={iconArrowDownWhite}
         image={imageDefikarteWissenTeaser}

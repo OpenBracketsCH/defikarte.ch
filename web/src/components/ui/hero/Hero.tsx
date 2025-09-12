@@ -4,8 +4,8 @@ import { Text } from '../text/Text';
 
 type HeroProps = {
   title: string;
-  description: string;
-  image: string;
+  description: string[];
+  image?: string;
   buttonText: string;
   buttonIcon: string;
 };
@@ -17,13 +17,24 @@ export const Hero = ({ title, description, image, buttonText, buttonIcon }: Hero
         <Text size="x-large" variant="tint" weight="bold" center className="pb-6 break-words">
           {title}
         </Text>
-        <Text size="regular" variant="white" weight="light" center className="pb-10">
-          {description}
-        </Text>
+        <div>
+          {description.map((d, i) => (
+            <Text
+              key={i}
+              size="regular"
+              variant="white"
+              weight="light"
+              center
+              className="last:pb-10"
+            >
+              {d}
+            </Text>
+          ))}
+        </div>
         <Button icon={buttonIcon} size="large">
           {buttonText}
         </Button>
-        <img src={image} className="mt-20 rounded-2xl" />
+        {image && <img src={image} className="mt-20 rounded-2xl" />}
       </ContentWrapper>
     </>
   );

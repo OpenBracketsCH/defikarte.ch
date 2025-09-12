@@ -39,7 +39,7 @@ export const Project = () => {
     <div>
       <Hero
         title={t('SectionProjectTitle')}
-        description={t('SectionProjectContent')}
+        description={[t('SectionProjectContent')]}
         buttonText={t('InformKnow')}
         buttonIcon={iconArrowDownWhite}
         image={a(imageDefikarteProjectTeaserEn)}
