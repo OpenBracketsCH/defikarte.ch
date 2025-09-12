@@ -123,7 +123,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             tooltip={{
               title: t('locationTooltipTitle'),
               content: t('locationTooltipContent'),
-              link: 'https://wiki.openstreetmap.org/wiki/Map_features',
+              link: 'https://wiki.openstreetmap.org/wiki/Tag:emergency%3Ddefibrillator',
             }}
             error={errors.location?.message}
             {...register('location', {
@@ -139,7 +139,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             tooltip={{
               title: t('indoorTooltipTitle'),
               content: t('indoorTooltipContent'),
-              link: 'https://wiki.openstreetmap.org/wiki/Map_features',
+              link: 'https://wiki.openstreetmap.org/wiki/Key:indoor',
             }}
             error={errors.indoor?.message}
             {...register('indoor', { required: t('indoorRequired') })}
@@ -153,7 +153,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             tooltip={{
               title: t('levelTooltipTitle'),
               content: t('levelTooltipContent'),
-              link: 'https://wiki.openstreetmap.org/wiki/Map_features',
+              link: 'https://wiki.openstreetmap.org/wiki/Key:level',
             }}
             error={errors.level?.message}
             {...register('level')}
@@ -167,7 +167,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             tooltip={{
               title: t('descriptionTooltipTitle'),
               content: t('descriptionTooltipContent'),
-              link: 'https://wiki.openstreetmap.org/wiki/Map_features',
+              link: 'https://wiki.openstreetmap.org/wiki/Key:description',
             }}
             error={errors.description?.message}
             {...register('description', {
@@ -184,7 +184,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             tooltip={{
               title: t('openingHoursTooltipTitle'),
               content: t('openingHoursTooltipContent'),
-              link: 'https://wiki.openstreetmap.org/wiki/Map_features',
+              link: 'https://wiki.openstreetmap.org/wiki/Key:opening_hours',
             }}
             error={errors.openingHours?.message}
             {...register('openingHours', { validate: areOpeningHoursValid })}
@@ -198,7 +198,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             tooltip={{
               title: t('operatorTooltipTitle'),
               content: t('operatorTooltipContent'),
-              link: 'https://wiki.openstreetmap.org/wiki/Map_features',
+              link: 'https://wiki.openstreetmap.org/wiki/Key:operator',
             }}
             error={errors.operator?.message}
             {...register('operator')}
@@ -212,7 +212,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             tooltip={{
               title: t('operatorPhoneTooltipTitle'),
               content: t('operatorPhoneTooltipContent'),
-              link: 'https://wiki.openstreetmap.org/wiki/Map_features',
+              link: 'https://wiki.openstreetmap.org/wiki/Key:phone',
             }}
             error={errors.operatorPhone?.message}
             {...register('operatorPhone', { validate: isPhoneNumberValid })}
@@ -224,7 +224,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             tooltip={{
               title: t('accessTooltipTitle'),
               content: t('accessTooltipContent'),
-              link: 'https://wiki.openstreetmap.org/wiki/Map_features',
+              link: 'https://wiki.openstreetmap.org/wiki/Key:access',
             }}
             {...register('access')}
             disabled={isSubmitting}
