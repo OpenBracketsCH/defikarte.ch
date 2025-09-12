@@ -14,7 +14,7 @@ export const Hero = ({ title, description, image, buttonText, buttonIcon }: Hero
   return (
     <>
       <ContentWrapper variant="green" paddingY="regular" className="flex-col 2xl:w-[1200px]">
-        <Text size="x-large" variant="tint" weight="bold" center className="pb-6">
+        <Text size="x-large" variant="tint" weight="bold" center className="pb-6 break-words">
           {title}
         </Text>
         <Text size="regular" variant="white" weight="light" center className="pb-10">

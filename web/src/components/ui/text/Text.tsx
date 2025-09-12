@@ -17,7 +17,7 @@ export const Text = ({
   ...props
 }: TextProps) => {
   const classNames = cn(
-    'max-w-[700px]',
+    'max-w-full lg:max-w-[700px]',
     {
       // todo: font size must be adjusted to mobile devices
       'text-base': size === 'small',
