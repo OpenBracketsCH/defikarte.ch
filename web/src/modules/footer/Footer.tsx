@@ -46,7 +46,7 @@ export const Footer = () => {
             ))}
           <NavLink
             key="legal"
-            to="/legal"
+            to="/privacy"
             className="text-primary-100-white font-normal leading-[150%] text-sm cursor-pointer"
           >
             {t('legal')}
