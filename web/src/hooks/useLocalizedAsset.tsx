@@ -11,14 +11,14 @@ export const useLocalizedAsset = () => {
    */
   const getLocalizedAsset = useCallback(
     (assetPath: string) => {
-      const currentLanguage = i18n.language;
+      const currentLanguage = i18n.resolvedLanguage;
       // Replace '/en/' or '_en.' or '-en.' with the current language
       // Handles svg, png, jpg, etc.
       return assetPath
         .replace(/([/_-])en([._])/g, `$1${currentLanguage}$2`)
         .replace(/([/_-])en\//g, `$1${currentLanguage}/`);
     },
-    [i18n.language]
+    [i18n.resolvedLanguage]
   );
 
   return { a: getLocalizedAsset };

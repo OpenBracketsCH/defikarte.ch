@@ -21,6 +21,7 @@ import { Button } from '../../components/ui/button/Button';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
 import { Hero } from '../../components/ui/hero/Hero';
 import { Text } from '../../components/ui/text/Text';
+import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 import { Footer } from '../footer/Footer';
@@ -31,7 +32,12 @@ import { TwintButton } from './twint-button/TwintButton';
 export const Sponsors = () => {
   const { t } = useTranslation('static');
   const { a } = useLocalizedAsset();
+  const { ref: firstViewRef, onClick: handleNextViewClick } = useHandleNextViewClick();
 
+  const handleMailtoClick = () => {
+    const email = 'sponsoring@defikarte.ch';
+    window.location.href = `mailto:${email}`;
+  };
   return (
     <div>
       <Hero
@@ -40,15 +46,21 @@ export const Sponsors = () => {
         image={imageDefikarteUnterstuetzungTeaser}
         buttonText={t('InformKnow')}
         buttonIcon={iconArrowDownWhite}
+        onButtonClick={handleNextViewClick}
       />
-      <ContentWrapper paddingY="regular" variant="white" className="flex-col break-words">
+      <ContentWrapper
+        paddingY="regular"
+        variant="white"
+        className="flex-col break-words"
+        ref={firstViewRef}
+      >
         <Text className="pb-6" variant="primary" size="large" weight="bold" center>
           {t('SectionSponsorsSearchTitle')}
         </Text>
         <Text className="pb-8 whitespace-pre-line" center variant="primary" size="regular">
           {t('SectionSponsorsSearchContent')}
         </Text>
-        <Button icon={iconEmailWhite} size="large">
+        <Button icon={iconEmailWhite} size="large" onClick={handleMailtoClick}>
           sponsoring@defikarte.ch
         </Button>
       </ContentWrapper>
@@ -94,13 +106,13 @@ export const Sponsors = () => {
           <SponsorPlatinCard
             description={t('ClaimSponsorsProcamed')}
             title="Procamed AG"
-            href=""
+            href="https://www.aed.ch/"
             src={imageDefikartePartnerProcamed}
           />
           <SponsorPlatinCard
             description={t('ClaimSponsorsLifetec')}
             title="Lifetec AG"
-            href=""
+            href="https://www.lifetec.ch/"
             src={imageDefikartePartnerLifetec}
           />
         </div>
@@ -110,21 +122,24 @@ export const Sponsors = () => {
           {t('SectionSponsorsGold')}
         </Text>
         <div className="flex gap-9 justify-center flex-wrap">
-          <SponsorCard src={imageDefikartePartnerResqpro} href="" />
-          <SponsorCard src={imageDefikartePartnerByteworks} href="" />
-          <SponsorCard src={imageDefikartePartnerFirstResponder} href="" />
-          <SponsorCard src={imageDefikartePartnerSirmed} href="" />
-          <SponsorCard src={imageDefikartePartnerFurrer} href="" />
-          <SponsorCard src={imageDefikartePartnerSinoma} href="" />
-          <SponsorCard src={imageDefikartePartnerKtsg} href="" />
+          <SponsorCard src={imageDefikartePartnerResqpro} href="https://www.resqpro.ch/" />
+          <SponsorCard src={imageDefikartePartnerByteworks} href="https://www.byteworks.ch/" />
+          <SponsorCard
+            src={imageDefikartePartnerFirstResponder}
+            href="https://www.first-responder.ch/"
+          />
+          <SponsorCard src={imageDefikartePartnerSirmed} href="https://www.sirmed.ch/" />
+          <SponsorCard src={imageDefikartePartnerFurrer} href="https://www.furrerit.ch/" />
+          <SponsorCard src={imageDefikartePartnerSinoma} href="https://www.sinoma.ch/" />
+          <SponsorCard src={imageDefikartePartnerKtsg} href="https://www.sg.ch/" />
         </div>
         <Text size="large" weight="bold" className="pt-32 pb-16">
           {t('SectionSponsorsSilver')}
         </Text>
         <div className="flex gap-9 justify-center flex-wrap">
-          <SponsorCard src={imageDefikartePartnerHexagon} href="" />
-          <SponsorCard src={imageDefikartePartnerHostpoint} href="" />
-          <SponsorCard src={imageDefikartePartnerSusv} href="" />
+          <SponsorCard src={imageDefikartePartnerHexagon} href="https://www.hexagon.com/" />
+          <SponsorCard src={imageDefikartePartnerHostpoint} href="https://www.hostpoint.ch/" />
+          <SponsorCard src={imageDefikartePartnerSusv} href="https://www.susv.ch/" />
         </div>
       </ContentWrapper>
       <AppAdvertisment />

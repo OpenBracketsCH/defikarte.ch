@@ -35,4 +35,7 @@ This is the repository for the redisgn of defikarte.ch. The goal is to create a 
   - header :white_check_mark:
   - footer :white_check_mark:
   - navbar :white_check_mark:
-  - static-content pages :clock1:
+  - static-content pages :white_check_mark:
+
+* tests :clock1:
+* ui checks :clock1:

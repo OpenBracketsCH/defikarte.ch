@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 export const TwintButton = () => {
   const { i18n } = useTranslation();
 
-  const imageSrc = `https://go.twint.ch/static/img/button_dark_${i18n.language}.svg`;
+  const imageSrc = `https://go.twint.ch/static/img/button_dark_${i18n.resolvedLanguage}.svg`;
   return (
     <button
       className="w-auto h-11 rounded-md flex justify-center cursor-pointer bg-transparent items-center"

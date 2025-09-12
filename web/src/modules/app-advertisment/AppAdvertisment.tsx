@@ -43,14 +43,26 @@ export const AppAdvertisment = ({ variant = 'green' }: AppAdvertismentProps) => 
           {contentText}
         </Text>
         <div className="flex flex-row gap-2 md:gap-4 pt-10 justify-center xl:justify-start">
-          <img
-            src={variant === 'green' ? imageAppleAppStoreWhiteDe : imageAppleAppStoreGreenDe}
-            className="h-8 md:h-auto"
-          />
-          <img
-            src={variant === 'green' ? imageGooglePlayStoreWhiteDe : imageGooglePlayStoreGreenDe}
-            className="h-8 md:h-auto"
-          />
+          <a
+            href="https://apps.apple.com/us/app/defikarte-ch/id1549569525"
+            target="__blank"
+            className="cursor-pointer"
+          >
+            <img
+              src={variant === 'green' ? imageAppleAppStoreWhiteDe : imageAppleAppStoreGreenDe}
+              className="h-8 md:h-auto"
+            />
+          </a>
+          <a
+            href="https://play.google.com/store/apps/details?id=ch.defikarte.app"
+            target="__blank"
+            className="cursor-pointer"
+          >
+            <img
+              src={variant === 'green' ? imageGooglePlayStoreWhiteDe : imageGooglePlayStoreGreenDe}
+              className="h-8 md:h-auto"
+            />
+          </a>
         </div>
       </div>
       <img

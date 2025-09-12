@@ -19,12 +19,14 @@ export const Footer = () => {
             alt="defikarte.ch"
             className="w-[150px] pb-8"
           />
-          <div className="border w-fit pt-3 px-4 pb-4 rounded-lg border-primary-10-white">
-            <p className="text-primary-100-green-02 text-xs font-normal leading-[150%] pb-1">
-              {t('projectOf')}
-            </p>
-            <img src={openbracketsLogoWhite} alt="OpenBracktes.ch" />
-          </div>
+          <a href="https://www.openbrackets.ch/" target="__blank" className="cursor-pointer">
+            <div className="border w-fit pt-3 px-4 pb-4 rounded-lg border-primary-10-white">
+              <p className="text-primary-100-green-02 text-xs font-normal leading-[150%] pb-1">
+                {t('projectOf')}
+              </p>
+              <img src={openbracketsLogoWhite} alt="OpenBracktes.ch" />
+            </div>
+          </a>
         </div>
         <div className="w-full md:w-1/2 grid md:grid-cols-3 md:grid-flow-col md:grid-rows-3 gap-3 pt-10 md:pt-0">
           <a
@@ -82,8 +84,12 @@ export const Footer = () => {
         </p>
         <p className="text-xs text-primary-100-white leading-[150%]">{t('supportedBy')}</p>
         <div className="flex items-center gap-6">
-          <img src={procamedLogoWhite} alt="procamed" className="h-[25px]" />
-          <img src={lifetectLogoWhite} alt="lifetec one" className="h-[25px]" />
+          <a href="https://www.aed.ch/" target="__blank" className="cursor-pointer">
+            <img src={procamedLogoWhite} alt="procamed" className="h-[25px]" />
+          </a>
+          <a href="https://www.lifetec.ch/" target="__blank" className="cursor-pointer">
+            <img src={lifetectLogoWhite} alt="lifetec one" className="h-[25px]" />
+          </a>
         </div>
       </div>
       <p className="text-[8px] text-primary-100-white leading-[150%] me-auto md:hidden">

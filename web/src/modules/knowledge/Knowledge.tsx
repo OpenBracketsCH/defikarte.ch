@@ -13,14 +13,16 @@ import imageDefirbillationQuer02 from '../../assets/landingpages/wissen/wissen-d
 import imageDefirbillationQuer03 from '../../assets/landingpages/wissen/wissen-defibrillation-quer-03.jpg';
 import { Button } from '../../components/ui/button/Button';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
+import { Hero } from '../../components/ui/hero/Hero';
 import { Text } from '../../components/ui/text/Text';
+import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 import { Footer } from '../footer/Footer';
-import { Hero } from '../../components/ui/hero/Hero';
 
 export const Knowledge = () => {
   const { t } = useTranslation('static');
   const isMediumOnly = useMediaQuery({ maxWidth: 1024, minWidth: 768 });
+  const { ref: firstViewRef, onClick: handleNextViewClick } = useHandleNextViewClick();
 
   return (
     <div>
@@ -30,8 +32,14 @@ export const Knowledge = () => {
         buttonText={t('InformKnow')}
         buttonIcon={iconArrowDownWhite}
         image={imageDefikarteWissenTeaser}
+        onButtonClick={handleNextViewClick}
       />
-      <ContentWrapper variant="beige" paddingY="large" className="flex-col lg:flex-row">
+      <ContentWrapper
+        variant="beige"
+        paddingY="large"
+        className="flex-col lg:flex-row"
+        ref={firstViewRef}
+      >
         <div>
           <Text size="large" weight="bold" className="pb-6">
             {t('SectionKnowledgePartOneTitle')}
@@ -108,7 +116,12 @@ export const Knowledge = () => {
             <Text size="small" weight="light" className="pb-6">
               {t('SectionKnowledgeInfoboxContent')}
             </Text>
-            <Button icon={iconExternalLinkWhite} size="large" className="w-fit">
+            <Button
+              icon={iconExternalLinkWhite}
+              size="large"
+              className="w-fit"
+              onClick={() => open('https://www.aed.ch/kontakt/Erste-Hilfeset.php', '__blank')}
+            >
               {t('Order')}
             </Button>
           </div>

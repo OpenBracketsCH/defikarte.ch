@@ -7,6 +7,11 @@ import { Text } from '../../components/ui/text/Text';
 
 export const Privacy = () => {
   const { t } = useTranslation('static');
+  const handleMailtoClick = () => {
+    const email = 'info@defikarte.ch';
+    window.location.href = `mailto:${email}`;
+  };
+
   return (
     <div>
       <Hero
@@ -19,6 +24,7 @@ export const Privacy = () => {
         ]}
         buttonText="info@defikarte.ch"
         buttonIcon={iconEmailWhite}
+        onButtonClick={handleMailtoClick}
       />
       <ContentWrapper variant="beige" paddingY="regular" className="flex-col items-start">
         <Text size="medium" weight="bold" className="pb-3 lg:max-w-full">
@@ -84,7 +90,11 @@ export const Privacy = () => {
         <Text>Ottikon, 05.08.2023</Text>
         <Text>
           Quelle:{' '}
-          <a href="" target="__blank" className="text-primary-100-green-03 cursor-pointer">
+          <a
+            href="https://www.swissanwalt.ch/"
+            target="__blank"
+            className="text-primary-100-green-03 cursor-pointer"
+          >
             Swiss Anwalt
           </a>
         </Text>

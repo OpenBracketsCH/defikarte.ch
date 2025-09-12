@@ -8,9 +8,17 @@ type HeroProps = {
   image?: string;
   buttonText: string;
   buttonIcon: string;
+  onButtonClick: () => void;
 };
 
-export const Hero = ({ title, description, image, buttonText, buttonIcon }: HeroProps) => {
+export const Hero = ({
+  title,
+  description,
+  image,
+  buttonText,
+  buttonIcon,
+  onButtonClick,
+}: HeroProps) => {
   return (
     <>
       <ContentWrapper variant="green" paddingY="regular" className="flex-col 2xl:w-[1200px]">
@@ -31,7 +39,7 @@ export const Hero = ({ title, description, image, buttonText, buttonIcon }: Hero
             </Text>
           ))}
         </div>
-        <Button icon={buttonIcon} size="large">
+        <Button icon={buttonIcon} size="large" onClick={onButtonClick}>
           {buttonText}
         </Button>
         {image && <img src={image} className="mt-20 rounded-2xl" />}

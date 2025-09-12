@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import illustrationFeaturesCaptureEn from '../../assets/landingpages/home/illustration-features-capture-en.png';
 import illustrationFeaturesCorrectEn from '../../assets/landingpages/home/illustration-features-correct-en.png';
@@ -6,6 +5,7 @@ import illustrationFeaturesFastEn from '../../assets/landingpages/home/illustrat
 import { Accordion } from '../../components/ui/accordion/Accordion';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
 import { Text } from '../../components/ui/text/Text';
+import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 import { Footer } from '../footer/Footer';
@@ -15,13 +15,7 @@ import { MapFooter } from './map-footer/MapFooter';
 export const Home = () => {
   const { t } = useTranslation('static');
   const { a } = useLocalizedAsset();
-  const firstViewRef = useRef<HTMLDivElement>(null);
-
-  const handleNextViewClick = () => {
-    if (firstViewRef.current) {
-      firstViewRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const { ref: firstViewRef, onClick: handleNextViewClick } = useHandleNextViewClick();
 
   return (
     <>

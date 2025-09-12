@@ -11,6 +11,7 @@ import { Button } from '../../components/ui/button/Button';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
 import { Hero } from '../../components/ui/hero/Hero';
 import { Text } from '../../components/ui/text/Text';
+import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 import { Footer } from '../footer/Footer';
@@ -23,6 +24,7 @@ type InfoCardProps = {
 export const Project = () => {
   const { t } = useTranslation('static');
   const { a } = useLocalizedAsset();
+  const { ref: firstViewRef, onClick: handleNextViewClick } = useHandleNextViewClick();
 
   const InfoCard = ({ title, description }: InfoCardProps) => (
     <div className="p-8 bg-primary-100-white rounded-2xl h-full">
@@ -43,10 +45,12 @@ export const Project = () => {
         buttonText={t('InformKnow')}
         buttonIcon={iconArrowDownWhite}
         image={a(imageDefikarteProjectTeaserEn)}
+        onButtonClick={handleNextViewClick}
       />
       <ContentWrapper
         variant="beige"
         className="py-16 md:py-16 grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 gap-6"
+        ref={firstViewRef}
       >
         <InfoCard title="15'0000+" description={t('SectionProjectFactOne')} />
         <InfoCard title="2019" description={t('SectionProjectFactTwo')} />
@@ -115,7 +119,11 @@ export const Project = () => {
         <Text variant="white" size="regular" weight="light" center className="pb-10">
           {t('SectionProjectOpenbracketsContent')}
         </Text>
-        <Button variant="white" icon={iconExternalLinkMiddleGreen}>
+        <Button
+          variant="white"
+          icon={iconExternalLinkMiddleGreen}
+          onClick={() => open('https://www.openbrackets.ch', '__blank')}
+        >
           OpenBrackets.ch
         </Button>
       </ContentWrapper>
