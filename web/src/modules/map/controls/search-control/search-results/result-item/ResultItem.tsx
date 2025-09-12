@@ -37,7 +37,7 @@ export const ResultItem = (props: Props) => {
   return (
     <div
       key={id}
-      className="flex first:pt-3 py-1 last:pt-1 last:pb-4 px-3 md:px-4 items-center last:rounded-b-[24px] last:md:rounded-b-[30px] hover:bg-green-custom bg-primary-100-white cursor-pointer"
+      className="flex py-1 first:pt-3 last:pb-4 px-3 md:px-4 items-center last:rounded-b-[24px] last:md:rounded-b-[30px] hover:bg-green-custom bg-primary-100-white cursor-pointer"
       onClick={() => props.onClick(item)}
     >
       <img src={icon} alt="searc-result" className="w-6 h-6" />
