@@ -43,6 +43,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             echo ${{ vars.STATIC_SITE_DEPLOYMENT_PATH }}
+            rm -rf ${{ vars.STATIC_SITE_DEPLOYMENT_PATH }}/*
 
       - name: Deploy artifacts to server
         uses: appleboy/scp-action@v0.1.7
