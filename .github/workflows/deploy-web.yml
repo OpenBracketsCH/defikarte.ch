@@ -5,14 +5,17 @@ on:
     branches:
       - main
       - dev
+    paths:
+      - "web/**"
 
   workflow_dispatch:
 
-env:
-  DEPLYOMENT_PATH: "${{ github.ref == 'refs/heads/main' && './www/production.defikarte.ch' || './www/staging.defikarte.ch' }}"
-
 jobs:
-  build:
+  build-and-deploy:
+    environment: "${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}"
+    env:
+      VITE_BACKEND_API: ${{ vars.BACKEND_API_URL }}
+      VITE_BACKEND_API_KEY: ${{ secrets.BACKEND_API_KEY }}
     runs-on: ubuntu-latest
     steps:
       - name: Check Out Code
@@ -39,10 +42,9 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            echo ${{ env.DEPLYOMENT_PATH }}
-            rm -rf ${{ env.DEPLYOMENT_PATH }}/*
+            echo ${{ vars.STATIC_SITE_DEPLOYMENT_PATH }}
 
-      - name: Copy build artifacts to server
+      - name: Deploy artifacts to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -50,5 +52,5 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.SERVER_PORT }}
           source: ./web/dist/
-          target: ${{ env.DEPLYOMENT_PATH }}
+          target: ${{ vars.STATIC_SITE_DEPLOYMENT_PATH }}
           strip_components: 3
