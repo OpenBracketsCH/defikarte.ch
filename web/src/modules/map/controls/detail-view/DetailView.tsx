@@ -106,7 +106,7 @@ export const DetailView = ({
         className="px-4 py-3 flex justify-between w-full items-start border-b border-primary-05-green-05 cursor-pointer"
         onClick={() => onCenterFeature()}
       >
-        <p className="text-wrap text-sm font-normal leading-[150%] text-primary-100-green-04 w-full md:w-60">
+        <p className="text-wrap text-sm font-normal leading-[150%] text-primary-100-green-04 w-full md:w-60 break-words">
           {name}
         </p>
         <IconButton
