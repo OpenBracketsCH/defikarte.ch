@@ -4,7 +4,8 @@ import imageAppleAppStoreWhiteDe from '../../assets/landingpages/apple-app-store
 import imageGooglePlayStoreGreenDe from '../../assets/landingpages/google-play-store-green-de.svg';
 import imageGooglePlayStoreWhiteDe from '../../assets/landingpages/google-play-store-white-de.svg';
 import imageAppScreenBlankEn from '../../assets/landingpages/home/app-screen-blank-en.png';
-import imageAppScreenShadowEn from '../../assets/landingpages/home/app-screen-shadow-en.png';
+// Todo: To use this image, I need more specifications or another image
+// import imageAppScreenShadowEn from '../../assets/landingpages/home/app-screen-shadow-en.png';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
 import { Text } from '../../components/ui/text/Text';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
@@ -66,8 +67,8 @@ export const AppAdvertisment = ({ variant = 'green' }: AppAdvertismentProps) => 
         </div>
       </div>
       <img
-        src={a(variant === 'green' ? imageAppScreenShadowEn : imageAppScreenBlankEn)}
-        className="max-w-[307px] md:max-w-[469px] xl:max-w-[570px]"
+        src={a(variant === 'green' ? imageAppScreenBlankEn : imageAppScreenBlankEn)}
+        className="max-w-[307px] md:max-w-[469px] xl:max-w-[570px] pt-[52px] ms-[45px] -me-8"
       />
     </ContentWrapper>
   );
