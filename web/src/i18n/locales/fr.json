@@ -103,5 +103,7 @@
   "operatorPhoneTooltipContent": "Le numéro de téléphone de l'exploitant afin de pouvoir le joindre facilement.",
   "accessTooltipTitle": "Accès",
   "accessTooltipContent": "Le défibrillateur est-il accessible au public ou uniquement « privé », par exemple par les employés ?",
-  "more": "Plus"
+  "more": "Plus",
+  "notFound": "La page a été introuvable.",
+  "goHome": "Aller à la page d'accueil"
 }

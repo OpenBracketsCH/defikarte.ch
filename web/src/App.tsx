@@ -5,6 +5,7 @@ import { Route, Routes, useLocation } from 'react-router';
 import { SuspenseWrapper } from './components/ui/suspense-wrapper/SupsenseWrapper';
 import { Home } from './modules/home/Home';
 import { Navbar } from './modules/nav-bar/NavBar';
+import { NotFound } from './modules/not-found/NotFound';
 
 const Knowledge = lazy(() =>
   import('./modules/knowledge/Knowledge').then(module => ({ default: module.Knowledge }))
@@ -61,6 +62,7 @@ const App: React.FC = () => {
       <Navbar />
       <ScrollToTop />
       <Routes>
+        <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route
           path="/knowledge"

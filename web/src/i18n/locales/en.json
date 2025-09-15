@@ -103,5 +103,7 @@
   "operatorPhoneTooltipContent": "The operator's phone number so they can be reached as easily as possible.",
   "accessTooltipTitle": "Access",
   "accessTooltipContent": "Is the defibrillator publicly accessible or only “private,” e.g., for employees?",
-  "more": "More"
+  "more": "More",
+  "notFound": "The page was not found.",
+  "goHome": "Go to homepage"
 }

@@ -103,5 +103,7 @@
   "operatorPhoneTooltipContent": "Die Telefonnummer des Betreibers um ihn möglichst einfach zu erreichen.",
   "accessTooltipTitle": "Zugang",
   "accessTooltipContent": "Ist der Defibrillator öffentlich zugänglich oder nur „privat“ wie z.B durch Mitarbeitende.",
-  "more": "Mehr"
+  "more": "Mehr",
+  "notFound": "Die Seite wurde nicht gefunden.",
+  "goHome": "Gehe zur Startseite"
 }
