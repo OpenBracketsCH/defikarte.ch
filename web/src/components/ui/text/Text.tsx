@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-interface TextProps extends React.ParamHTMLAttributes<HTMLParagraphElement> {
+interface TextProps extends React.ParamHTMLAttributes<HTMLParagraphElement | HTMLHeadingElement> {
   size?: 'small' | 'regular' | 'medium' | 'large' | 'x-large';
   weight?: 'light' | 'regular' | 'bold';
   variant?: 'primary' | 'tint' | 'white';
@@ -16,13 +16,27 @@ export const Text = ({
   center = false,
   ...props
 }: TextProps) => {
+  const T = (props: React.ParamHTMLAttributes<HTMLParagraphElement | HTMLHeadElement>) => {
+    switch (size) {
+      case 'x-large':
+        return <h1 {...props}></h1>;
+      case 'large':
+        return <h2 {...props}></h2>;
+      case 'medium':
+        return <h3 {...props}></h3>;
+      case 'regular':
+      case 'small':
+      default:
+        return <p {...props}></p>;
+    }
+  };
+
   const classNames = cn(
     'max-w-full lg:max-w-[700px]',
     {
-      // todo: font size must be adjusted to mobile devices
-      'text-base': size === 'small',
-      'text-lg md:text-xl': size === 'regular',
-      'text-[26px]': size === 'medium',
+      'text-sm md:text-base': size === 'small',
+      'text-base md:text-xl': size === 'regular',
+      'text-[22px] md:text-[26px]': size === 'medium',
       'text-[28px] md:text-[34px]': size === 'large',
       'text-[32px] text-[44px]': size === 'x-large',
       'font-light': weight === 'light',
@@ -39,8 +53,8 @@ export const Text = ({
   );
 
   return (
-    <p className={classNames} {...props}>
+    <T className={classNames} {...props}>
       {children}
-    </p>
+    </T>
   );
 };
