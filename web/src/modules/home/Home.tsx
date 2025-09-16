@@ -24,7 +24,7 @@ export const Home = () => {
         <MapFooter onNextViewClick={handleNextViewClick} />
       </div>
       <div ref={firstViewRef}>
-        <ContentWrapper paddingY="small" className="flex-col" variant="beige">
+        <ContentWrapper paddingY="small" className="flex-col pb-28 md:pb-28" variant="beige">
           <Text size="x-large" weight="bold" center className="pb-6">
             {t('SectionHomeTitle')}
           </Text>
