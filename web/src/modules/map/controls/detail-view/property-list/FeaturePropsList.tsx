@@ -40,14 +40,14 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
         <ItemProperty
           icon={isOpen ? iconAccessCircleGreen : iconAccessCircleGrey}
           title={t('access')}
-          value={props.access}
+          value={t(props.access)}
         />
       )}
       {props.indoor && (
         <ItemProperty
           icon={isOpen ? iconHouseCircleGreen : iconHouseCircleGrey}
           title={t('isIndoor')}
-          value={props.indoor}
+          value={t(props.indoor)}
         />
       )}
       {props.level && (
