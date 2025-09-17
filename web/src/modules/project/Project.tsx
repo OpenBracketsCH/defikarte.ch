@@ -52,10 +52,10 @@ export const Project = () => {
         className="py-16 md:py-16 grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 gap-6"
         ref={firstViewRef}
       >
-        <InfoCard title="15'0000+" description={t('SectionProjectFactOne')} />
-        <InfoCard title="2019" description={t('SectionProjectFactTwo')} />
+        <InfoCard title="15'500+" description={t('SectionProjectFactOne')} />
+        <InfoCard title="2020" description={t('SectionProjectFactTwo')} />
         <InfoCard title="12" description={t('SectionProjectFactThree')} />
-        <InfoCard title="50+" description={t('SectionProjectFactFour')} />
+        <InfoCard title="35+" description={t('SectionProjectFactFour')} />
       </ContentWrapper>
       <ContentWrapper
         variant="white"
