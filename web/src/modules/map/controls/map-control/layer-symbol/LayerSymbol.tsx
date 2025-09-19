@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import { HTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 
-interface LayerSymbolProps extends HTMLAttributes<HTMLButtonElement> {
+interface LayerSymbolProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active: boolean;
   img: string;
   label: string;

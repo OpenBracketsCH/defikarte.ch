@@ -23,8 +23,8 @@ export const MapControl = (props: Props) => {
   const { t } = useTranslation();
   const [isActive, setIsActive] = useState(false);
 
-  const setActiveBaseLayer = (id: string) => {
-    props.map?.setActiveBaseLayer(id);
+  const setActiveBaseLayer = async (id: string) => {
+    await props.map?.setActiveBaseLayer(id);
     props.setActiveBaseLayer(id);
   };
 
