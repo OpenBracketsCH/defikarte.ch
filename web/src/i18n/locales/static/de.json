@@ -91,5 +91,7 @@
   "SectionImpressumPartNineTitle": "Änderungen",
   "SectionImpressumPartNineContent": "Wir können diese Datenschutzerklärung jederzeit ohne Vorankündigung anpassen. Es gilt die jeweils aktuelle, auf unserer Website publizierte Fassung. Soweit die Datenschutzerklärung Teil einer Vereinbarung mit Ihnen ist, werden wir Sie im Falle einer Aktualisierung über die Änderung per E-Mail oder auf andere geeignete Weise informieren.",
   "SectionImpressumPartTenTitle": "Fragen an den Datenschutzbeauftragten",
-  "SectionImpressumPartTenContent": "Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine E-Mail oder wenden Sie sich direkt an die für den Datenschutz zu Beginn der Datenschutzerklärung aufgeführten, verantwortlichen Person in unserer Organisation."
+  "SectionImpressumPartTenContent": "Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine E-Mail oder wenden Sie sich direkt an die für den Datenschutz zu Beginn der Datenschutzerklärung aufgeführten, verantwortlichen Person in unserer Organisation.",
+  "OrderKnifeSubject": "Bestellung Gönner-Sackmesser",
+  "OrderKnifeBody": "Name:%0D%0AVorname:%0D%0AStrasse:%0D%0APLZ Ort:%0D%0AE-Mail-Adresse:%0D%0A%0D%0ABezahlt via Twint am: "
 }

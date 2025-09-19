@@ -36,6 +36,14 @@ export const Sponsors = () => {
     const email = 'sponsoring@defikarte.ch';
     window.location.href = `mailto:${email}`;
   };
+
+  const handleOrderKnifeClick = () => {
+    const email = 'orders@defikarte.ch';
+    const subject = t('OrderKnifeSubject');
+    const body = t('OrderKnifeBody');
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div>
       <Hero
@@ -72,7 +80,7 @@ export const Sponsors = () => {
             <Text size="regular" className="pb-8">
               {t('SectionSponsorsKnifeContent')}
             </Text>
-            <Button icon={iconExternalLinkWhite} size="large">
+            <Button icon={iconExternalLinkWhite} size="large" onClick={handleOrderKnifeClick}>
               {t('Order')}
             </Button>
           </div>
