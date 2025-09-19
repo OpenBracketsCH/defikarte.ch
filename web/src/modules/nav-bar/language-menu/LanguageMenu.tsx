@@ -11,9 +11,9 @@ type Language = {
 
 const languages: Language[] = [
   { code: 'de', label: 'Deutsch' },
+  { code: 'en', label: 'English' },
   { code: 'fr', label: 'Français' },
   { code: 'it', label: 'Italiano' },
-  { code: 'en', label: 'English' },
 ];
 
 type LanguageMenuProps = {
