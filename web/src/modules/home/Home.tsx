@@ -1,7 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import illustrationFeaturesCaptureEn from '../../assets/landingpages/home/illustration-features-capture-en.png';
-import illustrationFeaturesCorrectEn from '../../assets/landingpages/home/illustration-features-correct-en.png';
-import illustrationFeaturesFastEn from '../../assets/landingpages/home/illustration-features-fast-en.png';
 import { Accordion } from '../../components/ui/accordion/Accordion';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
 import { Text } from '../../components/ui/text/Text';
@@ -32,7 +29,7 @@ export const Home = () => {
           </Text>
           <div className="pt-20 flex w-full flex-col lg:flex-row justify-center items-center lg:items-baseline lg:justify-between gap-20 lg:gap-0">
             <div className="w-[300px] md:w-[288px] lg:w-[232px] xl:w-[300px]">
-              <img src={a(illustrationFeaturesFastEn)} />
+              <img src={a('illustrationFeaturesFast')} />
               <Text size="medium" weight="bold" className="pt-10 pb-4 text-center lg:text-left">
                 {t('SectionHomeClaimOneTitle')}
               </Text>
@@ -41,7 +38,7 @@ export const Home = () => {
               </Text>
             </div>
             <div className="w-[300px] md:w-[288px] lg:w-[232px] xl:w-[300px]">
-              <img src={a(illustrationFeaturesCorrectEn)} />
+              <img src={a('illustrationFeaturesCorrect')} />
               <Text size="medium" weight="bold" className="pt-10 pb-4 text-center lg:text-left">
                 {t('SectionHomeClaimTwoTitle')}
               </Text>
@@ -50,7 +47,7 @@ export const Home = () => {
               </Text>
             </div>
             <div className="w-[300px] md:w-[288px] lg:w-[232px] xl:w-[300px]">
-              <img src={a(illustrationFeaturesCaptureEn)} />
+              <img src={a('illustrationFeaturesCapture')} />
               <Text size="medium" weight="bold" className="pt-10 pb-4 text-center lg:text-left">
                 {t('SectionHomeClaimThreeTitle')}
               </Text>

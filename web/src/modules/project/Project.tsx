@@ -2,10 +2,7 @@ import { useTranslation } from 'react-i18next';
 import iconExternalLinkMiddleGreen from '../../assets/icons/icon-external-link-middle-green.svg';
 import iconArrowDownWhite from '../../assets/landingpages/icon-arrow-down-white.svg';
 import imageDefikartePortraitChristian from '../../assets/landingpages/projekt/defikarte-portrait-christian.jpg';
-import imageDefikarteProjectTeaserEn from '../../assets/landingpages/projekt/defikarte-projekt-teaser-en.jpg';
 import iconZitat from '../../assets/landingpages/projekt/icon-zitat.svg';
-import imageIllustrationFeaturesEmergencyEn from '../../assets/landingpages/projekt/illustration-features-emergency-en.png';
-import imageIllustrationFeaturesFindEn from '../../assets/landingpages/projekt/illustration-features-find-en.png';
 import imageOpenBracketLogoWhite from '../../assets/navigation/openbrackets-logo-white.svg';
 import { Button } from '../../components/ui/button/Button';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
@@ -43,7 +40,7 @@ export const Project = () => {
         description={[t('SectionProjectContent')]}
         buttonText={t('InformKnow')}
         buttonIcon={iconArrowDownWhite}
-        image={a(imageDefikarteProjectTeaserEn)}
+        image={a('defikarteProjektTeaser')}
         onButtonClick={handleNextViewClick}
       />
       <ContentWrapper
@@ -86,7 +83,7 @@ export const Project = () => {
       <ContentWrapper variant="beige" paddingY="regular" className="flex-col gap-26">
         <div className="flex flex-col lg:flex-row gap-10 xl:gap-20">
           <div className="flex justify-center">
-            <img src={imageIllustrationFeaturesFindEn} className="w-72 md:w-[380px] lg:w-[460px]" />
+            <img src={a('illustrationFeaturesFind')} className="w-72 md:w-[380px] lg:w-[460px]" />
           </div>
           <div className="w-auto md:w-[380px] lg:w-auto mx-auto lg:mx-0 flex flex-col justify-center">
             <Text weight="bold" size="large" className="pb-4">
@@ -98,7 +95,7 @@ export const Project = () => {
         <div className="flex flex-col lg:flex-row gap-10 xl:gap-20">
           <div className="flex justify-center">
             <img
-              src={imageIllustrationFeaturesEmergencyEn}
+              src={a('illustrationFeaturesEmergency')}
               className="w-72 md:w-[380px] lg:w-[460px]"
             />
           </div>
