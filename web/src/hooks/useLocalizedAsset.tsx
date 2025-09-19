@@ -14,10 +14,17 @@ export const useLocalizedAsset = () => {
       const currentLanguage = i18n.resolvedLanguage;
       // Replace '/en/' or '_en.' or '-en.' with the current language
       // Handles svg, png, jpg, etc.
-      console.log('getLocalizedAsset currentLanguage', currentLanguage);
-      return assetPath
+      const localizedAssetPath = assetPath
         .replace(/([/_-])en([._])/g, `$1${currentLanguage}$2`)
         .replace(/([/_-])en\//g, `$1${currentLanguage}/`);
+
+      console.log(
+        'getLocalizedAsset currentLanguage',
+        currentLanguage,
+        assetPath,
+        localizedAssetPath
+      );
+      return localizedAssetPath;
     },
     [i18n.resolvedLanguage]
   );
