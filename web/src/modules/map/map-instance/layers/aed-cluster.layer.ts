@@ -41,7 +41,7 @@ export const createAedClusterLayers = (baseId: string, source: string): LayerSpe
     source: source,
     layout: {
       'text-field': ['format', ['get', 'point_count'], { 'font-scale': 1 }],
-      'text-font': ['Frutiger Neue Condensed Regular'],
+      'text-font': ['Open Sans'],
       'text-size': 15,
       'text-pitch-alignment': 'map',
       'text-allow-overlap': true,

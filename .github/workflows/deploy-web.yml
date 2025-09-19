@@ -16,6 +16,7 @@ jobs:
     env:
       VITE_BACKEND_API: ${{ vars.BACKEND_API_URL }}
       VITE_BACKEND_API_KEY: ${{ secrets.BACKEND_API_KEY }}
+      VITE_MAPTILER_API_KEY: ${{ secrets.MAPTILER_API_KEY }}
     runs-on: ubuntu-latest
     steps:
       - name: Check Out Code

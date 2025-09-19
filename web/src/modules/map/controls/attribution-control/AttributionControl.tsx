@@ -5,6 +5,7 @@ type Props = {
 };
 
 export const AttributionControl = ({ activeBaseLayer }: Props) => {
+  const isMaptilerLayerActive = activeBaseLayer === MapConfiguration.osmVectorBasemapId;
   const isSwisstopoLayerActive = activeBaseLayer === MapConfiguration.swisstopoImageryBaseMapId;
   return (
     <div className="z-30 absolute bottom-0 left-4 px-1 bg-primary-80-white rounded-t-sm flex items-center">
@@ -24,6 +25,18 @@ export const AttributionControl = ({ activeBaseLayer }: Props) => {
         >
           © OpenStreetMap contributors
         </a>
+        {isMaptilerLayerActive && (
+          <>
+            <span className="text-[8px] md:text-[10px] mx-1">|</span>
+            <a
+              href="https://www.maptiler.com/copyright/"
+              target="_blank"
+              className="text-[8px] md:text-[10px] leading-[150%]"
+            >
+              © MapTiler
+            </a>
+          </>
+        )}
         {isSwisstopoLayerActive && (
           <>
             <span className="text-[8px] md:text-[10px] mx-1">|</span>
