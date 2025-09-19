@@ -14,7 +14,6 @@ import { Text } from '../../components/ui/text/Text';
 import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
-import { Footer } from '../footer/Footer';
 
 type InfoCardProps = {
   title: string;
@@ -127,7 +126,6 @@ export const Project = () => {
           OpenBrackets.ch
         </Button>
       </ContentWrapper>
-      <Footer />
     </div>
   );
 };

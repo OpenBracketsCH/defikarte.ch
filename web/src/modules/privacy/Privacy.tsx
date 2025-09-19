@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { Hero } from '../../components/ui/hero/Hero';
-import { Footer } from '../footer/Footer';
 import iconEmailWhite from '../../assets/landingpages/icon-email-white.svg';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
+import { Hero } from '../../components/ui/hero/Hero';
 import { Text } from '../../components/ui/text/Text';
 
 export const Privacy = () => {
@@ -99,7 +98,6 @@ export const Privacy = () => {
           </a>
         </Text>
       </ContentWrapper>
-      <Footer />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import { useMediaQuery } from 'react-responsive';
 import { Route, Routes, useLocation } from 'react-router';
 import { SuspenseWrapper } from './components/ui/suspense-wrapper/SupsenseWrapper';
+import { Footer } from './modules/footer/Footer';
 import { Home } from './modules/home/Home';
 import { Navbar } from './modules/nav-bar/NavBar';
 import { NotFound } from './modules/not-found/NotFound';
@@ -97,6 +98,7 @@ const App: React.FC = () => {
           }
         />
       </Routes>
+      <Footer />
     </div>
   );
 };

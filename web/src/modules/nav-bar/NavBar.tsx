@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { NavLink } from 'react-router';
 import logoWhite from '../../assets/navigation/defikarte-logo.svg';
 import iconBurgerWhite from '../../assets/navigation/icon-burger-white.svg';
@@ -13,6 +14,7 @@ import { LanguageMenu } from './language-menu/LanguageMenu';
 export const Navbar = () => {
   const { t } = useTranslation();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const isNavbarMobile = useMediaQuery({ maxWidth: 1024 });
 
   useEffect(() => {
     document.body.style.overflow = isMobileOpen ? 'hidden' : 'auto';
@@ -22,6 +24,12 @@ export const Navbar = () => {
       document.body.style.overflow = 'auto';
     };
   }, [isMobileOpen]);
+
+  useEffect(() => {
+    if (!isNavbarMobile) {
+      setIsMobileOpen(false);
+    }
+  }, [isNavbarMobile]);
 
   const EmergencyText = () => (
     <div className="leading-[150%]">
@@ -34,10 +42,11 @@ export const Navbar = () => {
     <>
       <nav
         className={cn(
+          'sticky top-0',
           'flex flex-col lg:flex-row items-center justify-between bg-primary-100-green-04 py-3 px-4 lg:px-6 text-white lg:h-16',
           {
             'h-[52px]': !isMobileOpen,
-            'z-50 absolute flex-col top-0 left-0 right-0 bottom-0 justify-start overflow-auto':
+            'z-50 absolute flex-col top-0 left-0 right-0 bottom-0 justify-start overflow-auto h-screen':
               isMobileOpen,
           }
         )}

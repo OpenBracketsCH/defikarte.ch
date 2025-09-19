@@ -8,7 +8,6 @@ import { Text } from '../../components/ui/text/Text';
 import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
-import { Footer } from '../footer/Footer';
 import { Map } from '../map/Map';
 import { MapFooter } from './map-footer/MapFooter';
 
@@ -75,7 +74,6 @@ export const Home = () => {
             <Accordion title={t('SectionFAQQuestionFive')} content={t('SectionFAQAnswerFive')} />
           </div>
         </ContentWrapper>
-        <Footer />
       </div>
     </>
   );

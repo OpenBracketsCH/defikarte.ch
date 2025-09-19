@@ -24,7 +24,6 @@ import { Text } from '../../components/ui/text/Text';
 import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
-import { Footer } from '../footer/Footer';
 import { SponsorCard } from './sponsor-card/SponsorCard';
 import { SponsorPlatinCard } from './sponsor-platin-card/SponsorPlatinCard';
 import { TwintButton } from './twint-button/TwintButton';
@@ -143,7 +142,6 @@ export const Sponsors = () => {
         </div>
       </ContentWrapper>
       <AppAdvertisment />
-      <Footer />
     </div>
   );
 };

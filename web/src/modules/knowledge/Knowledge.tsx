@@ -17,7 +17,6 @@ import { Hero } from '../../components/ui/hero/Hero';
 import { Text } from '../../components/ui/text/Text';
 import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
-import { Footer } from '../footer/Footer';
 
 export const Knowledge = () => {
   const { t } = useTranslation('static');
@@ -140,7 +139,6 @@ export const Knowledge = () => {
         </div>
       </ContentWrapper>
       <AppAdvertisment />
-      <Footer />
     </div>
   );
 };
