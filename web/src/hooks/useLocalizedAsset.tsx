@@ -16,7 +16,8 @@ export const useLocalizedAsset = () => {
       // Handles svg, png, jpg, etc.
       const localizedAssetPath = assetPath
         .replace(/([/_-])en([._])/g, `$1${currentLanguage}$2`)
-        .replace(/([/_-])en\//g, `$1${currentLanguage}/`);
+        .replace(/([/_-])en\//g, `$1${currentLanguage}/`)
+        .replace(/-en-(?=[^-]*$)/, `-${currentLanguage}-`);
 
       console.log(
         'getLocalizedAsset currentLanguage',
