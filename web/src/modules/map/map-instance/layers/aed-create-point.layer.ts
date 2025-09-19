@@ -38,6 +38,7 @@ export const createAedCreateMarkerLayers = (
       'circle-radius': 30,
       'circle-opacity': 0.6,
       'circle-translate': [0, -18], // Adjust circle position to be below the icon
+      'circle-translate-anchor': 'viewport',
     },
   };
 
