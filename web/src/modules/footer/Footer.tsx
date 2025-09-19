@@ -49,16 +49,9 @@ export const Footer = () => {
           <NavLink
             key="legal"
             to="/privacy"
-            className="text-primary-100-white font-normal leading-[150%] text-sm cursor-pointer"
+            className="text-primary-100-white font-normal leading-[150%] text-sm cursor-pointer row-span-2"
           >
             {t('legal')}
-          </NavLink>
-          <NavLink
-            key="privacy"
-            to="/privacy"
-            className="text-primary-100-white font-normal leading-[150%] text-sm cursor-pointer"
-          >
-            {t('privacy')}
           </NavLink>
           <a
             href="https://github.com/OpenBracketsCH/defikarte.ch"
