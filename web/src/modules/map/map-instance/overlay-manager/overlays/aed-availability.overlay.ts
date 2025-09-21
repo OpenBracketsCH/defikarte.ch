@@ -19,6 +19,7 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy, Refresha
   private aedPointLayers: LayerSpecification[] = [];
   private aedClusterLayers: LayerSpecification[] = [];
   private map: Map;
+  private abortController: AbortController | null = null;
 
   constructor(map: Map) {
     this.map = map;
@@ -35,8 +36,12 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy, Refresha
       return source.serialize();
     }
 
+    // Abort any previous request
+    this.abortOngoingRequest();
+    this.abortController = new AbortController();
+
     // takes long, but on the backend I am not able to filter by availability
-    const data = await requestAedDataByCurrentAvailability();
+    const data = await requestAedDataByCurrentAvailability({ signal: this.abortController.signal });
     return createAedSource(data);
   }
 
@@ -47,7 +52,11 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy, Refresha
       return;
     }
 
-    const data = await requestAedDataByCurrentAvailability();
+    // Abort any previous request
+    this.abortOngoingRequest();
+    this.abortController = new AbortController();
+
+    const data = await requestAedDataByCurrentAvailability({ signal: this.abortController.signal });
     source.setData(data);
   }
 
@@ -96,6 +105,9 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy, Refresha
   }
 
   cleanup(map: Map) {
+    // Abort any ongoing request
+    this.abortOngoingRequest();
+
     const layers = [...this.aedPointLayers, ...this.aedClusterLayers];
     layers.forEach(layer => {
       if (map.getLayer(layer.id)) {
@@ -109,5 +121,12 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy, Refresha
     this.interactions.forEach(interaction => {
       interaction.off();
     });
+  }
+
+  private abortOngoingRequest() {
+    if (this.abortController) {
+      this.abortController.abort();
+      this.abortController = null;
+    }
   }
 }

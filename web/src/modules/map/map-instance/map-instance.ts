@@ -56,17 +56,17 @@ export class MapInstance {
       attributionControl: false,
     });
 
-    this.overlayManager.registerOverlay(OverlayType.aed, new AedOverlayStrategy());
+    this.overlayManager.registerOverlay(OverlayType.aedAll, new AedOverlayStrategy());
     this.overlayManager.registerOverlay(
-      OverlayType.aedRestricted,
+      OverlayType.aedWithOpeningHours,
       new AedOverlayStrategy(restrictedFilterOverride)
     );
     this.overlayManager.registerOverlay(
-      OverlayType.aed247,
+      OverlayType.aedAlwaysAvailable,
       new AedOverlayStrategy(alwaysAvailableFilterOverride)
     );
     this.overlayManager.registerOverlay(
-      OverlayType.aedAvailability,
+      OverlayType.aedByCurrentAvailability,
       new AedAvailabilityOverlayStrategy(map)
     );
     this.overlayManager.registerOverlay(

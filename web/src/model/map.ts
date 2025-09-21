@@ -3,17 +3,17 @@ import { LayerSpecification, Map, MapGeoJSONFeature, SourceSpecification } from 
 
 export enum FilterType {
   'alwaysAvailable',
-  'restricted',
-  'availability',
+  'withOpeningHours',
+  'byAvailability',
 }
 
 export enum OverlayType {
-  'aed',
-  'aed247',
-  'aedRestricted',
-  'aedAvailability',
-  'userLocation',
-  'aedCreate',
+  'aedAll' = 'aedAll',
+  'aedAlwaysAvailable' = 'aedAlwaysAvailable',
+  'aedWithOpeningHours' = 'aedWithOpeningHours',
+  'aedByCurrentAvailability' = 'aedByCurrentAvailability',
+  'userLocation' = 'userLocation',
+  'aedCreate' = 'aedCreate',
 }
 
 export enum CreateMode {

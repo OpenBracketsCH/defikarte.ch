@@ -41,12 +41,12 @@ const createFilterKey = (filter: FilterType | FilterType[]) => {
 };
 
 const baseLayer: string = MapConfiguration.osmVectorBasemapId;
-const overlay: FilterType[] = [FilterType.alwaysAvailable, FilterType.restricted];
+const overlay: FilterType[] = [FilterType.alwaysAvailable, FilterType.withOpeningHours];
 const filterToOverlayMapping = {
-  [createFilterKey(FilterType.alwaysAvailable)]: OverlayType.aed247,
-  [createFilterKey(FilterType.restricted)]: OverlayType.aedRestricted,
-  [createFilterKey(FilterType.availability)]: OverlayType.aedAvailability,
-  [createFilterKey([FilterType.alwaysAvailable, FilterType.restricted])]: OverlayType.aed,
+  [createFilterKey(FilterType.alwaysAvailable)]: OverlayType.aedAlwaysAvailable,
+  [createFilterKey(FilterType.withOpeningHours)]: OverlayType.aedWithOpeningHours,
+  [createFilterKey(FilterType.byAvailability)]: OverlayType.aedByCurrentAvailability,
+  [createFilterKey([FilterType.alwaysAvailable, FilterType.withOpeningHours])]: OverlayType.aedAll,
 };
 
 export const Map = () => {
@@ -90,15 +90,12 @@ export const Map = () => {
   useEffect(() => {
     const filterKey = createFilterKey(activeOverlays);
     const activeOverlay = filterToOverlayMapping[filterKey];
-    const inactiveOverlays = Object.values(filterToOverlayMapping).filter(
-      overlay => overlay !== activeOverlay
-    );
-
-    for (const overlay of inactiveOverlays) {
-      mapInstance?.removeOverlay(overlay);
-    }
 
     mapInstance?.applyOverlay(activeOverlay);
+
+    return () => {
+      mapInstance?.removeOverlay(activeOverlay);
+    };
   }, [mapInstance, activeOverlays]);
 
   // location error handling
@@ -118,7 +115,7 @@ export const Map = () => {
   // map initialization
   useEffect(() => {
     if (mapContainer.current && !mapInstanceRef.current && activeBaseLayer) {
-      const activeOverlay = filterToOverlayMapping[createFilterKey(overlay)] || OverlayType.aed;
+      const activeOverlay = filterToOverlayMapping[createFilterKey(overlay)] || OverlayType.aedAll;
       const map = new MapInstance({
         container: mapContainer.current,
         baseLayer: activeBaseLayer,

@@ -10,6 +10,7 @@ import {
 export class OverlayManager {
   private overlays: Map<OverlayType, OverlayStrategy> = new Map();
   private activeOverlays: OverlayType[] = [];
+  private loadingOverlays: Set<OverlayType> = new Set();
   private onEvent: MapEventCallback | undefined;
 
   constructor(onEvent?: MapEventCallback) {
@@ -21,13 +22,19 @@ export class OverlayManager {
   }
 
   public async applyOverlay(map: MapInstance, overlay: OverlayType): Promise<void> {
-    if (this.activeOverlays.includes(overlay)) return;
+    if (this.activeOverlays.includes(overlay) || this.loadingOverlays.has(overlay)) return;
+    this.loadingOverlays.add(overlay);
     const strategy = this.overlays.get(overlay);
-    if (!strategy) return;
+    if (!strategy) {
+      this.loadingOverlays.delete(overlay);
+      return;
+    }
 
     const sourceId = strategy.getSourceId();
     const source = await strategy.createSource();
     const layers = strategy.createLayers();
+
+    if (!this.loadingOverlays.has(overlay)) return;
 
     if (!map.getSource(sourceId)) {
       map.addSource(sourceId, source);
@@ -40,7 +47,10 @@ export class OverlayManager {
     });
 
     strategy.registerInteractions(map, this.onEvent);
-    this.activeOverlays.push(overlay);
+    if (this.loadingOverlays.has(overlay) && !this.activeOverlays.includes(overlay)) {
+      this.activeOverlays.push(overlay);
+    }
+    this.loadingOverlays.delete(overlay);
   }
 
   public async applyActiveOverlaysOnStyle(style: StyleSpecification): Promise<StyleSpecification> {
@@ -63,7 +73,7 @@ export class OverlayManager {
   }
 
   public removeOverlay(map: MapInstance, overlay: OverlayType) {
-    if (!this.activeOverlays.includes(overlay)) return;
+    this.loadingOverlays.delete(overlay);
     const strategy = this.overlays.get(overlay);
     if (!strategy) return;
 

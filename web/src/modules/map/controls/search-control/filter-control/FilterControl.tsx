@@ -15,17 +15,17 @@ export const FilterControl = ({ activeOverlays, setActiveOverlays }: Props) => {
 
   const onFilterChange = (e: React.ChangeEvent<HTMLInputElement>, value: FilterType) => {
     setActiveOverlays(a => {
-      if (value === FilterType.availability && e.target.checked) {
-        return [FilterType.availability];
+      if (value === FilterType.byAvailability && e.target.checked) {
+        return [FilterType.byAvailability];
       }
 
-      if (value === FilterType.availability && !e.target.checked) {
-        return [FilterType.alwaysAvailable, FilterType.restricted];
+      if (value === FilterType.byAvailability && !e.target.checked) {
+        return [FilterType.alwaysAvailable, FilterType.withOpeningHours];
       }
 
       let result = a;
-      if (result.includes(FilterType.availability)) {
-        result = result.filter(x => x !== FilterType.availability);
+      if (result.includes(FilterType.byAvailability)) {
+        result = result.filter(x => x !== FilterType.byAvailability);
       }
 
       return e.target.checked ? [...result, value] : [...result.filter(x => x !== value)];
@@ -42,14 +42,14 @@ export const FilterControl = ({ activeOverlays, setActiveOverlays }: Props) => {
       />
       <FilterItem
         label={t('withOpeningHours')}
-        checked={activeOverlays?.includes(FilterType.restricted)}
-        onChange={e => onFilterChange(e, FilterType.restricted)}
+        checked={activeOverlays?.includes(FilterType.withOpeningHours)}
+        onChange={e => onFilterChange(e, FilterType.withOpeningHours)}
         icon={iconDefiOrange}
       />
       <FilterItem
         label={t('availableNow')}
-        checked={activeOverlays.includes(FilterType.availability)}
-        onChange={e => onFilterChange(e, FilterType.availability)}
+        checked={activeOverlays.includes(FilterType.byAvailability)}
+        onChange={e => onFilterChange(e, FilterType.byAvailability)}
         icon={iconOpeningHours}
       />
     </div>
