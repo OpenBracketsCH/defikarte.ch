@@ -23,6 +23,13 @@ export const Knowledge = () => {
   const isMediumOnly = useMediaQuery({ maxWidth: 1024, minWidth: 768 });
   const { ref: firstViewRef, onClick: handleNextViewClick } = useHandleNextViewClick();
 
+  const handleOrderKnifeClick = () => {
+    const email = 'orders@defikarte.ch';
+    const subject = t('OrderKnifeSubject');
+    const body = t('OrderKnifeBody');
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div>
       <Hero
@@ -132,7 +139,12 @@ export const Knowledge = () => {
             <Text size="small" weight="light" className="pb-6">
               {t('SectionKnowledgeKnifeContent')}
             </Text>
-            <Button icon={iconExternalLinkWhite} size="large" className="w-fit">
+            <Button
+              icon={iconExternalLinkWhite}
+              size="large"
+              className="w-fit"
+              onClick={handleOrderKnifeClick}
+            >
               {t('Order')}
             </Button>
           </div>
