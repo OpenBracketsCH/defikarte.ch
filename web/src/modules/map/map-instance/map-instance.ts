@@ -54,6 +54,7 @@ export class MapInstance {
       center: MapConfiguration.defaultCenter,
       zoom: MapConfiguration.defaultZoom,
       attributionControl: false,
+      dragRotate: false,
     });
 
     this.overlayManager.registerOverlay(OverlayType.aedAll, new AedOverlayStrategy());
