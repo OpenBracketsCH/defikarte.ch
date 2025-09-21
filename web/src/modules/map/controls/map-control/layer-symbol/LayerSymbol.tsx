@@ -22,6 +22,7 @@ export const LayerSymbol = ({ active, img, label, ...props }: LayerSymbolProps) 
     'box-border',
     'w-[73px]',
     'h-[78px]',
+    'cursor-pointer',
     {
       'border-2 border-primary-100-green-02': active,
     }
