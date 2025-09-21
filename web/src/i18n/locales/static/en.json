@@ -93,5 +93,5 @@
   "SectionImpressumPartTenTitle": "Questions to the data protection officer",
   "SectionImpressumPartTenContent": "If you have questions about data protection, please email us or contact directly the person responsible for data protection listed at the beginning of this privacy policy in our organization.",
   "OrderKnifeSubject": "Order Donor-Pocketknife",
-  "OrderKnifeBody": "Name:%0D%0ASurname:%0D%0AStreet:%0D%0APLZ Citx:%0D%0AE-Mail-Adress:%0D%0A%0D%0APaid via Twint on: "
+  "OrderKnifeBody": "Name:%0D%0ASurname:%0D%0AStreet:%0D%0APLZ City:%0D%0AE-Mail-Adress:%0D%0A%0D%0APaid via Twint on: "
 }
