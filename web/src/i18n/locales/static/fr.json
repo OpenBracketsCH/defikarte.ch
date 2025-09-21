@@ -91,5 +91,7 @@
   "SectionImpressumPartNineTitle": "Modifications",
   "SectionImpressumPartNineContent": "Nous pouvons adapter la présente déclaration de confidentialité à tout moment et sans préavis. La version en vigueur publiée sur notre site s’applique. Dans la mesure où la déclaration de confidentialité fait partie d’un accord avec vous, nous vous informerons de toute mise à jour par e-mail ou par tout autre moyen approprié.",
   "SectionImpressumPartTenTitle": "Questions au délégué à la protection des données",
-  "SectionImpressumPartTenContent": "Si vous avez des questions sur la protection des données, écrivez-nous un e-mail ou adressez-vous directement à la personne responsable de la protection des données mentionnée au début de la présente déclaration au sein de notre organisation."
+  "SectionImpressumPartTenContent": "Si vous avez des questions sur la protection des données, écrivez-nous un e-mail ou adressez-vous directement à la personne responsable de la protection des données mentionnée au début de la présente déclaration au sein de notre organisation.",
+  "OrderKnifeSubject": "Commande d'un couteau de poche pour donateurs",
+  "OrderKnifeBody": "Nom:%0D%0APrenom:%0D%0ARue:%0D%0ACode postal Ville:%0D%0AAdresse e-mail:%0D%0A%0D%0APaiement via Twint le: "
 }
