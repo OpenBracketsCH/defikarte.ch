@@ -134,7 +134,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
           />
           <SelectField
             label={t('indoor')}
-            options={['yes', 'no', 'flickflack']} // todo: remove flickflack option, only to test the validation and error handling
+            options={['yes', 'no']} // todo: remove flickflack option, only to test the validation and error handling
             required
             tooltip={{
               title: t('indoorTooltipTitle'),
