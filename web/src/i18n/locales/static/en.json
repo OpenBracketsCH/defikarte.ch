@@ -91,5 +91,7 @@
   "SectionImpressumPartNineTitle": "Changes",
   "SectionImpressumPartNineContent": "We may amend this privacy policy at any time without prior notice. The current version published on our website applies. Insofar as the privacy policy forms part of an agreement with you, we will inform you of any updates by email or by other appropriate means.",
   "SectionImpressumPartTenTitle": "Questions to the data protection officer",
-  "SectionImpressumPartTenContent": "If you have questions about data protection, please email us or contact directly the person responsible for data protection listed at the beginning of this privacy policy in our organization."
+  "SectionImpressumPartTenContent": "If you have questions about data protection, please email us or contact directly the person responsible for data protection listed at the beginning of this privacy policy in our organization.",
+  "OrderKnifeSubject": "Order Donor-Pocketknife",
+  "OrderKnifeBody": "Name:%0D%0ASurname:%0D%0AStreet:%0D%0APLZ City:%0D%0AE-Mail-Adress:%0D%0A%0D%0APaid via Twint on: "
 }

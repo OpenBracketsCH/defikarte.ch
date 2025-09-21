@@ -91,5 +91,7 @@
   "SectionImpressumPartNineTitle": "Modifiche",
   "SectionImpressumPartNineContent": "Possiamo modificare questa dichiarazione sulla protezione dei dati in qualsiasi momento senza preavviso. Si applica la versione attuale pubblicata sul nostro sito web. Nella misura in cui la dichiarazione sulla protezione dei dati fa parte di un accordo con te, in caso di aggiornamenti ti informeremo della modifica via e-mail o con altri mezzi appropriati.",
   "SectionImpressumPartTenTitle": "Domande al responsabile della protezione dei dati",
-  "SectionImpressumPartTenContent": "Se hai domande sulla protezione dei dati, scrivici un'e-mail o rivolgiti direttamente alla persona responsabile per la protezione dei dati indicata all'inizio della presente dichiarazione sulla protezione dei dati."
+  "SectionImpressumPartTenContent": "Se hai domande sulla protezione dei dati, scrivici un'e-mail o rivolgiti direttamente alla persona responsabile per la protezione dei dati indicata all'inizio della presente dichiarazione sulla protezione dei dati.",
+  "OrderKnifeSubject": "Ordine coltellino tascabile per sostenitori",
+  "OrderKnifeBody": "Cognome:%0D%0ANome:%0D%0AVia:%0D%0ACAP Citta:%0D%0AIndirizzo e-mail:%0D%0A%0D%0APagamento tramite Twint il:  "
 }
