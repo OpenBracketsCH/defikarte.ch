@@ -76,7 +76,7 @@ export const SearchControl = ({
 
   const onItemSelect = (feature: Feature<Geometry, GeoJsonProperties>) => {
     const mapGeoJSONFeature = {
-      geometry: feature.geometry,
+      geometry: { ...feature.geometry, bbox: feature.bbox },
       properties: feature.properties,
       id: feature.id,
       type: feature.type,

@@ -161,6 +161,8 @@ export const Map = () => {
         [bbox[0], bbox[1]],
         [bbox[2], bbox[3]],
       ]);
+
+      return;
     }
     const coordinates = (event.data.geometry as Point).coordinates;
     mapInstance?.easeTo(coordinates as [number, number], 18);
