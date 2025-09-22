@@ -110,6 +110,7 @@ export const Navbar = () => {
                     'lg:border-0',
                     'lg:last:border-0',
                     'border-primary-10-white',
+                    'hover:text-primary-100-green-01',
                     {
                       'text-primary-100-green-02': isActive,
                     }
