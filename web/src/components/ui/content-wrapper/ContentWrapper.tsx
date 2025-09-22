@@ -11,8 +11,7 @@ export const ContentWrapper = forwardRef<HTMLDivElement, ContentWrapperProps>(
     const containerClasses = cn('w-[100%]', 'flex', 'justify-center', 'items-center', {
       'bg-primary-100-white': variant === 'white',
       'bg-beige': variant === 'beige',
-      'bg-gradient-to-b from-primary-100-green-03 to-primary-100-green-02':
-        variant === 'green-gradient',
+      'bg-gradient-to-b from-[#154430] to-[#659552]': variant === 'green-gradient',
       'bg-primary-100-green-04': variant === 'green',
     });
 
