@@ -104,6 +104,7 @@
   /* shadow */
   --shadow-custom: 0px 4px 15px 0px;
   --shadow-custom-lg: 0px 0px 64px 0px;
+  --shadow-green-custom: #98c8670d 0px 20px 30px 0px, #98c86700 0px 15px 15px 0px;
 
   /* font */
   --font-sans: 'Poppins', sans-serif;
