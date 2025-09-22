@@ -19,7 +19,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
     'p-2': size === 'large',
     'bg-primary-20-green-02': variant === 'tint',
     'hover:bg-primary-40-green-02': variant === 'tint',
-    'bg-primary-green-custom': variant === 'secondary',
+    'bg-green-custom': variant === 'secondary',
     'hover:bg-graustufen-grau-a': variant === 'secondary',
     'bg-primary-100-white': variant === 'white',
     'hover:bg-green-custom': variant === 'white',
