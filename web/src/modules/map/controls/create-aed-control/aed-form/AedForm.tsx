@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import iconGpsWarningCircleRed from '../../../../../assets/icons/icon-gps-warning-circle-red.svg';
-import iconPlusDarkGreen from '../../../../../assets/icons/icon-plus-dark-green.svg';
+import iconCheckCircleGreen from '../../../../../assets/icons/icon-check-circle-green.svg';
+import iconCrossmarkCircleRed from '../../../../../assets/icons/icon-crossmark-circle-red.svg';
 import { Button } from '../../../../../components/ui/button/Button';
 import { CustomToast } from '../../../../../components/ui/custom-toast/CustomToast';
 import { SelectField } from '../../../../../components/ui/select-field/SelectField';
@@ -50,7 +50,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
       toast.custom(
         toastInstance => (
           <CustomToast
-            icon={iconPlusDarkGreen}
+            icon={iconCheckCircleGreen}
             toastInstance={toastInstance}
             title={isEdit ? t('editAedSuccessTitle') : t('createAedSuccessTitle')}
             message={isEdit ? t('editAedSuccessMessage') : t('createAedSuccessMessage')}
@@ -68,7 +68,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
       toast.custom(
         toastInstance => (
           <CustomToast
-            icon={iconGpsWarningCircleRed}
+            icon={iconCrossmarkCircleRed}
             toastInstance={toastInstance}
             title={t('createAedErrorTitle')}
             message={error instanceof Error ? error.message : t('createAedError')}
@@ -134,7 +134,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
           />
           <SelectField
             label={t('indoor')}
-            options={['yes', 'no']} // todo: remove flickflack option, only to test the validation and error handling
+            options={['yes', 'no']}
             required
             tooltip={{
               title: t('indoorTooltipTitle'),
