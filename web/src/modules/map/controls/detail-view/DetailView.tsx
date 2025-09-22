@@ -2,6 +2,7 @@ import cn from 'classnames';
 import { Feature, Point } from 'geojson';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import iconAccessDarkGreen from '../../../../assets/icons/icon-access-dark-green.svg';
 import iconAccessGrey from '../../../../assets/icons/icon-access-grey.svg';
 import iconCloseDarkGreen from '../../../../assets/icons/icon-close-dark-green.svg';
@@ -42,6 +43,7 @@ export const DetailView = ({
   onEdit,
 }: DetailViewProps) => {
   const { t } = useTranslation();
+  const isMobile = useMediaQuery({ maxWidth: 768 });
   const [propsVisible, setPropsVisible] = useState(false);
   if (!feature || !feature?.properties) {
     return null;
@@ -120,7 +122,11 @@ export const DetailView = ({
           }}
         />
       </div>
-      <div className="px-4 pt-4 overflow-auto gap-6 flex flex-col w-full">
+      <div
+        className={cn('px-4 pt-4 overflow-auto gap-6 flex flex-col w-full', {
+          'border-b border-primary-05-green-05': (propsVisible && isMobile) || !isMobile,
+        })}
+      >
         <div className="flex flex-wrap items-start justify-start gap-1.5">
           {isOpen && (
             <Tag variant="primary" icon={iconTimeWhite}>
@@ -180,7 +186,7 @@ export const DetailView = ({
           )}
         />
       </div>
-      <div className="pt-6 pb-4 px-4 flex-grow flex w-full items-end">
+      <div className="pt-3 2xl:pt-6 pb-3 2xl:pb-4 px-4 flex-grow flex w-full items-end">
         <div className="flex justify-between items-center w-full flex-row-reverse h-10">
           <IconButton
             title={t('edit')}
