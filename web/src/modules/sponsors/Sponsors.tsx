@@ -14,8 +14,8 @@ import imageDefikartePartnerResqpro from '../../assets/landingpages/unterstuetzu
 import imageDefikartePartnerSinoma from '../../assets/landingpages/unterstuetzung/defikarte-partner-sinoma.jpg';
 import imageDefikartePartnerSirmed from '../../assets/landingpages/unterstuetzung/defikarte-partner-sirmed.svg';
 import imageDefikartePartnerSusv from '../../assets/landingpages/unterstuetzung/defikarte-partner-susv.svg';
+import imageDefikarteUnterstuetzungSackmesser from '../../assets/landingpages/unterstuetzung/defikarte-unterstuetzung-sackmesser.jpg';
 import imageDefikarteUnterstuetzungTeaser from '../../assets/landingpages/unterstuetzung/defikarte-unterstuetzung-teaser.jpg';
-import imageDefikarteSackmesser from '../../assets/landingpages/wissen/defikarte-sackmesser.jpg';
 import { Button } from '../../components/ui/button/Button';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
 import { Hero } from '../../components/ui/hero/Hero';
@@ -72,7 +72,10 @@ export const Sponsors = () => {
       </ContentWrapper>
       <ContentWrapper variant="beige" paddingY="regular" className="flex-col gap-28 pb-16 md:pb-32">
         <div className="w-full md:w-95 lg:w-auto flex flex-col lg:flex-row gap-10 xl:gap-20 items-center justify-center">
-          <img className="rounded-2xl md:w-95 xl:w-115" src={imageDefikarteSackmesser} />
+          <img
+            className="rounded-2xl md:w-95 xl:w-115"
+            src={imageDefikarteUnterstuetzungSackmesser}
+          />
           <div className="w-full">
             <Text size="large" weight="bold" className="pb-4">
               {t('SectionSponsorsKnifeTitle')}

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
 import iconArrowDownWhite from '../../assets/landingpages/icon-arrow-down-white.svg';
 import iconExternalLinkWhite from '../../assets/landingpages/icon-external-link-white.svg';
-import imageDefikarteSackmesser from '../../assets/landingpages/wissen/defikarte-sackmesser.jpg';
+import imageDefikarteUnterstuetzungSackmesser from '../../assets/landingpages/unterstuetzung/defikarte-unterstuetzung-sackmesser.jpg';
 import imageDefikarteWissenTeaser from '../../assets/landingpages/wissen/defikarte-wissen-teaser.jpg';
 import imageProcamedInfobox from '../../assets/landingpages/wissen/procamed-infobox.jpg';
 import imageDefirbillationHoch01 from '../../assets/landingpages/wissen/wissen-defibrillation-hoch-01.jpg';
@@ -132,7 +132,7 @@ export const Knowledge = () => {
             </Button>
           </div>
           <div className="flex flex-col w-[288px] md:w-[380px] xl:w-[470px]">
-            <img src={imageDefikarteSackmesser} className="rounded-2xl" />
+            <img src={imageDefikarteUnterstuetzungSackmesser} className="rounded-2xl" />
             <Text size="medium" weight="bold" className="pb-4 pt-10">
               {t('SectionKnowledgeKnifeTitle')}
             </Text>
