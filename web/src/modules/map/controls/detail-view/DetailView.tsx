@@ -133,7 +133,7 @@ export const DetailView = ({
               {t('open')}
             </Tag>
           )}
-          {!isOpen && (
+          {props.opening_hours !== undefined && !isOpen && (
             <Tag variant="orange" icon={iconTimeWhite}>
               {t('closed')}
             </Tag>
