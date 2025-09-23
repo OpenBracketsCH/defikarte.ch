@@ -17,13 +17,13 @@ export const Accordion: React.FC<AccordionProps> = ({ title, content, defaultOpe
   return (
     <div className="bg-primary-100-white w-[100%] rounded-xl">
       <button
-        className="text-lg text-left text-primary-100-green-04 font-medium leading-[150%] flex justify-between w-[100%] cursor-pointer py-4 px-5"
+        className="text-lg text-left text-primary-100-green-04 font-medium leading-[150%] flex justify-between w-[100%] cursor-pointer py-4 px-5 items-start"
         aria-expanded={isOpen}
         onClick={toggleAccordion}
       >
-        {title}
+        <span className="flex-1">{title}</span>
         <img
-          className="ps-5"
+          className="ps-5 pt-[3.5px]"
           src={isOpen ? iconChevronUpMiddleGreenS : iconChevronDownMiddleGreenS}
         />
       </button>
