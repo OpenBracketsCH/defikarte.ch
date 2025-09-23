@@ -113,7 +113,7 @@ export const Knowledge = () => {
         ></iframe>
       </ContentWrapper>
       <ContentWrapper variant="beige" paddingY="regular">
-        <div className="w-full flex flex-col lg:flex-row justify-center items-center lg:justify-between">
+        <div className="w-full flex flex-col lg:flex-row justify-center items-center lg:items-start lg:justify-between">
           <div className="flex flex-col w-[288px] md:w-[380px] xl:w-[470px] pb-[50px] lg:pb-0">
             <img src={imageProcamedInfobox} className="rounded-2xl" />
             <Text size="medium" weight="bold" className="pb-4 pt-10">
