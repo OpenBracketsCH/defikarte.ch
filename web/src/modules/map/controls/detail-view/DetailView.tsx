@@ -123,7 +123,7 @@ export const DetailView = ({
         />
       </div>
       <div
-        className={cn('px-4 pt-4 overflow-auto gap-6 flex flex-col w-full', {
+        className={cn('px-4 pt-4 overflow-auto gap-6 flex flex-col w-full grow-1', {
           'border-b border-primary-05-green-05': (propsVisible && isMobile) || !isMobile,
         })}
       >
@@ -186,7 +186,7 @@ export const DetailView = ({
           )}
         />
       </div>
-      <div className="pt-3 2xl:pt-6 pb-3 2xl:pb-4 px-4 flex-grow flex w-full items-end">
+      <div className="pt-3 2xl:pt-6 pb-3 2xl:pb-4 px-4 flex-shrink flex w-full items-end">
         <div className="flex justify-between items-center w-full flex-row-reverse h-10">
           <IconButton
             title={t('edit')}
