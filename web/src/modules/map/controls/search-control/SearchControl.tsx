@@ -130,7 +130,7 @@ export const SearchControl = ({
   );
 
   return (
-    <div className="z-10 absolute top-4 md:top-6 m-auto w-full flex flex-col items-center h-0">
+    <div className="z-5 absolute top-4 md:top-6 m-auto w-full flex flex-col items-center h-0">
       <div className="w-full md:w-[550px] lg:w-[650px]">
         <div className={mainClasses}>
           <img src={iconSearch} alt="search-icon" />
