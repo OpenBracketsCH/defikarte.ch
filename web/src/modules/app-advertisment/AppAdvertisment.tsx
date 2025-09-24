@@ -43,7 +43,7 @@ export const AppAdvertisment = ({ variant = 'green' }: AppAdvertismentProps) => 
         <div className="flex flex-row gap-2 md:gap-4 pt-10 justify-center xl:justify-start">
           <a
             href="https://apps.apple.com/us/app/defikarte-ch/id1549569525"
-            target="__blank"
+            target="_blank"
             className="cursor-pointer"
           >
             <img
@@ -53,7 +53,7 @@ export const AppAdvertisment = ({ variant = 'green' }: AppAdvertismentProps) => 
           </a>
           <a
             href="https://play.google.com/store/apps/details?id=ch.defikarte.app"
-            target="__blank"
+            target="_blank"
             className="cursor-pointer"
           >
             <img

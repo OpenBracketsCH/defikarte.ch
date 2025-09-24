@@ -11,7 +11,7 @@ type SponsorPlatinCardProps = {
 
 export const SponsorPlatinCard = ({ title, description, src, href }: SponsorPlatinCardProps) => {
   return (
-    <a href={href} className="cursor-pointer lg:w-1/2" target="__blank">
+    <a href={href} className="cursor-pointer lg:w-1/2" target="_blank">
       <div className="bg-beige rounded-2xl flex flex-col h-112">
         <div className="bg-primary-100-white rounded-t-2xl flex justify-center items-center grow-1">
           <img src={src} className="w-[230px]" />

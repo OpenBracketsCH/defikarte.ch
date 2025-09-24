@@ -91,7 +91,7 @@ export const Privacy = () => {
           Quelle:{' '}
           <a
             href="https://www.swissanwalt.ch/"
-            target="__blank"
+            target="_blank"
             className="text-primary-100-green-03 cursor-pointer"
           >
             Swiss Anwalt

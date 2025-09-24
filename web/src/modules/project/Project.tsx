@@ -121,7 +121,7 @@ export const Project = () => {
         <Button
           variant="white"
           icon={iconExternalLinkMiddleGreen}
-          onClick={() => open('https://www.openbrackets.ch', '__blank')}
+          onClick={() => open('https://www.openbrackets.ch', '_blank')}
         >
           OpenBrackets.ch
         </Button>

@@ -46,7 +46,7 @@ export const Navbar = () => {
           'flex flex-col lg:flex-row items-center justify-between bg-primary-100-green-04 py-3 px-4 lg:px-6 text-white lg:h-16 z-50 shadow-green-custom',
           {
             'h-[52px]': !isMobileOpen,
-            'z-50 absolute flex-col top-0 left-0 right-0 bottom-0 justify-start overflow-auto h-dvh':
+            'z-50 absolute flex-col top-0 left-0 right-0 bottom-0 pb-8 pt-0 justify-start overflow-auto h-dvh':
               isMobileOpen,
           }
         )}
@@ -65,7 +65,7 @@ export const Navbar = () => {
           </button>
         </div>
         <div
-          className={cn('z-50 lg:hidden flex justify-between w-full', {
+          className={cn('z-50 lg:hidden flex justify-between w-full py-2.5', {
             hidden: !isMobileOpen,
           })}
         >
@@ -77,7 +77,7 @@ export const Navbar = () => {
         <div
           className={cn('lg:flex', 'lg:top-auto lg:right-auto lg:left-auto lg:bottom-auto', {
             hidden: !isMobileOpen,
-            'flex flex-col w-[100%] pt-10 md:pt-14 pb-8 md:pb-10 px-4 md:px-6 grow': isMobileOpen,
+            'flex flex-col w-[100%] pt-10 md:pt-14 md:pb-10 md:px-6 grow': isMobileOpen,
           })}
         >
           <div className={cn('flex justify-end pb-8 md:pb-10', { hidden: !isMobileOpen })}>
@@ -85,7 +85,7 @@ export const Navbar = () => {
           </div>
           <ul
             className={cn(
-              'lg:flex flex-col lg:flex-row lg:gap-8 leading-[150%] py-2 text-primary-100-white',
+              'lg:flex flex-col lg:flex-row lg:gap-8 leading-[150%] text-primary-100-white',
               {
                 'flex justify-start w-full': isMobileOpen,
               }
@@ -126,8 +126,12 @@ export const Navbar = () => {
               {t('supportedBy')}
             </p>
             <div className="flex gap-8">
-              <img src={procamedLogoWhite} alt="procamed" className="h-6" />
-              <img src={lifetecLogoWhite} alt="lifetec one" className="h-6" />
+              <a href="https://www.aed.ch/" className="cursor-pointer" target="_blank">
+                <img src={procamedLogoWhite} alt="procamed" className="h-6" />
+              </a>
+              <a href="https://www.lifetec.ch/" className="cursor-pointer" target="_blank">
+                <img src={lifetecLogoWhite} alt="lifetec one" className="h-6" />
+              </a>
             </div>
           </div>
         </div>

@@ -19,7 +19,7 @@ export const Footer = () => {
             alt="defikarte.ch"
             className="w-[150px] pb-8"
           />
-          <a href="https://www.openbrackets.ch/" target="__blank" className="cursor-pointer">
+          <a href="https://www.openbrackets.ch/" target="_blank" className="cursor-pointer">
             <div className="border w-fit pt-3 px-4 pb-4 rounded-lg border-primary-10-white">
               <p className="text-primary-100-green-02 text-xs font-normal leading-[150%] pb-1">
                 {t('projectOf')}
@@ -55,7 +55,7 @@ export const Footer = () => {
           </NavLink>
           <a
             href="https://github.com/OpenBracketsCH/defikarte.ch"
-            target="__blank"
+            target="_blank"
             className="flex text-primary-100-white font-normal leading-[150%] text-sm cursor-pointer h-fit"
           >
             GitHub
@@ -63,7 +63,7 @@ export const Footer = () => {
           </a>
           <a
             href="https://www.openbrackets.ch/"
-            target="__blank"
+            target="_blank"
             className="flex text-primary-100-white font-normal leading-[150%] text-sm cursor-pointer h-fit"
           >
             OpenBrackets
@@ -77,10 +77,10 @@ export const Footer = () => {
         </p>
         <p className="text-xs text-primary-100-white leading-[150%]">{t('supportedBy')}</p>
         <div className="flex items-center gap-6">
-          <a href="https://www.aed.ch/" target="__blank" className="cursor-pointer">
+          <a href="https://www.aed.ch/" target="_blank" className="cursor-pointer">
             <img src={procamedLogoWhite} alt="procamed" className="h-[25px]" />
           </a>
-          <a href="https://www.lifetec.ch/" target="__blank" className="cursor-pointer">
+          <a href="https://www.lifetec.ch/" target="_blank" className="cursor-pointer">
             <img src={lifetectLogoWhite} alt="lifetec one" className="h-[25px]" />
           </a>
         </div>
