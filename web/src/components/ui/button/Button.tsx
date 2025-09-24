@@ -38,7 +38,7 @@ export const Button = ({
         variant === 'white' || variant === 'secondary',
       'hover:[&:not(:disabled)]:text-primary-100-green-04': variant === 'white',
       'ps-2 md:ps-3 pe-3 md:pe-4 py-1.5 md:py-2': size === 'regular' && !iconOnly,
-      'ps-2 md:ps-4 pe-3 md:pe-5 py-1.5 md:py-3': size === 'large' && !iconOnly,
+      'ps-4 pe-5 py-3': size === 'large' && !iconOnly,
       'rounded-[theme(space.10)]': !iconOnly,
       'p-1.5 rounded-4xl': iconOnly,
     }
