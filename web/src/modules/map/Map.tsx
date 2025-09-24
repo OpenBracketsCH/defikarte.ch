@@ -1,6 +1,6 @@
 import { Point } from 'geojson';
 import { MapGeoJSONFeature } from 'maplibre-gl';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import iconGpsWarningCircleRed from '../../assets/icons/icon-gps-warning-circle-red.svg';
@@ -49,7 +49,11 @@ const filterToOverlayMapping = {
   [createFilterKey([FilterType.alwaysAvailable, FilterType.withOpeningHours])]: OverlayType.aedAll,
 };
 
-export const Map = () => {
+type MapProps = {
+  setIsFullscreen: Dispatch<SetStateAction<boolean>>;
+};
+
+export const Map = ({ setIsFullscreen }: MapProps) => {
   const { t } = useTranslation();
   const mapInstanceRef = useRef<MapInstance | null>(null);
   const mapInstance = mapInstanceRef.current;
@@ -73,6 +77,11 @@ export const Map = () => {
     setIsActive: setIsGpsActive,
     error: locationError,
   } = userLocation;
+
+  // automaticly activate fullscreen for editing function
+  useEffect(() => {
+    setIsFullscreen(createMode === CreateMode.position || createMode === CreateMode.form);
+  }, [createMode, setIsFullscreen]);
 
   // map event handling
   const onMapEvent: MapEventCallback = useCallback(

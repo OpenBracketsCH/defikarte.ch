@@ -37,6 +37,7 @@ const App: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isMedium = useMediaQuery({ maxWidth: 1024 });
   const [position, setPosition] = useState<'top-right' | 'bottom-center'>('top-right');
+  const [isMapFullscreen, setIsMapFullscreen] = useState(false);
 
   useEffect(() => {
     if (isMobile) {
@@ -64,7 +65,12 @@ const App: React.FC = () => {
       <ScrollToTop />
       <Routes>
         <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <Home isMapFullscreen={isMapFullscreen} setIsMapFullscreen={setIsMapFullscreen} />
+          }
+        />
         <Route
           path="/knowledge"
           element={
@@ -98,7 +104,7 @@ const App: React.FC = () => {
           }
         />
       </Routes>
-      <Footer />
+      {!isMapFullscreen && <Footer />}
     </div>
   );
 };
