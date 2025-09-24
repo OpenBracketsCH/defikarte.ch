@@ -1,12 +1,7 @@
-import appScreenBlankDe from '../assets/landingpages/home/app-screen-blank-de.png';
-import appScreenBlankEn from '../assets/landingpages/home/app-screen-blank-en.png';
-import appScreenBlankFr from '../assets/landingpages/home/app-screen-blank-fr.png';
-import appScreenBlankIt from '../assets/landingpages/home/app-screen-blank-it.png';
-
-import appScreenShadowDe from '../assets/landingpages/home/app-screen-shadow-de.png';
-import appScreenShadowEn from '../assets/landingpages/home/app-screen-shadow-en.png';
-import appScreenShadowFr from '../assets/landingpages/home/app-screen-shadow-fr.png';
-import appScreenShadowIt from '../assets/landingpages/home/app-screen-shadow-it.png';
+import appScreenTeaserDe from '../assets/landingpages/home/app-screen-teaser-de.png';
+import appScreenTeaserEn from '../assets/landingpages/home/app-screen-teaser-en.png';
+import appScreenTeaserFr from '../assets/landingpages/home/app-screen-teaser-fr.png';
+import appScreenTeaserkIt from '../assets/landingpages/home/app-screen-teaser-it.png';
 
 import illustrationFeaturesCaptureDe from '../assets/landingpages/home/illustration-features-capture-de.png';
 import illustrationFeaturesCaptureEn from '../assets/landingpages/home/illustration-features-capture-en.png';
@@ -51,8 +46,7 @@ export type LocalizedAsset = {
 };
 
 export type LocalizedAssetKey =
-  | 'appScreenBlank'
-  | 'appScreenShadow'
+  | 'appScreenTeaser'
   | 'illustrationFeaturesCapture'
   | 'illustrationFeaturesCorrect'
   | 'illustrationFeaturesFast'
@@ -62,17 +56,11 @@ export type LocalizedAssetKey =
   | 'defikarteProjektTeaser';
 
 export const localizedAssetRegistration: Record<LocalizedAssetKey, LocalizedAsset> = {
-  appScreenBlank: {
-    en: appScreenBlankEn,
-    de: appScreenBlankDe,
-    fr: appScreenBlankFr,
-    it: appScreenBlankIt,
-  },
-  appScreenShadow: {
-    en: appScreenShadowEn,
-    de: appScreenShadowDe,
-    fr: appScreenShadowFr,
-    it: appScreenShadowIt,
+  appScreenTeaser: {
+    en: appScreenTeaserEn,
+    de: appScreenTeaserDe,
+    fr: appScreenTeaserFr,
+    it: appScreenTeaserkIt,
   },
   illustrationFeaturesCapture: {
     en: illustrationFeaturesCaptureEn,

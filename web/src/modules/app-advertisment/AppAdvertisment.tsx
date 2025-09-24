@@ -63,10 +63,8 @@ export const AppAdvertisment = ({ variant = 'green' }: AppAdvertismentProps) => 
           </a>
         </div>
       </div>
-      {/* // Todo: To use this image, I need more specifications or another image
-// import imageAppScreenShadowEn from '../../assets/landingpages/home/app-screen-shadow-en.png';*/}
       <img
-        src={a(variant === 'green' ? 'appScreenBlank' : 'appScreenBlank')}
+        src={a('appScreenTeaser')}
         className="max-w-[307px] md:max-w-[469px] xl:max-w-[570px] pt-[52px] xl:ms-[45px] xl:-me-8"
       />
     </ContentWrapper>
