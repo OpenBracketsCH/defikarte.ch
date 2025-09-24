@@ -81,6 +81,10 @@ export const Map = ({ setIsFullscreen }: MapProps) => {
   // automaticly activate fullscreen for editing function
   useEffect(() => {
     setIsFullscreen(createMode === CreateMode.position || createMode === CreateMode.form);
+
+    return () => {
+      setIsFullscreen(false);
+    };
   }, [createMode, setIsFullscreen]);
 
   // map event handling
