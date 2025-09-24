@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import { HTMLInputTypeAttribute, useId } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useIsMobileAgent } from '../../../hooks/useIsMobileAgent';
 import { TooltipData } from '../../../model/app';
 import { Tooltip } from '../tooltip/Tooltip';
 
@@ -11,15 +12,11 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
-const isMobileAgent = () => {
-  return /Mobi|Android/i.test(navigator.userAgent);
-};
-
 export const TextField = ({ label, type, tooltip, error, ...props }: TextFieldProps) => {
   const { t } = useTranslation();
   const id = useId();
+  const isMobile = useIsMobileAgent();
 
-  const isMobile = isMobileAgent();
   return (
     <div className="flex flex-col gap-1.5 text-xs leading-[150%]">
       <div className="flex flex-row gap-0.5 align-middle">
