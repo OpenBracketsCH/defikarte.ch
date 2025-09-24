@@ -28,7 +28,7 @@ export const Home = () => {
             {t('SectionHomeContent')}
           </Text>
           <div className="pt-20 flex w-full flex-col lg:flex-row justify-center items-center lg:items-baseline lg:justify-between gap-20 lg:gap-0">
-            <div className="w-[300px] md:w-[288px] lg:w-[232px] xl:w-[300px]">
+            <div className="w-full md:w-[288px] lg:w-[232px] xl:w-[300px]">
               <img src={a('illustrationFeaturesFast')} />
               <Text size="medium" weight="bold" className="pt-10 pb-4 text-center lg:text-left">
                 {t('SectionHomeClaimOneTitle')}
@@ -37,7 +37,7 @@ export const Home = () => {
                 {t('SectionHomeClaimOneContent')}
               </Text>
             </div>
-            <div className="w-[300px] md:w-[288px] lg:w-[232px] xl:w-[300px]">
+            <div className="w-full md:w-[288px] lg:w-[232px] xl:w-[300px]">
               <img src={a('illustrationFeaturesCorrect')} />
               <Text size="medium" weight="bold" className="pt-10 pb-4 text-center lg:text-left">
                 {t('SectionHomeClaimTwoTitle')}
@@ -46,7 +46,7 @@ export const Home = () => {
                 {t('SectionHomeClaimTwoContent')}
               </Text>
             </div>
-            <div className="w-[300px] md:w-[288px] lg:w-[232px] xl:w-[300px]">
+            <div className="w-full md:w-[288px] lg:w-[232px] xl:w-[300px]">
               <img src={a('illustrationFeaturesCapture')} />
               <Text size="medium" weight="bold" className="pt-10 pb-4 text-center lg:text-left">
                 {t('SectionHomeClaimThreeTitle')}

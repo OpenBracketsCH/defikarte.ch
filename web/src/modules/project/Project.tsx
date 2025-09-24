@@ -58,7 +58,10 @@ export const Project = () => {
         paddingY="large"
         className="gap-10 xl:gap-16 flex-col lg:flex-row lg:items-start xl:items-center"
       >
-        <img src={imageDefikartePortraitChristian} className="rounded-2xl w-[419px]" />
+        <img
+          src={imageDefikartePortraitChristian}
+          className="rounded-2xl md:w-[330px] lg:w-[419px]"
+        />
         <div className="w-full flex flex-col justify-center lg:justify-start lg:items-start">
           <img src={iconZitat} className="h-[34px]" />
           <Text size="large" weight="bold" className="pt-8 pb-4 text-center lg:text-start">
@@ -83,7 +86,7 @@ export const Project = () => {
       <ContentWrapper variant="beige" paddingY="regular" className="flex-col gap-26">
         <div className="flex flex-col lg:flex-row gap-10 xl:gap-20">
           <div className="flex justify-center">
-            <img src={a('illustrationFeaturesFind')} className="w-72 md:w-[380px] lg:w-[460px]" />
+            <img src={a('illustrationFeaturesFind')} className="w-full md:w-[380px] lg:w-[460px]" />
           </div>
           <div className="w-auto md:w-[380px] lg:w-auto mx-auto lg:mx-0 flex flex-col justify-center">
             <Text weight="bold" size="large" className="pb-4">
@@ -96,7 +99,7 @@ export const Project = () => {
           <div className="flex justify-center">
             <img
               src={a('illustrationFeaturesEmergency')}
-              className="w-72 md:w-[380px] lg:w-[460px]"
+              className="w-full md:w-[380px] lg:w-[460px]"
             />
           </div>
           <div className="w-auto md:w-[380px] lg:w-auto mx-auto lg:mx-0 flex flex-col justify-center">
