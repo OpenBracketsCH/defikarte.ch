@@ -20,7 +20,7 @@ import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 
 export const Knowledge = () => {
   const { t } = useTranslation('static');
-  const isMediumOnly = useMediaQuery({ maxWidth: 1024, minWidth: 768 });
+  const isMediumOnly = useMediaQuery({ maxWidth: 1023, minWidth: 320 });
   const { ref: firstViewRef, onClick: handleNextViewClick } = useHandleNextViewClick();
 
   const handleOrderKnifeClick = () => {
@@ -62,7 +62,7 @@ export const Knowledge = () => {
           <img src={imageDefirbillationQuer01} className="w-full rounded-2xl mt-10" />
         )}
       </ContentWrapper>
-      <ContentWrapper variant="white" paddingY="large" className="lg:flex-row flex-col-reverse">
+      <ContentWrapper variant="white" paddingY="large" className="flex-col lg:flex-row">
         {!isMediumOnly && (
           <img
             src={imageDefirbillationHoch02}
@@ -114,7 +114,7 @@ export const Knowledge = () => {
       </ContentWrapper>
       <ContentWrapper variant="beige" paddingY="regular">
         <div className="w-full flex flex-col lg:flex-row justify-center items-center lg:items-start lg:justify-between">
-          <div className="flex flex-col w-[288px] md:w-[380px] xl:w-[470px] pb-[50px] lg:pb-0">
+          <div className="flex flex-col w-full md:w-[380px] xl:w-[470px] pb-[50px] lg:pb-0">
             <img src={imageProcamedInfobox} className="rounded-2xl" />
             <Text size="medium" weight="bold" className="pb-4 pt-10">
               {t('SectionKnowledgeInfoboxTitle')}
@@ -131,7 +131,7 @@ export const Knowledge = () => {
               {t('Order')}
             </Button>
           </div>
-          <div className="flex flex-col w-[288px] md:w-[380px] xl:w-[470px]">
+          <div className="flex flex-col w-full md:w-[380px] xl:w-[470px]">
             <img src={imageDefikarteUnterstuetzungSackmesser} className="rounded-2xl" />
             <Text size="medium" weight="bold" className="pb-4 pt-10">
               {t('SectionKnowledgeKnifeTitle')}
