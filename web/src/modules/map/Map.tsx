@@ -193,7 +193,9 @@ export const Map = ({ setIsFullscreen }: MapProps) => {
 
   return (
     <div className="relative flex-grow w-full">
-      <div className="h-full w-full" ref={mapContainer} />
+      <div className="absolute h-dvh w-dvw">
+        <div className="h-full w-full" ref={mapContainer} />
+      </div>
       {!isInitialized && <SplashScreen />}
       <MapControl
         map={mapInstance!}
