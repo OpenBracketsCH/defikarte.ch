@@ -1,5 +1,5 @@
 import className from 'classnames';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import layerIconGreen from '../../../../assets/icons/icon-layers-dark-green.svg';
 import layerIconWhite from '../../../../assets/icons/icon-layers-white.svg';
@@ -25,7 +25,6 @@ export const MapControl = (props: Props) => {
 
   const setActiveBaseLayer = async (id: string) => {
     props.setActiveBaseLayer(id);
-    setIsActive(false);
     await props.map?.setActiveBaseLayer(id);
   };
 
@@ -51,10 +50,32 @@ export const MapControl = (props: Props) => {
   );
 
   const { map, activeBaseLayer } = props;
+  const layerContainerRef = useRef<HTMLDivElement | null>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (!isActive) return;
+
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target as Node | null;
+      if (!target) return;
+
+      // If click is inside the layer container or on the toggle button, ignore
+      if (layerContainerRef.current && layerContainerRef.current.contains(target)) return;
+      if (toggleButtonRef.current && toggleButtonRef.current.contains(target)) return;
+
+      // Otherwise close the panel
+      setIsActive(false);
+    };
+
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [isActive]);
+
   return (
     <div className={mainClasses}>
       {isActive && (
-        <div className="md:mr-3 flex flex-col md:flex-row gap-2">
+        <div ref={layerContainerRef} className="md:mr-3 flex flex-col md:flex-row gap-2">
           <LayerSymbol
             active={activeBaseLayer === MapConfiguration.osmVectorBasemapId}
             img={swisstopoBaseMapImage}
@@ -77,6 +98,7 @@ export const MapControl = (props: Props) => {
       )}
       <div className="flex flex-col gap-1 mt-2 md:mt-0">
         <MapIconButton
+          ref={toggleButtonRef}
           title={t('layers')}
           active={isActive}
           icon={isActive ? layerIconWhite : layerIconGreen}
