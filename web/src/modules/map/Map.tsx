@@ -191,6 +191,11 @@ export const Map = ({ setIsFullscreen }: MapProps) => {
     setCreateMode(CreateMode.form);
   };
 
+  const handleOnCreateStart = () => {
+    setEditFeature(null);
+    setCreateMode(CreateMode.position);
+  };
+
   return (
     <div className="relative flex-grow w-full">
       <div className="absolute h-dvh w-dvw">
@@ -222,7 +227,7 @@ export const Map = ({ setIsFullscreen }: MapProps) => {
             activeOverlays={activeOverlays}
             setActiveOverlays={setActiveOverlays}
           />
-          <CreateButtonControl setCreateMode={setCreateMode} />
+          <CreateButtonControl onCreateStart={handleOnCreateStart} />
           <SponsorControl />
           <AttributionControl activeBaseLayer={activeBaseLayer} />
           {selectedFeature && (
