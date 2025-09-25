@@ -27,7 +27,6 @@ export const LanguageMenu = ({ variant }: LanguageMenuProps) => {
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(languages[0]);
 
   useEffect(() => {
-    console.log('setselectedlanguage');
     const lang = languages.find(x => x.code == i18n.resolvedLanguage);
     setSelectedLanguage(lang || languages[0]);
   }, [i18n.resolvedLanguage]);
