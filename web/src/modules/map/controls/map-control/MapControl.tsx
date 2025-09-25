@@ -25,6 +25,7 @@ export const MapControl = (props: Props) => {
 
   const setActiveBaseLayer = async (id: string) => {
     props.setActiveBaseLayer(id);
+    setIsActive(false);
     await props.map?.setActiveBaseLayer(id);
   };
 
