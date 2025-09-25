@@ -1,11 +1,12 @@
 import className from 'classnames';
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import layerIconGreen from '../../../../assets/icons/icon-layers-dark-green.svg';
 import layerIconWhite from '../../../../assets/icons/icon-layers-white.svg';
 import iconMinus from '../../../../assets/icons/icon-minus-dark-green.svg';
 import iconPlus from '../../../../assets/icons/icon-plus-dark-green.svg';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
+import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
 import { MapInstance } from '../../map-instance/map-instance';
 import swisstopoImageryImage from './../../../../assets/images/map-preview-aerial-view.png';
@@ -52,25 +53,14 @@ export const MapControl = (props: Props) => {
   const { map, activeBaseLayer } = props;
   const layerContainerRef = useRef<HTMLDivElement | null>(null);
   const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  useEffect(() => {
-    if (!isActive) return;
-
-    const onPointerDown = (e: PointerEvent) => {
-      const target = e.target as Node | null;
-      if (!target) return;
-
-      // If click is inside the layer container or on the toggle button, ignore
-      if (layerContainerRef.current && layerContainerRef.current.contains(target)) return;
-      if (toggleButtonRef.current && toggleButtonRef.current.contains(target)) return;
-
-      // Otherwise close the panel
-      setIsActive(false);
-    };
-
-    document.addEventListener('pointerdown', onPointerDown);
-    return () => document.removeEventListener('pointerdown', onPointerDown);
-  }, [isActive]);
+  useOnOutsidePointerDown({
+    active: isActive,
+    refsToIgnore: [
+      layerContainerRef as RefObject<HTMLElement | null>,
+      toggleButtonRef as RefObject<HTMLElement | null>,
+    ],
+    onOutsidePointerDown: () => setIsActive(false),
+  });
 
   return (
     <div className={mainClasses}>

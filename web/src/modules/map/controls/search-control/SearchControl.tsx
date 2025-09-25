@@ -1,9 +1,10 @@
 import className from 'classnames';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { MapGeoJSONFeature } from 'maplibre-gl';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
+import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
 import { FilterType, MapEvent } from '../../../../model/map';
 import { searchAddress } from '../../../../services/address-search.service';
 import { searchAed } from '../../../../services/aed-search.service';
@@ -103,6 +104,17 @@ export const SearchControl = ({
     searchInputRef.current?.focus();
   };
 
+  const filterContainerRef = useRef<HTMLDivElement | null>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
+  useOnOutsidePointerDown({
+    active: showFilter,
+    refsToIgnore: [
+      filterContainerRef as RefObject<HTMLElement | null>,
+      toggleButtonRef as RefObject<HTMLElement | null>,
+    ],
+    onOutsidePointerDown: () => setShowFilter(false),
+  });
+
   const dropdownOpen =
     showFilter || (searchResults?.features && searchResults.features.length > 0 === true);
   const mainClasses = className(
@@ -155,6 +167,7 @@ export const SearchControl = ({
               />
             )}
             <MapIconButton
+              ref={toggleButtonRef}
               title={t('filter')}
               active={false}
               icon={iconFilter}
@@ -170,7 +183,11 @@ export const SearchControl = ({
           </div>
         </div>
         {showFilter && (
-          <FilterControl activeOverlays={activeOverlays} setActiveOverlays={setActiveOverlays} />
+          <FilterControl
+            ref={filterContainerRef}
+            activeOverlays={activeOverlays}
+            setActiveOverlays={setActiveOverlays}
+          />
         )}
         {!showFilter && searchResults && searchResults?.features.length > 0 && (
           <SearchResults searchResults={searchResults} onItemSelect={onItemSelect} />
