@@ -39,6 +39,8 @@ type MapInstanceProps = {
 export class MapInstance {
   private mapInstance: Map | null = null;
   private overlayManager: OverlayManager;
+  // ensures overlays are only applied once (map styledata may fire multiple times)
+  private overlaysLoaded = false;
   private activeBaseLayer: string;
   private onEvent: MapEventCallback | undefined;
 
@@ -76,7 +78,8 @@ export class MapInstance {
     );
     this.overlayManager.registerOverlay(OverlayType.aedCreate, new AedCreateOverlayStrategy(map));
 
-    map.on('load', () => this.init(map, props.overlays));
+    map.on('styledata', () => this.loadOverlays(map, props.overlays));
+    map.on('load', () => this.init(map));
     map.on('sourcedataloading', e => {
       this.handleMapEvent(e.sourceId, 'loading');
     });
@@ -88,7 +91,19 @@ export class MapInstance {
     });
   }
 
-  public init = async (map: Map, overlays: OverlayType[]) => {
+  public loadOverlays(map: Map, overlays: OverlayType[]) {
+    if (this.overlaysLoaded) {
+      return;
+    }
+
+    for (const overlay of overlays) {
+      this.overlayManager.applyOverlay(map, overlay);
+    }
+
+    this.overlaysLoaded = true;
+  }
+
+  public init = async (map: Map) => {
     const images = [
       { id: MARKER_GREEN_IMAGE_ID, url: markerGreen },
       { id: MARKER_ORANGE_IMAGE_ID, url: markerOrange },
@@ -110,10 +125,6 @@ export class MapInstance {
         map.addImage(image.id, img);
       };
     });
-
-    for (const overlay of overlays) {
-      await this.overlayManager.applyOverlay(map, overlay);
-    }
 
     this.mapInstance = map;
     console.log('Map initialized');
