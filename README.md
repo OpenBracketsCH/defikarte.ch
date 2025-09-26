@@ -1,6 +1,6 @@
 ![defi logo](images/defi_logo.png)
 
-![alt text](defi-post-02.jpg)
+![alt text](images/defi-post-02.jpg)
 
 
 
