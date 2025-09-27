@@ -47,4 +47,4 @@ Wir untersützen folgende Open Source Initiativen:
 * [OpenData Swiss](https://opendata.swiss/de/)
 
 **Code on**
-<img src="images/github_logo.png" alt="drawing" width="60"/>
+<img src="images/GitHub_Logo.png" alt="drawing" width="60"/>
