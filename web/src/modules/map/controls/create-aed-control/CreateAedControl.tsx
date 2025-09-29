@@ -28,6 +28,7 @@ const createDefaultValues = (feature: Feature | null): AedData | undefined => {
       access: undefined,
       indoor: undefined,
       reporter: '',
+      sourceFeature: undefined,
     };
   }
 
@@ -44,6 +45,7 @@ const createDefaultValues = (feature: Feature | null): AedData | undefined => {
     access: feature.properties?.access || 'yes',
     indoor: feature.properties?.indoor || 'no',
     reporter: '',
+    sourceFeature: feature,
   };
 
   return defaultValues;

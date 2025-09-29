@@ -39,12 +39,41 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
   const onSubmit = async (data: AedData) => {
     try {
       let result: FeatureCollection | undefined = undefined;
-      const isEdit = data.id;
-      if (isEdit) {
-        const response = await putAedData(data);
+      const {
+        id,
+        longitude,
+        latitude,
+        sourceFeature,
+        location,
+        openingHours,
+        operatorPhone,
+        ...otherProps
+      } = data;
+      const requestData: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            id,
+            geometry: {
+              type: 'Point',
+              coordinates: [longitude, latitude],
+            },
+            properties: {
+              ...sourceFeature?.properties,
+              'defibrillator:location': location,
+              opening_hours: openingHours,
+              phone: operatorPhone,
+              ...otherProps,
+            },
+          },
+        ],
+      };
+      if (id) {
+        const response = await putAedData(requestData);
         result = response.data;
       } else {
-        const response = await postAedData(data);
+        const response = await postAedData(requestData);
         result = response.data;
       }
       toast.custom(
@@ -52,8 +81,8 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
           <CustomToast
             icon={iconCheckCircleGreen}
             toastInstance={toastInstance}
-            title={isEdit ? t('editAedSuccessTitle') : t('createAedSuccessTitle')}
-            message={isEdit ? t('editAedSuccessMessage') : t('createAedSuccessMessage')}
+            title={id ? t('editAedSuccessTitle') : t('createAedSuccessTitle')}
+            message={id ? t('editAedSuccessMessage') : t('createAedSuccessMessage')}
           />
         ),
         {

@@ -1,3 +1,5 @@
+import { Feature } from 'geojson';
+
 export interface AedData {
   id?: string;
   reporter: string;
@@ -12,6 +14,7 @@ export interface AedData {
   latitude: number;
   longitude: number;
   source?: string; // Source of the data, e.g., 'local_knowledge, defikarte.ch'
+  sourceFeature?: Feature; // original feature with eventually additional data
 }
 
 export interface TooltipData {

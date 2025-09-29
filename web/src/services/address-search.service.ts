@@ -3,7 +3,7 @@ import backend from '../api/backend';
 
 export const searchAddress = async (searchText: string) => {
   try {
-    const response = await backend.get<FeatureCollection>(`/v2/search/${searchText}`, {
+    const response = await backend.get<FeatureCollection>(`/v3/search/${searchText}`, {
       method: 'GET',
       headers: {
         'ACCESS-Control-Allow-Origin': '*',

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Feature, FeatureCollection, Geometry } from 'geojson';
 import backend from '../api/backend';
-import { AedData } from '../model/app';
 import { isOpenNow } from './opening-hours.service';
 
 type RequestOptions = {
@@ -10,7 +9,7 @@ type RequestOptions = {
 
 export const requestAedData = async (options?: RequestOptions): Promise<FeatureCollection> => {
   try {
-    const response = await backend.get<FeatureCollection>('/v2/defibrillator', {
+    const response = await backend.get<FeatureCollection>('/v3/aed', {
       method: 'GET',
       signal: options?.signal,
     });
@@ -48,19 +47,19 @@ export const requestAedDataByCurrentAvailability = async (
   };
 };
 
-export const postAedData = async (data: AedData) => {
-  return await backend.post<FeatureCollection>('v2/defibrillator', {
+export const postAedData = async (data: FeatureCollection) => {
+  return await backend.post<FeatureCollection>('v3/aed', {
     ...data,
     source: 'local_knowledge, defikarte.ch',
   });
 };
 
-export const putAedData = async (data: AedData) => {
-  if (!data.id) {
+export const putAedData = async (data: FeatureCollection) => {
+  if (!data.features[0].id) {
     throw new Error('AED data must have an id to be updated');
   }
 
-  return await backend.put<FeatureCollection>(`v2/defibrillator/${data.id}`, {
+  return await backend.put<FeatureCollection>(`v3/aed/${data.features[0].id}`, {
     ...data,
     source: 'local_knowledge, defikarte.ch',
   });
