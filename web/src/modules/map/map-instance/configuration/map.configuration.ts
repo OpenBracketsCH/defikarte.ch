@@ -27,7 +27,7 @@ export class MapConfiguration {
   public static aedCreatePointLayerId = 'aed-create-layer';
   public static aedCreateSourceId = 'aed-create-source';
 
-  public static aedGeoJsonUrl = `${AppConfiguration.baseUrl}v3/aed?key=${AppConfiguration.backendApiKey}`;
+  public static aedGeoJsonUrl = `${AppConfiguration.baseUrl}v3/aed?code=${AppConfiguration.backendApiKey}`;
 
   public static baseLayers: { [key: string]: string | StyleSpecification } = {
     [this
