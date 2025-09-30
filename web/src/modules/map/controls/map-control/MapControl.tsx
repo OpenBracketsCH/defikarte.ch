@@ -8,6 +8,7 @@ import iconMinus from '../../../../assets/icons/icon-minus-dark-green.svg';
 import iconPlus from '../../../../assets/icons/icon-plus-dark-green.svg';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
+import { CreateMode } from '../../../../model/map';
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
 import { MapInstance } from '../../map-instance/map-instance';
 import swisstopoImageryImage from './../../../../assets/images/map-preview-aerial-view.png';
@@ -19,12 +20,13 @@ type Props = {
   map: MapInstance | null;
   setActiveBaseLayer: (id: string) => void;
   activeBaseLayer: string;
+  createMode: CreateMode;
 };
 
 export const MapControl = (props: Props) => {
   const { t } = useTranslation();
   const [isActive, setIsActive] = useState(false);
-  const isGreateOrEqualMobile = useMediaQuery({ minWidth: 768 });
+  const isGreateOrEqualMedium = useMediaQuery({ minWidth: 768 });
 
   const setActiveBaseLayer = async (id: string) => {
     props.setActiveBaseLayer(id);
@@ -52,7 +54,7 @@ export const MapControl = (props: Props) => {
     'right-0'
   );
 
-  const { map, activeBaseLayer } = props;
+  const { map, activeBaseLayer, createMode } = props;
   const layerContainerRef = useRef<HTMLDivElement | null>(null);
   const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
   useOnOutsidePointerDown({
@@ -64,6 +66,7 @@ export const MapControl = (props: Props) => {
     onOutsidePointerDown: () => setIsActive(false),
   });
 
+  const isLayerButtonVisible = createMode !== CreateMode.form || isGreateOrEqualMedium;
   return (
     <div className={mainClasses}>
       {isActive && (
@@ -89,15 +92,17 @@ export const MapControl = (props: Props) => {
         </div>
       )}
       <div className="flex flex-col gap-1 mt-2 md:mt-0">
-        <MapIconButton
-          ref={toggleButtonRef}
-          title={t('layers')}
-          active={isActive}
-          icon={isActive ? layerIconWhite : layerIconGreen}
-          onClick={() => setIsActive(s => !s)}
-          className="shadow-custom shadow-green-shadow rounded-full not-md:p-2"
-        />
-        {isGreateOrEqualMobile && (
+        {isLayerButtonVisible && (
+          <MapIconButton
+            ref={toggleButtonRef}
+            title={t('layers')}
+            active={isActive}
+            icon={isActive ? layerIconWhite : layerIconGreen}
+            onClick={() => setIsActive(s => !s)}
+            className="shadow-custom shadow-green-shadow rounded-full not-md:p-2"
+          />
+        )}
+        {isGreateOrEqualMedium && (
           <>
             <MapIconButton
               title={t('zoomIn')}

@@ -206,6 +206,7 @@ export const Map = ({ setIsFullscreen }: MapProps) => {
         map={mapInstance!}
         setActiveBaseLayer={setActiveBaseLayer}
         activeBaseLayer={activeBaseLayer}
+        createMode={createMode}
       />
       {createMode !== CreateMode.none && (
         <CreateAedControl
