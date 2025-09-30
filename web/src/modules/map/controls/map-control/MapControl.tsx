@@ -1,6 +1,7 @@
-import className from 'classnames';
+import cn from 'classnames';
 import { RefObject, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import layerIconGreen from '../../../../assets/icons/icon-layers-dark-green.svg';
 import layerIconWhite from '../../../../assets/icons/icon-layers-white.svg';
 import iconMinus from '../../../../assets/icons/icon-minus-dark-green.svg';
@@ -23,13 +24,14 @@ type Props = {
 export const MapControl = (props: Props) => {
   const { t } = useTranslation();
   const [isActive, setIsActive] = useState(false);
+  const isGreateOrEqualMobile = useMediaQuery({ minWidth: 768 });
 
   const setActiveBaseLayer = async (id: string) => {
     props.setActiveBaseLayer(id);
     await props.map?.setActiveBaseLayer(id);
   };
 
-  const mainClasses = className(
+  const mainClasses = cn(
     'z-10',
     'absolute',
     'flex',
@@ -93,22 +95,26 @@ export const MapControl = (props: Props) => {
           active={isActive}
           icon={isActive ? layerIconWhite : layerIconGreen}
           onClick={() => setIsActive(s => !s)}
-          className="shadow-custom shadow-green-shadow rounded-full"
+          className="shadow-custom shadow-green-shadow rounded-full not-md:p-2"
         />
-        <MapIconButton
-          title={t('zoomIn')}
-          active={false}
-          icon={iconPlus}
-          onClick={() => map?.zoomIn()}
-          className="hidden md:flex shadow-custom shadow-green-shadow rounded-full"
-        />
-        <MapIconButton
-          title={t('zoomOut')}
-          active={false}
-          icon={iconMinus}
-          onClick={() => map?.zoomOut()}
-          className="hidden md:flex shadow-custom shadow-green-shadow rounded-full"
-        />
+        {isGreateOrEqualMobile && (
+          <>
+            <MapIconButton
+              title={t('zoomIn')}
+              active={false}
+              icon={iconPlus}
+              onClick={() => map?.zoomIn()}
+              className="shadow-custom shadow-green-shadow rounded-full"
+            />
+            <MapIconButton
+              title={t('zoomOut')}
+              active={false}
+              icon={iconMinus}
+              onClick={() => map?.zoomOut()}
+              className="shadow-custom shadow-green-shadow rounded-full"
+            />
+          </>
+        )}
       </div>
     </div>
   );

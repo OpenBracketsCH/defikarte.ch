@@ -24,7 +24,7 @@ export const MapButtons = ({
 
   const buttonContainerClass = cn(
     'absolute',
-    'bottom-4',
+    'bottom-5',
     'md:bottom-6',
     'z-10',
     'w-full',
@@ -50,7 +50,7 @@ export const MapButtons = ({
                 icon={iconCheckWhite}
                 onClick={handleConfirmPosition}
                 iconOnly
-                className="md:hidden"
+                className="md:hidden p-2"
               />
               <Button
                 variant="primary"
@@ -71,7 +71,7 @@ export const MapButtons = ({
                 icon={iconEditWhite}
                 onClick={handleChangePosition}
                 iconOnly
-                className="md:hidden"
+                className="md:hidden p-2"
               />
               <Button
                 variant="primary"
@@ -91,7 +91,7 @@ export const MapButtons = ({
             iconHover={iconCloseDarkGreen}
             onClick={handleCancel}
             iconOnly
-            className="md:hidden shadow-custom shadow-green-shadow"
+            className="md:hidden shadow-custom shadow-green-shadow p-2"
           />
           <Button
             variant="white"

@@ -9,8 +9,9 @@ interface MapIconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const MapIconButton = forwardRef<HTMLButtonElement, MapIconButtonProps>(
   ({ active, icon, variant = 'default', className, ...props }, ref) => {
-    const buttonClass = classNames(className, 'size-max');
+    const buttonClass = classNames('size-max');
     const imgClass = classNames(
+      className,
       'p-1',
       'rounded-full',
       'box-content',
