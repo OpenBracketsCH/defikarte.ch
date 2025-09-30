@@ -48,7 +48,7 @@ export const AppAdvertisment = ({ variant = 'green' }: AppAdvertismentProps) => 
           >
             <img
               src={variant === 'green' ? imageAppleAppStoreWhiteDe : imageAppleAppStoreGreenDe}
-              className="h-8 md:h-auto"
+              className="h-9 md:h-auto"
             />
           </a>
           <a
@@ -58,7 +58,7 @@ export const AppAdvertisment = ({ variant = 'green' }: AppAdvertismentProps) => 
           >
             <img
               src={variant === 'green' ? imageGooglePlayStoreWhiteDe : imageGooglePlayStoreGreenDe}
-              className="h-8 md:h-auto"
+              className="h-9 md:h-auto"
             />
           </a>
         </div>
