@@ -65,7 +65,7 @@ export const AppAdvertisment = ({ variant = 'green' }: AppAdvertismentProps) => 
       </div>
       <img
         src={a('appScreenTeaser')}
-        className="max-w-[307px] md:max-w-[469px] xl:max-w-[570px] pt-[52px] xl:ms-[45px] xl:-me-8"
+        className="md:max-w-[469px] xl:max-w-[570px] pt-[52px] xl:ms-[45px] xl:-me-8"
       />
     </ContentWrapper>
   );
