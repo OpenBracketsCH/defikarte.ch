@@ -123,7 +123,7 @@ export const DetailView = ({
         />
       </div>
       <div
-        className={cn('px-4 pt-4 overflow-auto gap-6 flex flex-col w-full grow-1', {
+        className={cn('px-4 py-4 overflow-auto gap-6 flex flex-col w-full grow-1', {
           'border-b border-primary-05-green-05': (propsVisible && isMobile) || !isMobile,
         })}
       >
@@ -173,17 +173,10 @@ export const DetailView = ({
           icon={iconEditDarkGreen}
           variant={isOpen ? 'tint' : 'secondary'}
           onClick={onEdit}
-          className={cn(
-            'md:hidden',
-            'w-full',
-            'flex',
-            'justify-end',
-            'items-end',
-            'pt-1',
-            'pb-4',
-            'pe-4',
-            { hidden: !propsVisible, 'md:flex': !propsVisible }
-          )}
+          className={cn('md:hidden', 'w-full', 'flex', 'justify-end', 'items-end', 'pt-1', {
+            hidden: !propsVisible,
+            'md:flex': !propsVisible,
+          })}
         />
       </div>
       <div className="py-3 2xl:py-4 px-4 flex-shrink flex w-full items-end">
