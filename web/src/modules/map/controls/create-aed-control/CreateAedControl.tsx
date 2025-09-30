@@ -42,8 +42,8 @@ const createDefaultValues = (feature: Feature | null): AedData | undefined => {
     location: feature.properties?.['defibrillator:location'] || '',
     id: feature.id?.toString() || '',
     level: feature.properties?.level || '',
-    access: feature.properties?.access || 'yes',
-    indoor: feature.properties?.indoor || 'no',
+    access: feature.properties?.access || '',
+    indoor: feature.properties?.indoor || '',
     reporter: '',
     sourceFeature: feature,
   };
