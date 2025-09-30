@@ -108,7 +108,7 @@ export const Sponsors = () => {
         <Text variant="white" size="regular" center className="pb-20">
           {t('SectionSponsorsPlatinContent')}
         </Text>
-        <div className="flex flex-col lg:flex-row w-full gap-9">
+        <div className="flex flex-col lg:flex-row w-full gap-5 md:gap-9">
           <SponsorPlatinCard
             description={t('ClaimSponsorsProcamed')}
             title="Procamed AG"
@@ -127,7 +127,7 @@ export const Sponsors = () => {
         <Text size="large" weight="bold" className="pb-16">
           {t('SectionSponsorsGold')}
         </Text>
-        <div className="flex gap-9 justify-center flex-wrap">
+        <div className="flex gap-5 md:gap-9 justify-center flex-wrap">
           <SponsorCard src={imageDefikartePartnerResqpro} href="https://www.resqpro.ch/" />
           <SponsorCard src={imageDefikartePartnerByteworks} href="https://www.byteworks.ch/" />
           <SponsorCard
@@ -142,7 +142,7 @@ export const Sponsors = () => {
         <Text size="large" weight="bold" className="pt-32 pb-16">
           {t('SectionSponsorsSilver')}
         </Text>
-        <div className="flex gap-9 justify-center flex-wrap">
+        <div className="flex gap-5 md:gap-9 justify-center flex-wrap">
           <SponsorCard src={imageDefikartePartnerHexagon} href="https://www.hexagon.com/" />
           <SponsorCard src={imageDefikartePartnerHostpoint} href="https://www.hostpoint.ch/" />
           <SponsorCard src={imageDefikartePartnerSusv} href="https://www.susv.ch/" />
