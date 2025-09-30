@@ -5,8 +5,11 @@ import { createOsmSource } from '../sources/osm.source';
 import imagerybasemap from '../styles/imagerybasemap.style.json';
 
 export class MapConfiguration {
-  public static defaultCenter: [number, number] = [8.12, 46.8];
-  public static defaultZoom: number = 7;
+  public static defaultCenter: [number, number] = [8.12, 46.75];
+  public static defaultBounds: [[number, number], [number, number]] = [
+    [5.98, 45.35],
+    [10.2, 48.1],
+  ];
 
   public static osmVectorBasemapId = 'osm-vector';
   public static osmBaseMapId = 'osm-common';

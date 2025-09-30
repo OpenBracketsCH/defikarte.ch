@@ -53,10 +53,14 @@ export class MapInstance {
     const map = new Map({
       container: props.container,
       style: MapConfiguration.baseLayers[this.activeBaseLayer],
-      center: MapConfiguration.defaultCenter,
-      zoom: MapConfiguration.defaultZoom,
+      bounds: MapConfiguration.defaultBounds,
+      fitBoundsOptions: {
+        center: MapConfiguration.defaultCenter,
+      },
       attributionControl: false,
       dragRotate: false,
+      touchZoomRotate: false,
+      pitchWithRotate: false,
     });
 
     this.overlayManager.registerOverlay(OverlayType.aedAll, new AedOverlayStrategy());
