@@ -138,7 +138,7 @@ export const CreateAedControl = ({
       />
       {createMode === CreateMode.position && (
         <div className="absolute top-6 z-10 w-full flex flex-row justify-center items-start h-0">
-          <div className="flex items-center px-3 md:px-5 py-2 md:py-4 gap-2.5 mx-9 md:mx-0 rounded-[50px] text-xs md:text-base leading-[150%] bg-primary-100-white text-primary-100-green-04">
+          <div className="flex items-center px-3 md:px-5 py-2 md:py-4 gap-2.5 mx-9 md:mx-0 rounded-[50px] text-xs md:text-base leading-[150%] bg-primary-100-white text-primary-100-green-04 shadow-custom shadow-green-shadow">
             <img src={iconInfoCircleGreenM} />
             <span>{t('choosePositionForNewAedOnMap')}</span>
           </div>

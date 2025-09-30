@@ -41,7 +41,7 @@ export default class ItemSelectInteraction implements InteractionLayer {
       this.deselectFeatures();
     }
 
-    if (!zoom && feature.geometry.bbox) {
+    if (!zoom && feature.geometry.bbox && feature.geometry.bbox.length > 3) {
       const bbox = feature.geometry.bbox;
       this.mapInstance.fitBounds([
         [bbox[0], bbox[1]],

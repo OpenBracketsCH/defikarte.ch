@@ -91,7 +91,7 @@ export const MapButtons = ({
             iconHover={iconCloseDarkGreen}
             onClick={handleCancel}
             iconOnly
-            className="md:hidden"
+            className="md:hidden shadow-custom shadow-green-shadow"
           />
           <Button
             variant="white"
@@ -99,7 +99,7 @@ export const MapButtons = ({
             icon={iconCloseMiddleGreen}
             iconHover={iconCloseDarkGreen}
             onClick={handleCancel}
-            className="hidden md:flex"
+            className="hidden md:flex shadow-custom shadow-green-shadow"
           >
             {t('cancel')}
           </Button>

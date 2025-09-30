@@ -93,20 +93,21 @@ export const MapControl = (props: Props) => {
           active={isActive}
           icon={isActive ? layerIconWhite : layerIconGreen}
           onClick={() => setIsActive(s => !s)}
+          className="shadow-custom shadow-green-shadow rounded-full"
         />
         <MapIconButton
           title={t('zoomIn')}
           active={false}
           icon={iconPlus}
           onClick={() => map?.zoomIn()}
-          className="hidden md:flex"
+          className="hidden md:flex shadow-custom shadow-green-shadow rounded-full"
         />
         <MapIconButton
           title={t('zoomOut')}
           active={false}
           icon={iconMinus}
           onClick={() => map?.zoomOut()}
-          className="hidden md:flex"
+          className="hidden md:flex shadow-custom shadow-green-shadow rounded-full"
         />
       </div>
     </div>

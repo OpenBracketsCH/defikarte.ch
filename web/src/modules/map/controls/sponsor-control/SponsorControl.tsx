@@ -6,7 +6,7 @@ export const SponsorControl = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="z-30 absolute bottom-0 right-6 bg-primary-100-white rounded-t-2xl hidden md:visible md:flex items-center px-4 py-1 w-[304px]">
+    <div className="z-30 absolute bottom-0 right-6 bg-primary-100-white rounded-t-2xl hidden md:visible md:flex items-center px-4 py-1 w-[304px] shadow-custom shadow-green-shadow">
       <p className="text-primary-100-green-04 text-xs leading-[150%]">{t('partner')}</p>
       <a href="https://www.aed.ch/" target="_blank" className="cursor-pointer">
         <img src={logoProcamed} alt="procamed" className="ml-4 mr-3" />

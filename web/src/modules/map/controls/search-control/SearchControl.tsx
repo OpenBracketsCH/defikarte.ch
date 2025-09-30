@@ -129,6 +129,7 @@ export const SearchControl = ({
     'md:gap-4',
     'h-5',
     'md:h-7',
+    'shadow-custom',
     'shadow-green-shadow',
     'box-content',
     {
