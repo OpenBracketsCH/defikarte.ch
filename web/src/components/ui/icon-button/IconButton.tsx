@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes } from 'react';
 
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: string;
-  variant?: 'tint' | 'secondary' | 'white';
+  variant?: 'tint' | 'secondary' | 'white' | 'white-transparent';
   size?: 'regular' | 'large';
 }
 
@@ -21,8 +21,9 @@ export const IconButton: React.FC<IconButtonProps> = ({
     'hover:bg-primary-40-green-02': variant === 'tint',
     'bg-green-custom': variant === 'secondary',
     'hover:bg-graustufen-grau-a': variant === 'secondary',
-    'bg-primary-100-white': variant === 'white',
+    'bg-primary-100-white': variant === 'white' || variant === 'white-transparent',
     'hover:bg-green-custom': variant === 'white',
+    'hover:bg-primary-75-white': variant === 'white-transparent',
   });
 
   return (

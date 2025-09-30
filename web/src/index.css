@@ -28,6 +28,7 @@
   /* colors */
   --color-primary-100-white: #fff;
   --color-primary-80-white: rgba(255, 255, 255, 0.8);
+  --color-primary-75-white: #ffffff75;
   --color-primary-60-white: rgba(255, 255, 255, 0.6);
   --color-primary-40-white: rgba(255, 255, 255, 0.4);
   --color-primary-20-white: rgba(255, 255, 255, 0.2);

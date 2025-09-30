@@ -24,7 +24,7 @@ export const SponsorPlatinCard = ({ title, description, src, href }: SponsorPlat
             <Text>{description}</Text>
             <IconButton
               size="large"
-              variant="white"
+              variant="white-transparent"
               icon={iconExternalLinkMiddleGreen}
               className="self-end md:self-auto"
             />

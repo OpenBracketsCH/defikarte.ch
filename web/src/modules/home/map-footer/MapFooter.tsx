@@ -14,7 +14,7 @@ export const MapFooter = ({ onNextViewClick }: MapFooterProps) => {
     <div className="flex items-center justify-center h-[58px] md:h-[75px] bg-beige z-1">
       <IconButton
         icon={isMobile ? iconChevronDownMiddleGreenS : iconChevronDownMiddleGreenM}
-        variant="white"
+        variant="white-transparent"
         size="large"
         onClick={onNextViewClick}
       />
