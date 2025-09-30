@@ -197,7 +197,7 @@ export const DetailView = ({
             onClick={onEdit}
           />
           <Button
-            className="md:hidden"
+            className="md:hidden not-md:pe-0"
             variant="secondary"
             onClick={() => setPropsVisible(s => !s)}
           >
