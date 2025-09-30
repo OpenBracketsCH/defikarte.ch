@@ -75,6 +75,12 @@ export const DetailView = ({
     });
   const name = props['defibrillator:location'] ?? props.description ?? props.operator ?? 'n/A';
 
+  const hasTags =
+    isOpen ||
+    (props.opening_hours !== undefined && !isOpen) ||
+    distance ||
+    props.access ||
+    props.indoor;
   const directionsUrl = generateGoogleMapsWalkingLink(coords[0], coords[1]);
   const containerClass = cn(
     'z-10',
@@ -127,42 +133,44 @@ export const DetailView = ({
           'border-b border-primary-05-green-05': (propsVisible && isMobile) || !isMobile,
         })}
       >
-        <div className="flex flex-wrap items-start justify-start gap-1.5">
-          {isOpen && (
-            <Tag variant="primary" icon={iconTimeWhite}>
-              {t('open')}
-            </Tag>
-          )}
-          {props.opening_hours !== undefined && !isOpen && (
-            <Tag variant="orange" icon={iconTimeWhite}>
-              {t('closed')}
-            </Tag>
-          )}
-          {distance && (
-            <Tag
-              variant={isOpen ? 'tint' : 'secondary'}
-              icon={isOpen ? iconNavigationDarkGreen : iconNavigationGrey}
-            >
-              {distanceText}
-            </Tag>
-          )}
-          {props.access && (
-            <Tag
-              variant={isOpen ? 'tint' : 'secondary'}
-              icon={isOpen ? iconAccessDarkGreen : iconAccessGrey}
-            >
-              {isAccess ? t('public') : t('private')}
-            </Tag>
-          )}
-          {props.indoor && (
-            <Tag
-              variant={isOpen ? 'tint' : 'secondary'}
-              icon={isOpen ? iconHouseDarkGreen : iconHouseGrey}
-            >
-              {isOutdoor ? t('outdoor') : t('indoor')}
-            </Tag>
-          )}
-        </div>
+        {hasTags && (
+          <div className="flex flex-wrap items-start justify-start gap-1.5">
+            {isOpen && (
+              <Tag variant="primary" icon={iconTimeWhite}>
+                {t('open')}
+              </Tag>
+            )}
+            {props.opening_hours !== undefined && !isOpen && (
+              <Tag variant="orange" icon={iconTimeWhite}>
+                {t('closed')}
+              </Tag>
+            )}
+            {distance && (
+              <Tag
+                variant={isOpen ? 'tint' : 'secondary'}
+                icon={isOpen ? iconNavigationDarkGreen : iconNavigationGrey}
+              >
+                {distanceText}
+              </Tag>
+            )}
+            {props.access && (
+              <Tag
+                variant={isOpen ? 'tint' : 'secondary'}
+                icon={isOpen ? iconAccessDarkGreen : iconAccessGrey}
+              >
+                {isAccess ? t('public') : t('private')}
+              </Tag>
+            )}
+            {props.indoor && (
+              <Tag
+                variant={isOpen ? 'tint' : 'secondary'}
+                icon={isOpen ? iconHouseDarkGreen : iconHouseGrey}
+              >
+                {isOutdoor ? t('outdoor') : t('indoor')}
+              </Tag>
+            )}
+          </div>
+        )}
         <FeaturePropsList
           feature={feature}
           isOpen={isOpen}
