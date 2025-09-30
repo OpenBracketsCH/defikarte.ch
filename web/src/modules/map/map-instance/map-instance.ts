@@ -59,7 +59,6 @@ export class MapInstance {
       },
       attributionControl: false,
       dragRotate: false,
-      touchZoomRotate: false,
       pitchWithRotate: false,
     });
 
