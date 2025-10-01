@@ -14,7 +14,7 @@ Die App zu Defikarte.ch findet man in den Stores des jeweiligen Anbieters.
   <img src="images/appstore.svg" alt="appstore" />
 </a>
 <a href="https://play.google.com/store/apps/details?id=ch.defikarte.app">
-  <img src="images/playstore.png" alt="playstore" />
+  <img src="images/playstore.png" alt="playstore" style="height:40px;" />
 </a>
 
 ## Awards
