@@ -60,6 +60,7 @@ export class MapInstance {
       attributionControl: false,
       dragRotate: false,
       pitchWithRotate: false,
+      touchPitch: false,
     });
 
     this.overlayManager.registerOverlay(OverlayType.aedAll, new AedOverlayStrategy());
