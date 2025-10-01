@@ -1,8 +1,6 @@
-![defi logo](images/defi_logo.png)
-
-![alt text](images/defi-post-02.jpg)
-
-
+<a href="https://www.defikarte.ch">
+<img src="images/defi_logo.png" alt="defikarte.ch"/>
+</a>
 
 ## Die Defikarte der Schweiz
 
@@ -12,8 +10,12 @@ Auf defikarte.ch sind derzeit über 15’000 Defibrillatoren mit ihrem Standort 
 
 Die App zu Defikarte.ch findet man in den Stores des jeweiligen Anbieters.
 
-[![appstore.png](images/appstore.png)](https://apps.apple.com/us/app/defikarte-ch/id1549569525)
-[![playstore.png](images/playstore.png)](https://play.google.com/store/apps/details?id=ch.defikarte.app)
+<a href="https://apps.apple.com/us/app/defikarte-ch/id1549569525">
+  <img src="images/appstore.svg" alt="appstore" height="50"/>
+</a>
+<a href="https://play.google.com/store/apps/details?id=ch.defikarte.app">
+  <img src="images/playstore.png" alt="playstore" height="50"/>
+</a>
 
 ## Awards
 
