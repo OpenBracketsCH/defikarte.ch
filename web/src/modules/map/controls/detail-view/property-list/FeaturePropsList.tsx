@@ -71,11 +71,11 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
           value={props.operator}
         />
       )}
-      {props.operator_phone && (
+      {props.phone && (
         <ItemProperty
           icon={isOpen ? iconPhoneCircleGreen : iconPhoneCircleGrey}
           title={t('operatorPhone')}
-          value={props.operator_phone}
+          value={props.phone}
         />
       )}
     </div>
