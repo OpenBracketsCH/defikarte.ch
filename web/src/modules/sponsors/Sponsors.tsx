@@ -128,12 +128,9 @@ export const Sponsors = () => {
           {t('SectionSponsorsGold')}
         </Text>
         <div className="flex gap-5 md:gap-9 justify-center flex-wrap">
+          <SponsorCard src={imageDefikartePartnerFirstResponder} href="https://www.first-responder.ch/"/>
           <SponsorCard src={imageDefikartePartnerResqpro} href="https://www.resqpro.ch/" />
           <SponsorCard src={imageDefikartePartnerByteworks} href="https://www.byteworks.ch/" />
-          <SponsorCard
-            src={imageDefikartePartnerFirstResponder}
-            href="https://www.first-responder.ch/"
-          />
           <SponsorCard src={imageDefikartePartnerSirmed} href="https://www.sirmed.ch/" />
           <SponsorCard src={imageDefikartePartnerFurrer} href="https://www.furrerit.ch/" />
           <SponsorCard src={imageDefikartePartnerSinoma} href="https://www.sinoma.ch/" />
