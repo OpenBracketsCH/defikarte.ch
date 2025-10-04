@@ -1,7 +1,15 @@
 import className from 'classnames';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { MapGeoJSONFeature } from 'maplibre-gl';
-import { Dispatch, RefObject, SetStateAction, useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
@@ -35,6 +43,7 @@ export const SearchControl = ({
   setActiveOverlays,
 }: Props) => {
   const { t } = useTranslation();
+  const [searchResultsActiveIndex, setSearchResultsActiveIndex] = useState<number | null>(null);
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
   const [showFilter, setShowFilter] = useState(false);
@@ -69,40 +78,63 @@ export const SearchControl = ({
     if (!value) {
       setSearchText('');
       setSearchResults(null);
+      setSearchResultsActiveIndex(null);
       return;
     }
 
     setSearchText(value);
   };
 
-  const onItemSelect = (feature: Feature<Geometry, GeoJsonProperties>) => {
-    const mapGeoJSONFeature = {
-      geometry: { ...feature.geometry, bbox: feature.bbox },
-      properties: feature.properties,
-      id: feature.id,
-      type: feature.type,
-      source: feature.properties?.source,
-    } as MapGeoJSONFeature;
+  const onItemSelect = useCallback(
+    (feature: Feature<Geometry, GeoJsonProperties>) => {
+      const mapGeoJSONFeature = {
+        geometry: { ...feature.geometry, bbox: feature.bbox },
+        properties: feature.properties,
+        id: feature.id,
+        type: feature.type,
+        source: feature.properties?.source,
+      } as MapGeoJSONFeature;
 
-    onFeatureSelect({
-      source: mapGeoJSONFeature.source,
-      data: mapGeoJSONFeature,
-      type: 'item-select',
-    });
-
-    const value = `${feature.properties?.addressPrimary ?? ''} ${
-      feature.properties?.addressSecondary ?? ''
-    }`.trim();
-    if (value) {
-      setSearchText(value);
-    }
-  };
+      onFeatureSelect({
+        source: mapGeoJSONFeature.source,
+        data: mapGeoJSONFeature,
+        type: 'item-select',
+      });
+    },
+    [onFeatureSelect]
+  );
 
   const onReset = () => {
     setSearchText('');
     setSearchResults(null);
+    setSearchResultsActiveIndex(null);
     searchInputRef.current?.focus();
   };
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const results = searchResults?.features;
+      if (!results) {
+        return;
+      }
+      switch (e.code) {
+        case 'ArrowDown':
+          setSearchResultsActiveIndex(s => (s === null || s === results.length - 1 ? 0 : s + 1));
+          break;
+        case 'ArrowUp':
+          setSearchResultsActiveIndex(s => (s === null || s === 0 ? results.length - 1 : s - 1));
+          break;
+        case 'Enter':
+          if (searchResultsActiveIndex !== null) {
+            onItemSelect(results[searchResultsActiveIndex]);
+          }
+          break;
+        default:
+          break;
+      }
+    },
+    [searchResults?.features, searchResultsActiveIndex, onItemSelect]
+  );
 
   const filterContainerRef = useRef<HTMLDivElement | null>(null);
   const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -147,7 +179,7 @@ export const SearchControl = ({
   return (
     <div className="z-5 absolute top-4 md:top-6 m-auto w-full flex flex-col items-center h-0">
       <div className="w-full md:w-[550px] lg:w-[650px]">
-        <div className={mainClasses}>
+        <div className={mainClasses} onKeyDown={handleKeyDown}>
           <img src={iconSearch} alt="search-icon" />
           <input
             onChange={onSearchChange}
@@ -193,7 +225,12 @@ export const SearchControl = ({
           />
         )}
         {!showFilter && searchResults && searchResults?.features.length > 0 && (
-          <SearchResults searchResults={searchResults} onItemSelect={onItemSelect} />
+          <SearchResults
+            searchResults={searchResults}
+            onItemSelect={onItemSelect}
+            activeIndex={searchResultsActiveIndex}
+            setActiveIndex={setSearchResultsActiveIndex}
+          />
         )}
       </div>
     </div>
