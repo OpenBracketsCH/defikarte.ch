@@ -56,7 +56,7 @@ export const ResultItem = (props: Props) => {
       onClick={() => props.onClick(item)}
       onMouseEnter={props.onMouseEnter}
     >
-      <img src={icon} alt="searc-result" className="w-6 h-6" />
+      <img src={icon} alt="search-result" className="w-6 h-6" />
       <div className="flex flex-col md:flex-row md:items-center ml-3 md:ml-4 text-nowrap overflow-hidden">
         {values[0] && (
           <span className="md:mr-3 text-sm font-normal text-primary-100-green-04">{values[0]}</span>
