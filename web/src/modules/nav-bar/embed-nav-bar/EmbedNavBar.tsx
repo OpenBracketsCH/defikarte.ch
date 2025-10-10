@@ -8,7 +8,7 @@ export const EmbedNavbar = () => {
   const { t } = useTranslation();
 
   const EmergencyText = () => (
-    <div className="leading-[150%]">
+    <div className="leading-[150%] not-md:hidden">
       <span className="pe-1.5 text-sm font-medium text-primary-100-white">{t('emergency')}</span>
       <span className="text-xl font-bold text-primary-100-green-02">144</span>
     </div>
@@ -28,8 +28,8 @@ export const EmbedNavbar = () => {
             className={cn('flex items-center space-x-4')}
             target="__blank"
           >
-            <div className="flex items-center space-x-4">
-              <img src={logoWhite} alt="defikarte.ch" className=''/>
+            <div className="flex items-center space-x-4 shrink-0 box-content">
+              <img src={logoWhite} alt="defikarte.ch" />
             </div>
           </NavLink>
         </div>
