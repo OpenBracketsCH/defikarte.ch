@@ -12,7 +12,7 @@ type Options = {
  * - `active`: when false, the listener is not attached.
  * - `refsToIgnore`: elements that should be treated as inside/ignored.
  */
-export const useOnOutsideKeyDown = ({
+export const useOnOutsidekeyDown = ({
   active,
   keys,
   refsToIgnore = [],
