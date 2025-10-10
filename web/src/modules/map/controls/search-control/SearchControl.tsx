@@ -12,6 +12,7 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
+import { useOnOutsidekeyDown } from '../../../../hooks/useOnOutsideKeyDown';
 import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
 import { FilterType, MapEvent } from '../../../../model/map';
 import { searchAddress } from '../../../../services/address-search.service';
@@ -47,6 +48,7 @@ export const SearchControl = ({
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FeatureCollection | null>(null);
   const [showFilter, setShowFilter] = useState(false);
+  const [showSearchResults, setShowSearchResults] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -62,6 +64,7 @@ export const SearchControl = ({
 
         if (results.features.length >= 0) {
           setShowFilter(false);
+          setShowSearchResults(true);
         }
       }
     };
@@ -79,6 +82,7 @@ export const SearchControl = ({
       setSearchText('');
       setSearchResults(null);
       setSearchResultsActiveIndex(null);
+      setShowSearchResults(false);
       return;
     }
 
@@ -108,6 +112,7 @@ export const SearchControl = ({
     setSearchText('');
     setSearchResults(null);
     setSearchResultsActiveIndex(null);
+    setShowSearchResults(false);
     searchInputRef.current?.focus();
   };
 
@@ -136,6 +141,31 @@ export const SearchControl = ({
     [searchResults?.features, searchResultsActiveIndex, onItemSelect]
   );
 
+  const searchBarRef = useRef<HTMLDivElement | null>(null);
+  const searchResultsContainerRef = useRef<HTMLDivElement | null>(null);
+  useOnOutsidePointerDown({
+    active: showSearchResults,
+    refsToIgnore: [
+      searchBarRef as RefObject<HTMLElement | null>,
+      searchResultsContainerRef as RefObject<HTMLElement | null>,
+    ],
+    onOutsidePointerDown: () => {
+      setShowSearchResults(false);
+    },
+  });
+
+  useOnOutsidekeyDown({
+    active: showSearchResults,
+    keys: ['Escape'],
+    refsToIgnore: [
+      searchBarRef as RefObject<HTMLElement | null>,
+      searchResultsContainerRef as RefObject<HTMLElement | null>,
+    ],
+    onOutsidePointerDown: () => {
+      setShowSearchResults(false);
+    },
+  });
+
   const filterContainerRef = useRef<HTMLDivElement | null>(null);
   const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
   useOnOutsidePointerDown({
@@ -144,11 +174,14 @@ export const SearchControl = ({
       filterContainerRef as RefObject<HTMLElement | null>,
       toggleButtonRef as RefObject<HTMLElement | null>,
     ],
-    onOutsidePointerDown: () => setShowFilter(false),
+    onOutsidePointerDown: () => {
+      setShowFilter(false);
+    },
   });
 
   const dropdownOpen =
-    showFilter || (searchResults?.features && searchResults.features.length > 0 === true);
+    showFilter ||
+    (showSearchResults && searchResults?.features && searchResults.features.length > 0 === true);
   const mainClasses = className(
     'flex',
     'items-center',
@@ -179,7 +212,12 @@ export const SearchControl = ({
   return (
     <div className="z-5 absolute top-4 md:top-6 m-auto w-full flex flex-col items-center h-0">
       <div className="w-full md:w-[550px] lg:w-[650px]">
-        <div className={mainClasses} onKeyDown={handleKeyDown}>
+        <div
+          className={mainClasses}
+          onKeyDown={handleKeyDown}
+          ref={searchBarRef}
+          onFocus={() => setShowSearchResults(true)}
+        >
           <img src={iconSearch} alt="search-icon" />
           <input
             onChange={onSearchChange}
@@ -224,8 +262,9 @@ export const SearchControl = ({
             setActiveOverlays={setActiveOverlays}
           />
         )}
-        {!showFilter && searchResults && searchResults?.features.length > 0 && (
+        {!showFilter && showSearchResults && (
           <SearchResults
+            ref={searchResultsContainerRef}
             searchResults={searchResults}
             onItemSelect={onItemSelect}
             activeIndex={searchResultsActiveIndex}
