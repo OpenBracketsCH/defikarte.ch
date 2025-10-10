@@ -26,7 +26,7 @@ export const EmbedNavbar = () => {
           <NavLink
             to={window.location.origin}
             className={cn('flex items-center space-x-4')}
-            target="__blank"
+            target="_blank"
           >
             <div className="flex items-center space-x-4 shrink-0 box-content">
               <img src={logoWhite} alt="defikarte.ch" />
