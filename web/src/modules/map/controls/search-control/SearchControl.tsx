@@ -12,7 +12,7 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
-import { useOnOutsidekeyDown } from '../../../../hooks/useOnOutsideKeyDown';
+import { useOnOutsideKeyDown } from '../../../../hooks/useOnOutsideKeyDown';
 import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
 import { FilterType, MapEvent } from '../../../../model/map';
 import { searchAddress } from '../../../../services/address-search.service';
@@ -154,7 +154,7 @@ export const SearchControl = ({
     },
   });
 
-  useOnOutsidekeyDown({
+  useOnOutsideKeyDown({
     active: showSearchResults,
     keys: ['Escape'],
     refsToIgnore: [
