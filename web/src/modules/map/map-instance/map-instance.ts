@@ -33,6 +33,7 @@ type MapInstanceProps = {
   container: string | HTMLElement;
   baseLayer: string;
   overlays: OverlayType[];
+  hash: boolean;
   onEvent?: MapEventCallback;
 };
 
@@ -61,6 +62,7 @@ export class MapInstance {
       dragRotate: false,
       pitchWithRotate: false,
       touchPitch: false,
+      hash: props.hash,
     });
 
     this.overlayManager.registerOverlay(OverlayType.aedAll, new AedOverlayStrategy());
