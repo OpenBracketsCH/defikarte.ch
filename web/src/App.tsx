@@ -2,7 +2,7 @@ import React, { lazy, useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useMediaQuery } from 'react-responsive';
 import { Route, Routes, useLocation, useMatch } from 'react-router';
-import { FullscreenWrapper } from './components/ui/fullscreen-wrapper/FullscreenWarpper';
+import { FullscreenWrapper } from './components/ui/fullscreen-wrapper/FullscreenWrapper';
 import { SuspenseWrapper } from './components/ui/suspense-wrapper/SuspenseWrapper';
 import { Footer } from './modules/footer/Footer';
 import { Home } from './modules/home/Home';

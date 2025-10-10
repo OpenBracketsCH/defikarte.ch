@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { FullscreenWrapper } from '../../components/ui/fullscreen-wrapper/FullscreenWarpper';
+import { FullscreenWrapper } from '../../components/ui/fullscreen-wrapper/FullscreenWrapper';
 import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { Map } from '../map/Map';
 import { HomeInfo } from './home-info/HomeInfo';
