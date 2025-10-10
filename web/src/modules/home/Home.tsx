@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { FullscreenWrapper } from '../../components/ui/fullscreen-wrapper/FullscreenWrapper';
 import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { Map } from '../map/Map';
 import { HomeInfo } from './home-info/HomeInfo';
@@ -14,10 +15,10 @@ export const Home = ({ isMapFullscreen, setIsMapFullscreen }: HomeProps) => {
 
   return (
     <>
-      <div className="h-[calc(100dvh-(52px))] lg:h-[calc(100dvh-(--spacing(16)))] w-full flex flex-col overflow-hidden">
-        <Map setIsFullscreen={setIsMapFullscreen} />
+      <FullscreenWrapper>
+        <Map setIsFullscreen={setIsMapFullscreen} isHash={false} />
         {!isMapFullscreen && <MapFooter onNextViewClick={handleNextViewClick} />}
-      </div>
+      </FullscreenWrapper>
       {!isMapFullscreen && <HomeInfo ref={firstViewRef} />}
     </>
   );

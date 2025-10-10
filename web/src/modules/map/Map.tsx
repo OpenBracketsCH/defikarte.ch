@@ -50,10 +50,11 @@ const filterToOverlayMapping = {
 };
 
 type MapProps = {
-  setIsFullscreen: Dispatch<SetStateAction<boolean>>;
+  isHash: boolean;
+  setIsFullscreen?: Dispatch<SetStateAction<boolean>>;
 };
 
-export const Map = ({ setIsFullscreen }: MapProps) => {
+export const Map = ({ isHash, setIsFullscreen }: MapProps) => {
   const { t } = useTranslation();
   const mapInstanceRef = useRef<MapInstance | null>(null);
   const mapInstance = mapInstanceRef.current;
@@ -80,6 +81,10 @@ export const Map = ({ setIsFullscreen }: MapProps) => {
 
   // automaticly activate fullscreen for editing function
   useEffect(() => {
+    if (!setIsFullscreen) {
+      return;
+    }
+
     setIsFullscreen(createMode === CreateMode.position || createMode === CreateMode.form);
 
     return () => {
@@ -134,6 +139,7 @@ export const Map = ({ setIsFullscreen }: MapProps) => {
         baseLayer: activeBaseLayer,
         overlays: [activeOverlay, OverlayType.userLocation],
         onEvent: onMapEvent,
+        hash: isHash,
       });
       mapInstanceRef.current = map;
       return () => mapInstanceRef.current?.remove();

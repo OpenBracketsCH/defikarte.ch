@@ -1,10 +1,13 @@
 import React, { lazy, useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { useMediaQuery } from 'react-responsive';
-import { Route, Routes, useLocation } from 'react-router';
+import { Route, Routes, useLocation, useMatch } from 'react-router';
+import { FullscreenWrapper } from './components/ui/fullscreen-wrapper/FullscreenWrapper';
 import { SuspenseWrapper } from './components/ui/suspense-wrapper/SuspenseWrapper';
 import { Footer } from './modules/footer/Footer';
 import { Home } from './modules/home/Home';
+import { Map } from './modules/map/Map';
+import { EmbedNavbar } from './modules/nav-bar/embed-nav-bar/EmbedNavBar';
 import { Navbar } from './modules/nav-bar/NavBar';
 import { NotFound } from './modules/not-found/NotFound';
 
@@ -34,6 +37,7 @@ const ScrollToTop = () => {
 };
 
 const App: React.FC = () => {
+  const isEmbedded = useMatch('map');
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isMedium = useMediaQuery({ maxWidth: 1024 });
   const [position, setPosition] = useState<'top-right' | 'bottom-center'>('top-right');
@@ -61,7 +65,7 @@ const App: React.FC = () => {
         }}
         toastOptions={{ duration: 7200 }}
       />
-      <Navbar />
+      {isEmbedded ? <EmbedNavbar /> : <Navbar />}
       <ScrollToTop />
       <Routes>
         <Route path="*" element={<NotFound />} />
@@ -69,6 +73,14 @@ const App: React.FC = () => {
           path="/"
           element={
             <Home isMapFullscreen={isMapFullscreen} setIsMapFullscreen={setIsMapFullscreen} />
+          }
+        />
+        <Route
+          path="/map"
+          element={
+            <FullscreenWrapper>
+              <Map isHash={true} />
+            </FullscreenWrapper>
           }
         />
         <Route
@@ -104,7 +116,7 @@ const App: React.FC = () => {
           }
         />
       </Routes>
-      {!isMapFullscreen && <Footer />}
+      {!isMapFullscreen && !isEmbedded && <Footer />}
     </div>
   );
 };

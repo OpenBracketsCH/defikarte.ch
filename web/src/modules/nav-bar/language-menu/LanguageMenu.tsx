@@ -55,7 +55,7 @@ export const LanguageMenu = ({ variant }: LanguageMenuProps) => {
   }, []);
 
   return (
-    <div className="relative inline-block z-40" ref={dropdownRef}>
+    <div className="relative inline-block z-40 shrink-0" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
         className="flex items-center ps-1 py-1 pe-2.5 gap-1.5 border border-primary-80-white hover:border-primary-100-green-02 rounded-[50px] text-xs text-primary-100-white font-normal focus:outline-none cursor-pointer"
