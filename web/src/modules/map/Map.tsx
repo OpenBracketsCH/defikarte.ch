@@ -144,7 +144,7 @@ export const Map = ({ isHash, setIsFullscreen }: MapProps) => {
       mapInstanceRef.current = map;
       return () => mapInstanceRef.current?.remove();
     }
-  }, [activeBaseLayer, onMapEvent]);
+  }, [activeBaseLayer, isHash, onMapEvent]);
 
   const handleSelectOrCenterFeatureOnMap = (event: MapEvent) => {
     if (event.type !== 'item-select' || !event.data) return;
