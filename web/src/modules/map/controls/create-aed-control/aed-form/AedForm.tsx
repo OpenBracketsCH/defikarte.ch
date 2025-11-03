@@ -38,6 +38,13 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
 
   const onSubmit = async (data: AedData) => {
     try {
+      const trimmedData = Object.fromEntries(
+        Object.entries(data).map(([key, value]) => [
+          key,
+          typeof value === 'string' ? value.trim() : value,
+        ])
+      ) as AedData;
+
       let result: FeatureCollection | undefined = undefined;
       const {
         id,
@@ -48,7 +55,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
         openingHours,
         operatorPhone,
         ...otherProps
-      } = data;
+      } = trimmedData;
       const requestData: FeatureCollection = {
         type: 'FeatureCollection',
         features: [
