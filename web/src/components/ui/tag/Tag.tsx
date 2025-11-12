@@ -1,5 +1,5 @@
 import className from 'classnames';
-import { ParamHTMLAttributes } from 'react';
+import React, { ParamHTMLAttributes } from 'react';
 
 interface TagProps extends ParamHTMLAttributes<HTMLElement> {
   icon: string;
@@ -7,7 +7,7 @@ interface TagProps extends ParamHTMLAttributes<HTMLElement> {
   children: React.ReactNode;
 }
 
-export const Tag: React.FC<TagProps> = ({ children, icon, variant = 'tint', ...props }) => {
+export const Tag: React.FC<TagProps> = React.memo(({ children, icon, variant = 'tint', ...props }) => {
   const pClass = className(
     'flex',
     'items-center',
@@ -41,4 +41,4 @@ export const Tag: React.FC<TagProps> = ({ children, icon, variant = 'tint', ...p
       {children}
     </p>
   );
-};
+});
