@@ -40,7 +40,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
 
   const handlePhoneNumberBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const result = formatPhoneNumber(e.target.value);
-    // only validate if the result is valid, if not focus cannot be changed from input field.
+    // Only validate if the result is valid; otherwise, focus cannot be changed from the input field.
     setValue('operatorPhone', result.value, { shouldValidate: result.isValid });
   };
 
