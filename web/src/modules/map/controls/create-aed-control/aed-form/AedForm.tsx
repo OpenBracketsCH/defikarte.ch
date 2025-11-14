@@ -14,6 +14,7 @@ import { CreateMode } from '../../../../../model/map';
 import { postAedData, putAedData } from '../../../../../services/aed-data.service';
 import {
   areOpeningHoursValid,
+  formatPhoneNumber,
   isPhoneNumberValid,
 } from '../../../../../services/custom-validation.service';
 import { MapInstance } from '../../../map-instance/map-instance';
@@ -33,8 +34,15 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
     register,
     watch,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = form;
+
+  const handlePhoneNumberBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const result = formatPhoneNumber(e.target.value);
+    // Only validate if the result is valid; otherwise, focus cannot be changed from the input field.
+    setValue('operatorPhone', result.value, { shouldValidate: result.isValid });
+  };
 
   const onSubmit = async (data: AedData) => {
     try {
@@ -244,7 +252,10 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
               link: 'https://wiki.openstreetmap.org/wiki/Key:phone',
             }}
             error={errors.operatorPhone?.message}
-            {...register('operatorPhone', { validate: isPhoneNumberValid })}
+            {...register('operatorPhone', { 
+              validate: isPhoneNumberValid,
+              onBlur: handlePhoneNumberBlur,
+            })}
             disabled={isSubmitting}
           />
           <SelectField
