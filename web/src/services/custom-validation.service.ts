@@ -1,6 +1,7 @@
 import {
   isPossiblePhoneNumber,
   isValidPhoneNumber,
+  parsePhoneNumberWithError,
   validatePhoneNumberLength,
 } from 'libphonenumber-js';
 import opening_hours from 'opening_hours';
@@ -34,4 +35,24 @@ export const isPhoneNumberValid = (value: string | undefined): string | boolean 
     validatePhoneNumberLength(value, 'CH') === undefined;
 
   return value === null || value === '' || valid || i18n.t('phoneNumberInvalid');
+};
+
+export const formatPhoneNumber = (value: string | undefined): {value: string, isValid: boolean} => {
+  if (!value) {
+    return { value: '', isValid: false };
+  }
+
+  // Only format if the value starts with a '+'
+  if (!value.trim().startsWith('+')) {
+    return { value, isValid: false };
+  }
+
+  try {
+    const phoneNumber = parsePhoneNumberWithError(value, 'CH');
+    return { value: phoneNumber.formatInternational(), isValid: phoneNumber.isValid() };
+  } catch {
+    // If parsing fails, return the original value
+  }
+
+  return { value, isValid: false };
 };
