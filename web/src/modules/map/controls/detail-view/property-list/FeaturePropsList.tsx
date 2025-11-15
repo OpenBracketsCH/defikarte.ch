@@ -3,8 +3,8 @@ import { Feature } from 'geojson';
 import { useTranslation } from 'react-i18next';
 import iconAccessCircleGreen from '../../../../../assets/icons/icon-access-circle-green.svg';
 import iconAccessCircleGrey from '../../../../../assets/icons/icon-access-circle-grey.svg';
-import iconHashtagCircleGreen from '../../../../../assets/icons/icon-hashtag-circle-green.svg';
-import iconHashtagCircleGrey from '../../../../../assets/icons/icon-hashtag-circle-grey.svg';
+import iconPinCircleGreen from '../../../../../assets/icons/icon-pin-circle-green.svg';
+import iconPinCircleGrey from '../../../../../assets/icons/icon-pin-circle-grey.svg';
 import iconHouseCircleGreen from '../../../../../assets/icons/icon-house-circle-green.svg';
 import iconHouseCircleGrey from '../../../../../assets/icons/icon-house-circle-grey.svg';
 import iconInfoCircleGreen from '../../../../../assets/icons/icon-info-circle-green-s.svg';
@@ -81,7 +81,7 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
         />
       )}
       <ItemProperty
-        icon={isOpen ? iconHashtagCircleGreen : iconHashtagCircleGrey}
+        icon={isOpen ? iconPinCircleGreen : iconPinCircleGrey}
         title={t('node')}
         value={feature.id || ''}
       />
