@@ -9,6 +9,8 @@ import iconInfoCircleGreen from '../../../../../assets/icons/icon-info-circle-gr
 import iconInfoCircleGrey from '../../../../../assets/icons/icon-info-circle-grey.svg';
 import iconPhoneCircleGreen from '../../../../../assets/icons/icon-phone-circle-green.svg';
 import iconPhoneCircleGrey from '../../../../../assets/icons/icon-phone-circle-grey.svg';
+import iconPinCircleGreen from '../../../../../assets/icons/icon-pin-circle-green.svg';
+import iconPinCircleGrey from '../../../../../assets/icons/icon-pin-circle-grey.svg';
 import iconProfileCircleGreen from '../../../../../assets/icons/icon-profile-circle-green.svg';
 import iconProfileCircleGrey from '../../../../../assets/icons/icon-profile-circle-grey.svg';
 import iconStairsCircleGreen from '../../../../../assets/icons/icon-stairs-circle-green.svg';
@@ -78,6 +80,11 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
           value={props.phone}
         />
       )}
+      <ItemProperty
+        icon={isOpen ? iconPinCircleGreen : iconPinCircleGrey}
+        title={t('node')}
+        value={feature.id || ''}
+      />
     </div>
   );
 };

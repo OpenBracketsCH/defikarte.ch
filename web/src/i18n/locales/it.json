@@ -106,5 +106,6 @@
   "accessTooltipContent": "Il defibrillatore è accessibile al pubblico o solo “privato”, ad esempio dai dipendenti?",
   "more": "Di più",
   "notFound": "La pagina non è stata trovata.",
-  "goHome": "Vai alla homepage"
+  "goHome": "Vai alla homepage",
+  "node": "Nodo"
 }
