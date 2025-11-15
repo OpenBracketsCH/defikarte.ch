@@ -2,7 +2,7 @@ import { FeatureCollection } from 'geojson';
 import { MapInstance } from '../modules/map/map-instance/map-instance';
 
 export const searchAed = async (searchText: string, sourceIds: string[], map: MapInstance) => {
-  if (!searchText) {
+  if (!searchText || searchText.length < 3) {
     return [];
   }
 
@@ -14,40 +14,76 @@ export const searchAed = async (searchText: string, sourceIds: string[], map: Ma
         feature.properties.source = sourceId;
       }
     });
-    data.features = [...data.features, ...sourceData.features];
+    data.features.push(...sourceData.features);
   }
 
-  const results = data.features.map(feature => {
-    const properties = feature.properties || {};
-    const name = properties.name || '';
-    const defibrillatorLocation = properties['defibrillator:location'] || '';
-    const description = properties.description || '';
-    const operator = properties.operator || '';
+  // Pre-compute regex to avoid repeated calls
+  const searchRegex = getSearchRegex(searchText);
+  if (!searchRegex) {
+    return [];
+  }
 
-    const countMatches =
-      doesTextMatch(searchText, name) +
-      doesTextMatch(searchText, defibrillatorLocation) +
-      doesTextMatch(searchText, description) +
-      doesTextMatch(searchText, operator);
+  const results = data.features
+    .map(feature => {
+      const properties = feature.properties || {};
+      const name = properties.name || '';
+      const defibrillatorLocation = properties['defibrillator:location'] || '';
+      const description = properties.description || '';
+      const operator = properties.operator || '';
 
-    return { feature, countMatches };
-  });
+      const countMatches =
+        doesTextMatchWithRegex(searchRegex, name) +
+        doesTextMatchWithRegex(searchRegex, defibrillatorLocation) +
+        doesTextMatchWithRegex(searchRegex, description) +
+        doesTextMatchWithRegex(searchRegex, operator);
 
-  return results
-    .filter(result => result.countMatches > 2)
-    .sort((a, b) => {
-      return b.countMatches - a.countMatches;
+      return { feature, countMatches };
     })
+    .filter(result => result.countMatches > 2)
+    .sort((a, b) => b.countMatches - a.countMatches)
     .map(result => result.feature);
+
+  return results;
 };
 
-const doesTextMatch = (searchText: string, value: string) => {
+// Cache for compiled regex patterns
+const regexCache = new Map<string, RegExp>();
+const MAX_REGEX_CACHE_SIZE = 100;
+
+const getSearchRegex = (searchText: string): RegExp | null => {
+  if (regexCache.has(searchText)) {
+    return regexCache.get(searchText)!;
+  }
+
   const searchTerms = searchText
     .toLowerCase()
     .split(' ')
     .map(term => term.trim())
-    .filter(term => term != ' ' && term.length > 2);
-  const searchRegex = new RegExp(searchTerms.join('|'), 'g');
+    .filter(term => term !== '' && term.length > 2);
+
+  if (searchTerms.length === 0) {
+    return null;
+  }
+
+  const regex = new RegExp(searchTerms.join('|'), 'g');
+
+  // Clear cache if it gets too large
+  if (regexCache.size >= MAX_REGEX_CACHE_SIZE) {
+    const firstKey = regexCache.keys().next().value;
+    if (firstKey !== undefined) {
+      regexCache.delete(firstKey);
+    }
+  }
+
+  regexCache.set(searchText, regex);
+  return regex;
+};
+
+const doesTextMatchWithRegex = (searchRegex: RegExp, value: string) => {
+  if (!value) {
+    return 0;
+  }
+
   const matches = Array.from(value.toLowerCase().matchAll(searchRegex));
 
   return matches.reduce(
