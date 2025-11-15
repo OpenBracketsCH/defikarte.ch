@@ -106,5 +106,6 @@
   "accessTooltipContent": "Le défibrillateur est-il accessible au public ou uniquement « privé », par exemple par les employés ?",
   "more": "Plus",
   "notFound": "La page a été introuvable.",
-  "goHome": "Aller à la page d'accueil"
+  "goHome": "Aller à la page d'accueil",
+  "node": "Nœud"
 }

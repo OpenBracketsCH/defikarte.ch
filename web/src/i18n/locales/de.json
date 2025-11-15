@@ -106,5 +106,6 @@
   "accessTooltipContent": "Ist der Defibrillator öffentlich zugänglich oder nur „privat“ wie z.B durch Mitarbeitende.",
   "more": "Mehr",
   "notFound": "Die Seite wurde nicht gefunden.",
-  "goHome": "Gehe zur Startseite"
+  "goHome": "Gehe zur Startseite",
+  "node": "Knoten"
 }
