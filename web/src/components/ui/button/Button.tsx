@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'white';
@@ -9,7 +9,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconOnly?: boolean;
 }
 
-export const Button = ({
+export const Button = React.memo(({
   variant = 'primary',
   size = 'regular',
   icon,
@@ -69,4 +69,4 @@ export const Button = ({
       <span className={textClass}>{children}</span>
     </button>
   );
-};
+});

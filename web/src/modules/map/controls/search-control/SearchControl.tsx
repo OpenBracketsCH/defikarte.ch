@@ -50,21 +50,42 @@ export const SearchControl = ({
   const [showFilter, setShowFilter] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     const search = async () => {
       if (searchText.length > 2) {
-        const results = await searchAddress(searchText);
-        const mapResults =
-          (map && (await searchAed(searchText, map.getActiveOverlaySourceIds(), map))) || [];
-        setSearchResults({
-          type: 'FeatureCollection',
-          features: [...results.features.slice(0, 4), ...mapResults.slice(0, 2)],
-        });
+        // Abort any ongoing search
+        if (abortControllerRef.current) {
+          abortControllerRef.current.abort();
+        }
+        
+        // Create new abort controller for this search
+        abortControllerRef.current = new AbortController();
+        const signal = abortControllerRef.current.signal;
 
-        if (results.features.length >= 0) {
-          setShowFilter(false);
-          setShowSearchResults(true);
+        try {
+          const results = await searchAddress(searchText, { signal });
+          const mapResults =
+            (map && (await searchAed(searchText, map.getActiveOverlaySourceIds(), map))) || [];
+          
+          // Only update if not aborted
+          if (!signal.aborted) {
+            setSearchResults({
+              type: 'FeatureCollection',
+              features: [...results.features.slice(0, 4), ...mapResults.slice(0, 2)],
+            });
+
+            if (results.features.length >= 0) {
+              setShowFilter(false);
+              setShowSearchResults(true);
+            }
+          }
+        } catch (error) {
+          // Ignore abort errors
+          if (error instanceof Error && error.name !== 'AbortError') {
+            console.error('Search error:', error);
+          }
         }
       }
     };
@@ -73,7 +94,13 @@ export const SearchControl = ({
       search();
     }, 500);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      // Abort search when component unmounts or searchText changes
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
   }, [searchText, map]);
 
   const onSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { Feature, Point } from 'geojson';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
 import iconAccessDarkGreen from '../../../../assets/icons/icon-access-dark-green.svg';
@@ -45,27 +45,38 @@ export const DetailView = ({
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [propsVisible, setPropsVisible] = useState(false);
+
+  const props = feature?.properties || {};
+  const coords = (feature?.geometry as Point)?.coordinates;
+  
+  // Memoize expensive opening hours check
+  const isOpen = useMemo(() => isOpenNow(props.opening_hours), [props.opening_hours]);
+  
+  // Memoize distance calculation
+  const distance = useMemo(
+    () =>
+      userLocation && coords
+        ? distanceBetweenPoints(
+            {
+              lat: userLocation.coords.latitude,
+              lon: userLocation.coords.longitude,
+            },
+            {
+              lon: coords[0],
+              lat: coords[1],
+            }
+          )
+        : null,
+    [userLocation, coords]
+  );
+
   if (!feature || !feature?.properties) {
     return null;
   }
-
-  const props = feature.properties || {};
-  const coords = (feature.geometry as Point)?.coordinates;
-  const isOpen = isOpenNow(props.opening_hours);
+  
   const isOutdoor = props.indoor === 'no';
   const isAccess = props.access === 'yes';
-  const distance = userLocation
-    ? distanceBetweenPoints(
-        {
-          lat: userLocation?.coords.latitude,
-          lon: userLocation.coords.longitude,
-        },
-        {
-          lon: coords[0],
-          lat: coords[1],
-        }
-      )
-    : null;
+  
   const isSmallerThan1000 = distance && distance < 1000;
   const distanceText =
     distance &&
