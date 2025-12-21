@@ -12,7 +12,7 @@
     "app:android": "npm run android --workspace=app",
     "app:ios": "npm run ios --workspace=app",
     "web:dev": "npm run dev --workspace=web",
-    "web:build": "npm run build --workspace=web",
+    "web:build": "npm run build --workspace=web --omit=optional",
     "install:web-prod": "npm ci --workspace=shared --workspace=web",
     "lint": "npm run lint --workspaces --if-present"
   },
