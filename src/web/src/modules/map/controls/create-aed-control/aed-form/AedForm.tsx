@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import backend from '../../../../../api/backend';
 import iconCheckCircleGreen from '../../../../../assets/icons/icon-check-circle-green.svg';
 import iconCrossmarkCircleRed from '../../../../../assets/icons/icon-crossmark-circle-red.svg';
 import { Button } from '../../../../../components/ui/button/Button';
@@ -11,7 +12,6 @@ import { SelectField } from '../../../../../components/ui/select-field/SelectFie
 import { TextField } from '../../../../../components/ui/text-field/TextField';
 import { AedData } from '../../../../../model/app';
 import { CreateMode } from '../../../../../model/map';
-import { postAedData, putAedData } from '../../../../../services/aed-data.service';
 import {
   areOpeningHoursValid,
   formatPhoneNumber,
@@ -78,10 +78,10 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
         ],
       };
       if (id) {
-        const response = await putAedData(requestData);
+        const response = await backend.putAedData(requestData);
         result = response.data;
       } else {
-        const response = await postAedData(requestData);
+        const response = await backend.postAedData(requestData);
         result = response.data;
       }
       toast.custom(
@@ -252,7 +252,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
               link: 'https://wiki.openstreetmap.org/wiki/Key:phone',
             }}
             error={errors.operatorPhone?.message}
-            {...register('operatorPhone', { 
+            {...register('operatorPhone', {
               validate: isPhoneNumberValid,
               onBlur: handlePhoneNumberBlur,
             })}

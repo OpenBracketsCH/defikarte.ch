@@ -1,10 +1,8 @@
-import axios from 'axios';
+import { ApiClient } from '@defikarte/shared';
 
-export default axios.create({
-  baseURL:
+// todo: use values from app-configuration
+export default new ApiClient({
+  baseUrl:
     import.meta.env.VITE_BACKEND_API || 'https://defikarte-backend-staging.azurewebsites.net/api/',
-  headers: {
-    'x-functions-clientid': 'defikarte-app',
-    'x-functions-key': import.meta.env.VITE_BACKEND_API_KEY || '',
-  },
+  apiKey: import.meta.env.VITE_BACKEND_API_KEY || '',
 });

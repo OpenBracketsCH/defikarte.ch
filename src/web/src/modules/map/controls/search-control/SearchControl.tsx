@@ -15,7 +15,6 @@ import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIcon
 import { useOnOutsideKeyDown } from '../../../../hooks/useOnOutsideKeyDown';
 import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
 import { FilterType, MapEvent } from '../../../../model/map';
-import { searchAddress } from '../../../../services/address-search.service';
 import { searchAed } from '../../../../services/aed-search.service';
 import { MapInstance } from '../../map-instance/map-instance';
 import iconClose from './../../../../assets/icons/icon-close-dark-green.svg';
@@ -25,6 +24,7 @@ import iconGpsOn from './../../../../assets/icons/icon-gps-on-circle-green.svg';
 import iconSearch from './../../../../assets/icons/icon-search-dark-green.svg';
 import { FilterControl } from './filter-control/FilterControl';
 import { SearchResults } from './search-results/SearchResults';
+import backend from '../../../../api/backend';
 
 type Props = {
   map: MapInstance | null;
@@ -59,16 +59,16 @@ export const SearchControl = ({
         if (abortControllerRef.current) {
           abortControllerRef.current.abort();
         }
-        
+
         // Create new abort controller for this search
         abortControllerRef.current = new AbortController();
         const signal = abortControllerRef.current.signal;
 
         try {
-          const results = await searchAddress(searchText, { signal });
+          const results = await backend.searchAddress(searchText, { signal });
           const mapResults =
             (map && (await searchAed(searchText, map.getActiveOverlaySourceIds(), map))) || [];
-          
+
           // Only update if not aborted
           if (!signal.aborted) {
             setSearchResults({
