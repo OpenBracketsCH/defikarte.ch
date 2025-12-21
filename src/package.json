@@ -13,6 +13,7 @@
     "app:ios": "npm run ios --workspace=app",
     "web:dev": "npm run dev --workspace=web",
     "web:build": "npm run build --workspace=web",
+    "install:web-prod": "npm ci --workspace=shared --workspace=web",
     "lint": "npm run lint --workspaces --if-present"
   },
   "devDependencies": {},

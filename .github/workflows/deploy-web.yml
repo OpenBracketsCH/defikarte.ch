@@ -28,12 +28,12 @@ jobs:
           node-version: "20"
 
       - name: Install Dependencies
-        working-directory: ./src/web
-        run: npm install
+        working-directory: ./src
+        run: npm run install:web-prod
 
       - name: Build React App
-        working-directory: ./src/web
-        run: npm run build
+        working-directory: ./src
+        run: npm run web:build
 
       - name: Clean target directory on server
         uses: appleboy/ssh-action@v1
