@@ -19,9 +19,9 @@ Die App zu Defikarte.ch findet man in den Stores des jeweiligen Anbieters.
 
 ## Awards
 
-***Nominierungen***
+**_Nominierungen_**
 
-* DINACon Award [Shortlist der Kategorie Community Award](https://awards.dinacon.ch/shortlist-2020/)
+- DINACon Award [Shortlist der Kategorie Community Award](https://awards.dinacon.ch/shortlist-2020/)
 
 ## Sponsoren
 
@@ -46,7 +46,66 @@ Open Source und Open Data ist einer der Grund-Manifeste der Defikarte.
 
 Wir untersützen folgende Open Source Initiativen:
 
-* [OpenData Swiss](https://opendata.swiss/de/)
+- [OpenData Swiss](https://opendata.swiss/de/)
+
+## Development Setup
+
+This is a monorepo using npm workspaces with three main packages:
+
+- **`/app`** - React Native mobile application (iOS & Android)
+- **`/web`** - React web application
+- **`/shared`** - Shared code between app and web
+
+### Prerequisites
+
+- Node.js >= 18.0.0
+- npm >= 9.0.0
+
+### Installation
+
+Install all dependencies for all workspaces:
+
+```bash
+npm install
+```
+
+### Running the Projects
+
+**React Native App:**
+
+```bash
+npm run app:start      # Start Expo dev server
+npm run app:android    # Run on Android
+npm run app:ios        # Run on iOS
+```
+
+**Web Application:**
+
+```bash
+npm run web:dev        # Start development server
+npm run web:build      # Build for production
+```
+
+### Shared Code
+
+The `/shared` folder contains utilities and hooks that are used by both the app and web projects. See `/shared/README.md` for more details.
+
+**Example usage:**
+
+```typescript
+import {
+  formatCoordinates,
+  calculateDistance,
+  useDebounce,
+} from "@defikarte/shared";
+```
+
+### Workspace Commands
+
+```bash
+npm run lint              # Run linting on all workspaces
+npm install               # Install/update all workspace dependencies
+```
 
 **Code on**
 <img src="images/GitHub_Logo.png" alt="drawing" width="60"/>

@@ -10,6 +10,7 @@ import { Map } from './modules/map/Map';
 import { EmbedNavbar } from './modules/nav-bar/embed-nav-bar/EmbedNavBar';
 import { Navbar } from './modules/nav-bar/NavBar';
 import { NotFound } from './modules/not-found/NotFound';
+import { SearchComponent } from './examples/shared-code-example';
 
 const Knowledge = lazy(() =>
   import('./modules/knowledge/Knowledge').then(module => ({ default: module.Knowledge }))
@@ -117,6 +118,7 @@ const App: React.FC = () => {
         />
       </Routes>
       {!isMapFullscreen && !isEmbedded && <Footer />}
+      <SearchComponent />
     </div>
   );
 };
