@@ -19,11 +19,7 @@ shared/
 ### In the Web Project
 
 ```typescript
-import {
-  formatCoordinates,
-  calculateDistance,
-  useDebounce,
-} from "@defikarte/shared";
+import { formatCoordinates, calculateDistance, useDebounce } from '@defikarte/shared';
 
 // Use coordinate utilities
 const formatted = formatCoordinates(47.3769, 8.5417);
@@ -36,11 +32,7 @@ const debouncedSearchTerm = useDebounce(searchTerm, 300);
 ### In the App Project
 
 ```typescript
-import {
-  formatCoordinates,
-  calculateDistance,
-  useDebounce,
-} from "@defikarte/shared";
+import { formatCoordinates, calculateDistance, useDebounce } from '@defikarte/shared';
 
 // Same usage as above
 ```
@@ -49,7 +41,7 @@ import {
 
 1. Create your new file in `src/`
 2. Export it from `src/index.ts`
-3. Run `npm install` from the root to update workspace links
+3. Run `pnpm install` from the root to update workspace links
 4. Import and use in your projects
 
 ## Available Functions
@@ -87,7 +79,7 @@ Debounces a value with a specified delay (default 500ms).
 **Example:**
 
 ```typescript
-const [searchTerm, setSearchTerm] = useState("");
+const [searchTerm, setSearchTerm] = useState('');
 const debouncedSearch = useDebounce(searchTerm, 300);
 
 useEffect(() => {

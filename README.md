@@ -59,14 +59,14 @@ This is a monorepo using npm workspaces with three main packages:
 ### Prerequisites
 
 - Node.js >= 18.0.0
-- npm >= 9.0.0
+- pnpm >= 10.0.0
 
 ### Installation
 
 Install all dependencies for all workspaces:
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Running the Projects
@@ -74,16 +74,16 @@ npm install
 **React Native App:**
 
 ```bash
-npm run app:start      # Start Expo dev server
-npm run app:android    # Run on Android
-npm run app:ios        # Run on iOS
+pnpm run app:start      # Start Expo dev server
+pnpm run app:android    # Run on Android
+pnpm run app:ios        # Run on iOS
 ```
 
 **Web Application:**
 
 ```bash
-npm run web:dev        # Start development server
-npm run web:build      # Build for production
+pnpm run web:dev        # Start development server
+pnpm run web:build      # Build for production
 ```
 
 ### Shared Code

@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": [
+    "../shared"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,7 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@defikarte/shared": "*",
+    "@defikarte/shared": "workspace:*",
     "@turf/circle": "^7.2.0",
     "axios": "^1.7.9",
     "classnames": "^2.5.1",
@@ -31,6 +34,7 @@
   "devDependencies": {
     "@eslint/js": "^9.15.0",
     "@tailwindcss/postcss": "^4.0.14",
+    "@types/geojson": "^7946.0.16",
     "@types/react": "19.0.0",
     "@types/react-dom": "19.0.0",
     "@vitejs/plugin-react": "^4.3.4",

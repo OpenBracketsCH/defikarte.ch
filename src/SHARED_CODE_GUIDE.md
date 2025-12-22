@@ -16,7 +16,7 @@ defikarte.ch/
 └── shared/              # Shared utilities and hooks
 ```
 
-When you run `npm install` at the root level, npm automatically creates symlinks to the shared package in both `app/node_modules/@defikarte/shared` and `web/node_modules/@defikarte/shared`.
+When you run `pnpm install` at the root level, pnpm automatically creates symlinks to the shared package in both `app/node_modules/@defikarte/shared` and `web/node_modules/@defikarte/shared`.
 
 ## Using Shared Code
 
@@ -129,7 +129,7 @@ Consider adding tests in `/shared` to ensure reliability:
 
 ```bash
 cd shared
-npm install --save-dev jest @types/jest
+pnpm install --save-dev jest @types/jest
 ```
 
 ### 4. Add Dependencies to Shared Package
@@ -138,7 +138,7 @@ If your shared code needs a library:
 
 ```bash
 cd shared
-npm install <package-name>
+pnpm install <package-name>
 ```
 
 Then update `/shared/package.json` to mark it as a peer dependency if needed.
@@ -185,7 +185,7 @@ export function isValidCoordinate(lat: number, lng: number): boolean {
 Run from the root:
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Changes in `/shared` Not Reflected
@@ -193,7 +193,7 @@ npm install
 1. Make sure your dev server is running
 2. Try stopping and restarting the dev server
 3. Clear the cache:
-   - App: `cd app && npm start -- --clear`
+   - App: `cd app && pnpm start -- --clear`
    - Web: Delete `web/.vite` folder
 
 ### TypeScript Errors in Shared Package

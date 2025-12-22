@@ -27,13 +27,18 @@ jobs:
         with:
           node-version: "24"
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
       - name: Install Dependencies
-        working-directory: ./src
-        run: npm ci
+        working-directory: ./src/web
+        run: pnpm install --frozen-lockfile
 
       - name: Build React App
-        working-directory: ./src
-        run: npm run web:build
+        working-directory: ./src/web
+        run: pnpm run build
 
       - name: Clean target directory on server
         uses: appleboy/ssh-action@v1

@@ -2,6 +2,9 @@
   "name": "app",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "workspaces": [
+    "../shared"
+  ],
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -11,7 +14,7 @@
     "lint": "expo lint"
   },
   "dependencies": {
-    "@defikarte/shared": "*",
+    "@defikarte/shared": "workspace:*",
     "@expo/vector-icons": "^15.0.3",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",
