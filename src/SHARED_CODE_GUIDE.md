@@ -6,17 +6,30 @@ The `@defikarte/shared` package contains code that is shared between the React N
 
 ## How It Works
 
-This project uses **npm workspaces** to manage multiple packages in a single repository:
+This project uses **pnpm workspaces** to manage multiple packages in a single repository. Each package (app and web) has its own `pnpm-workspace.yaml` file that references the shared package:
 
 ```
-defikarte.ch/
-├── package.json         # Root workspace configuration
-├── app/                 # React Native app
-├── web/                 # React web app
-└── shared/              # Shared utilities and hooks
+defikarte.ch/src/
+├── app/
+│   ├── pnpm-workspace.yaml    # References ../shared
+│   ├── package.json            # Contains "@defikarte/shared": "workspace:*"
+│   └── ...                     # React Native Expo app
+├── web/
+│   ├── pnpm-workspace.yaml    # References ../shared
+│   ├── package.json            # Contains "@defikarte/shared": "workspace:*"
+│   └── ...                     # React Vite app
+└── shared/
+    ├── package.json            # Shared package definition
+    └── src/
+        ├── index.ts            # Main export file
+        ├── api/                # API client code
+        ├── configuration/      # Shared configurations
+        ├── map/                # Map-related utilities
+        ├── model/              # TypeScript types and models
+        └── services/           # Shared services
 ```
 
-When you run `pnpm install` at the root level, pnpm automatically creates symlinks to the shared package in both `app/node_modules/@defikarte/shared` and `web/node_modules/@defikarte/shared`.
+When you run `pnpm install` in either the `app/` or `web/` directory, pnpm automatically creates symlinks to the shared package in `node_modules/@defikarte/shared`.
 
 ## Using Shared Code
 
@@ -25,57 +38,40 @@ When you run `pnpm install` at the root level, pnpm automatically creates symlin
 In any file in `/app` or `/web`:
 
 ```typescript
-import {
-  formatCoordinates,
-  calculateDistance,
-  useDebounce,
-} from "@defikarte/shared";
+import { ApiClient } from "@defikarte/shared";
+import type { RequestOptions, ApiConfiguration } from "@defikarte/shared";
 ```
 
-### Step 2: Use the Functions or Hooks
+### Step 2: Use the Shared Code
 
-**Example: Format Coordinates**
-
-```typescript
-const formatted = formatCoordinates(47.3769, 8.5417);
-// Result: "47.376900° N, 8.541700° E"
-```
-
-**Example: Calculate Distance**
+**Example: API Client**
 
 ```typescript
-const distance = calculateDistance(47.3769, 8.5417, 46.948, 7.4474);
-// Result: 73.82 (km from Zurich to Bern)
-```
+import { ApiClient } from "@defikarte/shared";
 
-**Example: Use Debounce Hook**
+const apiConfig: ApiConfiguration = {
+  baseUrl: "https://api.example.com",
+  timeout: 5000,
+};
 
-```typescript
-function SearchBar() {
-  const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 300);
+const client = new ApiClient(apiConfig);
 
-  useEffect(() => {
-    // This runs 300ms after user stops typing
-    if (debouncedSearch) {
-      performSearch(debouncedSearch);
-    }
-  }, [debouncedSearch]);
-
-  return <input value={search} onChange={(e) => setSearch(e.target.value)} />;
-}
+// Make API calls
+const data = await client.get("/endpoint");
 ```
 
 ## Adding New Shared Code
 
 ### Step 1: Create Your File
 
-Add a new file in `/shared/src/`:
+Add a new file in the appropriate subdirectory of `/shared/src/`:
 
 ```typescript
-// /shared/src/my-utility.ts
-export function myNewFunction(param: string): string {
-  return `Hello, ${param}!`;
+// /shared/src/services/my-service.ts
+export class MyService {
+  public processData(input: string): string {
+    return `Processed: ${input}`;
+  }
 }
 ```
 
@@ -85,7 +81,7 @@ Update `/shared/src/index.ts`:
 
 ```typescript
 // Add this line
-export { myNewFunction } from "./my-utility";
+export { MyService } from "./services/my-service";
 ```
 
 ### Step 3: Use It
@@ -93,18 +89,29 @@ export { myNewFunction } from "./my-utility";
 No need to reinstall! The workspace is already linked:
 
 ```typescript
-import { myNewFunction } from "@defikarte/shared";
+import { MyService } from "@defikarte/shared";
 
-myNewFunction("World"); // "Hello, World!"
+const service = new MyService();
+service.processData("Hello"); // "Processed: Hello"
 ```
 
 ## TypeScript Support
 
 TypeScript automatically picks up types from the shared package because:
 
-1. The shared package's `package.json` specifies: `"types": "src/index.ts"`
-2. Both app and web projects have TypeScript configured
-3. npm workspaces create proper symlinks
+1. The shared package's `package.json` specifies: `"main": "src/index.ts"` and `"types": "src/index.ts"`
+2. Both app (React Native Expo) and web (Vite) projects have TypeScript configured
+3. pnpm workspaces create proper symlinks with the `workspace:*` protocol
+
+## Current Shared Package Structure
+
+The shared package currently includes:
+
+- **API Client** (`/api/api-client.ts`): HTTP client for making API requests
+- **Configuration** (`/configuration/`): Shared configuration files
+- **Map** (`/map/`): Map-related utilities and helpers
+- **Models** (`/model/`): TypeScript types, interfaces, and data models
+- **Services** (`/services/`): Business logic and shared services
 
 ## Development Tips
 
@@ -117,98 +124,170 @@ Changes in `/shared` will trigger hot reload in both app and web (as long as dev
 Only put code in `/shared` that works on both React Native and React web:
 
 - ✅ Pure utility functions
-- ✅ React hooks
+- ✅ React hooks (using platform-agnostic APIs)
 - ✅ TypeScript types/interfaces
 - ✅ Business logic
+- ✅ API clients (using axios or fetch)
 - ❌ React Native specific components (`View`, `Text`, etc.)
 - ❌ Web-only APIs (`document`, `window`, etc.)
+- ❌ Platform-specific navigation code
 
-### 3. Test Your Shared Code
+### 3. Dependencies in Shared Package
 
-Consider adding tests in `/shared` to ensure reliability:
+The shared package currently has:
+
+**Dependencies:**
+
+- `axios`: ^1.13.2 - HTTP client for API calls
+- `geojson`: ^0.5.0 - GeoJSON type definitions
+
+**Peer Dependencies:**
+
+- `react`: >=18.0.0 - Required for React hooks
+
+If your shared code needs a new library, add it to `/shared/package.json`:
 
 ```bash
 cd shared
-pnpm install --save-dev jest @types/jest
+pnpm add <package-name>
 ```
 
-### 4. Add Dependencies to Shared Package
-
-If your shared code needs a library:
+Then reinstall in both app and web:
 
 ```bash
-cd shared
-pnpm install <package-name>
+cd ../app && pnpm install
+cd ../web && pnpm install
 ```
 
-Then update `/shared/package.json` to mark it as a peer dependency if needed.
+### 4. Working with pnpm Workspaces
+
+To install dependencies in a specific workspace:
+
+```bash
+# From the app directory
+cd src/app
+pnpm install
+
+# From the web directory
+cd src/web
+pnpm install
+```
+
+The `workspace:*` protocol in package.json ensures both projects always use the local shared package.
 
 ## Common Patterns
 
 ### Shared Types/Interfaces
 
 ```typescript
-// /shared/src/types.ts
-export interface AEDLocation {
+// /shared/src/model/location.ts
+export interface Location {
   id: string;
   latitude: number;
   longitude: number;
   address: string;
 }
+
+// Export from index.ts
+export type { Location } from "./model/location";
 ```
 
-### Shared Constants
+### Shared API Client
 
 ```typescript
-// /shared/src/constants.ts
-export const MAP_CENTER = {
-  latitude: 46.8182,
-  longitude: 8.2275,
-};
+// /shared/src/api/api-client.ts
+import axios, { type AxiosInstance } from "axios";
 
-export const DEFAULT_ZOOM = 8;
-```
+export class ApiClient {
+  private client: AxiosInstance;
 
-### Shared Validation Logic
+  constructor(config: ApiConfiguration) {
+    this.client = axios.create({
+      baseURL: config.baseUrl,
+      timeout: config.timeout,
+    });
+  }
 
-```typescript
-// /shared/src/validators.ts
-export function isValidCoordinate(lat: number, lng: number): boolean {
-  return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+  async get<T>(endpoint: string): Promise<T> {
+    const response = await this.client.get<T>(endpoint);
+    return response.data;
+  }
 }
+```
+
+### Shared Configuration
+
+```typescript
+// /shared/src/configuration/map-config.ts
+export const MAP_CONFIG = {
+  defaultCenter: {
+    latitude: 46.8182,
+    longitude: 8.2275,
+  },
+  defaultZoom: 8,
+};
 ```
 
 ## Troubleshooting
 
 ### "Cannot find module '@defikarte/shared'"
 
-Run from the root:
+Run from the app or web directory:
 
 ```bash
+cd src/app  # or cd src/web
 pnpm install
 ```
 
 ### Changes in `/shared` Not Reflected
 
 1. Make sure your dev server is running
-2. Try stopping and restarting the dev server
+2. Try stopping and restarting the dev server:
+   - App: `cd src/app && pnpm start`
+   - Web: `cd src/web && pnpm dev`
 3. Clear the cache:
-   - App: `cd app && pnpm start -- --clear`
-   - Web: Delete `web/.vite` folder
+   - App: `cd src/app && pnpm start -- --clear`
+   - Web: Delete `src/web/node_modules/.vite` folder
 
 ### TypeScript Errors in Shared Package
 
-Make sure you've installed dependencies:
+Make sure dependencies are installed in the shared package:
 
 ```bash
-cd shared
-npm install
+cd src/shared
+pnpm install
+```
+
+Also ensure that both app and web have installed the shared package:
+
+```bash
+cd src/app && pnpm install
+cd src/web && pnpm install
+```
+
+### Workspace Link Issues
+
+If the workspace link is broken, try:
+
+```bash
+cd src/app
+rm -rf node_modules pnpm-lock.yaml
+pnpm install
+
+cd ../web
+rm -rf node_modules pnpm-lock.yaml
+pnpm install
 ```
 
 ## Need Help?
 
-See the example files:
+Check the existing shared code structure:
 
-- `/app/examples/shared-code-example.tsx`
-- `/web/src/examples/shared-code-example.tsx`
-- `/shared/README.md`
+- `/shared/src/api/` - API client implementations
+- `/shared/src/configuration/` - Shared configurations
+- `/shared/src/map/` - Map-related utilities
+- `/shared/src/model/` - TypeScript types and models
+- `/shared/src/services/` - Business logic services
+- `/shared/src/index.ts` - Main export file
+
+For more information about the project structure, see the main README files in each package.

@@ -66,6 +66,12 @@ This is a monorepo using npm workspaces with three main packages:
 Install all dependencies for all workspaces:
 
 ```bash
+cd src/app
+pnpm install
+
+----
+
+cd src/web
 pnpm install
 ```
 
@@ -74,16 +80,18 @@ pnpm install
 **React Native App:**
 
 ```bash
-pnpm run app:start      # Start Expo dev server
-pnpm run app:android    # Run on Android
-pnpm run app:ios        # Run on iOS
+cd src/app
+pnpm run start      # Start Expo dev server
+pnpm run android    # Run on Android
+pnpm run ios        # Run on iOS
 ```
 
 **Web Application:**
 
 ```bash
-pnpm run web:dev        # Start development server
-pnpm run web:build      # Build for production
+cd src/web
+pnpm run dev        # Start development server
+pnpm run build      # Build for production
 ```
 
 ### Shared Code
@@ -98,13 +106,6 @@ import {
   calculateDistance,
   useDebounce,
 } from "@defikarte/shared";
-```
-
-### Workspace Commands
-
-```bash
-npm run lint              # Run linting on all workspaces
-npm install               # Install/update all workspace dependencies
 ```
 
 **Code on**
