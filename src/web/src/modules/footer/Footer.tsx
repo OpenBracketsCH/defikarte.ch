@@ -1,5 +1,5 @@
+import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 import defikarteLogoQuerGruenNegativRgb from '../../assets/logo/defikarte-logo-quer-gruen-negativ-rgb.svg';
 import iconExternalLinkMiddleGreen from '../../assets/navigation/icon-external-link-middle-green.svg';
 import lifetectLogoWhite from '../../assets/navigation/lifetec-logo-white.svg';
@@ -38,21 +38,21 @@ export const Footer = () => {
           {AppConfiguration.routes
             .filter(r => r.key !== 'home')
             .map(r => (
-              <NavLink
+              <Link
                 key={r.key}
                 to={r.route}
                 className="text-primary-100-white font-normal leading-[150%] text-sm cursor-pointer"
               >
                 {t(r.key)}
-              </NavLink>
+              </Link>
             ))}
-          <NavLink
+          <Link
             key="legal"
             to="/privacy"
             className="text-primary-100-white font-normal leading-[150%] text-sm cursor-pointer row-span-2"
           >
             {t('legal')}
-          </NavLink>
+          </Link>
           <a
             href="https://github.com/OpenBracketsCH/defikarte.ch"
             target="_blank"

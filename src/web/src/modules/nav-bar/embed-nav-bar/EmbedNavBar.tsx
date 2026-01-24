@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
+import { Link } from '@tanstack/react-router';
 import logoWhite from '../../../assets/navigation/defikarte-logo.svg';
 import { LanguageMenu } from '../language-menu/LanguageMenu';
 
@@ -23,7 +23,7 @@ export const EmbedNavbar = () => {
         )}
       >
         <div className="flex items-center justify-between w-full">
-          <NavLink
+          <Link
             to={window.location.origin}
             className={cn('flex items-center space-x-4')}
             target="_blank"
@@ -31,7 +31,7 @@ export const EmbedNavbar = () => {
             <div className="flex items-center space-x-4 shrink-0 box-content">
               <img src={logoWhite} alt="defikarte.ch" />
             </div>
-          </NavLink>
+          </Link>
         </div>
         <div className="flex items-center gap-6 w-full justify-end">
           <EmergencyText />

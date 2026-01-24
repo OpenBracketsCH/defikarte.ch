@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
+import { Link } from '@tanstack/react-router';
 import iconExternalLinkMiddleGreen from '../../assets/icons/icon-external-link-middle-green.svg';
 import { Button } from '../../components/ui/button/Button';
 import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapper';
@@ -16,11 +16,11 @@ export const NotFound = () => {
       <Text variant="tint" size="large">
         {t('notFound')}
       </Text>
-      <NavLink to={'/'}>
+      <Link to={'/'}>
         <Button icon={iconExternalLinkMiddleGreen} variant="white" size="large">
           {t('goHome')}
         </Button>
-      </NavLink>
+      </Link>
     </ContentWrapper>
   );
 };

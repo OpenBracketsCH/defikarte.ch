@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
-import { NavLink } from 'react-router';
+import { Link } from '@tanstack/react-router';
 import logoWhite from '../../assets/navigation/defikarte-logo.svg';
 import iconBurgerWhite from '../../assets/navigation/icon-burger-white.svg';
 import iconCloseWhite from '../../assets/navigation/icon-close-white.svg';
@@ -52,11 +52,11 @@ export const Navbar = () => {
         )}
       >
         <div className="flex items-center justify-between w-full lg:w-auto">
-          <NavLink to={'/'} className={cn('flex items-center space-x-4', { hidden: isMobileOpen })}>
+          <Link to={'/'} className={cn('flex items-center space-x-4', { hidden: isMobileOpen })}>
             <div className="flex items-center space-x-4">
               <img src={logoWhite} alt="defikarte.ch" className="" />
             </div>
-          </NavLink>
+          </Link>
           <button
             onClick={() => setIsMobileOpen(true)}
             className={cn('lg:hidden cursor-pointer', { hidden: isMobileOpen })}
@@ -92,33 +92,29 @@ export const Navbar = () => {
             )}
           >
             {AppConfiguration.routes.map(r => (
-              <NavLink
+              <Link
                 onClick={() => setIsMobileOpen(false)}
                 key={r.key}
                 to={r.route}
-                className={({ isActive }) =>
-                  cn(
-                    'text-base',
-                    'lg:text-sm',
-                    'font-medium',
-                    'py-4',
-                    'md:py-10',
-                    'lg:p-0',
-                    'lg:m-0',
-                    'border-t',
-                    'last:border-b',
-                    'lg:border-0',
-                    'lg:last:border-0',
-                    'border-primary-10-white',
-                    'hover:text-primary-100-green-01',
-                    {
-                      'text-primary-100-green-02': isActive,
-                    }
-                  )
-                }
+                activeProps={{ className: 'text-primary-100-green-02' }}
+                className={cn(
+                  'text-base',
+                  'lg:text-sm',
+                  'font-medium',
+                  'py-4',
+                  'md:py-10',
+                  'lg:p-0',
+                  'lg:m-0',
+                  'border-t',
+                  'last:border-b',
+                  'lg:border-0',
+                  'lg:last:border-0',
+                  'border-primary-10-white',
+                  'hover:text-primary-100-green-01'
+                )}
               >
                 {t(r.key)}
-              </NavLink>
+              </Link>
             ))}
           </ul>
           <div className="flex lg:hidden grow flex-col gap-4 justify-end pt-8 md:pt-10">
