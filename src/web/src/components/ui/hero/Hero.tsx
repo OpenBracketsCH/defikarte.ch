@@ -2,14 +2,14 @@ import { Button } from '../button/Button';
 import { ContentWrapper } from '../content-wrapper/ContentWrapper';
 import { Text } from '../text/Text';
 
-type HeroProps = {
+interface HeroProps {
   title: string;
   description: string[];
   image?: string;
   buttonText: string;
   buttonIcon: string;
   onButtonClick: () => void;
-};
+}
 
 export const Hero = ({
   title,
@@ -28,6 +28,7 @@ export const Hero = ({
         <div>
           {description.map((d, i) => (
             <Text
+              /* eslint-disable-next-line @eslint-react/no-array-index-key */
               key={i}
               size="regular"
               variant="white"

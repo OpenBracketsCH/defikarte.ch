@@ -1,5 +1,5 @@
-import { GeoJSON, GeoJsonProperties, Geometry } from 'geojson';
-import { FilterSpecification, GeoJSONSourceSpecification } from 'maplibre-gl';
+import { type GeoJSON, type GeoJsonProperties, type Geometry } from 'geojson';
+import { type FilterSpecification, type GeoJSONSourceSpecification } from 'maplibre-gl';
 
 export const createAedSource = (
   data: string | GeoJSON<Geometry, GeoJsonProperties>,

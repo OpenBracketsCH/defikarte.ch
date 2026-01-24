@@ -1,5 +1,5 @@
 import className from 'classnames';
-import React, { ParamHTMLAttributes } from 'react';
+import React, { type ParamHTMLAttributes } from 'react';
 
 interface TagProps extends ParamHTMLAttributes<HTMLElement> {
   icon: string;

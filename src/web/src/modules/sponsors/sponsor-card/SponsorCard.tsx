@@ -1,7 +1,7 @@
-type SponsorCardProps = {
+interface SponsorCardProps {
   href: string;
   src: string;
-};
+}
 
 export const SponsorCard = ({ src, href }: SponsorCardProps) => {
   return (

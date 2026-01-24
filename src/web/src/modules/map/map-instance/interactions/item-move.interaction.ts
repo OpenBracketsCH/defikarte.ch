@@ -1,10 +1,10 @@
-import { FeatureCollection, GeoJsonProperties, Point } from 'geojson';
-import { GeoJSONSource, Map, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
-import { InteractionLayer, MapEventCallback } from '../../../../model/map';
+import { type FeatureCollection, type GeoJsonProperties, type Point } from 'geojson';
+import { type GeoJSONSource, type Map, type MapGeoJSONFeature, type MapMouseEvent } from 'maplibre-gl';
+import { type InteractionLayer, type MapEventCallback } from '../../../../model/map';
 
 export default class ItemMoveInteraction implements InteractionLayer {
   private mapInstance: Map;
-  private moveFeatureId: { [key: string]: string | number | null } = {};
+  private moveFeatureId: Record<string, string | number | null> = {};
   private onEvent?: MapEventCallback;
 
   constructor(mapInstance: Map, sourceId: string, onEvent?: MapEventCallback) {
@@ -33,7 +33,7 @@ export default class ItemMoveInteraction implements InteractionLayer {
     }
 
     this.moveFeatureId[this.sourceId] = featureId;
-    const source = this.mapInstance.getSource(this.sourceId) as GeoJSONSource;
+    const source = this.mapInstance.getSource<GeoJSONSource>(this.sourceId);
     if (!source) {
       console.warn('Source not found');
       return;
@@ -57,6 +57,6 @@ export default class ItemMoveInteraction implements InteractionLayer {
   };
 
   private setFeaturePositionMapEvent = (e: MapMouseEvent & { features?: MapGeoJSONFeature[] }) => {
-    this.setFeaturePosition(this.moveFeatureId[this.sourceId], e.lngLat.toArray());
+    void this.setFeaturePosition(this.moveFeatureId[this.sourceId], e.lngLat.toArray());
   };
 }

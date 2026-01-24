@@ -1,8 +1,8 @@
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
 
-type Props = {
+interface Props {
   activeBaseLayer: string;
-};
+}
 
 export const AttributionControl = ({ activeBaseLayer }: Props) => {
   const isMaptilerLayerActive = activeBaseLayer === MapConfiguration.osmVectorBasemapId;

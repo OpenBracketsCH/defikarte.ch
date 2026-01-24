@@ -7,12 +7,12 @@ import iconEditWhite from '../../../../../assets/icons/icon-edit-white.svg';
 import { Button } from '../../../../../components/ui/button/Button';
 import { CreateMode } from '../../../../../model/map';
 
-type MapButtonProps = {
+interface MapButtonProps {
   createMode: CreateMode;
   handleCancel: () => void;
   handleConfirmPosition: () => void;
   handleChangePosition: () => void;
-};
+}
 
 export const MapButtons = ({
   createMode,

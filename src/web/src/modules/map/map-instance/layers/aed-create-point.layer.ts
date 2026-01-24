@@ -1,4 +1,4 @@
-import { LayerSpecification } from 'maplibre-gl';
+import { type LayerSpecification } from 'maplibre-gl';
 import {
   COLORS,
   IMAGE_SCALE,

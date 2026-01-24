@@ -1,4 +1,4 @@
-import { FilterSpecification, LayerSpecification } from 'maplibre-gl';
+import { type FilterSpecification, type LayerSpecification } from 'maplibre-gl';
 import {
   COLORS,
   IMAGE_SCALE,

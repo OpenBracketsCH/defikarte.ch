@@ -1,26 +1,22 @@
-import { useEffect, useState } from 'react';
-import { MapEvent } from '../../../model/map';
+import { useState } from 'react';
+import { type MapEvent } from '../../../model/map';
 
-interface SourceState {
-  [key: string]: 'loading' | 'loaded' | 'abort' | 'error';
-}
+type SourceState = Record<string, 'loading' | 'loaded' | 'abort' | 'error'>;
 
 export const useMapEvents = () => {
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
   const [, setSourceState] = useState<SourceState>({});
-  const [isAnySourceLoading, setIsAnySourceLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (!isAnySourceLoading) {
-      setIsInitialized(true);
-    }
-  }, [isAnySourceLoading]);
 
   const handleMapEvent = (event: MapEvent) => {
     if (event.type === 'map-state' && event.source) {
       setSourceState(prevState => {
-        const newState = { ...prevState, [event.source as string]: event.state };
-        setIsAnySourceLoading(Object.values(newState).some(state => state === 'loading'));
+        const newState = { ...prevState, [event.source]: event.state };
+        const isAnySourceLoading = Object.values(newState).some(state => state === 'loading');
+
+        // it is important to onyl set isInitialized to true. if not the map-splash-screen appears with every load.
+        if (!isAnySourceLoading) {
+          setIsInitialized(true);
+        }
         return newState;
       });
     }

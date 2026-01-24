@@ -1,4 +1,4 @@
-import { LayerSpecification } from 'maplibre-gl';
+import { type LayerSpecification } from 'maplibre-gl';
 import { COLORS } from '../configuration/constants';
 
 export const createUserLocationLayers = (baseId: string, source: string): LayerSpecification[] => {

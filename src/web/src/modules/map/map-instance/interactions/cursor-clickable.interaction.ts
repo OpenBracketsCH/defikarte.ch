@@ -1,5 +1,5 @@
-import { Map, MapGeoJSONFeature, MapMouseEvent } from 'maplibre-gl';
-import { InteractionLayer } from '../../../../model/map';
+import { type Map, type MapGeoJSONFeature, type MapMouseEvent } from 'maplibre-gl';
+import { type InteractionLayer } from '../../../../model/map';
 
 export default class CursorClickableInteraction implements InteractionLayer {
   private mapInstance: Map;

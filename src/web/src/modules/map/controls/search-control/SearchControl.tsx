@@ -1,10 +1,10 @@
 import className from 'classnames';
-import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import { MapGeoJSONFeature } from 'maplibre-gl';
+import { type Feature, type FeatureCollection, type GeoJsonProperties, type Geometry } from 'geojson';
+import { type MapGeoJSONFeature } from 'maplibre-gl';
 import {
-  Dispatch,
-  RefObject,
-  SetStateAction,
+  type Dispatch,
+  type RefObject,
+  type SetStateAction,
   useCallback,
   useEffect,
   useRef,
@@ -14,9 +14,9 @@ import { useTranslation } from 'react-i18next';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { useOnOutsideKeyDown } from '../../../../hooks/useOnOutsideKeyDown';
 import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
-import { FilterType, MapEvent } from '../../../../model/map';
+import { type FilterType, type MapEvent } from '../../../../model/map';
 import { searchAed } from '../../../../services/aed-search.service';
-import { MapInstance } from '../../map-instance/map-instance';
+import { type MapInstance } from '../../map-instance/map-instance';
 import iconClose from './../../../../assets/icons/icon-close-dark-green.svg';
 import iconFilter from './../../../../assets/icons/icon-filter-dark-green.svg';
 import iconGpsOff from './../../../../assets/icons/icon-gps-off-circle-green.svg';
@@ -26,14 +26,14 @@ import { FilterControl } from './filter-control/FilterControl';
 import { SearchResults } from './search-results/SearchResults';
 import backend from '../../../../api/backend';
 
-type Props = {
+interface Props {
   map: MapInstance | null;
   isGpsActive: boolean;
   setIsGpsActive: Dispatch<SetStateAction<boolean>>;
   onFeatureSelect: (event: MapEvent) => void;
   activeOverlays: FilterType[];
   setActiveOverlays: Dispatch<SetStateAction<FilterType[]>>;
-};
+}
 
 export const SearchControl = ({
   map,
@@ -67,7 +67,7 @@ export const SearchControl = ({
         try {
           const results = await backend.searchAddress(searchText, { signal });
           const mapResults =
-            (map && (await searchAed(searchText, map.getActiveOverlaySourceIds(), map))) || [];
+            (map && (await searchAed(searchText, map.getActiveOverlaySourceIds(), map))) ?? [];
 
           // Only update if not aborted
           if (!signal.aborted) {
@@ -90,8 +90,8 @@ export const SearchControl = ({
       }
     };
 
-    const timer = setTimeout(() => {
-      search();
+    const timer = setTimeout(async () => {
+      await search();
     }, 500);
 
     return () => {
@@ -103,7 +103,7 @@ export const SearchControl = ({
     };
   }, [searchText, map]);
 
-  const onSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (!value) {
       setSearchText('');
@@ -123,7 +123,7 @@ export const SearchControl = ({
         properties: feature.properties,
         id: feature.id,
         type: feature.type,
-        source: feature.properties?.source,
+        source: feature.properties?.source as string,
       } as MapGeoJSONFeature;
 
       onFeatureSelect({

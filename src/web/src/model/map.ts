@@ -1,5 +1,5 @@
-import { Feature, GeoJsonProperties, Point } from 'geojson';
-import { LayerSpecification, Map, MapGeoJSONFeature, SourceSpecification } from 'maplibre-gl';
+import { type Feature, type GeoJsonProperties, type Point } from 'geojson';
+import { type LayerSpecification, type Map, type MapGeoJSONFeature, type SourceSpecification } from 'maplibre-gl';
 
 export enum FilterType {
   'alwaysAvailable',

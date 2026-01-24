@@ -1,11 +1,11 @@
-import { RefObject, useEffect } from 'react';
+import { type RefObject, useEffect } from 'react';
 
-type Options = {
+interface Options {
   active: boolean;
   keys: string[];
-  refsToIgnore?: Array<RefObject<HTMLElement | null>>;
+  refsToIgnore?: RefObject<HTMLElement | null>[];
   onOutsidePointerDown: () => void;
-};
+}
 
 /**
  * Calls `onOutsidePointerDown` when a pointerdown event happens outside all given refs.
@@ -29,7 +29,9 @@ export const useOnOutsideKeyDown = ({
       if (!target) return;
 
       for (const ref of refsToIgnore) {
-        if (ref?.current && ref.current.contains(target)) return;
+        if (ref?.current?.contains(target)) {
+          return;
+        }
       }
 
       onOutsidePointerDown();

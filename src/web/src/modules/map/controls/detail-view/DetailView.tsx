@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { Feature, Point } from 'geojson';
+import { type Feature, type Point } from 'geojson';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
@@ -27,13 +27,13 @@ const generateGoogleMapsWalkingLink = (lon: number, lat: number): string => {
   return directionUrl;
 };
 
-type DetailViewProps = {
+interface DetailViewProps {
   feature: Feature | null;
   userLocation: GeolocationPosition | null;
   onCenterFeature: () => void;
   onClose: () => void;
   onEdit: () => void;
-};
+}
 
 export const DetailView = ({
   feature,
@@ -46,12 +46,12 @@ export const DetailView = ({
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [propsVisible, setPropsVisible] = useState(false);
 
-  const props = feature?.properties || {};
+  const props = feature?.properties ?? {};
   const coords = (feature?.geometry as Point)?.coordinates;
-  
+
   // Memoize expensive opening hours check
-  const isOpen = useMemo(() => isOpenNow(props.opening_hours), [props.opening_hours]);
-  
+  const isOpen = useMemo(() => isOpenNow(props.opening_hours as string), [props.opening_hours]);
+
   // Memoize distance calculation
   const distance = useMemo(
     () =>
@@ -70,13 +70,13 @@ export const DetailView = ({
     [userLocation, coords]
   );
 
-  if (!feature || !feature?.properties) {
+  if (!feature?.properties) {
     return null;
   }
-  
+
   const isOutdoor = props.indoor === 'no';
   const isAccess = props.access === 'yes';
-  
+
   const isSmallerThan1000 = distance && distance < 1000;
   const distanceText =
     distance &&
@@ -84,13 +84,13 @@ export const DetailView = ({
       distance: isSmallerThan1000 ? distance.toFixed(0) : (distance / 1000).toFixed(1),
       unit: isSmallerThan1000 ? 'm' : 'km',
     });
-  const name = props['defibrillator:location'] ?? props.description ?? props.operator ?? 'n/A';
+  const name =
+    (props['defibrillator:location'] as string) ?? props.description ?? props.operator ?? 'n/A';
 
   const hasTags =
-    isOpen ||
-    (props.opening_hours !== undefined && !isOpen) ||
-    distance ||
-    props.access ||
+    (isOpen || (props.opening_hours !== undefined && !isOpen)) ??
+    distance ??
+    props.access ??
     props.indoor;
   const directionsUrl = generateGoogleMapsWalkingLink(coords[0], coords[1]);
   const containerClass = cn(

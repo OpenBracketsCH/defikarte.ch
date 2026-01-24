@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import iconExternalLinkMiddleGreen from '../../../assets/icons/icon-external-link-middle-green.svg';
 import iconQuestionGrey from '../../../assets/icons/icon-question-grey.svg';
-import { TooltipData } from '../../../model/app';
+import { type TooltipData } from '../../../model/app';
 
-type TooltipProps = {
+interface TooltipProps {
   tooltip?: TooltipData;
-};
+}
 
 export const Tooltip = ({ tooltip }: TooltipProps) => {
   const { t } = useTranslation();

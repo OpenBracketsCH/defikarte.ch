@@ -1,4 +1,4 @@
-import { FilterSpecification } from 'maplibre-gl';
+import { type FilterSpecification } from 'maplibre-gl';
 
 export const alwaysAvailableFilterOverride: FilterSpecification = [
   'match',

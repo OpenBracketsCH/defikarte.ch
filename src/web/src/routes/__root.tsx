@@ -24,15 +24,7 @@ function RootComponent() {
   const isEmbedded = matchRoute({ to: '/map' });
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isMedium = useMediaQuery({ maxWidth: 1024 });
-  const [position, setPosition] = useState<'top-right' | 'bottom-center'>('top-right');
-
-  useEffect(() => {
-    if (isMobile) {
-      setPosition('bottom-center');
-    } else {
-      setPosition('top-right');
-    }
-  }, [isMobile]);
+  const position: 'top-right' | 'bottom-center' = isMobile ? 'bottom-center' : 'top-right';
 
   return (
     <div className="flex flex-col">

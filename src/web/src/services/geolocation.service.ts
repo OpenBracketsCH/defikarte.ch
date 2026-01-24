@@ -1,13 +1,24 @@
+const locationErrorMessages = {
+  [`${GeolocationPositionError.PERMISSION_DENIED}`]: 'locationPermissionDenied',
+  [`${GeolocationPositionError.POSITION_UNAVAILABLE}`]: 'locationUnavailable',
+  [`${GeolocationPositionError.TIMEOUT}`]: 'locationTimeout',
+};
+
 export class GeolocationService {
-  private watchId: number = 0;
+  private watchId = 0;
 
   public getCurrentPosition(options?: PositionOptions): Promise<GeolocationPosition | null> {
     return new Promise<GeolocationPosition | null>((resolve, reject) => {
       if (!navigator.geolocation) {
-        reject({
-          code: GeolocationPositionError.POSITION_UNAVAILABLE,
-          message: 'Geolocation is not available',
-        } as GeolocationPositionError);
+        const messageKey = locationErrorMessages[GeolocationPositionError.POSITION_UNAVAILABLE];
+        reject(
+          new Error(messageKey, {
+            cause: {
+              code: GeolocationPositionError.POSITION_UNAVAILABLE,
+              message: 'Geolocation is not available',
+            } as GeolocationPositionError,
+          })
+        );
         return;
       }
 
@@ -16,7 +27,7 @@ export class GeolocationService {
       };
 
       const errorCallback = (e: GeolocationPositionError) => {
-        reject(e);
+        reject(new Error(locationErrorMessages[e.code], { cause: e }));
       };
 
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);

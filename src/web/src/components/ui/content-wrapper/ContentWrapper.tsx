@@ -1,13 +1,11 @@
 import cn from 'classnames';
-import { forwardRef } from 'react';
 
 interface ContentWrapperProps extends React.BaseHTMLAttributes<HTMLDivElement> {
   variant?: 'white' | 'beige' | 'green-gradient' | 'green';
   paddingY?: 'small' | 'regular' | 'large';
 }
 
-export const ContentWrapper = forwardRef<HTMLDivElement, ContentWrapperProps>(
-  ({ children, className, variant = 'white', paddingY = 'regular', ...props }, ref) => {
+export const ContentWrapper = ({ ref, children, className, variant = 'white', paddingY = 'regular', ...props }: ContentWrapperProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const containerClasses = cn('w-[100%]', 'flex', 'justify-center', 'items-center', {
       'bg-primary-100-white': variant === 'white',
       'bg-beige': variant === 'beige',
@@ -38,5 +36,4 @@ export const ContentWrapper = forwardRef<HTMLDivElement, ContentWrapperProps>(
         <div className={contentClasses}>{children}</div>
       </div>
     );
-  }
-);
+  };

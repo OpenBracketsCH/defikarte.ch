@@ -1,14 +1,14 @@
-import { type Dispatch, type SetStateAction, createContext, useContext } from 'react';
+import { type Dispatch, type SetStateAction, createContext, use } from 'react';
 
-type FullScreenContextType = {
+interface FullScreenContextType {
   isMapFullscreen: boolean;
   setIsMapFullscreen: Dispatch<SetStateAction<boolean>>;
-};
+}
 
 export const FullScreenContext = createContext<FullScreenContextType | null>(null);
 
 export const useFullscreenState = () => {
-  const context = useContext(FullScreenContext);
+  const context = use(FullScreenContext);
   if (!context) throw new Error('useFullscreenState must be used within FullScreenContext');
   return context;
 };

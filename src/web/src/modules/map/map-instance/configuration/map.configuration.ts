@@ -1,4 +1,4 @@
-import { StyleSpecification } from 'maplibre-gl';
+import { type StyleSpecification } from 'maplibre-gl';
 import AppConfiguration from '../../../../configuration/app.configuration';
 import { createOsmLayer } from '../layers/osm.layer';
 import { createOsmSource } from '../sources/osm.source';
@@ -32,7 +32,7 @@ export class MapConfiguration {
 
   public static aedGeoJsonUrl = `${AppConfiguration.baseUrl}v3/aed?code=${AppConfiguration.backendApiKey}`;
 
-  public static baseLayers: { [key: string]: string | StyleSpecification } = {
+  public static baseLayers: Record<string, string | StyleSpecification> = {
     [this
       .osmVectorBasemapId]: `https://api.maptiler.com/maps/0197f0bb-e6c3-791b-bc7d-02b7b0afea60/style.json?key=${AppConfiguration.maptilerApiKey}`,
     [this.osmBaseMapId]: {

@@ -12,26 +12,26 @@ import { useHandleNextViewClick } from '../../hooks/useHandleNextViewClick';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../app-advertisment/AppAdvertisment';
 
-type InfoCardProps = {
+interface InfoCardProps {
   title: string;
   description: string;
-};
+}
+
+const InfoCard = ({ title, description }: InfoCardProps) => (
+  <div className="p-8 bg-primary-100-white rounded-2xl h-full">
+    <Text variant="primary" size="large" className="font-semibold">
+      {title}
+    </Text>
+    <Text variant="primary" size="regular" weight="light">
+      {description}
+    </Text>
+  </div>
+);
 
 export const Project = () => {
   const { t } = useTranslation('static');
   const { a } = useLocalizedAsset();
   const { ref: firstViewRef, onClick: handleNextViewClick } = useHandleNextViewClick();
-
-  const InfoCard = ({ title, description }: InfoCardProps) => (
-    <div className="p-8 bg-primary-100-white rounded-2xl h-full">
-      <Text variant="primary" size="large" className="font-semibold">
-        {title}
-      </Text>
-      <Text variant="primary" size="regular" weight="light">
-        {description}
-      </Text>
-    </div>
-  );
 
   return (
     <div>

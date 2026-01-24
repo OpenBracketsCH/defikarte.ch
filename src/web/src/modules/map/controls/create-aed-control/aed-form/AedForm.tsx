@@ -1,6 +1,6 @@
-import { Feature, FeatureCollection } from 'geojson';
-import { Dispatch, SetStateAction } from 'react';
-import { useForm } from 'react-hook-form';
+import { type Feature, type FeatureCollection } from 'geojson';
+import { type Dispatch, type SetStateAction } from 'react';
+import { type useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import backend from '../../../../../api/backend';
@@ -10,23 +10,23 @@ import { Button } from '../../../../../components/ui/button/Button';
 import { CustomToast } from '../../../../../components/ui/custom-toast/CustomToast';
 import { SelectField } from '../../../../../components/ui/select-field/SelectField';
 import { TextField } from '../../../../../components/ui/text-field/TextField';
-import { AedData } from '../../../../../model/app';
+import { type AedData } from '../../../../../model/app';
 import { CreateMode } from '../../../../../model/map';
 import {
   areOpeningHoursValid,
   formatPhoneNumber,
   isPhoneNumberValid,
 } from '../../../../../services/custom-validation.service';
-import { MapInstance } from '../../../map-instance/map-instance';
+import { type MapInstance } from '../../../map-instance/map-instance';
 
 const toastId = 'aed-toast';
 
-type AedFormProps = {
+interface AedFormProps {
   map: MapInstance | null;
   form: ReturnType<typeof useForm<AedData>>;
   setCreateMode: Dispatch<SetStateAction<CreateMode>>;
   onSuccess: (feature: Feature) => void;
-};
+}
 
 export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) => {
   const { t } = useTranslation();
@@ -123,7 +123,10 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
   const title = watch('id') ? t('editAed') : t('createAed');
   return (
     <div className="absolute z-10 h-auto lg:w-[555px] md:max-h-[600px] lg:max-h-full lg:h-auto rounded-2xl bottom-16 md:bottom-22 top-4 right-4 left-4 lg:bottom-6 md:top-6 md:right-6 md:left-6 lg:left-auto bg-primary-100-white shadow-custom-lg shadow-green-shadow-64">
-      <form className="flex flex-col h-[100%] justify-between" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col h-[100%] justify-between"
+        onSubmit={void handleSubmit(onSubmit)}
+      >
         <h1 className="border-b p-4 border-primary-05-green-05">{title}</h1>
         <div className="flex flex-col flex-grow justify-start px-4 pt-5 pb-4 gap-4 overflow-auto border-b border-primary-05-green-05">
           <TextField

@@ -1,12 +1,15 @@
-import { FeatureCollection } from 'geojson';
-import { MapInstance } from '../modules/map/map-instance/map-instance';
+import type { FeatureCollection } from 'geojson';
+import type { MapInstance } from '../modules/map/map-instance/map-instance';
 
 export const searchAed = async (searchText: string, sourceIds: string[], map: MapInstance) => {
   if (!searchText || searchText.length < 3) {
     return [];
   }
 
-  const data: FeatureCollection = { features: [], type: 'FeatureCollection' };
+  const data: FeatureCollection = {
+    features: [],
+    type: 'FeatureCollection',
+  };
   for (const sourceId of sourceIds) {
     const sourceData = await map.getGeoJsonSourceData(sourceId);
     sourceData.features.forEach(feature => {
@@ -25,11 +28,11 @@ export const searchAed = async (searchText: string, sourceIds: string[], map: Ma
 
   const results = data.features
     .map(feature => {
-      const properties = feature.properties || {};
-      const name = properties.name || '';
-      const defibrillatorLocation = properties['defibrillator:location'] || '';
-      const description = properties.description || '';
-      const operator = properties.operator || '';
+      const properties = feature.properties ?? {};
+      const name = (properties.name as string) ?? '';
+      const defibrillatorLocation = (properties['defibrillator:location'] as string) ?? '';
+      const description = (properties.description as string) ?? '';
+      const operator = (properties.operator as string) ?? '';
 
       const countMatches =
         doesTextMatchWithRegex(searchRegex, name) +

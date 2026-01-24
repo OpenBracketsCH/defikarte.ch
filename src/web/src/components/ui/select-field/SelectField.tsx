@@ -1,8 +1,8 @@
 import cn from 'classnames';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useIsMobileAgent } from '../../../hooks/useIsMobileAgent';
-import { TooltipData } from '../../../model/app';
+import { isMobileAgent } from '../../../services/isMobileAgent';
+import { type TooltipData } from '../../../model/app';
 import { Tooltip } from '../tooltip/Tooltip';
 
 interface SelectFieldProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
@@ -15,7 +15,7 @@ interface SelectFieldProps extends React.SelectHTMLAttributes<HTMLSelectElement>
 export const SelectField = ({ label, tooltip, error, ...props }: SelectFieldProps) => {
   const { t } = useTranslation();
   const id = useId();
-  const isMobile = useIsMobileAgent();
+  const isMobile = isMobileAgent();
 
   return (
     <div className="flex flex-col gap-1.5 text-xs leading-[150%]">

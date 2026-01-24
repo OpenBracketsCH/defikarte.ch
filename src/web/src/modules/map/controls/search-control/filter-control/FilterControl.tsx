@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FilterType } from '../../../../../model/map';
 import iconDefiGreen from './../../../../../assets/icons/icon-defi-circle-green.svg';
@@ -6,13 +5,12 @@ import iconDefiOrange from './../../../../../assets/icons/icon-defi-circle-orang
 import iconOpeningHours from './../../../../../assets/icons/icon-opening-times-circle-green.svg';
 import { FilterItem } from './filter-item/FilterItem';
 
-type FilterControlProps = {
+interface FilterControlProps {
   activeOverlays: FilterType[];
   setActiveOverlays: React.Dispatch<React.SetStateAction<FilterType[]>>;
-};
+}
 
-export const FilterControl = forwardRef<HTMLDivElement, FilterControlProps>(
-  ({ activeOverlays, setActiveOverlays }: FilterControlProps, ref) => {
+export const FilterControl = ({ ref, activeOverlays, setActiveOverlays }: FilterControlProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const { t } = useTranslation();
 
     const onFilterChange = (e: React.ChangeEvent<HTMLInputElement>, value: FilterType) => {
@@ -56,5 +54,4 @@ export const FilterControl = forwardRef<HTMLDivElement, FilterControlProps>(
         />
       </div>
     );
-  }
-);
+  };

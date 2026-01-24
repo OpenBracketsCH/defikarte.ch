@@ -7,9 +7,9 @@ import { ContentWrapper } from '../../components/ui/content-wrapper/ContentWrapp
 import { Text } from '../../components/ui/text/Text';
 import { useLocalizedAsset } from '../../hooks/useLocalizedAsset';
 
-type AppAdvertismentProps = {
+interface AppAdvertismentProps {
   variant?: 'white' | 'green';
-};
+}
 
 export const AppAdvertisment = ({ variant = 'green' }: AppAdvertismentProps) => {
   const { t } = useTranslation('static');

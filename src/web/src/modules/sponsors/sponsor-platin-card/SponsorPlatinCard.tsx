@@ -2,12 +2,12 @@ import iconExternalLinkMiddleGreen from '../../../assets/icons/icon-external-lin
 import { IconButton } from '../../../components/ui/icon-button/IconButton';
 import { Text } from '../../../components/ui/text/Text';
 
-type SponsorPlatinCardProps = {
+interface SponsorPlatinCardProps {
   title: string;
   description: string;
   src: string;
   href: string;
-};
+}
 
 export const SponsorPlatinCard = ({ title, description, src, href }: SponsorPlatinCardProps) => {
   return (

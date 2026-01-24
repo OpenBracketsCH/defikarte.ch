@@ -1,10 +1,10 @@
 import circle from '@turf/circle';
-import { Feature, FeatureCollection, Point, Position } from 'geojson';
-import { LngLatBounds, LngLatLike } from 'maplibre-gl';
+import type { Feature, FeatureCollection, Point, Position } from 'geojson';
+import { LngLatBounds, type LngLatLike } from 'maplibre-gl';
 import { useCallback, useEffect, useState } from 'react';
 import { GeolocationService } from '../../../services/geolocation.service';
 import { MapConfiguration } from '../map-instance/configuration/map.configuration';
-import { MapInstance } from '../map-instance/map-instance';
+import { type MapInstance } from '../map-instance/map-instance';
 import { usePrevious } from './usePrevious';
 
 const calculateBounds = (position: GeolocationPosition): LngLatBounds => {
@@ -51,15 +51,9 @@ const geolocationOptions: PositionOptions = {
   maximumAge: 1000 * 60 * 5, // 5 minutes
 };
 
-const locationErrorMessages = {
-  [`${GeolocationPositionError.PERMISSION_DENIED}`]: 'locationPermissionDenied',
-  [`${GeolocationPositionError.POSITION_UNAVAILABLE}`]: 'locationUnavailable',
-  [`${GeolocationPositionError.TIMEOUT}`]: 'locationTimeout',
-};
-
-type Props = {
+interface Props {
   map: MapInstance | null;
-};
+}
 
 export const useUserLocation = ({ map }: Props) => {
   const [geolocationService] = useState(() => new GeolocationService());
@@ -99,7 +93,7 @@ export const useUserLocation = ({ map }: Props) => {
         setUserLocation(pos);
       },
       error => {
-        handleError(locationErrorMessages[error.code]);
+        handleError(error.message);
       },
       geolocationOptions
     );
@@ -132,8 +126,8 @@ export const useUserLocation = ({ map }: Props) => {
 
           watchUserPosition();
         } catch (error) {
-          if (error instanceof GeolocationPositionError) {
-            handleError(locationErrorMessages[error.code]);
+          if (error instanceof Error && error.cause instanceof GeolocationPositionError) {
+            handleError(error.message);
           } else {
             handleError('unknownLocationErrorOccurred');
           }
@@ -145,7 +139,7 @@ export const useUserLocation = ({ map }: Props) => {
       }
     };
 
-    handleIsActive();
+    void handleIsActive();
   }, [
     geolocationService,
     isActive,

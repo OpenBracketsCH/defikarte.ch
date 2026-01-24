@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
-type Props = {
+interface Props {
   checked: boolean;
   label: string;
   icon: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 export const FilterItem = ({ checked, label, icon, onChange }: Props) => {
   const id = useMemo(() => Math.random().toString(36).substring(7), []);

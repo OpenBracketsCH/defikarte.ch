@@ -3,9 +3,9 @@ import iconChevronDownMiddleGreenM from '../../../assets/landingpages/home/icon-
 import iconChevronDownMiddleGreenS from '../../../assets/landingpages/home/icon-chevron-down-middle-green-s.svg';
 import { IconButton } from '../../../components/ui/icon-button/IconButton';
 
-type MapFooterProps = {
+interface MapFooterProps {
   onNextViewClick: () => void;
-};
+}
 
 export const MapFooter = ({ onNextViewClick }: MapFooterProps) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });

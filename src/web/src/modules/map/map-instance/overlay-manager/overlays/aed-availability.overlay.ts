@@ -1,9 +1,14 @@
-import { GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
 import {
-  InteractionLayer,
-  MapEventCallback,
-  OverlayStrategy,
-  RefreshableOverlayStrategy,
+  type GeoJSONSource,
+  type LayerSpecification,
+  type Map,
+  type GeoJSONSourceSpecification,
+} from 'maplibre-gl';
+import {
+  type InteractionLayer,
+  type MapEventCallback,
+  type OverlayStrategy,
+  type RefreshableOverlayStrategy,
 } from '../../../../../model/map';
 import { requestAedDataByCurrentAvailability } from '../../../../../services/aed-data.service';
 import { MapConfiguration } from '../../configuration/map.configuration';
@@ -29,11 +34,11 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy, Refresha
     return MapConfiguration.aedAvailabilitySourceId;
   }
 
-  async createSource() {
+  async createSource(): Promise<GeoJSONSourceSpecification> {
     // optimize performance when base-layer changes and source is already loaded
-    const source = this.map.getSource(this.getSourceId()) as GeoJSONSource;
+    const source = this.map.getSource(this.getSourceId())!;
     if (source) {
-      return source.serialize();
+      return source.serialize() as GeoJSONSourceSpecification;
     }
 
     // Abort any previous request
@@ -46,7 +51,7 @@ export class AedAvailabilityOverlayStrategy implements OverlayStrategy, Refresha
   }
 
   async refreshSourceData(map: Map): Promise<void> {
-    const source = map.getSource(this.getSourceId()) as GeoJSONSource;
+    const source = map.getSource<GeoJSONSource>(this.getSourceId())!;
     if (!source) {
       console.warn('Source not found', this.getSourceId());
       return;

@@ -3,11 +3,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import iconChevronDownWhite from '../../../assets/icons/icon-chevron-down-white.svg';
 import iconLanguageSwitchCircleGreen from '../../../assets/navigation/icon-language-switch-circle-green.svg';
+import type { i18n } from 'i18next';
 
-type Language = {
+interface Language {
   code: string;
   label: string;
-};
+}
 
 const languages: Language[] = [
   { code: 'de', label: 'Deutsch' },
@@ -16,27 +17,29 @@ const languages: Language[] = [
   { code: 'it', label: 'Italiano' },
 ];
 
-type LanguageMenuProps = {
+interface LanguageMenuProps {
   variant: 'light' | 'dark';
+}
+
+const selectInitialLanguage = (i18n: i18n) => {
+  const lang = languages.find(x => x.code == i18n.resolvedLanguage);
+  return lang ?? languages[0];
 };
 
 export const LanguageMenu = ({ variant }: LanguageMenuProps) => {
   const { i18n } = useTranslation();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(languages[0]);
-
-  useEffect(() => {
-    const lang = languages.find(x => x.code == i18n.resolvedLanguage);
-    setSelectedLanguage(lang || languages[0]);
-  }, [i18n.resolvedLanguage]);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(() =>
+    selectInitialLanguage(i18n)
+  );
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const selectLanguage = (language: Language) => {
-    i18n.changeLanguage(language.code);
+    void i18n.changeLanguage(language.code);
     setSelectedLanguage(language);
     setIsOpen(false);
   };

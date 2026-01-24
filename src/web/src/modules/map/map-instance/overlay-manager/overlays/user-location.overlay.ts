@@ -1,6 +1,6 @@
-import { FeatureCollection } from 'geojson';
-import { GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
-import { InteractionLayer, OverlayStrategy } from '../../../../../model/map';
+import { type FeatureCollection } from 'geojson';
+import { type GeoJSONSource, type LayerSpecification, type Map } from 'maplibre-gl';
+import { type InteractionLayer, type OverlayStrategy } from '../../../../../model/map';
 import { MapConfiguration } from '../../configuration/map.configuration';
 import { createUserLocationLayers } from '../../layers/user-location.layer';
 import { createGeoJSONSource } from '../../sources/geojson.source';
@@ -17,7 +17,7 @@ export class UserLocationOverlayStrategy implements OverlayStrategy {
   }
 
   async createSource() {
-    const source = this.map.getSource(this.getSourceId()) as GeoJSONSource;
+    const source = this.map.getSource<GeoJSONSource>(this.getSourceId());
     let data: GeoJSON.GeoJSON = {
       type: 'FeatureCollection',
       features: [],

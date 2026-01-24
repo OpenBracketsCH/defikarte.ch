@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next';
 import iconPlusWhite from '../../../../assets/icons/icon-plus-white.svg';
 import { Button } from '../../../../components/ui/button/Button';
 
-type CreateButtonControlProps = {
+interface CreateButtonControlProps {
   onCreateStart: () => void;
-};
+}
 
 export const CreateButtonControl = ({ onCreateStart }: CreateButtonControlProps) => {
   const { t } = useTranslation();

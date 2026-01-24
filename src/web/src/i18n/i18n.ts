@@ -17,7 +17,7 @@ const resources = {
   it: { translation: it, static: itStatic },
 };
 
-i18n
+void i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({

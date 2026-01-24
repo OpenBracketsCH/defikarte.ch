@@ -1,9 +1,9 @@
-import { FilterSpecification, GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
+import { type FilterSpecification, type GeoJSONSource, type LayerSpecification, type Map } from 'maplibre-gl';
 import {
-  InteractionLayer,
-  MapEventCallback,
-  OverlayStrategy,
-  RefreshableOverlayStrategy,
+  type InteractionLayer,
+  type MapEventCallback,
+  type OverlayStrategy,
+  type RefreshableOverlayStrategy,
 } from '../../../../../model/map';
 import { MapConfiguration } from '../../configuration/map.configuration';
 import ClusterZoomInteraction from '../../interactions/cluster-zoom.interaction';
@@ -32,7 +32,7 @@ export class AedOverlayStrategy implements OverlayStrategy, RefreshableOverlaySt
   }
 
   refreshSourceData(map: Map): Promise<void> {
-    const source = map.getSource(this.getSourceId()) as GeoJSONSource;
+    const source = map.getSource<GeoJSONSource>(this.getSourceId());
     if (!source) {
       console.warn('Source not found', this.getSourceId());
       return Promise.resolve();

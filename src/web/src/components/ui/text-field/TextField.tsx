@@ -1,8 +1,8 @@
 import cn from 'classnames';
-import { HTMLInputTypeAttribute, useId } from 'react';
+import { type HTMLInputTypeAttribute, useId } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useIsMobileAgent } from '../../../hooks/useIsMobileAgent';
-import { TooltipData } from '../../../model/app';
+import { isMobileAgent } from '../../../services/isMobileAgent';
+import { type TooltipData } from '../../../model/app';
 import { Tooltip } from '../tooltip/Tooltip';
 
 interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -15,7 +15,7 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export const TextField = ({ label, type, tooltip, error, ...props }: TextFieldProps) => {
   const { t } = useTranslation();
   const id = useId();
-  const isMobile = useIsMobileAgent();
+  const isMobile = isMobileAgent();
 
   return (
     <div className="flex flex-col gap-1.5 text-xs leading-[150%]">

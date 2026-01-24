@@ -7,6 +7,25 @@ interface TextProps extends React.ParamHTMLAttributes<HTMLParagraphElement | HTM
   center?: boolean;
 }
 
+interface TProps extends React.ParamHTMLAttributes<HTMLParagraphElement | HTMLHeadElement> {
+  size?: 'small' | 'regular' | 'medium' | 'large' | 'x-large';
+}
+
+const T = ({ size, ...props }: TProps) => {
+  switch (size) {
+    case 'x-large':
+      return <h1 {...props}></h1>;
+    case 'large':
+      return <h2 {...props}></h2>;
+    case 'medium':
+      return <h3 {...props}></h3>;
+    case 'regular':
+    case 'small':
+    default:
+      return <p {...props}></p>;
+  }
+};
+
 export const Text = ({
   children,
   className,
@@ -16,21 +35,6 @@ export const Text = ({
   center = false,
   ...props
 }: TextProps) => {
-  const T = (props: React.ParamHTMLAttributes<HTMLParagraphElement | HTMLHeadElement>) => {
-    switch (size) {
-      case 'x-large':
-        return <h1 {...props}></h1>;
-      case 'large':
-        return <h2 {...props}></h2>;
-      case 'medium':
-        return <h3 {...props}></h3>;
-      case 'regular':
-      case 'small':
-      default:
-        return <p {...props}></p>;
-    }
-  };
-
   const classNames = cn(
     'max-w-full lg:max-w-[700px]',
     {

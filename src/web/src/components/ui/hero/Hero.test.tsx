@@ -9,7 +9,7 @@ describe('Hero', () => {
         buttonIcon=""
         buttonText=""
         description={[]}
-        onButtonClick={() => {}}
+        onButtonClick={() => undefined}
         title="click me"
       />
     );

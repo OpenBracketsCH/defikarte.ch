@@ -1,4 +1,4 @@
-import { RasterSourceSpecification } from 'maplibre-gl';
+import { type RasterSourceSpecification } from 'maplibre-gl';
 
 export const createOsmSource = (): RasterSourceSpecification => {
   return {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { StyleSpecification } from "maplibre-gl";
+import { type StyleSpecification } from "maplibre-gl";
 
 export const requestStyleSpecification = async (
   styleUrl: string

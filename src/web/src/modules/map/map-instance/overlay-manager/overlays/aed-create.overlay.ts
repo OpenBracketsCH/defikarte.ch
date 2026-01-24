@@ -1,6 +1,10 @@
-import { FeatureCollection } from 'geojson';
-import { GeoJSONSource, LayerSpecification, Map } from 'maplibre-gl';
-import { InteractionLayer, MapEventCallback, OverlayStrategy } from '../../../../../model/map';
+import { type FeatureCollection } from 'geojson';
+import {
+  type LayerSpecification,
+  type Map,
+  type GeoJSONSourceSpecification
+} from 'maplibre-gl';
+import { type InteractionLayer, type MapEventCallback, type OverlayStrategy } from '../../../../../model/map';
 import { MapConfiguration } from '../../configuration/map.configuration';
 import ItemMoveInteraction from '../../interactions/item-move.interaction';
 import { createAedCreateMarkerLayers as createAedCreatePointLayers } from '../../layers/aed-create-point.layer';
@@ -18,10 +22,10 @@ export class AedCreateOverlayStrategy implements OverlayStrategy {
     return MapConfiguration.aedCreateSourceId;
   }
 
-  async createSource() {
-    const source = this.map.getSource(this.getSourceId()) as GeoJSONSource;
+  createSource(): GeoJSONSourceSpecification {
+    const source = this.map.getSource(this.getSourceId())!;
     if (source) {
-      return source.serialize();
+      return source.serialize() as GeoJSONSourceSpecification;
     }
 
     const data: GeoJSON.GeoJSON = {

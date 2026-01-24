@@ -1,4 +1,4 @@
-import { RasterLayerSpecification } from 'maplibre-gl';
+import { type RasterLayerSpecification } from 'maplibre-gl';
 
 export const createOsmLayer = (id: string, source: string) => {
   return {

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Feature } from 'geojson';
+import { type Feature } from 'geojson';
 import { useTranslation } from 'react-i18next';
 import iconAccessCircleGreen from '../../../../../assets/icons/icon-access-circle-green.svg';
 import iconAccessCircleGrey from '../../../../../assets/icons/icon-access-circle-grey.svg';
@@ -19,15 +19,15 @@ import iconTimeCircleGreen from '../../../../../assets/icons/icon-time-circle-gr
 import iconTimeCircleGrey from '../../../../../assets/icons/icon-time-circle-grey.svg';
 import { ItemProperty } from './item-property/ItemProperty';
 
-type FeaturePropsListProps = {
+interface FeaturePropsListProps {
   feature: Feature;
   isOpen: boolean;
   className?: string;
-};
+}
 
 export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsListProps) => {
   const { t } = useTranslation();
-  const props = feature.properties || {};
+  const props = feature.properties ?? {};
   const containerClass = classNames(className, 'flex', 'flex-col', 'gap-3');
   return (
     <div className={containerClass}>
@@ -35,55 +35,55 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
         <ItemProperty
           icon={isOpen ? iconTimeCircleGreen : iconTimeCircleGrey}
           title={t('openingHours')}
-          value={props.opening_hours}
+          value={props.opening_hours as string}
         />
       )}
       {props.access && (
         <ItemProperty
           icon={isOpen ? iconAccessCircleGreen : iconAccessCircleGrey}
           title={t('access')}
-          value={t(props.access)}
+          value={t(props.access as string)}
         />
       )}
       {props.indoor && (
         <ItemProperty
           icon={isOpen ? iconHouseCircleGreen : iconHouseCircleGrey}
           title={t('isIndoor')}
-          value={t(props.indoor)}
+          value={t(props.indoor as string)}
         />
       )}
       {props.level && (
         <ItemProperty
           icon={isOpen ? iconStairsCircleGreen : iconStairsCircleGrey}
           title={t('level')}
-          value={props.level}
+          value={props.level as string}
         />
       )}
       {props.description && (
         <ItemProperty
           icon={isOpen ? iconInfoCircleGreen : iconInfoCircleGrey}
           title={t('description')}
-          value={props.description}
+          value={props.description as string}
         />
       )}
       {props.operator && (
         <ItemProperty
           icon={isOpen ? iconProfileCircleGreen : iconProfileCircleGrey}
           title={t('operator')}
-          value={props.operator}
+          value={props.operator as string}
         />
       )}
       {props.phone && (
         <ItemProperty
           icon={isOpen ? iconPhoneCircleGreen : iconPhoneCircleGrey}
           title={t('operatorPhone')}
-          value={props.phone}
+          value={props.phone as string}
         />
       )}
       <ItemProperty
         icon={isOpen ? iconPinCircleGreen : iconPinCircleGrey}
         title={t('node')}
-        value={feature.id || ''}
+        value={feature.id ?? ''}
       />
     </div>
   );

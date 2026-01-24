@@ -2,10 +2,10 @@ const deg2rad = (deg: number) => {
   return deg * (Math.PI / 180);
 };
 
-type Coordinate = {
+interface Coordinate {
   lat: number;
   lon: number;
-};
+}
 
 export const distanceBetweenPoints = (point1: Coordinate, point2: Coordinate) => {
   const lat1 = point1.lat;

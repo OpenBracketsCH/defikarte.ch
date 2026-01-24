@@ -1,6 +1,6 @@
-import { Feature, Point } from 'geojson';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { CreateMode, MapInteractionEvent, OverlayType } from '../../../model/map';
+import { type Feature } from 'geojson';
+import { type Dispatch, type SetStateAction, useEffect, useRef, useState } from 'react';
+import { CreateMode, type MapInteractionEvent, OverlayType } from '../../../model/map';
 import {
   createFeature,
   deselectAllFeatures,
@@ -8,23 +8,23 @@ import {
   getRelevantInteractions,
 } from '../helper';
 import { MapConfiguration } from '../map-instance/configuration/map.configuration';
-import ItemMoveInteraction from '../map-instance/interactions/item-move.interaction';
-import { MapInstance } from '../map-instance/map-instance';
+import type ItemMoveInteraction from '../map-instance/interactions/item-move.interaction';
+import { type MapInstance } from '../map-instance/map-instance';
 
 const featureId = 42;
 
 const getFeaturePosition = (feature: Feature | null): [number, number] => {
-  if (!feature || !feature.geometry || feature.geometry.type !== 'Point') {
+  if (feature?.geometry?.type !== 'Point') {
     return [0, 0];
   }
-  const coordinates = (feature.geometry as Point).coordinates;
+  const coordinates = feature.geometry.coordinates;
   return [coordinates[0], coordinates[1]];
 };
 
-type UseHandleCreateModeProps = {
+interface UseHandleCreateModeProps {
   map: MapInstance | null;
   feature: MapInteractionEvent | null;
-};
+}
 
 export const useHandleCreateMode = ({
   map,
@@ -51,7 +51,7 @@ export const useHandleCreateMode = ({
         const data = createFeature(featureId, center!, isEdit);
         map?.setGeoJSONSourceData(MapConfiguration.aedCreateSourceId, data);
         const interaction: ItemMoveInteraction | undefined = getMoveInteraction(map);
-        interaction?.setFeaturePosition(featureId, center!);
+        await interaction?.setFeaturePosition(featureId, center!);
       }
 
       // case change position of AED
@@ -77,7 +77,7 @@ export const useHandleCreateMode = ({
       prevCreateModeRef.current = createMode;
     };
 
-    init();
+    void init();
   }, [map, createMode, feature]);
 
   return [createMode, setCreateMode];

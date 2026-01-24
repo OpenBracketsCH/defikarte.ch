@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import type { Ref } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Accordion } from '../../../components/ui/accordion/Accordion';
 import { ContentWrapper } from '../../../components/ui/content-wrapper/ContentWrapper';
@@ -6,7 +6,11 @@ import { Text } from '../../../components/ui/text/Text';
 import { useLocalizedAsset } from '../../../hooks/useLocalizedAsset';
 import { AppAdvertisment } from '../../app-advertisment/AppAdvertisment';
 
-export const HomeInfo = forwardRef<HTMLDivElement>((_, ref) => {
+interface HomeInfoProps {
+  ref: Ref<HTMLDivElement>;
+}
+
+export const HomeInfo = ({ ref }: HomeInfoProps) => {
   const { t } = useTranslation('static');
   const { a } = useLocalizedAsset();
 
@@ -65,4 +69,4 @@ export const HomeInfo = forwardRef<HTMLDivElement>((_, ref) => {
       </ContentWrapper>
     </div>
   );
-});
+};

@@ -1,16 +1,15 @@
-import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import { Dispatch, forwardRef, SetStateAction } from 'react';
+import { type Feature, type FeatureCollection, type GeoJsonProperties, type Geometry } from 'geojson';
+import { type Dispatch, type SetStateAction } from 'react';
 import { ResultItem } from './result-item/ResultItem';
 
-type SearchResultsProps = {
+interface SearchResultsProps {
   searchResults: FeatureCollection<Geometry, GeoJsonProperties> | null;
   activeIndex: number | null;
   onItemSelect: (item: Feature<Geometry, GeoJsonProperties>) => void;
   setActiveIndex: Dispatch<SetStateAction<number | null>>;
-};
+}
 
-export const SearchResults = forwardRef<HTMLDivElement, SearchResultsProps>(
-  (props: SearchResultsProps, ref) => {
+export const SearchResults = ({ ref, ...props }: SearchResultsProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
     const handleMouseEnter = (index: number) => {
       props.setActiveIndex(index);
     };
@@ -30,5 +29,4 @@ export const SearchResults = forwardRef<HTMLDivElement, SearchResultsProps>(
         })}
       </div>
     );
-  }
-);
+  };

@@ -1,15 +1,15 @@
 import iconCloseDarkGreen from '../../../assets/icons/icon-close-dark-green.svg';
 import { IconButton } from '../icon-button/IconButton';
 import cn from 'classnames';
-import toast, { Toast } from 'react-hot-toast';
+import toast, { type Toast } from 'react-hot-toast';
 
-type CustomToastProps = {
+interface CustomToastProps {
   toastInstance: Toast;
   message?: string;
   title?: string;
   icon?: string;
   onClose?: () => void;
-};
+}
 
 export const CustomToast = ({ toastInstance, message, title, icon }: CustomToastProps) => {
   const containerClass = cn(

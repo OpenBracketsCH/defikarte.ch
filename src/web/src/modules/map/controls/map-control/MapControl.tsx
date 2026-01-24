@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { RefObject, useRef, useState } from 'react';
+import { type RefObject, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
 import layerIconGreen from '../../../../assets/icons/icon-layers-dark-green.svg';
@@ -10,18 +10,18 @@ import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIcon
 import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
 import { CreateMode } from '../../../../model/map';
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
-import { MapInstance } from '../../map-instance/map-instance';
+import { type MapInstance } from '../../map-instance/map-instance';
 import swisstopoImageryImage from './../../../../assets/images/map-preview-aerial-view.png';
 import swisstopoBaseMapImage from './../../../../assets/images/map-preview-base-map.png';
 import osmImage from './../../../../assets/images/map-preview-open-street.png';
 import { LayerSymbol } from './layer-symbol/LayerSymbol';
 
-type Props = {
+interface Props {
   map: MapInstance | null;
   setActiveBaseLayer: (id: string) => void;
   activeBaseLayer: string;
   createMode: CreateMode;
-};
+}
 
 export const MapControl = (props: Props) => {
   const { t } = useTranslation();
@@ -75,19 +75,19 @@ export const MapControl = (props: Props) => {
             active={activeBaseLayer === MapConfiguration.osmVectorBasemapId}
             img={swisstopoBaseMapImage}
             label={t('basemap')}
-            onClick={() => setActiveBaseLayer(MapConfiguration.osmVectorBasemapId)}
+            onClick={() => void setActiveBaseLayer(MapConfiguration.osmVectorBasemapId)}
           />
           <LayerSymbol
             active={activeBaseLayer === MapConfiguration.osmBaseMapId}
             img={osmImage}
             label={t('osm')}
-            onClick={() => setActiveBaseLayer(MapConfiguration.osmBaseMapId)}
+            onClick={() => void setActiveBaseLayer(MapConfiguration.osmBaseMapId)}
           />
           <LayerSymbol
             active={activeBaseLayer === MapConfiguration.swisstopoImageryBaseMapId}
             img={swisstopoImageryImage}
             label={t('satellite')}
-            onClick={() => setActiveBaseLayer(MapConfiguration.swisstopoImageryBaseMapId)}
+            onClick={() => void setActiveBaseLayer(MapConfiguration.swisstopoImageryBaseMapId)}
           />
         </div>
       )}

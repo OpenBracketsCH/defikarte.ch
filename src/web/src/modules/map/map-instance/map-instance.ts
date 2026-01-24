@@ -1,5 +1,5 @@
-import { FeatureCollection } from 'geojson';
-import { GeoJSONSource, LngLatBoundsLike, LngLatLike, Map, StyleSpecification } from 'maplibre-gl';
+import { type FeatureCollection } from 'geojson';
+import { type GeoJSONSource, type LngLatBoundsLike, type LngLatLike, Map, type StyleSpecification } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import markerBlue from '../../../assets/icons/defi-map-marker-blue.svg';
 import markerGreen from '../../../assets/icons/defi-map-marker-green.svg';
@@ -9,7 +9,7 @@ import markerGradientM from '../../../assets/icons/map-marker-count-gradient-m.s
 import markerGradientS from '../../../assets/icons/map-marker-count-gradient-s.svg';
 import markerGradientXl from '../../../assets/icons/map-marker-count-gradient-xl.svg';
 import markerGradientXs from '../../../assets/icons/map-marker-count-gradient-xs.svg';
-import { MapEventCallback, OverlayType } from '../../../model/map';
+import { type MapEventCallback, OverlayType } from '../../../model/map';
 import { requestStyleSpecification } from '../../../services/map-style.service';
 import {
   MARKER_BLUE_IMAGE_ID,
@@ -29,13 +29,13 @@ import { AedCreateOverlayStrategy } from './overlay-manager/overlays/aed-create.
 import { AedOverlayStrategy } from './overlay-manager/overlays/aed.overlay';
 import { UserLocationOverlayStrategy } from './overlay-manager/overlays/user-location.overlay';
 
-type MapInstanceProps = {
+interface MapInstanceProps {
   container: string | HTMLElement;
   baseLayer: string;
   overlays: OverlayType[];
   hash: boolean;
   onEvent?: MapEventCallback;
-};
+}
 
 export class MapInstance {
   private mapInstance: Map | null = null;
@@ -84,7 +84,7 @@ export class MapInstance {
     );
     this.overlayManager.registerOverlay(OverlayType.aedCreate, new AedCreateOverlayStrategy(map));
 
-    map.on('styledata', () => this.loadOverlays(map, props.overlays));
+    map.on('styledata', () => void this.loadOverlays(map, props.overlays));
     map.on('load', () => this.init(map));
     map.on('sourcedataloading', e => {
       this.handleMapEvent(e.sourceId, 'loading');
@@ -97,19 +97,19 @@ export class MapInstance {
     });
   }
 
-  public loadOverlays(map: Map, overlays: OverlayType[]) {
+  public async loadOverlays(map: Map, overlays: OverlayType[]) {
     if (this.overlaysLoaded) {
       return;
     }
 
     for (const overlay of overlays) {
-      this.overlayManager.applyOverlay(map, overlay);
+      await this.overlayManager.applyOverlay(map, overlay);
     }
 
     this.overlaysLoaded = true;
   }
 
-  public init = async (map: Map) => {
+  public init = (map: Map) => {
     const images = [
       { id: MARKER_GREEN_IMAGE_ID, url: markerGreen },
       { id: MARKER_ORANGE_IMAGE_ID, url: markerOrange },
@@ -216,7 +216,7 @@ export class MapInstance {
       return;
     }
 
-    const source = this.mapInstance?.getSource(sourceId) as GeoJSONSource;
+    const source = this.mapInstance?.getSource<GeoJSONSource>(sourceId);
     if (!source) {
       console.debug('Source not found', sourceId);
       return;
@@ -235,7 +235,7 @@ export class MapInstance {
       return { type: 'FeatureCollection', features: [] };
     }
 
-    const source = this.mapInstance.getSource(sourceId) as GeoJSONSource;
+    const source = this.mapInstance.getSource<GeoJSONSource>(sourceId)!;
     if (!source) {
       return { type: 'FeatureCollection', features: [] };
     }
@@ -246,7 +246,7 @@ export class MapInstance {
   public setFeatureState = (
     sourceId: string,
     featureId: string | number | undefined,
-    state: { [key: string]: boolean | string | number }
+    state: Record<string, boolean | string | number>
   ) => {
     if (!this.mapInstance) {
       return;

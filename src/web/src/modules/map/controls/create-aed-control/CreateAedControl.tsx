@@ -1,15 +1,15 @@
-import { Feature, GeoJsonProperties, Geometry, Point } from 'geojson';
-import { MapGeoJSONFeature } from 'maplibre-gl';
-import { Dispatch, SetStateAction } from 'react';
+import { type Feature, type GeoJsonProperties, type Geometry, type Point } from 'geojson';
+import { type MapGeoJSONFeature } from 'maplibre-gl';
+import { type Dispatch, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import iconInfoCircleGreenM from '../../../../assets/icons/icon-info-circle-green-m.svg';
-import { AedData } from '../../../../model/app';
-import { CreateMode, MapInteractionEvent } from '../../../../model/map';
+import { type AedData, type AedAccess, type AedIndoor } from '../../../../model/app';
+import { CreateMode, type MapInteractionEvent } from '../../../../model/map';
 import { getActiveAedOverlay } from '../../helper';
 import { FEATURE_STATE } from '../../map-instance/configuration/constants';
 import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
-import { MapInstance } from '../../map-instance/map-instance';
+import { type MapInstance } from '../../map-instance/map-instance';
 import { AedForm } from './aed-form/AedForm';
 import { MapButtons } from './map-buttons/MapButtons';
 
@@ -35,15 +35,15 @@ const createDefaultValues = (feature: Feature | null): AedData | undefined => {
   const defaultValues: AedData = {
     latitude: (feature.geometry as Point).coordinates[1],
     longitude: (feature.geometry as Point).coordinates[0],
-    description: feature.properties?.description || '',
-    operator: feature.properties?.operator || '',
-    operatorPhone: feature.properties?.phone || '',
-    openingHours: feature.properties?.opening_hours || '',
-    location: feature.properties?.['defibrillator:location'] || '',
-    id: feature.id?.toString() || '',
-    level: feature.properties?.level || '',
-    access: feature.properties?.access || '',
-    indoor: feature.properties?.indoor || '',
+    description: (feature.properties?.description as string) || '',
+    operator: (feature.properties?.operator as string) || '',
+    operatorPhone: (feature.properties?.phone as string) || '',
+    openingHours: (feature.properties?.opening_hours as string) || '',
+    location: (feature.properties?.['defibrillator:location'] as string) || '',
+    id: feature.id?.toString() ?? '',
+    level: (feature.properties?.level as string) || '',
+    access: (feature.properties?.access as AedAccess) || '',
+    indoor: (feature.properties?.indoor as AedIndoor) || '',
     reporter: '',
     sourceFeature: feature,
   };
@@ -51,14 +51,14 @@ const createDefaultValues = (feature: Feature | null): AedData | undefined => {
   return defaultValues;
 };
 
-type CreateAedControlProps = {
+interface CreateAedControlProps {
   map: MapInstance | null;
   createMode: CreateMode;
   feature: MapInteractionEvent | null;
   setEditFeature: Dispatch<SetStateAction<MapInteractionEvent | null>>;
   setCreateMode: Dispatch<SetStateAction<CreateMode>>;
   onFeatureSelect: (event: MapInteractionEvent) => void;
-};
+}
 
 export const CreateAedControl = ({
   map,
@@ -72,13 +72,13 @@ export const CreateAedControl = ({
   const form = useForm<AedData>({
     shouldUseNativeValidation: true,
     reValidateMode: 'onChange',
-    defaultValues: createDefaultValues(feature?.data || null),
+    defaultValues: createDefaultValues(feature?.data ?? null),
   });
 
   const handleCancel = () => {
     form.reset();
     if (feature) {
-      map?.setFeatureState(feature.source || '', feature.data?.id, {
+      map?.setFeatureState(feature.source ?? '', feature.data?.id, {
         [FEATURE_STATE.EDITING]: false,
       });
     }
@@ -107,7 +107,7 @@ export const CreateAedControl = ({
 
   const handleOnSuccess = (successFeature: Feature<Geometry, GeoJsonProperties>) => {
     if (feature) {
-      map?.setFeatureState(feature.source || '', feature.data?.id, {
+      map?.setFeatureState(feature.source ?? '', feature.data?.id, {
         [FEATURE_STATE.EDITING]: false,
       });
     }
@@ -118,7 +118,7 @@ export const CreateAedControl = ({
       properties: successFeature.properties,
       id: successFeature.id,
       type: successFeature.type,
-      source: feature?.source || activeSourceId,
+      source: feature?.source ?? activeSourceId,
     } as MapGeoJSONFeature;
 
     onFeatureSelect({
@@ -133,7 +133,7 @@ export const CreateAedControl = ({
       <MapButtons
         createMode={createMode}
         handleCancel={handleCancel}
-        handleConfirmPosition={handleConfirmPosition}
+        handleConfirmPosition={() => void handleConfirmPosition()}
         handleChangePosition={handleChangePosition}
       />
       {createMode === CreateMode.position && (

@@ -1,16 +1,16 @@
-import { Map as MapInstance, StyleSpecification } from 'maplibre-gl';
+import { type Map as MapInstance, type StyleSpecification } from 'maplibre-gl';
 import {
-  InteractionLayer,
-  MapEventCallback,
-  OverlayStrategy,
-  OverlayType,
-  RefreshableOverlayStrategy,
+  type InteractionLayer,
+  type MapEventCallback,
+  type OverlayStrategy,
+  type OverlayType,
+  type RefreshableOverlayStrategy,
 } from '../../../../model/map';
 
 export class OverlayManager {
-  private overlays: Map<OverlayType, OverlayStrategy> = new Map();
+  private overlays = new Map<OverlayType, OverlayStrategy>();
   private activeOverlays: OverlayType[] = [];
-  private loadingOverlays: Set<OverlayType> = new Set();
+  private loadingOverlays = new Set<OverlayType>();
   private onEvent: MapEventCallback | undefined;
 
   constructor(onEvent?: MapEventCallback) {

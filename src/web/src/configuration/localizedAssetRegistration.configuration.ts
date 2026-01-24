@@ -38,12 +38,12 @@ import defikarteProjektTeaserEn from '../assets/landingpages/projekt/defikarte-p
 import defikarteProjektTeaserFr from '../assets/landingpages/projekt/defikarte-projekt-teaser-fr.jpg';
 import defikarteProjektTeaserIt from '../assets/landingpages/projekt/defikarte-projekt-teaser-it.jpg';
 
-export type LocalizedAsset = {
+export interface LocalizedAsset {
   en: string;
   de: string;
   fr: string;
   it: string;
-};
+}
 
 export type LocalizedAssetKey =
   | 'appScreenTeaser'

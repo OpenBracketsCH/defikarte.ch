@@ -1,15 +1,15 @@
 import cn from 'classnames';
-import { Feature, GeoJsonProperties, Geometry } from 'geojson';
+import { type Feature, type GeoJsonProperties, type Geometry } from 'geojson';
 import iconDefiGreen from './../../../../../../assets/icons/icon-defi-circle-green.svg';
 import iconDefiOrange from './../../../../../../assets/icons/icon-defi-circle-orange.svg';
 import iconAddress from './../../../../../../assets/icons/icon-marker-circle-green-m.svg';
 
-type Props = {
+interface Props {
   isActive: boolean;
   item: Feature<Geometry, GeoJsonProperties>;
   onClick: (item: Feature<Geometry, GeoJsonProperties>) => void;
   onMouseEnter: () => void;
-};
+}
 
 export const ResultItem = (props: Props) => {
   const { item } = props;
@@ -17,7 +17,7 @@ export const ResultItem = (props: Props) => {
   const getLabel = (properties: GeoJsonProperties): string[] => {
     if (properties?.emergency === 'defibrillator') {
       const value =
-        properties?.['defibrillator:location'] ??
+        (properties?.['defibrillator:location'] as string) ??
         properties?.description ??
         properties?.operator ??
         'n/A';
@@ -25,17 +25,17 @@ export const ResultItem = (props: Props) => {
     }
     return [properties?.addressPrimary, properties?.addressSecondary].filter(
       x => x !== null || x !== undefined || x !== ''
-    );
+    ) as string[];
   };
 
-  const values = getLabel(item.properties || {});
+  const values = getLabel(item.properties ?? {});
   const id = item.id?.toString();
   const icon =
     item.properties?.emergency === 'defibrillator' && item.properties.opening_hours === '24/7'
       ? iconDefiGreen
       : item.properties?.emergency === 'defibrillator'
-      ? iconDefiOrange
-      : iconAddress;
+        ? iconDefiOrange
+        : iconAddress;
 
   return (
     <div

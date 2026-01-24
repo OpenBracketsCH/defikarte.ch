@@ -11,10 +11,24 @@ import procamedLogoWhite from '../../assets/navigation/procamed-logo-white.svg';
 import AppConfiguration from '../../configuration/app.configuration';
 import { LanguageMenu } from './language-menu/LanguageMenu';
 
+const EmergencyText = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="leading-[150%]">
+      <span className="pe-1.5 text-sm font-medium text-primary-100-white">{t('emergency')}</span>
+      <span className="text-xl font-bold text-primary-100-green-02">144</span>
+    </div>
+  );
+};
+
 export const Navbar = () => {
   const { t } = useTranslation();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const isNavbarMobile = useMediaQuery({ maxWidth: 1024 });
+  useMediaQuery({ maxWidth: 1024 }, undefined, matches => {
+    if (!matches) {
+      setIsMobileOpen(false);
+    }
+  });
 
   useEffect(() => {
     document.body.style.overflow = isMobileOpen ? 'hidden' : 'auto';
@@ -24,19 +38,6 @@ export const Navbar = () => {
       document.body.style.overflow = 'auto';
     };
   }, [isMobileOpen]);
-
-  useEffect(() => {
-    if (!isNavbarMobile) {
-      setIsMobileOpen(false);
-    }
-  }, [isNavbarMobile]);
-
-  const EmergencyText = () => (
-    <div className="leading-[150%]">
-      <span className="pe-1.5 text-sm font-medium text-primary-100-white">{t('emergency')}</span>
-      <span className="text-xl font-bold text-primary-100-green-02">144</span>
-    </div>
-  );
 
   return (
     <>

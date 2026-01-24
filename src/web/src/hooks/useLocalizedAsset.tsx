@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  LocalizedAsset,
-  LocalizedAssetKey,
+  type LocalizedAsset,
+  type LocalizedAssetKey,
   localizedAssetRegistration,
 } from '../configuration/localizedAssetRegistration.configuration';
 

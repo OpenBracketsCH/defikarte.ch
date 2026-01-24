@@ -1,6 +1,5 @@
-import { Point } from 'geojson';
-import { MapGeoJSONFeature } from 'maplibre-gl';
-import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
+import { type Point } from 'geojson';
+import { type Dispatch, type SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import iconGpsWarningCircleRed from '../../assets/icons/icon-gps-warning-circle-red.svg';
@@ -10,9 +9,9 @@ import AppConfiguration from '../../configuration/app.configuration';
 import {
   CreateMode,
   FilterType,
-  MapEvent,
-  MapEventCallback,
-  MapInteractionEvent,
+  type MapEvent,
+  type MapEventCallback,
+  type MapInteractionEvent,
   OverlayType,
 } from '../../model/map';
 import { AttributionControl } from './controls/attribution-control/AttributionControl';
@@ -49,10 +48,10 @@ const filterToOverlayMapping = {
   [createFilterKey([FilterType.alwaysAvailable, FilterType.withOpeningHours])]: OverlayType.aedAll,
 };
 
-type MapProps = {
+interface MapProps {
   isHash: boolean;
   setIsFullscreen?: Dispatch<SetStateAction<boolean>>;
-};
+}
 
 export const Map = ({ isHash, setIsFullscreen }: MapProps) => {
   const { t } = useTranslation();
@@ -66,10 +65,10 @@ export const Map = ({ isHash, setIsFullscreen }: MapProps) => {
   const [activeOverlays, setActiveOverlays] = useState<FilterType[]>(overlay);
   const [selectedFeature, setSelectedFeature] = useState<MapInteractionEvent | null>(null);
   const [editFeature, setEditFeature] = useState<MapInteractionEvent | null>(null);
-  const mapContainer = useRef<HTMLDivElement>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
   const [createMode, setCreateMode] = useHandleCreateMode({
     map: mapInstance,
-    feature: editFeature || null,
+    feature: editFeature ?? null,
   });
   const userLocation = useUserLocation({ map: mapInstance });
   const {
@@ -109,7 +108,7 @@ export const Map = ({ isHash, setIsFullscreen }: MapProps) => {
     const filterKey = createFilterKey(activeOverlays);
     const activeOverlay = filterToOverlayMapping[filterKey];
 
-    mapInstance?.applyOverlay(activeOverlay);
+    void mapInstance?.applyOverlay(activeOverlay);
 
     return () => {
       mapInstance?.removeOverlay(activeOverlay);
@@ -132,10 +131,10 @@ export const Map = ({ isHash, setIsFullscreen }: MapProps) => {
 
   // map initialization
   useEffect(() => {
-    if (mapContainer.current && !mapInstanceRef.current && activeBaseLayer) {
+    if (mapContainerRef.current && !mapInstanceRef.current && activeBaseLayer) {
       const activeOverlay = filterToOverlayMapping[createFilterKey(overlay)] || OverlayType.aedAll;
       const map = new MapInstance({
-        container: mapContainer.current,
+        container: mapContainerRef.current,
         baseLayer: activeBaseLayer,
         overlays: [activeOverlay, OverlayType.userLocation],
         onEvent: onMapEvent,
@@ -164,7 +163,7 @@ export const Map = ({ isHash, setIsFullscreen }: MapProps) => {
         interaction instanceof ItemSelectInteraction &&
         interaction.sourceId === event.data?.source
       ) {
-        interaction.selectFeature(event.data as MapGeoJSONFeature, null);
+        interaction.selectFeature(event.data, null);
         result = true;
       }
     });
@@ -175,7 +174,7 @@ export const Map = ({ isHash, setIsFullscreen }: MapProps) => {
   const centerFeatureOnMap = (event: MapInteractionEvent | null) => {
     if (!event || !event.data) return;
     const bbox = event.data.geometry.bbox;
-    if (bbox && bbox.length === 4) {
+    if (bbox?.length === 4) {
       mapInstance?.fitBounds([
         [bbox[0], bbox[1]],
         [bbox[2], bbox[3]],
@@ -191,7 +190,7 @@ export const Map = ({ isHash, setIsFullscreen }: MapProps) => {
     if (!event || !event.data) return;
     centerFeatureOnMap(event);
     setEditFeature(event);
-    mapInstance?.setFeatureState(event.source || '', event.data.id, {
+    mapInstance?.setFeatureState(event.source ?? '', event.data.id, {
       [FEATURE_STATE.EDITING]: true,
     });
     setCreateMode(CreateMode.form);
@@ -205,11 +204,11 @@ export const Map = ({ isHash, setIsFullscreen }: MapProps) => {
   return (
     <div className="relative flex-grow w-full">
       <div className="absolute h-dvh w-dvw">
-        <div className="h-full w-full" ref={mapContainer} />
+        <div className="h-full w-full" ref={mapContainerRef} />
       </div>
       {!isInitialized && <SplashScreen />}
       <MapControl
-        map={mapInstance!}
+        map={mapInstance}
         setActiveBaseLayer={setActiveBaseLayer}
         activeBaseLayer={activeBaseLayer}
         createMode={createMode}
