@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `@defikarte/shared` package contains code that is shared between the React Native app and the React web application. This guide will help you understand how to use and extend the shared code.
+The `@defikarte/shared` package contains code that is shared between the CapacitorJS + React mobile app and the React web application. Both applications use **MapLibre GL JS** for map rendering. This guide will help you understand how to use and extend the shared code.
 
 ## How It Works
 
@@ -13,7 +13,7 @@ defikarte.ch/src/
 ├── app/
 │   ├── pnpm-workspace.yaml    # References ../shared
 │   ├── package.json            # Contains "@defikarte/shared": "workspace:*"
-│   └── ...                     # React Native Expo app
+│   └── ...                     # CapacitorJS + React mobile app
 ├── web/
 │   ├── pnpm-workspace.yaml    # References ../shared
 │   ├── package.json            # Contains "@defikarte/shared": "workspace:*"
@@ -100,7 +100,7 @@ service.processData("Hello"); // "Processed: Hello"
 TypeScript automatically picks up types from the shared package because:
 
 1. The shared package's `package.json` specifies: `"main": "src/index.ts"` and `"types": "src/index.ts"`
-2. Both app (React Native Expo) and web (Vite) projects have TypeScript configured
+2. Both app (CapacitorJS + React) and web (React + Vite) projects have TypeScript configured
 3. pnpm workspaces create proper symlinks with the `workspace:*` protocol
 
 ## Current Shared Package Structure
@@ -109,9 +109,10 @@ The shared package currently includes:
 
 - **API Client** (`/api/api-client.ts`): HTTP client for making API requests
 - **Configuration** (`/configuration/`): Shared configuration files
-- **Map** (`/map/`): Map-related utilities and helpers
+- **Map** (`/map/`): Map-related utilities and helpers (MapLibre GL JS configuration, styles, layers)
 - **Models** (`/model/`): TypeScript types, interfaces, and data models
 - **Services** (`/services/`): Business logic and shared services
+- **UI Components** (`/components/`): React components that work across mobile and web
 
 ## Development Tips
 
@@ -121,16 +122,29 @@ Changes in `/shared` will trigger hot reload in both app and web (as long as dev
 
 ### 2. Keep It Platform-Agnostic
 
-Only put code in `/shared` that works on both React Native and React web:
+Only put code in `/shared` that works on both the mobile app and web app:
 
 - ✅ Pure utility functions
 - ✅ React hooks (using platform-agnostic APIs)
 - ✅ TypeScript types/interfaces
 - ✅ Business logic
 - ✅ API clients (using axios or fetch)
-- ❌ React Native specific components (`View`, `Text`, etc.)
-- ❌ Web-only APIs (`document`, `window`, etc.)
+- ✅ MapLibre GL JS code (map styles, layers, sources, etc.)
+- ✅ React UI components (buttons, cards, forms, etc.)
+- ✅ Shared styling (CSS/Tailwind classes)
 - ❌ Platform-specific navigation code
+- ❌ Capacitor plugins (keep these in the mobile app)
+- ❌ Browser-only APIs (`localStorage`, `document.cookie`, etc. - use Capacitor Preferences API wrapper instead)
+
+**Note:** Since both apps use React and MapLibre GL JS, you can share:
+
+- Map configuration and styling
+- MapLibre GL JS layer definitions
+- Map interaction logic
+- GeoJSON data processing utilities
+- **React UI components** - buttons, cards, modals, forms, etc.
+- **React hooks** - custom hooks for state management, API calls, etc.
+- **Styling utilities** - shared CSS classes, theme configurations
 
 ### 3. Dependencies in Shared Package
 
