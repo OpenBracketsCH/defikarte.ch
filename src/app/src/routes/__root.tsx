@@ -1,13 +1,15 @@
-import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { NavBar } from "../app/layout/NavBar/NavBar";
+import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { NavBar } from '../app/layout/NavBar/NavBar';
 
 function RootComponent() {
   return (
-    <div className="">
-      <main>
+    <div className="w-full h-screen flex flex-col">
+      <main className="grow">
         <Outlet />
       </main>
-      <NavBar />
+      <nav>
+        <NavBar />
+      </nav>
     </div>
   );
 }
