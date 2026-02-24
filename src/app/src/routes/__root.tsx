@@ -1,5 +1,5 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router';
-import { NavBar } from '../app/layout/NavBar/NavBar';
+import { NavBar } from '../app/layout/nav-bar/NavBar';
 
 function RootComponent() {
   return (

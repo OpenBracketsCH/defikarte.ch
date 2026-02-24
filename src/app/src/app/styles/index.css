@@ -119,6 +119,9 @@
   /* font */
   --font-sans: 'Poppins', sans-serif;
 
+  /* grid */
+  --grid-nav: repeat(4, 70px);
+
   @keyframes enter {
     0% {
       transform: translateY(-100%) scale(0.8);
@@ -129,7 +132,6 @@
       opacity: 1;
     }
   }
-
   --animate-enter: enter 230ms cubic-bezier(0.21, 1.02, 0.73, 1) forwards;
 
   @keyframes leave {

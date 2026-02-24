@@ -1,16 +1,16 @@
-import i18n from "i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
-import { initReactI18next } from "react-i18next";
-/*import de from './locales/de.json';
+import i18n from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import { initReactI18next } from 'react-i18next';
+import de from './locales/de.json';
 import en from './locales/en.json';
 import fr from './locales/fr.json';
-import it from './locales/it.json';*/
+import it from './locales/it.json';
 
 const resources = {
-  /*en: { translation: en, static: enStatic },
-  de: { translation: de, static: deStatic },
-  fr: { translation: fr, static: frStatic },
-  it: { translation: it, static: itStatic },*/
+  en: { translation: en },
+  de: { translation: de },
+  fr: { translation: fr },
+  it: { translation: it },
 };
 
 void i18n
@@ -18,12 +18,12 @@ void i18n
   .use(initReactI18next)
   .init({
     debug: false, // import.meta.env.DEV,
-    fallbackLng: "de",
+    fallbackLng: 'de',
     interpolation: {
       escapeValue: false,
     },
     resources: resources,
-    defaultNS: "translation",
+    defaultNS: 'translation',
   });
 
 export default i18n;
