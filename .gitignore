@@ -28,3 +28,4 @@ dist-ssr
 web-statistics
 
 .vscode
+.vite

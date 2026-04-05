@@ -4,10 +4,10 @@ import { NavBar } from '../app/layout/nav-bar/NavBar';
 function RootComponent() {
   return (
     <div className="w-full h-screen flex flex-col">
-      <main className="grow">
+      <main className="grow overflow-auto">
         <Outlet />
       </main>
-      <nav>
+      <nav className="shrink-0">
         <NavBar />
       </nav>
     </div>
