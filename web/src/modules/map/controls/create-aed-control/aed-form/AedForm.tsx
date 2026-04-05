@@ -270,7 +270,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
               content: t('operatorEmailTooltipContent'),
               link: 'https://wiki.openstreetmap.org/wiki/Key:email',
             }}
-            error={errors.operatorPhone?.message}
+            error={errors.operatorEmail?.message}
             {...register('operatorEmail')}
             disabled={isSubmitting}
           />

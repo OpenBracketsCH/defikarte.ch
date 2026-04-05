@@ -82,7 +82,7 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
       )}
       {props.email && (
         <ItemProperty
-          icon={isOpen ? iconPhoneCircleGreen : iconPhoneCircleGrey}
+          icon={isOpen ? iconInfoCircleGreen : iconInfoCircleGrey}
           title={t('operatorEmail')}
           value={props.email}
         />
