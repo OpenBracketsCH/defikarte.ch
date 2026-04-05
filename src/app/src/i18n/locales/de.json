@@ -1,1 +1,8 @@
-{}
+{
+  "nav": {
+    "home": "Defikarte",
+    "about": "Infos",
+    "settings": "Einstellungen",
+    "create": "Erstellen"
+  }
+}

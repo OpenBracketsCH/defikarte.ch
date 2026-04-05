@@ -12,7 +12,7 @@ interface IconLinkProps extends LinkProps {
 export const IconLink = ({ iconSrc, activeProps, children, ...props }: IconLinkProps) => {
   const activeLinkProps = { className: activeProps?.className };
   return (
-    <Link className="flex items-center flex-col" activeProps={activeLinkProps} {...props}>
+    <Link className="flex items-center flex-col flex-1" activeProps={activeLinkProps} {...props}>
       {({ isActive }) => (
         <>
           <img src={isActive ? activeProps?.iconSrc : iconSrc} />

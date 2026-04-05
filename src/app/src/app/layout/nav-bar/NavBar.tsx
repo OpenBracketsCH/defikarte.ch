@@ -15,7 +15,7 @@ export const NavBar = () => {
 
   return (
     <div className="flex justify-center px-4 py-1.5 bg-primary-100-green-04 text-primary-100-white">
-      <div className="grid grid-cols-(--grid-nav)">
+      <div className="flex w-full">
         <IconLink
           to="/"
           iconSrc={iconMarkerWhite}

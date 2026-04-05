@@ -1,8 +1,8 @@
 {
-    "nav": {
-        "home": "Home",
-        "create": "Create",
-        "settings": "Settings",
-        "about": "About"
-    }
+  "nav": {
+    "home": "Home",
+    "create": "Create",
+    "settings": "Settings",
+    "about": "About"
+  }
 }
