@@ -80,6 +80,13 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
           value={props.phone}
         />
       )}
+      {props.email && (
+        <ItemProperty
+          icon={isOpen ? iconPhoneCircleGreen : iconPhoneCircleGrey}
+          title={t('operatorEmail')}
+          value={props.email}
+        />
+      )}
       <ItemProperty
         icon={isOpen ? iconPinCircleGreen : iconPinCircleGrey}
         title={t('node')}
