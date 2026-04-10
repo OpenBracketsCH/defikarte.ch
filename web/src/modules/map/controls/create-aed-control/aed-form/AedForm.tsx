@@ -55,6 +55,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
         location,
         openingHours,
         operatorPhone,
+        operatorEmail,
         ...otherProps
       } = data;
       const requestData: FeatureCollection = {
@@ -72,6 +73,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
               'defibrillator:location': location,
               opening_hours: openingHours,
               phone: operatorPhone,
+              email: operatorEmail,
               ...otherProps,
             },
           },
@@ -252,10 +254,24 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
               link: 'https://wiki.openstreetmap.org/wiki/Key:phone',
             }}
             error={errors.operatorPhone?.message}
-            {...register('operatorPhone', { 
+            {...register('operatorPhone', {
               validate: isPhoneNumberValid,
               onBlur: handlePhoneNumberBlur,
             })}
+            disabled={isSubmitting}
+          />
+          <TextField
+            autoComplete="off"
+            label={t('operatorEmail')}
+            type="email"
+            placeholder={t('operatorEmailPlaceholder')}
+            tooltip={{
+              title: t('operatorEmailTooltipTitle'),
+              content: t('operatorEmailTooltipContent'),
+              link: 'https://wiki.openstreetmap.org/wiki/Key:email',
+            }}
+            error={errors.operatorEmail?.message}
+            {...register('operatorEmail')}
             disabled={isSubmitting}
           />
           <SelectField
