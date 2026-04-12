@@ -1,11 +1,11 @@
 {
     "data_format": 1,
     "data_url": "https://www.defikarte.ch/taginfo.json",
-    "data_updated": "20240927T200000Z",
+    "data_updated": "20260412T200000Z",
     "project": {         
         "name": "Defikarte.ch",
         "description": "A map to show the next defibrillator with OpenStreetMap data",   
-        "project_url": "https://www.defikarte.ch",
+        "project_url": "https://github.com/OpenBracketsCH/defikarte.ch",
         "icon_url": "https://defikarte.ch/assets/defikarte-logo-C2rpPPds.svg",
         "contact_name": "Christian Nüssli",
         "contact_email": "christian@openbrackets.ch"
