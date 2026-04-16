@@ -32,10 +32,6 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
   const containerClass = classNames(className, 'flex', 'flex-col', 'gap-3');
   return (
     <div className={containerClass}>
-      <DefiPhoto
-        wikimediaCommons={props.wikimedia_commons}
-        image={props.image}
-      />
       {props.opening_hours && (
         <ItemProperty
           icon={isOpen ? iconTimeCircleGreen : iconTimeCircleGrey}
@@ -96,6 +92,10 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
         icon={isOpen ? iconPinCircleGreen : iconPinCircleGrey}
         title={t('node')}
         value={feature.id || ''}
+      />
+      <DefiPhoto
+        wikimediaCommons={props.wikimedia_commons}
+        image={props.image}
       />
     </div>
   );

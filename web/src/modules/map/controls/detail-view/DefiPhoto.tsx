@@ -79,7 +79,7 @@ export const DefiPhoto = ({ wikimediaCommons, image }: DefiPhotoProps) => {
 
   if (loading) {
     return (
-      <div className="w-full h-16 flex items-center justify-center">
+      <div className="w-full h-32 flex items-center justify-center">
         <span className="text-xs text-primary-100-green-04 opacity-50">Foto wird geladen</span>
       </div>
     );
@@ -87,25 +87,14 @@ export const DefiPhoto = ({ wikimediaCommons, image }: DefiPhotoProps) => {
 
   if (!photo) return null;
 
-  const creditText = photo.credit + ' \u00b7 Wikimedia Commons';
-  const descUrl = photo.descriptionUrl;
-  const thumbUrl = photo.thumbUrl;
-
   return (
-    <div className="flex flex-col gap-1">
-      <a href={descUrl} target="_blank" rel="noopener noreferrer">
-        <img
-          src={thumbUrl}
-          alt="Foto des Defibrillators"
-          className="w-full rounded-lg object-cover"
-          loading="lazy"
-        />
-      </a>
-      <div className="text-xs font-normal text-primary-100-green-04 opacity-60 leading-[150%]">
-        <a href={descUrl} target="_blank" rel="noopener noreferrer" className="underline">
-          {creditText}
-        </a>
-      </div>
-    </div>
+    <a href={photo.descriptionUrl} target="_blank" rel="noopener noreferrer">
+      <img
+        src={photo.thumbUrl}
+        alt="Foto des Defibrillators"
+        className="w-full h-32 rounded-lg object-cover"
+        loading="lazy"
+      />
+    </a>
   );
 };
