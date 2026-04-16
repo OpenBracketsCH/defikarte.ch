@@ -46,7 +46,9 @@ async function fetchWikimediaPhoto(
       info.extmetadata?.Artist?.value?.replace(/<[^>]+>/g, '') ?? 'Wikimedia Commons';
     return {
       thumbUrl: info.thumburl,
-      descriptionUrl: info.descriptionurl ?? `https://commons.wikimedia.org/wiki/${encodeURIComponent(filename)}`,
+      descriptionUrl:
+        info.descriptionurl ??
+        `https://commons.wikimedia.org/wiki/${encodeURIComponent(filename)}`,
       credit,
     };
   } catch {
@@ -77,12 +79,14 @@ export const DefiPhoto = ({ wikimediaCommons, image }: DefiPhotoProps) => {
   if (loading) {
     return (
       <div className="w-full h-16 flex items-center justify-center">
-        <p className="text-xs text-primary-100-green-04 opacity-50">Foto wird geladen…</p>
+        <p className="text-xs text-primary-100-green-04 opacity-50">Foto wird geladen</p>
       </div>
     );
   }
 
   if (!photo) return null;
+
+  const creditText = `${photo.credit} \u00b7 Wikimedia Commons`;
 
   return (
     <div className="flex flex-col gap-1">
@@ -95,14 +99,13 @@ export const DefiPhoto = ({ wikimediaCommons, image }: DefiPhotoProps) => {
         />
       </a>
       <p className="text-xs font-normal text-primary-100-green-04 opacity-60 leading-[150%]">
-        📷{' '}
         
           href={photo.descriptionUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="underline"
         >
-          {photo.credit} · Wikimedia Commons
+          {creditText}
         </a>
       </p>
     </div>
