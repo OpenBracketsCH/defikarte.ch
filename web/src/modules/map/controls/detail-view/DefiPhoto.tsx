@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php';
+const HTML_TAG_REGEX = /<[^>]+>/g;
 
 interface WikimediaPhoto {
   thumbUrl: string;
@@ -43,7 +44,7 @@ async function fetchWikimediaPhoto(
     const info = page?.imageinfo?.[0];
     if (!info?.thumburl) return null;
     const credit =
-      info.extmetadata?.Artist?.value?.replace(/<[^>]+>/g, '') ?? 'Wikimedia Commons';
+      info.extmetadata?.Artist?.value?.replace(HTML_TAG_REGEX, '') ?? 'Wikimedia Commons';
     return {
       thumbUrl: info.thumburl,
       descriptionUrl:
