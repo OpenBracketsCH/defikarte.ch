@@ -40,7 +40,6 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
 
   const handlePhoneNumberBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const result = formatPhoneNumber(e.target.value);
-    // Only validate if the result is valid; otherwise, focus cannot be changed from the input field.
     setValue('operatorPhone', result.value, { shouldValidate: result.isValid });
   };
 
@@ -56,6 +55,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
         openingHours,
         operatorPhone,
         operatorEmail,
+        wikimediaCommons,
         ...otherProps
       } = data;
       const requestData: FeatureCollection = {
@@ -74,6 +74,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
               opening_hours: openingHours,
               phone: operatorPhone,
               email: operatorEmail,
+              ...(wikimediaCommons ? { wikimedia_commons: wikimediaCommons } : {}),
               ...otherProps,
             },
           },
@@ -95,9 +96,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             message={id ? t('editAedSuccessMessage') : t('createAedSuccessMessage')}
           />
         ),
-        {
-          id: toastId,
-        }
+        { id: toastId }
       );
       await map?.refreshActiveOverlays();
       setCreateMode(CreateMode.none);
@@ -113,9 +112,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
             message={error instanceof Error ? error.message : t('createAedError')}
           />
         ),
-        {
-          id: toastId,
-        }
+        { id: toastId }
       );
     }
   };
@@ -123,6 +120,7 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
   const longitude = watch('longitude');
   const latitude = watch('latitude');
   const title = watch('id') ? t('editAed') : t('createAed');
+
   return (
     <div className="absolute z-10 h-auto lg:w-[555px] md:max-h-[600px] lg:max-h-full lg:h-auto rounded-2xl bottom-16 md:bottom-22 top-4 right-4 left-4 lg:bottom-6 md:top-6 md:right-6 md:left-6 lg:left-auto bg-primary-100-white shadow-custom-lg shadow-green-shadow-64">
       <form className="flex flex-col h-[100%] justify-between" onSubmit={handleSubmit(onSubmit)}>
@@ -283,6 +281,20 @@ export const AedForm = ({ map, form, setCreateMode, onSuccess }: AedFormProps) =
               link: 'https://wiki.openstreetmap.org/wiki/Key:access',
             }}
             {...register('access')}
+            disabled={isSubmitting}
+          />
+          <TextField
+            autoComplete="off"
+            label={t('wikimediaCommons')}
+            type="text"
+            placeholder={t('wikimediaCommonsPlaceholder')}
+            tooltip={{
+              title: t('wikimediaCommonsTooltipTitle'),
+              content: t('wikimediaCommonsTooltipContent'),
+              link: 'https://commons.wikimedia.org',
+            }}
+            error={errors.wikimediaCommons?.message}
+            {...register('wikimediaCommons')}
             disabled={isSubmitting}
           />
         </div>
