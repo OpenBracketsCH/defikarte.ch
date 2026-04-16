@@ -17,6 +17,7 @@ import iconStairsCircleGreen from '../../../../../assets/icons/icon-stairs-circl
 import iconStairsCircleGrey from '../../../../../assets/icons/icon-stairs-circle-grey.svg';
 import iconTimeCircleGreen from '../../../../../assets/icons/icon-time-circle-green.svg';
 import iconTimeCircleGrey from '../../../../../assets/icons/icon-time-circle-grey.svg';
+import { DefiPhoto } from '../DefiPhoto';
 import { ItemProperty } from './item-property/ItemProperty';
 
 type FeaturePropsListProps = {
@@ -31,6 +32,10 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
   const containerClass = classNames(className, 'flex', 'flex-col', 'gap-3');
   return (
     <div className={containerClass}>
+      <DefiPhoto
+        wikimediaCommons={props.wikimedia_commons}
+        image={props.image}
+      />
       {props.opening_hours && (
         <ItemProperty
           icon={isOpen ? iconTimeCircleGreen : iconTimeCircleGrey}
