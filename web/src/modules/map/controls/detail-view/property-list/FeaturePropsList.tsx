@@ -17,7 +17,7 @@ import iconStairsCircleGreen from '../../../../../assets/icons/icon-stairs-circl
 import iconStairsCircleGrey from '../../../../../assets/icons/icon-stairs-circle-grey.svg';
 import iconTimeCircleGreen from '../../../../../assets/icons/icon-time-circle-green.svg';
 import iconTimeCircleGrey from '../../../../../assets/icons/icon-time-circle-grey.svg';
-import { DefiPhoto } from '../DefiPhoto';
+import { AedPhoto } from './aed-photo/AedPhoto';
 import { ItemProperty } from './item-property/ItemProperty';
 
 type FeaturePropsListProps = {
@@ -93,7 +93,7 @@ export const FeaturePropsList = ({ feature, isOpen, className }: FeaturePropsLis
         title={t('node')}
         value={feature.id || ''}
       />
-      <DefiPhoto
+      <AedPhoto
         wikimediaCommons={props.wikimedia_commons}
         image={props.image}
       />

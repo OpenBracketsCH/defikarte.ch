@@ -112,8 +112,6 @@
   "notFound": "La page a été introuvable.",
   "goHome": "Aller à la page d'accueil",
   "node": "Nœud",
-  "wikimediaCommons": "Photo (Wikimedia Commons)",
-  "wikimediaCommonsPlaceholder": "File:Defibrillateur_Gare_Centrale.jpg",
-  "wikimediaCommonsTooltipTitle": "Ajouter une photo",
-  "wikimediaCommonsTooltipContent": "Téléchargez d'abord une photo sur commons.wikimedia.org, puis saisissez le nom du fichier ici, p.ex. File:MaPhoto.jpg"
+  "photoLoading": "Chargement de la photo",
+  "photoAlt": "Photo du défibrillateur"
 }

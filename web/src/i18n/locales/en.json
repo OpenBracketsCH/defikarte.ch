@@ -112,8 +112,6 @@
   "notFound": "The page was not found.",
   "goHome": "Go to homepage",
   "node": "Node",
-  "wikimediaCommons": "Photo (Wikimedia Commons)",
-  "wikimediaCommonsPlaceholder": "File:Defibrillator_Main_Station.jpg",
-  "wikimediaCommonsTooltipTitle": "Add a photo",
-  "wikimediaCommonsTooltipContent": "First upload a photo to commons.wikimedia.org, then enter the filename here, e.g. File:MyPhoto.jpg"
+  "photoLoading": "Loading photo",
+  "photoAlt": "Photo of the defibrillator"
 }

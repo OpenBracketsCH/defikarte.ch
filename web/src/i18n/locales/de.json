@@ -112,8 +112,6 @@
   "notFound": "Die Seite wurde nicht gefunden.",
   "goHome": "Gehe zur Startseite",
   "node": "Knoten",
-  "wikimediaCommons": "Foto (Wikimedia Commons)",
-  "wikimediaCommonsPlaceholder": "File:Defibrillator_Hauptbahnhof.jpg",
-  "wikimediaCommonsTooltipTitle": "Foto hinterlegen",
-  "wikimediaCommonsTooltipContent": "Lade zuerst ein Foto auf commons.wikimedia.org hoch und trage hier den Dateinamen ein, z.B. File:MeinFoto.jpg"
+  "photoLoading": "Foto wird geladen",
+  "photoAlt": "Foto des Defibrillators"
 }
