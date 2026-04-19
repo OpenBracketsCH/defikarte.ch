@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php';
-const HTML_TAG_REGEX = /<[^>]+>/g;
 
 export interface WikimediaPhoto {
   thumbUrl: string;
