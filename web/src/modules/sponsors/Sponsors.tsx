@@ -5,7 +5,7 @@ import iconExternalLinkWhite from '../../assets/landingpages/icon-external-link-
 import imageDefikartePartnerByteworks from '../../assets/landingpages/unterstuetzung/defikarte-partner-byteworks.svg';
 import imageDefikartePartnerFirstResponder from '../../assets/landingpages/unterstuetzung/defikarte-partner-first-responder.jpg';
 import imageDefikartePartnerFurrer from '../../assets/landingpages/unterstuetzung/defikarte-partner-furrer.jpg';
-import imageDefikartePartnerHexagon from '../../assets/landingpages/unterstuetzung/defikarte-partner-hexagon.svg';
+import imageDefikartePartnerOctave from '../../assets/landingpages/unterstuetzung/defikarte-partner-octave.jpg';
 import imageDefikartePartnerHostpoint from '../../assets/landingpages/unterstuetzung/defikarte-partner-hostpoint.svg';
 import imageDefikartePartnerKtsg from '../../assets/landingpages/unterstuetzung/defikarte-partner-ktsg.svg';
 import imageDefikartePartnerLifetec from '../../assets/landingpages/unterstuetzung/defikarte-partner-lifetec.svg';
@@ -140,7 +140,7 @@ export const Sponsors = () => {
           {t('SectionSponsorsSilver')}
         </Text>
         <div className="flex gap-5 md:gap-9 justify-center flex-wrap">
-          <SponsorCard src={imageDefikartePartnerHexagon} href="https://www.hexagon.com/" />
+          <SponsorCard src={imageDefikartePartnerOctave} href="https://www.octave.com/" />
           <SponsorCard src={imageDefikartePartnerHostpoint} href="https://www.hostpoint.ch/" />
           <SponsorCard src={imageDefikartePartnerSusv} href="https://www.susv.ch/" />
         </div>
