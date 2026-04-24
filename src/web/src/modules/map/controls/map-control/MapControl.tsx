@@ -1,3 +1,4 @@
+import { CreateMode, MapConfiguration, type MapInstance } from '@defikarte/shared';
 import cn from 'classnames';
 import { type RefObject, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +9,6 @@ import iconMinus from '../../../../assets/icons/icon-minus-dark-green.svg';
 import iconPlus from '../../../../assets/icons/icon-plus-dark-green.svg';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
-import { CreateMode } from '../../../../model/map';
-import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
-import { type MapInstance } from '../../map-instance/map-instance';
 import swisstopoImageryImage from './../../../../assets/images/map-preview-aerial-view.png';
 import swisstopoBaseMapImage from './../../../../assets/images/map-preview-base-map.png';
 import osmImage from './../../../../assets/images/map-preview-open-street.png';

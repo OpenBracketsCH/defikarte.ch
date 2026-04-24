@@ -1,4 +1,4 @@
-import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
+import { MapConfiguration } from '@defikarte/shared';
 
 interface Props {
   activeBaseLayer: string;

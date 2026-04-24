@@ -135,12 +135,21 @@ importers:
 
   ../shared:
     dependencies:
+      '@turf/circle':
+        specifier: ^7.2.0
+        version: 7.3.1
       axios:
         specifier: ^1.13.2
         version: 1.13.2
       geojson:
         specifier: ^0.5.0
         version: 0.5.0
+      maplibre-gl:
+        specifier: ^4.7.1
+        version: 4.7.1
+      opening_hours:
+        specifier: ^3.8.0
+        version: 3.9.0(typescript@5.6.3)
       react:
         specifier: '>=18.0.0'
         version: 19.0.0
@@ -4095,6 +4104,12 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.4
 
+  i18next@24.2.3(typescript@5.6.3):
+    dependencies:
+      '@babel/runtime': 7.28.4
+    optionalDependencies:
+      typescript: 5.6.3
+
   i18next@24.2.3(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.28.4
@@ -4352,6 +4367,14 @@ snapshots:
   object-assign@4.1.1: {}
 
   obug@2.1.1: {}
+
+  opening_hours@3.9.0(typescript@5.6.3):
+    dependencies:
+      i18next: 24.2.3(typescript@5.6.3)
+      i18next-browser-languagedetector: 8.2.0
+      suncalc: 1.9.0
+    transitivePeerDependencies:
+      - typescript
 
   opening_hours@3.9.0(typescript@5.9.3):
     dependencies:

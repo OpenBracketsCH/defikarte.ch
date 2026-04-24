@@ -1,15 +1,18 @@
+import {
+  CreateMode,
+  FEATURE_STATE,
+  MapConfiguration,
+  type MapInstance,
+  type MapInteractionEvent,
+  getActiveAedOverlay,
+} from '@defikarte/shared';
 import { type Feature, type GeoJsonProperties, type Geometry, type Point } from 'geojson';
 import { type MapGeoJSONFeature } from 'maplibre-gl';
 import { type Dispatch, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import iconInfoCircleGreenM from '../../../../assets/icons/icon-info-circle-green-m.svg';
-import { type AedData, type AedAccess, type AedIndoor } from '../../../../model/app';
-import { CreateMode, type MapInteractionEvent } from '../../../../model/map';
-import { getActiveAedOverlay } from '../../helper';
-import { FEATURE_STATE } from '../../map-instance/configuration/constants';
-import { MapConfiguration } from '../../map-instance/configuration/map.configuration';
-import { type MapInstance } from '../../map-instance/map-instance';
+import { type AedAccess, type AedData, type AedIndoor } from '../../../../model/app';
 import { AedForm } from './aed-form/AedForm';
 import { MapButtons } from './map-buttons/MapButtons';
 

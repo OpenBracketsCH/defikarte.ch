@@ -1,3 +1,4 @@
+import { distanceBetweenPoints, isOpenNow } from '@defikarte/shared';
 import cn from 'classnames';
 import { type Feature, type Point } from 'geojson';
 import { useMemo, useState } from 'react';
@@ -17,8 +18,6 @@ import { Button } from '../../../../components/ui/button/Button';
 import { IconButton } from '../../../../components/ui/icon-button/IconButton';
 import { Tag } from '../../../../components/ui/tag/Tag';
 import AppConfiguration from '../../../../configuration/app.configuration';
-import { distanceBetweenPoints } from '../../../../services/coordinate-calculation.service';
-import { isOpenNow } from '../../../../services/opening-hours.service';
 import { FeaturePropsList } from './property-list/FeaturePropsList';
 
 const generateGoogleMapsWalkingLink = (lon: number, lat: number): string => {

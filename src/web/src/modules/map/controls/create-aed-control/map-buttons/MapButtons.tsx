@@ -1,3 +1,4 @@
+import { CreateMode } from '@defikarte/shared';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import iconCheckWhite from '../../../../../assets/icons/icon-check-white.svg';
@@ -5,7 +6,6 @@ import iconCloseDarkGreen from '../../../../../assets/icons/icon-close-dark-gree
 import iconCloseMiddleGreen from '../../../../../assets/icons/icon-close-middle-green.svg';
 import iconEditWhite from '../../../../../assets/icons/icon-edit-white.svg';
 import { Button } from '../../../../../components/ui/button/Button';
-import { CreateMode } from '../../../../../model/map';
 
 interface MapButtonProps {
   createMode: CreateMode;

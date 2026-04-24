@@ -1,5 +1,11 @@
+import { type FilterType, type MapEvent, type MapInstance, searchAed } from '@defikarte/shared';
 import className from 'classnames';
-import { type Feature, type FeatureCollection, type GeoJsonProperties, type Geometry } from 'geojson';
+import {
+  type Feature,
+  type FeatureCollection,
+  type GeoJsonProperties,
+  type Geometry,
+} from 'geojson';
 import { type MapGeoJSONFeature } from 'maplibre-gl';
 import {
   type Dispatch,
@@ -11,12 +17,10 @@ import {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
+import backend from '../../../../api/backend';
 import { MapIconButton } from '../../../../components/ui/map-icon-button/MapIconButton';
 import { useOnOutsideKeyDown } from '../../../../hooks/useOnOutsideKeyDown';
 import { useOnOutsidePointerDown } from '../../../../hooks/useOnOutsidePointerDown';
-import { type FilterType, type MapEvent } from '../../../../model/map';
-import { searchAed } from '../../../../services/aed-search.service';
-import { type MapInstance } from '../../map-instance/map-instance';
 import iconClose from './../../../../assets/icons/icon-close-dark-green.svg';
 import iconFilter from './../../../../assets/icons/icon-filter-dark-green.svg';
 import iconGpsOff from './../../../../assets/icons/icon-gps-off-circle-green.svg';
@@ -24,7 +28,6 @@ import iconGpsOn from './../../../../assets/icons/icon-gps-on-circle-green.svg';
 import iconSearch from './../../../../assets/icons/icon-search-dark-green.svg';
 import { FilterControl } from './filter-control/FilterControl';
 import { SearchResults } from './search-results/SearchResults';
-import backend from '../../../../api/backend';
 
 interface Props {
   map: MapInstance | null;

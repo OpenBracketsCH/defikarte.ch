@@ -1,3 +1,4 @@
+import { CreateMode, type MapInstance } from '@defikarte/shared';
 import { type Feature, type FeatureCollection } from 'geojson';
 import { type Dispatch, type SetStateAction } from 'react';
 import { type useForm } from 'react-hook-form';
@@ -11,13 +12,11 @@ import { CustomToast } from '../../../../../components/ui/custom-toast/CustomToa
 import { SelectField } from '../../../../../components/ui/select-field/SelectField';
 import { TextField } from '../../../../../components/ui/text-field/TextField';
 import { type AedData } from '../../../../../model/app';
-import { CreateMode } from '../../../../../model/map';
 import {
   areOpeningHoursValid,
   formatPhoneNumber,
   isPhoneNumberValid,
 } from '../../../../../services/custom-validation.service';
-import { type MapInstance } from '../../../map-instance/map-instance';
 
 const toastId = 'aed-toast';
 
