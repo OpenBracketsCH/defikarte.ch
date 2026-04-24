@@ -111,5 +111,7 @@
   "more": "Di più",
   "notFound": "La pagina non è stata trovata.",
   "goHome": "Vai alla homepage",
-  "node": "Nodo"
+  "node": "Nodo",
+  "photoLoading": "Caricamento foto",
+  "photoAlt": "Foto del defibrillatore"
 }

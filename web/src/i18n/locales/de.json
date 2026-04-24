@@ -111,5 +111,7 @@
   "more": "Mehr",
   "notFound": "Die Seite wurde nicht gefunden.",
   "goHome": "Gehe zur Startseite",
-  "node": "Knoten"
+  "node": "Knoten",
+  "photoLoading": "Foto wird geladen",
+  "photoAlt": "Foto des Defibrillators"
 }

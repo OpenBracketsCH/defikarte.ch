@@ -111,5 +111,7 @@
   "more": "Plus",
   "notFound": "La page a été introuvable.",
   "goHome": "Aller à la page d'accueil",
-  "node": "Nœud"
+  "node": "Nœud",
+  "photoLoading": "Chargement de la photo",
+  "photoAlt": "Photo du défibrillateur"
 }
